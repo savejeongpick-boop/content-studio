@@ -705,6 +705,84 @@
     .kw-link:hover { border-color: var(--accent); color: var(--accent-text); }
 
     /* =========================================================
+       성과 · 트래픽
+       ========================================================= */
+    .seg {
+      display: inline-flex; gap: 3px; padding: 3px;
+      background: #eceded; border: 1px solid #e4e6eb; border-radius: 9px;
+    }
+    .seg-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 27px; padding: 0 10px;
+      border: 1px solid transparent; border-radius: 7px;
+      background: transparent; color: var(--muted);
+      font-size: 11.5px; font-weight: 650; font-family: inherit;
+      cursor: pointer; white-space: nowrap;
+    }
+    .seg-btn:hover { color: var(--text); background: rgba(255, 255, 255, 0.65); }
+    .seg-btn.active { background: #fff; color: var(--text); border-color: #dfe2e9; box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06); }
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+    .kpi {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface-2); padding: 11px 13px;
+    }
+    .kpi-top { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 650; color: var(--muted); }
+    .kpi-top .i { width: 13px; height: 13px; color: var(--muted-2); }
+    .kpi-value { font-size: 20px; font-weight: 750; letter-spacing: -0.03em; line-height: 1.3; margin-top: 3px; color: var(--text); }
+    .kpi-sub { font-size: 10.5px; color: var(--muted-2); }
+    .kpi.accent { border-color: #e0ddff; background: linear-gradient(180deg, #fbfaff, #fff); }
+    .kpi.accent .kpi-value { color: var(--accent-text); }
+    .metrics-form {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface-2); padding: 12px;
+    }
+    .metrics-table-wrap {
+      margin-top: 12px; border: 1px solid var(--border); border-radius: var(--radius);
+      overflow-x: auto; background: #fff;
+    }
+    table.data-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .data-table th {
+      position: sticky; top: 0; background: #f7f8fa; text-align: right;
+      font-size: 10.5px; font-weight: 750; letter-spacing: 0; color: var(--muted);
+      padding: 9px 12px; border-bottom: 1px solid var(--border); white-space: nowrap;
+    }
+    .data-table th:first-child, .data-table td:first-child { text-align: left; }
+    .data-table td {
+      padding: 9px 12px; border-bottom: 1px solid #f0f1f5; text-align: right;
+      font-variant-numeric: tabular-nums; color: var(--text-2); white-space: nowrap;
+    }
+    .data-table tbody tr:hover td { background: #fbfbfd; }
+    .data-table tbody tr:last-child td { border-bottom: 0; }
+    .data-table td.num-strong { color: var(--text); font-weight: 700; }
+    .data-table .period-label { font-weight: 650; color: var(--text); font-variant-numeric: tabular-nums; }
+    .data-table .period-sub { display: block; font-size: 10px; font-weight: 500; color: var(--muted-2); }
+    .data-table .empty-row td { text-align: center; color: var(--muted); padding: 20px 12px; }
+    .metrics-recent { margin-top: 14px; }
+    .metrics-recent-head {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+      font-size: 11.5px; font-weight: 700; color: var(--text); margin-bottom: 8px;
+    }
+    .metrics-recent-head .hint { font-size: 10.5px; font-weight: 500; color: var(--muted-2); }
+    .m-recent-row {
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between;
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      padding: 8px 11px; background: var(--surface-2);
+    }
+    .m-recent-main { min-width: 200px; flex: 1 1 260px; }
+    .m-recent-title { font-size: 12px; font-weight: 600; color: var(--text); }
+    .m-recent-meta { font-size: 10.5px; color: var(--muted-2); font-variant-numeric: tabular-nums; }
+    .m-chip {
+      display: inline-flex; align-items: center; font-size: 10px; font-weight: 700;
+      padding: 1px 7px; border-radius: 999px; border: 1px solid var(--border);
+      background: #fff; color: var(--text-2);
+    }
+    .m-chip.naver { color: #067a38; background: #eafaf0; border-color: #c6f0d8; }
+    .m-chip.google { color: #1a56c4; background: #eef3ff; border-color: #d3e0fb; }
+    .m-chip.insta { color: #b3215a; background: #fff0f5; border-color: #fbd3e2; }
+    .m-chip.yt { color: #c8102e; background: #fff1f3; border-color: #fbd2d9; }
+    .m-chip.threads { color: #16181d; background: #f2f3f5; border-color: #dfe1e6; }
+
+    /* =========================================================
        Post list & pickle
        ========================================================= */
     .post-hint {
@@ -834,6 +912,11 @@
       .post-btns { width: 100%; }
       .post-btns .btn-mini { flex: 1 1 auto; }
       .review-grid { grid-template-columns: minmax(0, 1fr); }
+      .seg { width: 100%; overflow-x: auto; }
+      .seg-btn { flex: 1 0 auto; }
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .kpi-value { font-size: 17px; }
+      .metrics-recent-head { flex-direction: column; gap: 2px; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -884,6 +967,7 @@
     <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
     <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M1 14h6M9 8h6M17 16h6"/></symbol>
     <symbol id="i-workflow" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><path d="M6.5 10v4a3 3 0 0 0 3 3h4"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6" rx="1"/><rect x="12.5" y="8" width="3" height="10" rx="1"/><rect x="18" y="5" width="3" height="13" rx="1"/></symbol>
     <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
     <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13a2 2 0 0 1 1.8 1.1L22 12v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6l1.7-5.9A2 2 0 0 1 5.5 5Z"/></symbol>
   </svg>
@@ -918,6 +1002,7 @@
         <button type="button" class="tab" data-goto="studioPanel"><svg class="i" aria-hidden="true"><use href="#i-sliders"></use></svg>스튜디오</button>
         <button type="button" class="tab" data-goto="resultsSection"><svg class="i" aria-hidden="true"><use href="#i-layers"></use></svg>5채널 결과</button>
         <button type="button" class="tab" data-goto="calendarPanel"><svg class="i" aria-hidden="true"><use href="#i-calendar"></use></svg>날짜·예약</button>
+        <button type="button" class="tab" data-goto="metricsPanel"><svg class="i" aria-hidden="true"><use href="#i-chart"></use></svg>성과</button>
         <button type="button" class="tab" data-goto="picklePanel"><svg class="i" aria-hidden="true"><use href="#i-message"></use></svg>피클 지시</button>
         <button type="button" class="tab" data-goto="importPanel"><svg class="i" aria-hidden="true"><use href="#i-inbox"></use></svg>JSON</button>
       </div>
@@ -1321,6 +1406,106 @@
         <textarea id="scheduleRequest" style="margin-top:8px;min-height:86px;font-size:12px;" readonly></textarea>
       </details>
       <div id="postList" class="post-list"></div>
+    </section>
+
+    <section class="panel" id="metricsPanel">
+      <div class="kw-panel-head">
+        <div class="ph-left">
+          <span class="p-icon"><svg class="i" aria-hidden="true"><use href="#i-chart"></use></svg></span>
+          <div class="ph-title">
+            <h2>성과 · 트래픽 관리</h2>
+            <span class="hint">발행한 글의 조회수·방문수·반응을 기록하면 일자별 · 주차별 · 월별 · 연도별로 자동 합산됩니다.</span>
+          </div>
+        </div>
+        <div class="ph-right">
+          <div class="seg" id="metricsView" role="tablist" aria-label="집계 단위">
+            <button type="button" class="seg-btn active" data-period="day">일자별</button>
+            <button type="button" class="seg-btn" data-period="week">주차별</button>
+            <button type="button" class="seg-btn" data-period="month">월별</button>
+            <button type="button" class="seg-btn" data-period="year">연도별</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-top"><svg class="i" aria-hidden="true"><use href="#i-chart"></use></svg>총 조회수</div>
+          <div class="kpi-value" id="kpiViews">0</div>
+          <div class="kpi-sub" id="kpiRange">기록 없음</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-top"><svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>총 방문수</div>
+          <div class="kpi-value" id="kpiVisits">0</div>
+          <div class="kpi-sub" id="kpiVisitsSub">조회 대비 0%</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-top"><svg class="i" aria-hidden="true"><use href="#i-layers"></use></svg>발행 건수</div>
+          <div class="kpi-value" id="kpiPosts">0</div>
+          <div class="kpi-sub" id="kpiPostsSub">기록 0건</div>
+        </div>
+        <div class="kpi accent">
+          <div class="kpi-top"><svg class="i" aria-hidden="true"><use href="#i-message"></use></svg>총 반응</div>
+          <div class="kpi-value" id="kpiReactions">0</div>
+          <div class="kpi-sub" id="kpiReactionsSub">글당 평균 0</div>
+        </div>
+      </div>
+
+      <div class="metrics-form">
+        <div class="row" style="margin-bottom:0;">
+          <div>
+            <label for="mDate"><svg class="i" aria-hidden="true"><use href="#i-calendar"></use></svg>날짜</label>
+            <input type="date" id="mDate" />
+          </div>
+          <div>
+            <label for="mChannel"><svg class="i" aria-hidden="true"><use href="#i-layers"></use></svg>채널</label>
+            <select id="mChannel">
+              <option value="naver">네이버 블로그</option>
+              <option value="google">티스토리</option>
+              <option value="insta">인스타 카툰</option>
+              <option value="yt">유튜브 쇼츠</option>
+              <option value="threads">스레드</option>
+            </select>
+          </div>
+          <div>
+            <label for="mTitle">글 제목 · 링크</label>
+            <input type="text" id="mTitle" placeholder="예: 블프 마감일 정리 …" />
+          </div>
+          <div>
+            <label for="mViews">조회수</label>
+            <input type="text" inputmode="numeric" id="mViews" placeholder="0" />
+          </div>
+          <div>
+            <label for="mVisits">방문수</label>
+            <input type="text" inputmode="numeric" id="mVisits" placeholder="0" />
+          </div>
+          <div>
+            <label for="mReactions">반응 (좋아요·댓글)</label>
+            <input type="text" inputmode="numeric" id="mReactions" placeholder="0" />
+          </div>
+        </div>
+        <div class="actions" style="margin-top:10px;">
+          <button class="btn-primary" onclick="saveMetric()"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>기록 추가</button>
+          <button class="btn-outline" onclick="clearMetricInputs()">입력 비우기</button>
+        </div>
+        <div id="metricResult" class="import-result"></div>
+      </div>
+
+      <div class="metrics-table-wrap">
+        <table class="data-table">
+          <thead id="metricsHead">
+            <tr><th>기간</th><th>발행</th><th>조회수</th><th>방문수</th><th>반응</th><th>일평균 조회</th></tr>
+          </thead>
+          <tbody id="metricsBody"></tbody>
+        </table>
+      </div>
+
+      <div class="metrics-recent">
+        <div class="metrics-recent-head">
+          <span>최근 기록</span>
+          <span class="hint" id="metricsNote">기록은 이 브라우저에만 저장됩니다</span>
+        </div>
+        <div id="metricsRecent" class="post-list" style="max-height:260px;"></div>
+      </div>
     </section>
 
     <section class="panel" id="picklePanel">
@@ -4640,7 +4825,7 @@ instaLine +
     }
 
     /* 섹션 내비게이션 (스크롤 이동 + 현재 섹션 표시) */
-    const TAB_SECTIONS = ['panel-overview', 'reviewPanel', 'stdPanel', 'kwPanel', 'studioPanel', 'resultsSection', 'calendarPanel', 'picklePanel', 'importPanel'];
+    const TAB_SECTIONS = ['panel-overview', 'reviewPanel', 'stdPanel', 'kwPanel', 'studioPanel', 'resultsSection', 'calendarPanel', 'metricsPanel', 'picklePanel', 'importPanel'];
     function setActiveTab(id) {
       const tabs = document.getElementById('studioTabs');
       if (!tabs || !tabs.querySelectorAll) return;
@@ -4675,10 +4860,250 @@ instaLine +
       return true;
     }
 
+
+    /* ===================== 성과 · 트래픽 관리 ===================== */
+    const METRICS_KEY = 'wonyeong_studio_metrics_v1';
+    const METRIC_CHANNELS = { naver: '네이버', google: '티스토리', insta: '인스타', yt: '유튜브', threads: '스레드' };
+    const METRIC_VIEWS = ['day', 'week', 'month', 'year'];
+    const PERIOD_LABEL = { day: '일자별', week: '주차별', month: '월별', year: '연도별' };
+    let metrics = [];
+    let metricsView = 'day';
+
+    function readMetrics() {
+      const raw = readLocal(METRICS_KEY);
+      if (!raw) return [];
+      try { const arr = JSON.parse(raw); return Array.isArray(arr) ? arr : []; } catch (e) { return []; }
+    }
+    function persistMetrics() { return writeLocal(METRICS_KEY, metrics); }
+    function num(v) {
+      const n = Number(String(v == null ? '' : v).replace(/[^0-9.\-]/g, ''));
+      return isFinite(n) && n > 0 ? Math.round(n) : 0;
+    }
+    function nextMetricId() { return 'm' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+    function metricSay(msg, ok) {
+      const out = document.getElementById('metricResult');
+      if (out) { out.textContent = msg; out.className = 'import-result ' + (ok ? 'ok' : 'err'); }
+      if (typeof statusText !== 'undefined' && statusText) statusText.textContent = msg;
+    }
+
+    function addMetric(entry) {
+      const g = (id) => { const el = document.getElementById(id); return el ? el.value : ''; };
+      const src = entry || {
+        date: g('mDate'), channel: g('mChannel'), title: g('mTitle'),
+        views: g('mViews'), visits: g('mVisits'), reactions: g('mReactions')
+      };
+      const date = String(src.date || '').trim().slice(0, 10);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) { metricSay('날짜를 YYYY-MM-DD 형식으로 선택해 주세요', false); return false; }
+      const views = num(src.views), visits = num(src.visits), reactions = num(src.reactions);
+      if (!views && !visits && !reactions) { metricSay('조회수·방문수·반응 중 하나는 0보다 커야 합니다', false); return false; }
+      const item = {
+        id: nextMetricId(),
+        date: date,
+        channel: METRIC_CHANNELS[src.channel] ? String(src.channel) : 'naver',
+        title: String(src.title || '').trim().slice(0, 200),
+        views: views, visits: visits, reactions: reactions,
+        savedAt: nowStamp()
+      };
+      metrics.push(item);
+      persistMetrics();
+      renderMetrics();
+      metricSay(date + ' · ' + METRIC_CHANNELS[item.channel] + ' 기록을 추가했습니다 (조회 ' + views.toLocaleString('ko-KR') + ' · 방문 ' + visits.toLocaleString('ko-KR') + ' · 반응 ' + reactions + ')', true);
+      return item;
+    }
+    function saveMetric() {
+      const item = addMetric();
+      if (!item) return false;
+      ['mTitle', 'mViews', 'mVisits', 'mReactions'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      const t = document.getElementById('mTitle');
+      if (t && t.focus) t.focus();
+      return true;
+    }
+    function clearMetricInputs() {
+      ['mTitle', 'mViews', 'mVisits', 'mReactions'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      metricSay('입력칸을 비웠습니다', true);
+      return true;
+    }
+    function removeMetric(id) {
+      const before = metrics.length;
+      metrics = metrics.filter(m => m.id !== id);
+      if (metrics.length === before) return false;
+      persistMetrics();
+      renderMetrics();
+      metricSay('기록 1건을 삭제했습니다', true);
+      return true;
+    }
+    function removeMetricWithConfirm(id) {
+      const m = metrics.filter(x => x.id === id)[0];
+      if (!m) return false;
+      const label = m.date + ' · ' + METRIC_CHANNELS[m.channel] + ' · 조회 ' + m.views;
+      const okToDelete = (typeof window.confirm === 'function') ? window.confirm(label + ' 기록을 지울까요?') : true;
+      if (!okToDelete) return false;
+      return removeMetric(id);
+    }
+
+    /* ISO 주차 (월~일) */
+    function pad2(n) { return String(n).padStart(2, '0'); }
+    function isoDay(d) { return d.getUTCFullYear() + '-' + pad2(d.getUTCMonth() + 1) + '-' + pad2(d.getUTCDate()); }
+    function isoWeekInfo(dateStr) {
+      const d = new Date(dateStr + 'T00:00:00Z');
+      const t = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+      const day = t.getUTCDay() || 7;
+      t.setUTCDate(t.getUTCDate() + 4 - day);
+      const yearStart = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));
+      const week = Math.ceil((((t - yearStart) / 86400000) + 1) / 7);
+      const monday = new Date(t.getTime());
+      monday.setUTCDate(monday.getUTCDate() - 3);
+      const sunday = new Date(monday.getTime());
+      sunday.setUTCDate(sunday.getUTCDate() + 6);
+      return { key: t.getUTCFullYear() + '-W' + pad2(week), year: t.getUTCFullYear(), week: week, start: isoDay(monday), end: isoDay(sunday) };
+    }
+
+    function bucketOf(date, view) {
+      if (view === 'week') {
+        const w = isoWeekInfo(date);
+        return { key: w.key, label: w.key, sub: w.start.slice(5).replace('-', '/') + '~' + w.end.slice(5).replace('-', '/') };
+      }
+      if (view === 'month') return { key: date.slice(0, 7), label: date.slice(0, 7), sub: '' };
+      if (view === 'year') return { key: date.slice(0, 4), label: date.slice(0, 4), sub: '' };
+      const wd = ['일', '월', '화', '수', '목', '금', '토'][new Date(date + 'T00:00:00').getDay()];
+      return { key: date, label: date, sub: '(' + wd + ')' };
+    }
+
+    function aggregateMetrics(view) {
+      const mode = METRIC_VIEWS.indexOf(view) > -1 ? view : metricsView;
+      const map = {};
+      metrics.forEach(m => {
+        const b = bucketOf(String(m.date), mode);
+        if (!map[b.key]) map[b.key] = { key: b.key, label: b.label, sub: b.sub, posts: 0, views: 0, visits: 0, reactions: 0 };
+        const row = map[b.key];
+        row.posts += 1;
+        row.views += num(m.views);
+        row.visits += num(m.visits);
+        row.reactions += num(m.reactions);
+      });
+      return Object.keys(map).map(k => map[k]).sort((a, b) => (a.key < b.key ? 1 : (a.key > b.key ? -1 : 0)));
+    }
+
+    function metricsTotals() {
+      return metrics.reduce((acc, m) => {
+        acc.posts += 1;
+        acc.views += num(m.views);
+        acc.visits += num(m.visits);
+        acc.reactions += num(m.reactions);
+        return acc;
+      }, { posts: 0, views: 0, visits: 0, reactions: 0 });
+    }
+
+    function fmtNum(n) { return Number(n || 0).toLocaleString('ko-KR'); }
+
+    function setMetricsView(view) {
+      if (METRIC_VIEWS.indexOf(view) === -1) return false;
+      metricsView = view;
+      const box = document.getElementById('metricsView');
+      if (box && box.querySelectorAll) {
+        box.querySelectorAll('.seg-btn').forEach(b => {
+          if (b.dataset && b.dataset.period === view) b.classList.add('active');
+          else b.classList.remove('active');
+        });
+      }
+      renderMetrics();
+      return true;
+    }
+
+    function renderMetrics() {
+      const rows = aggregateMetrics(metricsView);
+      const totals = metricsTotals();
+      ['kpiViews', 'kpiVisits', 'kpiPosts', 'kpiReactions'].forEach((id, i) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const val = [totals.views, totals.visits, totals.posts, totals.reactions][i];
+        el.textContent = fmtNum(val);
+      });
+      const range = document.getElementById('kpiRange');
+      if (range) {
+        range.textContent = metrics.length
+          ? PERIOD_LABEL[metricsView] + ' ' + rows.length + '개 · 기록 ' + metrics.length + '건'
+          : '기록 없음';
+      }
+      const vs = document.getElementById('kpiVisitsSub');
+      if (vs) vs.textContent = totals.views ? '조회 대비 ' + Math.round(totals.visits / totals.views * 100) + '%' : '조회 대비 0%';
+      const ps = document.getElementById('kpiPostsSub');
+      if (ps) ps.textContent = '기록 ' + totals.posts + '건';
+      const rs = document.getElementById('kpiReactionsSub');
+      if (rs) rs.textContent = '글당 평균 ' + (totals.posts ? (Math.round(totals.reactions / totals.posts * 10) / 10) : 0);
+
+      const head = document.getElementById('metricsHead');
+      if (head) {
+        const first = metricsView === 'week' ? '주차 (월~일)' : PERIOD_LABEL[metricsView];
+        head.innerHTML = '<tr><th>' + first + '</th><th>발행</th><th>조회수</th><th>방문수</th><th>반응</th><th>일평균 조회</th></tr>';
+      }
+      const body = document.getElementById('metricsBody');
+      if (body) {
+        if (!rows.length) {
+          body.innerHTML = '<tr class="empty-row"><td colspan="6">아직 기록이 없습니다. 위에서 날짜·채널·조회수를 넣고 <b>기록 추가</b>를 누르면 일/주/월/연도별로 합산됩니다.</td></tr>';
+        } else {
+          body.innerHTML = rows.map(r => {
+            const days = metricsView === 'week' ? 7 : (metricsView === 'month' ? 30 : (metricsView === 'year' ? 365 : 1));
+            const avg = Math.round(r.views / (metricsView === 'day' ? 1 : days));
+            return '<tr>' +
+              '<td><span class="period-label">' + esc(r.label) + '</span>' + (r.sub ? '<span class="period-sub">' + esc(r.sub) + '</span>' : '') + '</td>' +
+              '<td>' + r.posts + '</td>' +
+              '<td class="num-strong">' + fmtNum(r.views) + '</td>' +
+              '<td>' + fmtNum(r.visits) + '</td>' +
+              '<td>' + fmtNum(r.reactions) + '</td>' +
+              '<td>' + fmtNum(avg) + '</td>' +
+            '</tr>';
+          }).join('');
+        }
+      }
+      const recent = document.getElementById('metricsRecent');
+      if (recent) {
+        const list = metrics.slice().sort((a, b) => (a.date < b.date ? 1 : (a.date > b.date ? -1 : 0))).slice(0, 8);
+        if (!list.length) {
+          recent.innerHTML = '<div class="post-empty">아직 기록이 없습니다. 발행한 글의 조회수를 남기면 여기에 쌓입니다.</div>';
+        } else {
+          recent.innerHTML = list.map(m =>
+            '<div class="m-recent-row">' +
+              '<div class="m-recent-main">' +
+                '<div class="m-recent-title">' + esc(m.title || '(제목 미입력)') + '</div>' +
+                '<div class="m-recent-meta">' + esc(m.date) + ' · <span class="m-chip ' + esc(m.channel) + '">' + esc(METRIC_CHANNELS[m.channel] || m.channel) + '</span> · 조회 ' + fmtNum(m.views) + ' · 방문 ' + fmtNum(m.visits) + ' · 반응 ' + fmtNum(m.reactions) + '</div>' +
+              '</div>' +
+              '<div class="post-btns"><button class="btn-mini" data-metric-del="' + esc(m.id) + '">삭제</button></div>' +
+            '</div>'
+          ).join('');
+        }
+      }
+      const note = document.getElementById('metricsNote');
+      if (note) note.textContent = metrics.length ? '기록 ' + metrics.length + '건 · localStorage 저장' : '기록은 이 브라우저에만 저장됩니다';
+    }
+
+    function initMetrics() {
+      metrics = readMetrics();
+      const d = document.getElementById('mDate');
+      if (d && !d.value) d.value = todayISO();
+      renderMetrics();
+      return metrics.length;
+    }
+
     /* ===================== 이벤트 연결 ===================== */
     document.getElementById('postStatusFilter').addEventListener('change', (e) => {
       postFilter = e.target.value;
       renderPostList();
+    });
+    /* 성과 보기 전환 · 기록 삭제 */
+    document.addEventListener('click', (e) => {
+      const t = e.target;
+      if (!t || !t.closest) return;
+      const seg = t.closest('.seg-btn[data-period]');
+      if (seg) { setMetricsView(seg.dataset.period); return; }
+      const del = t.closest('[data-metric-del]');
+      if (del) { removeMetricWithConfirm(del.dataset.metricDel); return; }
     });
     /* 5대 심사 기준 체크박스 */
     document.addEventListener('change', (e) => {
@@ -4786,6 +5211,7 @@ instaLine +
     renderSeo('google');
     initPostBook();
     restoreBgm();
+    initMetrics();
     initTabs();
     renderReview();
     renderOverview();
