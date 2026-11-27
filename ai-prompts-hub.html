@@ -5,285 +5,356 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>세픽 5채널 자동화 · AI별 복사용 프롬프트 허브 (2026-11-27 최신 기준 · 광고 홀드)</title>
   <style>
+    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css");
     :root {
-      --bg: #0f1117;
-      --card: #181b24;
-      --card-2: #202431;
-      --border: #2c3142;
-      --text: #f3f5f9;
-      --muted: #9aa3b2;
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --surface-2: #fbfbfd;
+      --surface-3: #f5f6f9;
+      --text: #111318;
+      --text-2: #3c4250;
+      --muted: #6a7280;
+      --muted-2: #8b93a1;
+      --border: #e5e7ec;
+      --border-strong: #d6dae3;
+      --accent: #4f46e5;
+      --accent-hover: #4338ca;
+      --accent-soft: #eef2ff;
+      --accent-text: #4338ca;
       --gpt: #10a37f;
       --gemini: #4285f4;
       --claude: #d97757;
-      --accent: #a78bfa;
-      --ok: #22c55e;
-      --hold: #f0b429;
+      --ok: #059669;
+      --ok-soft: #ecfdf5;
+      --ok-border: #b7ebd7;
+      --hold: #b45309;
+      --hold-soft: #fffbeb;
+      --hold-border: #f2e0b6;
+      --radius-sm: 9px;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.04);
+      --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px -18px rgba(16, 24, 40, 0.35);
+      --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+      --font: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", "Malgun Gothic", "Noto Sans KR", sans-serif;
+      --appbar-h: 58px;
     }
     * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
-      background: var(--bg);
+      font-family: var(--font);
+      background-color: var(--bg);
+      background-image: radial-gradient(1100px 380px at 10% -10%, rgba(79, 70, 229, 0.07), transparent 60%),
+                        radial-gradient(900px 340px at 95% -12%, rgba(16, 185, 129, 0.06), transparent 62%);
+      background-repeat: no-repeat;
       color: var(--text);
-      line-height: 1.6;
-      padding: 20px 14px 48px;
+      line-height: 1.58;
+      letter-spacing: -0.011em;
+      word-break: keep-all;
+      -webkit-font-smoothing: antialiased;
     }
-    .wrap {
-      max-width: 820px;
-      margin: 0 auto;
+    .i { width: 16px; height: 16px; flex: 0 0 auto; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; vertical-align: -3px; }
+    .i-14 { width: 14px; height: 14px; }
+
+    /* 앱 바 */
+    .appbar {
+      position: sticky; top: 0; z-index: 60;
+      height: var(--appbar-h);
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 18px;
+      background: rgba(255, 255, 255, 0.86);
+      -webkit-backdrop-filter: saturate(180%) blur(14px);
+      backdrop-filter: saturate(180%) blur(14px);
+      border-bottom: 1px solid var(--border);
     }
-    header {
-      background: linear-gradient(135deg, #1f2333, #171a24);
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-mark {
+      width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; color: #fff;
+      background: linear-gradient(145deg, #6366f1 0%, #4f46e5 45%, #7c3aed 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 6px 14px -8px rgba(79, 70, 229, 0.9);
+    }
+    .brand-name { display: flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap; }
+    .brand-name .pro {
+      font-size: 9.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+      color: #fff; background: linear-gradient(120deg, #4f46e5, #7c3aed); padding: 2px 6px; border-radius: 5px;
+    }
+    .brand-sub { font-size: 11px; color: var(--muted-2); }
+    .appbar-spacer { flex: 1 1 auto; }
+    .appbar-meta { display: flex; align-items: center; gap: 8px; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 28px; padding: 0 10px;
+      border: 1px solid var(--border); border-radius: 999px; background: #fff;
+      font-size: 11.5px; font-weight: 650; color: var(--text-2); white-space: nowrap;
+    }
+    .pill b { color: var(--text); font-weight: 750; }
+    .pill.review { border-color: #ddd9ff; background: var(--accent-soft); color: var(--accent-text); }
+    .pill.review b { color: var(--accent-text); }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      height: 28px; padding: 0 11px;
+      border: 1px solid var(--border-strong); border-radius: 999px; background: #fff;
+      font-size: 11.5px; font-weight: 650; color: var(--text-2); text-decoration: none;
+      box-shadow: var(--shadow-xs);
+    }
+    .back-link:hover { border-color: var(--accent); color: var(--accent-text); }
+
+    .wrap { max-width: 980px; margin: 0 auto; padding: 22px 18px 64px; }
+
+    /* 헤더 */
+    header { margin-bottom: 16px; }
+    .hero {
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: var(--radius-lg);
       padding: 20px;
-      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
     }
-    h1 {
-      margin: 0 0 6px;
-      font-size: 20px;
-      font-weight: 700;
+    .hero::before {
+      content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+      background: linear-gradient(90deg, #4f46e5, #7c3aed 40%, transparent 85%);
+      opacity: 0.85;
     }
-    .sub {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
+    .hero-top { display: flex; align-items: flex-start; gap: 11px; }
+    .hero-icon {
+      width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
+      background: var(--accent-soft); color: var(--accent); border: 1px solid #e3e2ff; flex: 0 0 auto;
     }
-    .badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 12px;
+    h1 { margin: 0; font-size: 19px; font-weight: 750; letter-spacing: -0.025em; line-height: 1.35; }
+    .sub { margin: 6px 0 0; color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+    .sub b { color: var(--text-2); font-weight: 650; }
+    .sub code, .badge code {
+      background: #eff1f6; border: 1px solid #e6e9f0; border-radius: 5px;
+      padding: 0 4px; font-size: 11px; font-family: var(--mono); color: #40485a;
     }
+    .badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
     .badge {
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: var(--card-2);
-      border: 1px solid var(--border);
-      color: #d8dee9;
-    }
-    .badge.hold {
-      color: #ffd98a;
-      background: rgba(240, 180, 41, 0.12);
-      border-color: rgba(240, 180, 41, 0.45);
-    }
-    .std {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 14px 16px;
-      margin-bottom: 14px;
-      font-size: 12.5px;
-      color: #cfd6e2;
-    }
-    .std summary {
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .std h3 {
-      font-size: 12.5px;
-      margin: 12px 0 4px;
-      color: var(--accent);
-    }
-    .std ul { margin: 0 0 0 16px; padding: 0; }
-    .std li { margin-bottom: 3px; }
-    .std code {
-      background: #10131a;
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      padding: 1px 5px;
-      font-size: 11.5px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    }
-    .std .flow {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      align-items: center;
-      margin: 6px 0 2px;
-      font-weight: 700;
-    }
-    .std .flow span {
-      background: rgba(167, 139, 250, 0.16);
-      border: 1px solid rgba(167, 139, 250, 0.4);
-      color: #ddd2ff;
-      border-radius: 999px;
-      padding: 3px 9px;
-      font-size: 11.5px;
-    }
-    .active-note {
-      margin: 8px 0 2px;
-      padding: 8px 11px;
-      border-radius: 10px;
-      background: rgba(34, 197, 94, 0.10);
-      border: 1px solid rgba(34, 197, 94, 0.35);
-      color: #9ff0bd;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    .std.hold {
-      border-color: rgba(240, 180, 41, 0.45);
-      background: rgba(240, 180, 41, 0.06);
-    }
-    .std.hold summary { color: #ffd98a; }
-    .std.hold h3 { color: #ffc861; }
-    .tabs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-    .tab-btn {
-      border: 1px solid var(--border);
-      background: var(--card);
-      color: var(--muted);
-      padding: 12px 10px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .tab-btn.active[data-ai="gpt"] {
-      background: rgba(16, 163, 127, 0.16);
-      border-color: var(--gpt);
-      color: #6ee7b7;
-    }
-    .tab-btn.active[data-ai="gemini"] {
-      background: rgba(66, 133, 244, 0.16);
-      border-color: var(--gemini);
-      color: #93c5fd;
-    }
-    .tab-btn.active[data-ai="claude"] {
-      background: rgba(217, 119, 87, 0.18);
-      border-color: var(--claude);
-      color: #fdba74;
-    }
-    .panel {
-      display: none;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 18px;
-    }
-    .panel.active {
-      display: block;
-    }
-    .panel-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-    .panel-title {
-      font-size: 16px;
-      font-weight: 700;
-      margin: 0;
-    }
-    .panel-desc {
-      margin: 4px 0 0;
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .copy-btn {
-      border: none;
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      background: var(--accent);
-      color: #11131a;
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 600;
+      padding: 4px 9px; border-radius: 999px;
+      background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2);
       white-space: nowrap;
     }
-    .copy-btn.copied {
-      background: var(--ok);
-      color: #07140c;
+    .badge b { color: var(--text); font-weight: 700; }
+    .badge.hold { color: #8a5a11; background: var(--hold-soft); border-color: var(--hold-border); }
+
+    /* 기준 카드 */
+    .std {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      font-size: 12.5px;
+      color: var(--text-2);
+      box-shadow: var(--shadow-xs);
     }
-    .copy-btn.hold {
-      background: var(--hold);
-      color: #241a02;
+    .std summary {
+      cursor: pointer; font-size: 13px; font-weight: 700; color: var(--text);
+      list-style: none; display: flex; align-items: center; gap: 7px;
     }
+    .std summary::-webkit-details-marker { display: none; }
+    .std summary::after {
+      content: ""; margin-left: auto; width: 8px; height: 8px;
+      border-right: 1.6px solid var(--muted); border-bottom: 1.6px solid var(--muted);
+      transform: rotate(45deg); transition: transform 0.15s ease;
+    }
+    .std[open] summary::after { transform: rotate(-135deg); }
+    .std[open] summary { margin-bottom: 10px; }
+    .std h3 {
+      font-size: 12px; margin: 14px 0 5px; color: var(--accent-text);
+      font-weight: 750; letter-spacing: -0.01em;
+    }
+    .std ul { margin: 0 0 0 15px; padding: 0; }
+    .std li { margin-bottom: 3px; line-height: 1.6; }
+    .std code {
+      background: #eff1f6; border: 1px solid #e6e9f0; border-radius: 5px;
+      padding: 0 4px; font-size: 11px; font-family: var(--mono); color: #40485a;
+    }
+    .std .flow {
+      display: flex; flex-wrap: wrap; gap: 5px; align-items: center;
+      margin: 6px 0 4px; font-weight: 700;
+    }
+    .std .flow span {
+      background: #fff; border: 1px solid #e2dfff; color: var(--accent-text);
+      border-radius: 999px; padding: 3px 9px; font-size: 11px;
+    }
+    .active-note {
+      display: flex; align-items: flex-start; gap: 7px;
+      margin: 10px 0 2px; padding: 8px 11px; border-radius: var(--radius-sm);
+      background: var(--ok-soft); border: 1px solid var(--ok-border);
+      color: #067647; font-size: 11.5px; font-weight: 650; line-height: 1.6;
+    }
+    .std.hold { border-color: var(--hold-border); background: #fffdf7; }
+    .std.hold summary { color: #8a5a11; }
+    .std.hold h3 { color: #a9711b; }
+
+    /* AI 탭 (세그먼트) */
+    .tabs {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+      padding: 4px; margin-bottom: 12px;
+      background: #eceef1; border: 1px solid #e4e6eb; border-radius: var(--radius);
+    }
+    .tab-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      border: 1px solid transparent; background: transparent; color: var(--muted);
+      padding: 9px 10px; border-radius: 8px;
+      font-size: 13px; font-weight: 650; font-family: inherit; letter-spacing: -0.01em;
+      cursor: pointer; transition: all 0.14s ease;
+    }
+    .tab-btn .dot { width: 7px; height: 7px; border-radius: 50%; flex: 0 0 auto; opacity: 0.55; }
+    .tab-btn:hover { color: var(--text); background: rgba(255, 255, 255, 0.6); }
+    .tab-btn.active { background: #fff; color: var(--text); border-color: #dfe2e9; box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06); }
+    .tab-btn.active .dot { opacity: 1; }
+    .tab-btn[data-ai="gpt"] .dot { background: var(--gpt); }
+    .tab-btn[data-ai="gemini"] .dot { background: var(--gemini); }
+    .tab-btn[data-ai="claude"] .dot { background: var(--claude); }
+    .tab-btn.active[data-ai="gpt"] { color: #0b7a5f; }
+    .tab-btn.active[data-ai="gemini"] { color: #1a56c4; }
+    .tab-btn.active[data-ai="claude"] { color: #b45733; }
+
+    /* 패널 */
+    .panel {
+      display: none; background: var(--surface);
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: 18px; box-shadow: var(--shadow-sm);
+    }
+    .panel.active { display: block; }
+    .panel-head {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 12px; flex-wrap: wrap; margin-bottom: 12px;
+    }
+    .ph-left { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
+    .panel-icon {
+      width: 30px; height: 30px; border-radius: var(--radius-sm); display: grid; place-items: center;
+      background: var(--accent-soft); color: var(--accent); border: 1px solid #e3e2ff; flex: 0 0 auto;
+    }
+    .panel-title { font-size: 14.5px; font-weight: 700; margin: 1px 0 0; letter-spacing: -0.02em; }
+    .panel-desc { margin: 3px 0 0; font-size: 11.5px; color: var(--muted); line-height: 1.55; }
+    .panel-desc b { color: var(--text-2); font-weight: 650; }
+    .copy-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      border: 1px solid transparent; border-radius: var(--radius-sm);
+      padding: 8px 13px; font-size: 12.5px; font-weight: 650; font-family: inherit;
+      cursor: pointer; background: var(--accent); color: #fff;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+      white-space: nowrap; transition: background-color 0.12s ease;
+    }
+    .copy-btn:hover { background: var(--accent-hover); }
+    .copy-btn.copied { background: var(--ok); color: #fff; }
+    .copy-btn.hold { background: #fff; color: #8a5a11; border-color: var(--hold-border); box-shadow: var(--shadow-xs); }
+
     pre {
       margin: 0;
-      background: #10131a;
+      background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px;
+      border-radius: var(--radius-sm);
+      padding: 13px 14px;
       white-space: pre-wrap;
       word-break: break-word;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 13px;
-      line-height: 1.65;
-      color: #e5e9f0;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--text-2);
       max-height: 520px;
       overflow-y: auto;
     }
+    pre::selection { background: #ddd9ff; }
+
     .footer-card {
-      margin-top: 16px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
+      margin-top: 14px; background: var(--surface);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 16px; box-shadow: var(--shadow-sm);
     }
-    .footer-card.hold {
-      border-color: rgba(240, 180, 41, 0.45);
-      background: rgba(240, 180, 41, 0.06);
-    }
-    .footer-card h2 {
-      margin: 0 0 8px;
-      font-size: 15px;
-    }
-    .footer-card p {
-      margin: 0 0 12px;
-      font-size: 13px;
-      color: var(--muted);
-    }
+    .footer-card.hold { border-color: var(--hold-border); background: #fffdf7; }
+    .footer-card h2 { margin: 0 0 6px; font-size: 13.5px; font-weight: 700; letter-spacing: -0.02em; }
+    .footer-card p { margin: 0 0 10px; font-size: 12px; color: var(--muted); line-height: 1.6; }
     .toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #22c55e;
-      color: #06210f;
-      font-weight: 700;
-      font-size: 13px;
-      padding: 10px 16px;
-      border-radius: 999px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
+      position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);
+      background: #111318; color: #fff; font-weight: 650; font-size: 12.5px;
+      padding: 9px 16px; border-radius: 999px;
+      box-shadow: 0 12px 30px -12px rgba(16, 24, 40, 0.6);
+      opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
     }
-    .toast.show {
-      opacity: 1;
+    .toast.show { opacity: 1; }
+
+    @media (max-width: 700px) {
+      :root { --appbar-h: 54px; }
+      .appbar { padding: 0 12px; gap: 8px; }
+      .brand-sub { display: none; }
+      .pill.review { display: none; }
+      .wrap { padding: 16px 12px 52px; }
+      .hero, .panel { padding: 15px; border-radius: var(--radius); }
+      h1 { font-size: 17px; }
+      .tabs { grid-template-columns: 1fr; }
+      .tab-btn { justify-content: flex-start; padding: 9px 12px; }
+      pre { font-size: 11.5px; max-height: 420px; }
+      .panel-head { flex-direction: column; }
+      .copy-btn { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;overflow:hidden">
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M10 15.5a2 2 0 0 0-1.4-1.4l-5.1-1.3a.5.5 0 0 1 0-1L8.6 10.5A2 2 0 0 0 10 9.1l1.3-5.1a.5.5 0 0 1 1 0l1.3 5.1A2 2 0 0 0 15 10.5l5.1 1.3a.5.5 0 0 1 0 1L15 14.1a2 2 0 0 0-1.4 1.4l-1.3 5.1a.5.5 0 0 1-1 0Z"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 17v5"/><path d="M9 10.8a2 2 0 0 1-1.1 1.8l-1.8.9A2 2 0 0 0 5 15.2V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.8a2 2 0 0 0-1.1-1.8l-1.8-.9A2 2 0 0 1 15 10.8V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1Z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 9 5-9 5-9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></symbol>
+  </svg>
+
+  <header class="appbar">
+    <div class="brand">
+      <span class="brand-mark"><svg class="i" aria-hidden="true"><use href="#i-pen"></use></svg></span>
+      <div>
+        <div class="brand-name">프롬프트 허브 <span class="pro">Pro</span></div>
+        <div class="brand-sub">ChatGPT · Gemini · Claude 공통 지침</div>
+      </div>
+    </div>
+    <div class="appbar-spacer"></div>
+    <div class="appbar-meta">
+      <span class="pill"><svg class="i i-14" aria-hidden="true"><use href="#i-layers"></use></svg>5채널 · <b>3 AI</b></span>
+      <span class="pill review"><svg class="i i-14" aria-hidden="true"><use href="#i-shield"></use></svg>광고·제휴 <b>홀드</b></span>
+      <a class="back-link" href="index.html"><svg class="i i-14" aria-hidden="true"><use href="#i-chevron-left"></use></svg>스튜디오</a>
+    </div>
+  </header>
+
   <div class="wrap">
     <header>
-      <h1>🤖 세픽 5채널 자동화 · AI별 복사용 프롬프트 허브</h1>
-      <p class="sub">2026-11-27 09:30 기준 — <b>✅ 지금 쓰는 규칙(순수 콘텐츠)</b>과 <b>⏸️ 승인·안정권 후 적용(광고·제휴)</b>을 분리했습니다. 복사 프롬프트 3종에는 광고·제휴·<code>AF3753560</code>·고지 문구가 들어 있지 않습니다. 스레드는 <code>@savejeong.pick</code> 실제 글 말투(반말)로 바뀌었습니다.</p>
-      <div class="badges">
-        <span class="badge">네이버 블로그 (savejeong)</span>
-        <span class="badge">티스토리 (10년 후의 나를 위해)</span>
-        <span class="badge">인스타 카툰 (save_jeong)</span>
-        <span class="badge">유튜브 쇼핑 쇼츠 (세픽)</span>
-        <span class="badge">스레드 (@savejeong.pick) · 반말</span>
-        <span class="badge">매일 09:00 작성 · 업로드는 확인 후</span>
-        <span class="badge hold">⏸️ 쿠팡 파트너스 AF3753560 — 승인 후 (현재 미사용)</span>
+      <div class="hero">
+        <div class="hero-top">
+          <span class="hero-icon"><svg class="i" aria-hidden="true"><use href="#i-sparkles"></use></svg></span>
+          <div>
+            <h1>AI별 복사용 프롬프트 허브</h1>
+            <p class="sub">2026-11-27 10:25 기준 — <b>지금 쓰는 규칙(순수 콘텐츠)</b>과 <b>승인·안정권 후 적용(광고·제휴)</b>을 분리했습니다. 복사 프롬프트 3종에는 광고·제휴·<code>AF3753560</code>·고지 문구가 들어 있지 않습니다. 스레드는 <code>@savejeong.pick</code> 실제 글 말투(반말)를 씁니다.</p>
+          </div>
+        </div>
+        <div class="badges">
+          <span class="badge">네이버 블로그 <b>savejeong</b></span>
+          <span class="badge">티스토리 <b>10년 후의 나를 위해</b></span>
+          <span class="badge">인스타 카툰 <b>save_jeong</b></span>
+          <span class="badge">유튜브 쇼핑 쇼츠 <b>세픽</b></span>
+          <span class="badge">스레드 <b>@savejeong.pick</b> · 반말</span>
+          <span class="badge"><svg class="i i-14" aria-hidden="true"><use href="#i-clock"></use></svg>매일 <b>07:30 · 16:30</b> 작성·검수 → <b>08:00 · 17:00</b> 발행</span>
+          <span class="badge hold"><svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg>쿠팡 파트너스 <b>AF3753560</b> — 승인 후 (현재 미사용)</span>
+        </div>
       </div>
     </header>
 
     <details class="std" open>
-      <summary>📌 세 AI 공통 기준 (✅ 지금 쓰는 5개 규칙)</summary>
-      <div class="active-note">✅ 현재 적용 중 — 승인 전 순수 콘텐츠 모드 · 광고·제휴 링크·상품 링크·고지 문구는 넣지 않습니다.</div>
+      <summary><svg class="i" aria-hidden="true"><use href="#i-pin"></use></svg>세 AI 공통 기준<span style="color:var(--muted);font-weight:600;font-size:11.5px;">지금 쓰는 5개 규칙</span></summary>
+      <div class="active-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> 현재 적용 중 — 승인 전 순수 콘텐츠 모드 · 광고·제휴 링크·상품 링크·고지 문구는 넣지 않습니다.</div>
 
       <h3>1. 예스24 크레마클럽 33권 — 공통 4단 뼈대</h3>
       <div class="flow"><span>3초 훅</span><span>→</span><span>문제 공감</span><span>→</span><span>해결책</span><span>→</span><span>댓글·행동 유도(CTA)</span></div>
@@ -325,7 +396,7 @@
     </details>
 
     <details class="std hold">
-      <summary>⏸️ 승인·안정권 진입 후 적용 (현재 홀드 — 복사 프롬프트에선 제외됨)</summary>
+      <summary><svg class="i" aria-hidden="true"><use href="#i-pause"></use></svg>승인·안정권 진입 후 적용 (현재 홀드 — 복사 프롬프트에선 제외됨)</summary>
       <p style="margin:8px 0 0; font-size:12.5px;">아래 항목은 각 플랫폼이 <b>승인·안정권</b>에 들어간 뒤에만 씁니다. 지금 복사하는 프롬프트 3종에는 들어 있지 않습니다.</p>
 
       <h3>⏸️ 쿠팡 파트너스 AF3753560</h3>
@@ -348,18 +419,21 @@
     </details>
 
     <div class="tabs">
-      <button class="tab-btn active" data-ai="gpt" onclick="selectTab('gpt')">🟢 ChatGPT용</button>
-      <button class="tab-btn" data-ai="gemini" onclick="selectTab('gemini')">🔵 Gemini용</button>
-      <button class="tab-btn" data-ai="claude" onclick="selectTab('claude')">🟠 Claude용</button>
+      <button class="tab-btn active" data-ai="gpt" onclick="selectTab('gpt')"><span class="dot"></span>ChatGPT</button>
+      <button class="tab-btn" data-ai="gemini" onclick="selectTab('gemini')"><span class="dot"></span>Gemini</button>
+      <button class="tab-btn" data-ai="claude" onclick="selectTab('claude')"><span class="dot"></span>Claude</button>
     </div>
 
     <section id="panel-gpt" class="panel active">
       <div class="panel-head">
-        <div>
-          <h2 class="panel-title">🟢 ChatGPT 프로젝트 지침용 (구조화 · 실행 표 · 반말 스레드)</h2>
-          <p class="panel-desc">ChatGPT → 프로젝트 「4채널 콘텐츠 스튜디오」(이름은 그대로) → 지침 칸에 그대로 붙여넣기 · <b>지침 내용은 5채널 기준</b></p>
+        <div class="ph-left">
+          <span class="panel-icon"><svg class="i" aria-hidden="true"><use href="#i-sparkles"></use></svg></span>
+          <div>
+            <h2 class="panel-title">ChatGPT 프로젝트 지침용 (구조화 · 실행 표 · 반말 스레드)</h2>
+            <p class="panel-desc">ChatGPT → 프로젝트 「4채널 콘텐츠 스튜디오」(이름은 그대로) → 지침 칸에 그대로 붙여넣기 · <b>지침 내용은 5채널 기준</b></p>
         </div>
-        <button class="copy-btn" onclick="copyText('prompt-gpt', this)">📋 ChatGPT 프롬프트 복사</button>
+          </div>
+        <button class="copy-btn" onclick="copyText('prompt-gpt', this)"><svg class="i" aria-hidden="true"><use href="#i-clipboard"></use></svg>ChatGPT 프롬프트 복사</button>
       </div>
       <pre id="prompt-gpt">너는 나(정원영, 세정아빠)의 5채널 콘텐츠 자동화 파트너다. 내가 주제나 상품 키워드를 1번 입력하면 아래 5개 채널 콘텐츠를 한 번에 작성한다. 작성만 하고 업로드는 내 확인 전까지 절대 하지 않는다.
 
@@ -432,11 +506,14 @@
 
     <section id="panel-gemini" class="panel">
       <div class="panel-head">
-        <div>
-          <h2 class="panel-title">🔵 Gemini 스킬 지침용 (즉시 출력 · 트렌드 훅 · 반말 스레드)</h2>
-          <p class="panel-desc">Gemini → 스킬 「콘텐츠-스튜디오-4채널」(이름은 그대로) → 요청 사항 칸에 그대로 붙여넣기 · <b>지침 내용은 5채널 기준</b></p>
+        <div class="ph-left">
+          <span class="panel-icon"><svg class="i" aria-hidden="true"><use href="#i-sparkles"></use></svg></span>
+          <div>
+            <h2 class="panel-title">Gemini 스킬 지침용 (즉시 출력 · 트렌드 훅 · 반말 스레드)</h2>
+            <p class="panel-desc">Gemini → 스킬 「콘텐츠-스튜디오-4채널」(이름은 그대로) → 요청 사항 칸에 그대로 붙여넣기 · <b>지침 내용은 5채널 기준</b></p>
         </div>
-        <button class="copy-btn" onclick="copyText('prompt-gemini', this)">📋 Gemini 프롬프트 복사</button>
+          </div>
+        <button class="copy-btn" onclick="copyText('prompt-gemini', this)"><svg class="i" aria-hidden="true"><use href="#i-clipboard"></use></svg>Gemini 프롬프트 복사</button>
       </div>
       <pre id="prompt-gemini">너는 최신 트렌드와 바이럴 쇼츠 소재 발굴에 특화된 나의 5채널 콘텐츠 제작 어시스턴트다. 전략 설명·서론 없이, 내가 주제를 주면 곧바로 아래 5채널 초안을 출력한다.
 
@@ -494,11 +571,14 @@
 
     <section id="panel-claude" class="panel">
       <div class="panel-head">
-        <div>
-          <h2 class="panel-title">🟠 Claude 프로젝트 지침용 (AI 티 제로 · 문체 · 반말 스레드)</h2>
-          <p class="panel-desc">Claude → 프로젝트 「4채널 콘텐츠 스튜디오」(이름은 그대로) → 지침 칸에 그대로 붙여넣기 · <b>지침 내용은 5채널 기준</b></p>
+        <div class="ph-left">
+          <span class="panel-icon"><svg class="i" aria-hidden="true"><use href="#i-sparkles"></use></svg></span>
+          <div>
+            <h2 class="panel-title">Claude 프로젝트 지침용 (AI 티 제로 · 문체 · 반말 스레드)</h2>
+            <p class="panel-desc">Claude → 프로젝트 「4채널 콘텐츠 스튜디오」(이름은 그대로) → 지침 칸에 그대로 붙여넣기 · <b>지침 내용은 5채널 기준</b></p>
         </div>
-        <button class="copy-btn" onclick="copyText('prompt-claude', this)">📋 Claude 프롬프트 복사</button>
+          </div>
+        <button class="copy-btn" onclick="copyText('prompt-claude', this)"><svg class="i" aria-hidden="true"><use href="#i-clipboard"></use></svg>Claude 프롬프트 복사</button>
       </div>
       <pre id="prompt-claude">당신은 한국어 문체 감각이 뛰어난 나(정원영, 세정아빠)의 5채널 콘텐츠 에디터입니다. 내가 주제 하나를 던지면, 읽는 사람이 AI가 썼다는 느낌을 전혀 받지 않도록 살아 있는 문체로 5개 채널 초안을 한 번에 작성합니다. 초안만 쓰고 발행은 내 승인 전까지 대기합니다.
 
@@ -550,9 +630,9 @@
     </section>
 
     <div class="footer-card hold">
-      <h2>⏸️ 승인·안정권 진입 후 사용할 제휴 고지 문구 (보관용)</h2>
+      <h2><svg class="i" aria-hidden="true"><use href="#i-pause"></use></svg> 승인·안정권 진입 후 사용할 제휴 고지 문구 (보관용)</h2>
       <p>지금은 쓰지 않습니다. 각 플랫폼이 승인·안정권에 들어가 링크를 넣을 때만 복사해 붙이세요. 복사 프롬프트에는 들어 있지 않습니다.</p>
-      <button class="copy-btn hold" onclick="copyText('notice-block', this)">⏸️ 보관용 고지 문구 복사</button>
+      <button class="copy-btn hold" onclick="copyText('notice-block', this)"><svg class="i" aria-hidden="true"><use href="#i-pause"></use></svg>보관용 고지 문구 복사</button>
       <pre id="notice-block" style="margin-top: 12px; max-height: 220px;">[⏸️ 승인·안정권 진입 후 사용 — 제휴 · 광고 고지 (보관용)]
 ※ 각 플랫폼 승인·안정권 진입 전까지는 붙이지 않습니다.
 · 쿠팡 파트너스(쇼츠 고정댓글·설명란, 제휴 글): 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
@@ -562,11 +642,11 @@
     </div>
 
     <div class="footer-card">
-      <h2>💬 카카오톡 「나에게 보내기」용 요약본 복사</h2>
+      <h2><svg class="i" aria-hidden="true"><use href="#i-message"></use></svg> 카카오톡 「나에게 보내기」용 요약본 복사</h2>
       <p>카톡 나에게 보내기에 저장해 두고 필요할 때 꺼내 보기 좋은 요약 버전이에요.</p>
-      <button class="copy-btn" onclick="copyText('kakao-summary', this)">💛 카톡 나에게 보내기용 복사</button>
+      <button class="copy-btn" onclick="copyText('kakao-summary', this)"><svg class="i" aria-hidden="true"><use href="#i-clipboard"></use></svg>카톡 나에게 보내기용 복사</button>
       <pre id="kakao-summary" style="margin-top: 12px; max-height: 300px;">[세픽 5채널 콘텐츠 자동화 — 2026-11-27 최신 기준]
-⏰ 매일 오전 9시 5개 작성 (업로드는 확인 후)
+⏰ 매일 07:30 · 16:30 5개 작성·자체 검수 (업로드는 확인 후 08:00 · 17:00)
 ⏸️ 광고·제휴: 각 플랫폼 승인·안정권 전까지 전부 홀드 (링크·고지·제휴 코드 없음)
 
 1. 네이버 블로그 (savejeong) — 경험·공감 1,450~1,600자, 애드포스트 승인 대비/SEO
@@ -606,13 +686,13 @@
         document.execCommand('copy');
         ta.remove();
       }
-      const orig = btn.innerText;
-      btn.innerText = '✅ 복사 완료!';
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>복사 완료!';
       btn.classList.add('copied');
       const toast = document.getElementById('toast');
       toast.classList.add('show');
       setTimeout(() => {
-        btn.innerText = orig;
+        btn.innerHTML = orig;
         btn.classList.remove('copied');
         toast.classList.remove('show');
       }, 1800);
