@@ -127,6 +127,14 @@
     .pill.plan { background: var(--surface-3); border-color: var(--border); color: var(--muted); font-weight: 650; }
     a.pill { text-decoration: none; }
     a.pill:hover { border-color: var(--accent); color: var(--accent-text); }
+    button.pill { cursor: pointer; font-family: inherit; }
+    button.pill.guide { background: #fff; color: var(--text-2); }
+    .guide-q {
+      display: inline-grid; place-items: center; width: 14px; height: 14px;
+      border-radius: 50%; background: var(--surface-3); border: 1px solid var(--border-strong);
+      font-size: 9.5px; font-weight: 800; color: var(--muted);
+    }
+    button.pill.guide:hover { border-color: var(--accent); color: var(--accent-text); }
     .pill.review { border-color: #ddd9ff; background: var(--accent-soft); color: var(--accent-text); }
     .pill.review b { color: var(--accent-text); }
     .status {
@@ -147,43 +155,48 @@
     }
 
     /* =========================================================
-       Tabs
+       Tab bar — 실제 화면 전환 (앵커 스크롤 아님)
        ========================================================= */
-    .navbar {
+    .tabbar {
       position: sticky; top: var(--appbar-h); z-index: 55;
-      padding: 9px 18px;
-      background: rgba(246, 247, 249, 0.82);
-      -webkit-backdrop-filter: saturate(160%) blur(12px);
-      backdrop-filter: saturate(160%) blur(12px);
+      background: rgba(255, 255, 255, 0.9);
+      -webkit-backdrop-filter: saturate(170%) blur(12px);
+      backdrop-filter: saturate(170%) blur(12px);
       border-bottom: 1px solid var(--border);
     }
-    .navbar-inner {
-      max-width: 1240px; margin: 0 auto;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .tabs {
-      display: flex; align-items: center; gap: 4px;
+    .tabbar-inner {
+      max-width: 1180px; margin: 0 auto; padding: 0 20px;
+      display: flex; align-items: stretch; gap: 2px;
       overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
-      padding: 3px; border-radius: 10px; background: #eceded; border: 1px solid #e4e6eb;
     }
-    .tabs::-webkit-scrollbar { display: none; }
+    .tabbar-inner::-webkit-scrollbar { display: none; }
     .tab {
-      display: inline-flex; align-items: center; gap: 6px;
-      height: 30px; padding: 0 11px;
-      border: 1px solid transparent; border-radius: 8px;
-      background: transparent; color: var(--muted);
-      font-size: 12.5px; font-weight: 650; letter-spacing: -0.01em;
-      cursor: pointer; white-space: nowrap; font-family: inherit;
+      position: relative; display: inline-flex; align-items: center; gap: 7px;
+      height: 48px; padding: 0 13px; white-space: nowrap;
+      border: 0; border-radius: 0; background: transparent;
+      color: var(--muted); font-size: 13.5px; font-weight: 600; letter-spacing: -0.014em;
+      cursor: pointer; font-family: inherit;
     }
-    .tab .i { width: 14px; height: 14px; opacity: 0.85; }
-    .tab:hover { color: var(--text); background: rgba(255, 255, 255, 0.7); }
-    .tab.active {
-      background: #fff; color: var(--text);
-      border-color: #dfe2e9;
-      box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+    .tab:hover { color: var(--text); }
+    .tab .i { width: 15px; height: 15px; opacity: 0.7; }
+    .tab.active { color: var(--text); font-weight: 700; }
+    .tab.active .i { opacity: 1; color: var(--accent); }
+    .tab.active::after {
+      content: ""; position: absolute; left: 11px; right: 11px; bottom: -1px; height: 2px;
+      background: var(--text); border-radius: 2px 2px 0 0;
     }
-    .tab.active .i { color: var(--accent); opacity: 1; }
-    .navbar-note { margin-left: auto; font-size: 11.5px; color: var(--muted-2); white-space: nowrap; }
+
+    /* 화면(뷰) 전환 — 활성 뷰만 렌더 */
+    .view { display: none; }
+    .view.active { display: block; animation: viewIn 0.16s ease-out both; }
+    @keyframes viewIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    .view-head {
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;
+      margin: 2px 2px 16px;
+    }
+    .view-head h1 { margin: 0; font-size: 20px; font-weight: 750; letter-spacing: -0.035em; line-height: 1.25; }
+    .view-head p { margin: 4px 0 0; font-size: 12.5px; color: var(--muted); }
+    .view-head-actions { display: flex; gap: 8px; flex: 0 0 auto; }
 
     /* =========================================================
        Layout
@@ -259,6 +272,8 @@
       margin-bottom: 5px; letter-spacing: -0.005em;
     }
     label .i { color: var(--muted-2); width: 13px; height: 13px; }
+    .lb-opt { font-size: 10px; font-weight: 600; color: var(--muted-2); background: var(--surface-3); border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; margin-left: 3px; }
+    details:not([open]) > *:not(summary) { display: none; }
     input[type="text"], input[type="password"], input[type="date"], input[type="datetime-local"], select, textarea {
       width: 100%;
       border: 1px solid var(--border-strong);
@@ -310,6 +325,14 @@
     .btn-secondary:hover { background: #e6e9ff; }
     .btn-outline { background: #fff; color: var(--text-2); border: 1px solid var(--border-strong); box-shadow: var(--shadow-xs); }
     .btn-outline:hover { background: var(--surface-3); color: var(--text); }
+    a.btn-outline, a.btn-secondary, a.btn-primary {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 13px; border-radius: var(--radius-sm);
+      font-size: 12.5px; font-weight: 650; text-decoration: none;
+      box-shadow: var(--shadow-xs);
+    }
+    a.btn-outline { background: #fff; color: var(--text-2); border: 1px solid var(--border-strong); }
+    a.btn-outline:hover { background: var(--surface-3); color: var(--text); }
     .btn-mini {
       padding: 5px 9px;
       font-size: 11.5px; font-weight: 650;
@@ -326,21 +349,128 @@
     .actions .btn-primary { padding: 9px 16px; font-size: 13px; }
 
     /* =========================================================
-       Overview stats
+       Dashboard — 요약 KPI · 다음 할 일 · 콘텐츠 진행
        ========================================================= */
-    .overview { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
-    .stat {
-      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 12px 14px; box-shadow: var(--shadow-xs);
-      display: flex; flex-direction: column; gap: 2px; min-width: 0;
+    .dash-head {
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 14px;
+      margin: 2px 2px 18px;
     }
-    .stat-top { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 650; color: var(--muted); }
-    .stat-top .i { width: 13px; height: 13px; color: var(--muted-2); }
-    .stat-value { font-size: 19px; font-weight: 750; letter-spacing: -0.03em; color: var(--text); line-height: 1.3; }
-    .stat-value small { font-size: 11.5px; font-weight: 600; color: var(--muted-2); margin-left: 3px; letter-spacing: 0; }
-    .stat-sub { font-size: 11px; color: var(--muted-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .stat.accent { border-color: #e0ddff; background: linear-gradient(180deg, #fbfaff, #fff); }
-    .stat.accent .stat-value { color: var(--accent-text); }
+    .dash-head h1 { margin: 0; font-size: 21px; font-weight: 750; letter-spacing: -0.035em; line-height: 1.2; }
+    .dash-head .dash-sub { margin: 5px 0 0; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .dash-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
+    .dkpi {
+      background: #fff; border: 1px solid var(--border); border-radius: 14px;
+      padding: 15px 16px 14px; box-shadow: var(--shadow-xs); min-width: 0;
+    }
+    .dkpi-k { font-size: 11.5px; font-weight: 650; color: var(--muted); letter-spacing: -0.005em; }
+    .dkpi-v {
+      margin-top: 6px; font-size: 25px; font-weight: 750; letter-spacing: -0.04em;
+      line-height: 1.15; color: var(--text); font-variant-numeric: tabular-nums;
+    }
+    .dkpi-v small { margin-left: 2px; font-size: 12px; font-weight: 600; color: var(--muted-2); letter-spacing: 0; }
+    .dkpi-s { margin-top: 5px; font-size: 11.5px; color: var(--muted-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dkpi.primary { border-color: #dcd9ff; background: #fdfdff; }
+    .dkpi.primary .dkpi-v { color: var(--accent-text); }
+    .nextbar {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      background: #fff; border: 1px solid var(--border); border-radius: 14px;
+      padding: 11px 12px 11px 16px; margin-bottom: 24px; box-shadow: var(--shadow-xs);
+    }
+    .nextbar-main { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .nextbar-k {
+      font-size: 11px; font-weight: 700; color: var(--muted);
+      background: var(--surface-3); border: 1px solid var(--border);
+      border-radius: 999px; padding: 3px 9px; white-space: nowrap;
+    }
+    .nextbar-v { font-size: 13.5px; font-weight: 650; color: var(--text); letter-spacing: -0.015em; }
+    .nextbar-act { display: flex; gap: 8px; flex: 0 0 auto; }
+    .dash-sec { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 0 2px 9px; }
+    .dash-sec h2 { margin: 0; font-size: 14px; font-weight: 750; letter-spacing: -0.02em; }
+    .dash-sec .dash-count { font-size: 11.5px; color: var(--muted-2); font-variant-numeric: tabular-nums; }
+    .ctable {
+      background: #fff; border: 1px solid var(--border); border-radius: 14px;
+      box-shadow: var(--shadow-sm); overflow: hidden;
+    }
+    .ctable-h, .crow {
+      display: grid; grid-template-columns: minmax(0, 1fr) 128px 104px 84px;
+      gap: 12px; align-items: center; padding: 10px 16px;
+    }
+    .ctable-h {
+      background: var(--surface-3); border-bottom: 1px solid var(--border);
+      font-size: 11px; font-weight: 650; color: var(--muted);
+    }
+    .ctable-h > span:nth-child(n+2) { text-align: right; }
+    .crow { padding: 13px 16px; }
+    .crow + .crow { border-top: 1px solid var(--border); }
+    .crow:hover { background: #fcfcfe; }
+    .crow-main { min-width: 0; }
+    .crow-top { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .crow-date { font-size: 11.5px; font-weight: 650; color: var(--muted-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .crow-topic {
+      font-size: 13.5px; font-weight: 650; color: var(--text); letter-spacing: -0.022em;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .st {
+      display: inline-flex; align-items: center; gap: 4px; flex: 0 0 auto;
+      font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 999px;
+      border: 1px solid; white-space: nowrap; letter-spacing: -0.005em;
+    }
+    .st.done { color: #067647; background: #ecfdf5; border-color: #b7ebd7; }
+    .st.waiting { color: #8a5a11; background: #fffbeb; border-color: #f2e0b6; }
+    .st.draft { color: #4338ca; background: #eef2ff; border-color: #dcd9ff; }
+    .crow-meta { display: flex; align-items: center; gap: 9px; margin-top: 8px; flex-wrap: wrap; }
+    .pbar { flex: 0 0 104px; height: 5px; border-radius: 999px; background: #eceef2; overflow: hidden; }
+    .pbar i { display: block; height: 100%; border-radius: 999px; background: var(--ok); }
+    .pbar.draft i { background: var(--accent); }
+    .crow-pt { font-size: 10.5px; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .crow-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+    .ch-dot {
+      display: inline-flex; align-items: center; font-size: 10.5px; font-weight: 650; line-height: 1.7;
+      padding: 1px 6px; border-radius: 6px; border: 1px solid var(--border);
+      color: #9aa1ad; background: #fff; text-decoration: none; white-space: nowrap;
+    }
+    .ch-dot.ready { color: var(--text-2); border-style: dashed; border-color: var(--border-strong); }
+    .ch-dot.none { color: #b6bcc6; border-color: #eef0f4; background: var(--surface-2); }
+    .ch-dot.done { color: #fff; border-color: transparent; }
+    .ch-dot[data-ch="naver"].done { background: #03a34a; }
+    .ch-dot[data-ch="google"].done { background: #3b6fd4; }
+    .ch-dot[data-ch="insta"].done { background: #c6326a; }
+    .ch-dot[data-ch="yt"].done { background: #cf1f38; }
+    .ch-dot[data-ch="threads"].done { background: #23262d; }
+    a.ch-dot:hover { filter: brightness(1.08); }
+    .crow-nums { display: flex; gap: 12px; justify-content: flex-end; }
+    .crow-num { font-size: 12.5px; font-weight: 650; color: var(--text-2); font-variant-numeric: tabular-nums; }
+    .crow-num.muted { color: #b0b7c2; font-weight: 500; }
+    .crow-num em { display: none; font-style: normal; }
+    .crow-rev { display: flex; align-items: center; gap: 4px; justify-content: flex-end; }
+    .crow-rev input {
+      width: 74px; text-align: right; padding: 5px 7px; font-size: 12.5px; font-weight: 650;
+      font-variant-numeric: tabular-nums; border-radius: 7px;
+    }
+    .crow-rev span { font-size: 11px; color: var(--muted-2); }
+    .crow-acts { display: flex; gap: 5px; justify-content: flex-end; }
+    .crow-empty { padding: 34px 16px; text-align: center; font-size: 12.5px; color: var(--muted); }
+    .crow-empty .btn-mini { margin-left: 6px; }
+    .rev-cell { display: inline-flex; align-items: center; gap: 4px; justify-content: flex-end; }
+    .rev-cell input { width: 88px; text-align: right; padding: 5px 7px; font-size: 12px; font-variant-numeric: tabular-nums; }
+    .rev-cell span { font-size: 11px; color: var(--muted-2); }
+    .rev-foot {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+      margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border);
+      font-size: 12px; font-weight: 650; color: var(--muted);
+    }
+    .rev-foot #revTotal { font-size: 14px; font-weight: 750; color: var(--text); font-variant-numeric: tabular-nums; }
+
+    /* =========================================================
+       Panel head (compact)
+       ========================================================= */
+    .ph { display: flex; align-items: center; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; margin-bottom: 12px; }
+    .ph h2 { margin: 0; font-size: 14px; font-weight: 750; letter-spacing: -0.02em; }
+    .ph-note { font-size: 11.5px; font-weight: 500; color: var(--muted-2); }
+    .ph-score { font-size: 11.5px; font-weight: 600; color: var(--muted); }
+    .ph-score b { color: var(--text); font-weight: 750; }
+    .ph > .ph-right { margin-left: auto; }
+    .mode-note--line { display: flex; align-items: center; gap: 7px; }
 
     /* =========================================================
        Badges & chips
@@ -381,7 +511,7 @@
     /* =========================================================
        Review checklist (5대 심사 기준)
        ========================================================= */
-    .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); gap: 10px; }
+    .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(204px, 1fr)); gap: 10px; }
     .review-item {
       display: block;
       margin-bottom: 0;
@@ -732,6 +862,8 @@
     .kpi-sub { font-size: 10.5px; color: var(--muted-2); }
     .kpi.accent { border-color: #e0ddff; background: linear-gradient(180deg, #fbfaff, #fff); }
     .kpi.accent .kpi-value { color: var(--accent-text); }
+    .metrics-meta { margin: -4px 2px 12px; font-size: 11px; color: var(--muted-2); font-variant-numeric: tabular-nums; }
+    .metrics-meta b { color: var(--text-2); font-weight: 700; }
     .metrics-form {
       border: 1px solid var(--border); border-radius: var(--radius);
       background: var(--surface-2); padding: 12px;
@@ -864,14 +996,45 @@
     .footer b { color: var(--muted); font-weight: 650; }
 
     /* =========================================================
+       Onboarding tour (스포트라이트)
+       ========================================================= */
+    .tour-layer { position: fixed; inset: 0; z-index: 200; display: none; pointer-events: none; }
+    .tour-layer.open { display: block; }
+    .tour-spot {
+      position: fixed; z-index: 201; display: none; pointer-events: none;
+      border-radius: 12px; border: 2px solid rgba(255, 255, 255, 0.92);
+      box-shadow: 0 0 0 9999px rgba(12, 15, 22, 0.58);
+      transition: left 0.18s ease, top 0.18s ease, width 0.18s ease, height 0.18s ease;
+    }
+    .tour-bubble {
+      position: fixed; z-index: 202; width: 314px; max-width: calc(100vw - 24px);
+      background: #fff; color: var(--text); border-radius: 14px;
+      padding: 15px 16px 13px; pointer-events: auto;
+      box-shadow: 0 22px 48px -16px rgba(10, 14, 25, 0.5), 0 0 0 1px rgba(16, 24, 40, 0.06);
+    }
+    .tour-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .tour-step { font-size: 10.5px; font-weight: 750; letter-spacing: 0.02em; color: var(--accent-text); }
+    .tour-dots { display: flex; gap: 4px; }
+    .tour-dots i { width: 5px; height: 5px; border-radius: 50%; background: #d7dae1; }
+    .tour-dots i.on { background: var(--accent); }
+    .tour-bubble h3 { margin: 7px 0 4px; font-size: 14.5px; font-weight: 750; letter-spacing: -0.02em; }
+    .tour-bubble p { margin: 0; font-size: 12.5px; line-height: 1.6; color: var(--text-2); }
+    .tour-actions { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 13px; }
+    .tour-skip {
+      background: transparent; border: 0; padding: 6px 4px; color: var(--muted);
+      font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit;
+    }
+    .tour-skip:hover { color: var(--text); }
+    .tour-next { padding: 7px 14px; font-size: 12.5px; }
+
+    /* =========================================================
        Responsive
        ========================================================= */
     @media (min-width: 1400px) {
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 1024px) {
-      .overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .navbar-note { display: none; }
+      .dash-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 860px) {
       .appbar { gap: 10px; padding: 0 12px; }
@@ -895,14 +1058,34 @@
       .status { max-width: 42vw; font-size: 10.5px; height: 25px; padding: 0 8px 0 7px; }
       .appbar-spacer { flex: 0 0 0; }
       .appbar-meta { gap: 6px; }
-      .navbar { padding: 7px 10px; }
-      .tabs { width: 100%; }
-      .tab { height: 28px; padding: 0 9px; font-size: 12px; }
+      .tabbar-inner { padding: 0 12px; }
+      .view-head { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .view-head p { font-size: 12px; }
+      .hbadge { white-space: normal; line-height: 1.45; }
+      .tab { height: 44px; padding: 0 9px; font-size: 12.5px; }
       .tab .i { display: none; }
+      .dash-head { flex-direction: column; align-items: stretch; gap: 10px; }
+      .dash-kpis { gap: 8px; }
+      .dkpi { padding: 12px 13px; border-radius: 12px; }
+      .dkpi-v { font-size: 20px; }
+      .nextbar { padding: 11px 12px; gap: 10px; }
+      .nextbar-act { width: 100%; }
+      .nextbar-act button { flex: 1 1 auto; }
+      .ctable-h { display: none; }
+      .crow { grid-template-columns: minmax(0, 1fr); gap: 9px; padding: 13px 14px; }
+      .crow-nums { justify-content: flex-start; }
+      .crow-num em { display: inline; margin-left: 3px; font-size: 10.5px; font-weight: 500; color: var(--muted-2); }
+      .crow-rev, .crow-acts { justify-content: flex-start; }
+      .crow-acts .btn-mini { flex: 0 0 auto; }
+      .data-table { table-layout: fixed; width: 100%; }
+      .data-table th, .data-table td { padding: 8px 7px; font-size: 11.5px; white-space: normal; word-break: normal; overflow-wrap: anywhere; }
+      .data-table th:nth-child(1), .data-table td:nth-child(1) { width: 30%; }
+      #metricsHead th:nth-child(2), #metricsBody td:nth-child(2),
+      #metricsHead th:nth-child(6), #metricsBody td:nth-child(6) { display: none; }
+      #revenuePanel thead th:nth-child(3), #revTableBody td:nth-child(3),
+      #revenuePanel thead th:nth-child(4), #revTableBody td:nth-child(4) { display: none; }
+      .rev-cell input { width: 74px; }
       .row { grid-template-columns: minmax(0, 1fr); gap: 10px; }
-      .overview { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-      .stat { padding: 10px 11px; border-radius: var(--radius-sm); }
-      .stat-value { font-size: 16px; }
       .kw-panel-head { flex-direction: column; align-items: stretch; gap: 8px; }
       .ph-right { justify-content: flex-start; }
       .progress { min-width: 0; flex: 1 1 auto; }
@@ -973,264 +1156,106 @@
     <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13a2 2 0 0 1 1.8 1.1L22 12v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6l1.7-5.9A2 2 0 0 1 5.5 5Z"/></symbol>
   </svg>
 
-  <!-- ── 상단 앱 바 ── -->
   <header class="appbar">
     <div class="brand">
       <span class="brand-mark"><svg class="i i-18" aria-hidden="true"><use href="#i-pen"></use></svg></span>
       <div class="brand-text">
-        <div class="brand-name">원영 콘텐츠 스튜디오 <span class="pro">Pro</span></div>
+        <div class="brand-name">원영 콘텐츠 스튜디오</div>
         <div class="brand-sub">네이버 · 티스토리 · 인스타툰 · 쇼츠 · 스레드</div>
       </div>
     </div>
     <div class="appbar-spacer"></div>
     <div class="appbar-meta">
-      <a class="pill hub-link" href="ai-prompts-hub.html" title="AI별 복사용 프롬프트 허브"><svg class="i i-14" aria-hidden="true"><use href="#i-external"></use></svg>프롬프트 허브</a>
-      <span class="pill review" title="5대 심사 기준 · 법적 안전 자체 검수"><svg class="i i-14" aria-hidden="true"><use href="#i-shield"></use></svg>심사 기준 <b id="reviewScore">0/5</b></span>
-      <span class="pill schedule" title="매일 07:30 · 16:30 작성·자체 검수 → 확인 후 08:00 · 17:00 발행"><svg class="i i-14" aria-hidden="true"><use href="#i-clock"></use></svg>매일 <b>07:30 · 16:30</b> 작성·검수 → <b>08:00 · 17:00</b> 발행</span>
       <span class="status" id="statusText">준비 완료</span>
-      <span class="pill plan">Free</span>
+      <button type="button" class="pill guide" id="tourStartBtn" title="사용 가이드 다시 보기"><span class="guide-q" aria-hidden="true">?</span>가이드</button>
+      <a class="pill hub-link" href="ai-prompts-hub.html" title="AI별 복사용 프롬프트 허브"><svg class="i i-14" aria-hidden="true"><use href="#i-external"></use></svg>프롬프트 허브</a>
     </div>
   </header>
 
-  <!-- ── 섹션 내비게이션 ── -->
-  <nav class="navbar" aria-label="스튜디오 섹션">
-    <div class="navbar-inner">
-      <div class="tabs" id="studioTabs">
-        <button type="button" class="tab active" data-goto="panel-overview"><svg class="i" aria-hidden="true"><use href="#i-layout"></use></svg>워크스페이스</button>
-        <button type="button" class="tab" data-goto="reviewPanel"><svg class="i" aria-hidden="true"><use href="#i-shield"></use></svg>심사 기준</button>
-        <button type="button" class="tab" data-goto="stdPanel"><svg class="i" aria-hidden="true"><use href="#i-book"></use></svg>채널 기준</button>
-        <button type="button" class="tab" data-goto="kwPanel"><svg class="i" aria-hidden="true"><use href="#i-search"></use></svg>키워드</button>
-        <button type="button" class="tab" data-goto="studioPanel"><svg class="i" aria-hidden="true"><use href="#i-sliders"></use></svg>스튜디오</button>
-        <button type="button" class="tab" data-goto="resultsSection"><svg class="i" aria-hidden="true"><use href="#i-layers"></use></svg>5채널 결과</button>
-        <button type="button" class="tab" data-goto="calendarPanel"><svg class="i" aria-hidden="true"><use href="#i-calendar"></use></svg>날짜·예약</button>
-        <button type="button" class="tab" data-goto="metricsPanel"><svg class="i" aria-hidden="true"><use href="#i-chart"></use></svg>성과</button>
-        <button type="button" class="tab" data-goto="picklePanel"><svg class="i" aria-hidden="true"><use href="#i-message"></use></svg>피클 지시</button>
-        <button type="button" class="tab" data-goto="importPanel"><svg class="i" aria-hidden="true"><use href="#i-inbox"></use></svg>JSON</button>
-      </div>
-      <span class="navbar-note">브라우저에만 저장 · 광고·제휴 홀드</span>
+  <!-- ── 화면 탭 (실제 뷰 전환) ── -->
+  <nav class="tabbar" aria-label="주요 화면">
+    <div class="tabbar-inner" id="studioTabs" role="tablist">
+      <button type="button" class="tab active" data-view="dashboard" role="tab" aria-controls="view-dashboard" aria-selected="true"><svg class="i" aria-hidden="true"><use href="#i-layout"></use></svg>대시보드</button>
+      <button type="button" class="tab" data-view="create" role="tab" aria-controls="view-create" aria-selected="false"><svg class="i" aria-hidden="true"><use href="#i-sparkles"></use></svg>새 콘텐츠 제작</button>
+      <button type="button" class="tab" data-view="publish" role="tab" aria-controls="view-publish" aria-selected="false"><svg class="i" aria-hidden="true"><use href="#i-calendar"></use></svg>발행 · 일정</button>
+      <button type="button" class="tab" data-view="performance" role="tab" aria-controls="view-performance" aria-selected="false"><svg class="i" aria-hidden="true"><use href="#i-chart"></use></svg>성과 · 수익</button>
+      <button type="button" class="tab" data-view="settings" role="tab" aria-controls="view-settings" aria-selected="false"><svg class="i" aria-hidden="true"><use href="#i-sliders"></use></svg>기준 · 설정</button>
     </div>
   </nav>
 
-  <div class="wrap" id="panel-overview">
+  <main class="wrap" id="appMain">
 
-    <!-- ── 워크스페이스 요약 ── -->
-    <div class="overview">
-      <div class="stat">
-        <div class="stat-top"><svg class="i" aria-hidden="true"><use href="#i-calendar"></use></svg>오늘 초안</div>
-        <div class="stat-value" id="statToday">0<small>/5</small></div>
-        <div class="stat-sub" id="statTodaySub">아직 기록 없음</div>
-      </div>
-      <div class="stat accent">
-        <div class="stat-top"><svg class="i" aria-hidden="true"><use href="#i-clock"></use></svg>다음 발행</div>
-        <div class="stat-value" id="statNext">08:00</div>
-        <div class="stat-sub">확인 후 발행 · 하루 2회</div>
-      </div>
-      <div class="stat">
-        <div class="stat-top"><svg class="i" aria-hidden="true"><use href="#i-trending"></use></svg>평균 SEO</div>
-        <div class="stat-value" id="statSeo">—</div>
-        <div class="stat-sub">네이버 · 티스토리 자동 점검</div>
-      </div>
-      <div class="stat">
-        <div class="stat-top"><svg class="i" aria-hidden="true"><use href="#i-layers"></use></svg>기록</div>
-        <div class="stat-value" id="statPosts">0<small>일</small></div>
-        <div class="stat-sub" id="statPostsSub">임시저장 0 · 예약 0</div>
-      </div>
-    </div>
-
-    <!-- ── 5대 심사 기준 · 법적 안전 자체 검수 ── -->
-    <section class="panel" id="reviewPanel">
-      <div class="kw-panel-head">
-        <div class="ph-left">
-          <span class="p-icon"><svg class="i" aria-hidden="true"><use href="#i-shield"></use></svg></span>
-          <div class="ph-title">
-            <h2>5대 심사 기준 · 법적 안전 자체 검수</h2>
-            <span class="hint">발행 전 다섯 관문을 모두 통과해야 합니다. 체크 상태는 이 브라우저에 저장되고, 상단 배지가 함께 갱신됩니다.</span>
-          </div>
-        </div>
-        <div class="ph-right">
-          <div class="progress" title="자체 검수 진행률">
-            <div class="progress-track"><div class="progress-fill" id="reviewFill"></div></div>
-            <span class="progress-text" id="reviewText">0 / 5</span>
-          </div>
+    <!-- ══════════ 대시보드 ══════════ -->
+    <section class="view active" id="view-dashboard" data-view="dashboard">
+      <div class="dash-head">
+        <div>
+          <h1>대시보드</h1>
+          <p class="dash-sub" id="dashToday">불러오는 중…</p>
         </div>
       </div>
-      <div class="review-grid" id="reviewGrid">
-        <label class="review-item" data-review="adsense">
-          <input type="checkbox" data-review-box="adsense" />
-          <span class="review-head">
-            <span class="review-check"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg></span>
-            <span>
-              <span class="review-en">Google AdSense Approval</span>
-              <span class="review-ko">고유 콘텐츠 10~15편 · 개인정보처리방침·소개·문의 페이지 · 금지 콘텐츠 0건</span>
-            </span>
-          </span>
-          <span class="review-tag"><svg class="i" aria-hidden="true"><use href="#i-check-circle"></use></svg>애드센스 승인 요건</span>
-        </label>
-        <label class="review-item" data-review="seo">
-          <input type="checkbox" data-review-box="seo" />
-          <span class="review-head">
-            <span class="review-check"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg></span>
-            <span>
-              <span class="review-en">SEO Audit</span>
-              <span class="review-ko">제목 25~38자 · 키워드 앞배치 · H2/H3 · 키워드 3~6회 · Alt·태그</span>
-            </span>
-          </span>
-          <span class="review-tag"><svg class="i" aria-hidden="true"><use href="#i-trending"></use></svg>SEO 100점 점검</span>
-        </label>
-        <label class="review-item" data-review="quality">
-          <input type="checkbox" data-review-box="quality" />
-          <span class="review-head">
-            <span class="review-check"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg></span>
-            <span>
-              <span class="review-en">Content Quality Assessment</span>
-              <span class="review-ko">AI 티 제거 · 1인칭 장면·숫자 · 금지 상투어 0회 · 두 블로그 문장 중복 없음</span>
-            </span>
-          </span>
-          <span class="review-tag"><svg class="i" aria-hidden="true"><use href="#i-type"></use></svg>콘텐츠 품질</span>
-        </label>
-        <label class="review-item" data-review="compliance">
-          <input type="checkbox" data-review-box="compliance" />
-          <span class="review-head">
-            <span class="review-check"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg></span>
-            <span>
-              <span class="review-en">Website Compliance Review</span>
-              <span class="review-ko">광고·제휴 링크 0개 · 공정위 고지 홀드 · 인용 출처 표기 · 저작권 안전</span>
-            </span>
-          </span>
-          <span class="review-tag"><svg class="i" aria-hidden="true"><use href="#i-shield"></use></svg>법적 안전</span>
-        </label>
-        <label class="review-item" data-review="publisher">
-          <input type="checkbox" data-review-box="publisher" />
-          <span class="review-head">
-            <span class="review-check"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg></span>
-            <span>
-              <span class="review-en">Publisher Eligibility Review</span>
-              <span class="review-ko">발행 이력 · 계정 상태 정상 · 플랫폼 정책 위반 0건 · 수익화 신청 자격 확인</span>
-            </span>
-          </span>
-          <span class="review-tag"><svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>게시자 자격</span>
-        </label>
+
+      <div class="dash-kpis">
+        <div class="dkpi">
+          <div class="dkpi-k">총 콘텐츠</div>
+          <div class="dkpi-v" id="dashCount">0<small>건</small></div>
+          <div class="dkpi-s" id="dashCountSub">발행 완료 0건</div>
+        </div>
+        <div class="dkpi">
+          <div class="dkpi-k">평균 진행률</div>
+          <div class="dkpi-v" id="dashProgress">0<small>%</small></div>
+          <div class="dkpi-s" id="dashProgressSub">채널 0/0</div>
+        </div>
+        <div class="dkpi">
+          <div class="dkpi-k">총 조회 · 방문</div>
+          <div class="dkpi-v" id="dashViews">0</div>
+          <div class="dkpi-s" id="dashViewsSub">방문 0</div>
+        </div>
+        <div class="dkpi primary">
+          <div class="dkpi-k">총 수익</div>
+          <div class="dkpi-v" id="dashRevenue">0<small>원</small></div>
+          <div class="dkpi-s" id="dashRevenueSub">콘텐츠별 수익 합계</div>
+        </div>
+      </div>
+
+      <div class="nextbar">
+        <div class="nextbar-main">
+          <span class="nextbar-k">다음 할 일</span>
+          <span class="nextbar-v" id="dashNext">—</span>
+        </div>
+        <div class="nextbar-act">
+          <button type="button" class="btn-outline" data-goto-view="publish">발행 · 일정</button>
+          <button type="button" class="btn-primary" data-goto-view="create">+ 새 콘텐츠 만들기</button>
+        </div>
+      </div>
+
+      <div class="dash-sec">
+        <h2>콘텐츠 목록</h2>
+        <span class="dash-count" id="dashListCount">0건</span>
+      </div>
+      <div class="ctable" data-tour="list">
+        <div class="ctable-h">
+          <span>콘텐츠</span>
+          <span>조회 · 방문</span>
+          <span>수익</span>
+          <span>관리</span>
+        </div>
+        <div id="dashList"></div>
       </div>
     </section>
 
-    <!-- ── 운용 모드 · 채널 계정 ── -->
-    <section class="panel" id="workspacePanel">
-      <div class="kw-panel-head">
-        <div class="ph-left">
-          <span class="p-icon"><svg class="i" aria-hidden="true"><use href="#i-workflow"></use></svg></span>
-          <div class="ph-title">
-            <h2>운용 모드 · 채널 계정</h2>
-            <span class="hint">지금은 승인 전 순수 콘텐츠 모드입니다. 광고·제휴·고지는 승인·안정권 진입 후에만 켭니다.</span>
-          </div>
-        </div>
-        <div class="ph-right">
-          <span class="mode-badge"><svg class="i" aria-hidden="true"><use href="#i-check-circle"></use></svg>현재 적용 중 — 순수 콘텐츠</span>
-          <span class="mode-badge hold"><svg class="i" aria-hidden="true"><use href="#i-pause"></use></svg>승인·안정권 후 적용 (현재 홀드)</span>
+    <!-- ══════════ 새 콘텐츠 제작 ══════════ -->
+    <section class="view" id="view-create" data-view="create">
+      <div class="view-head">
+        <div>
+          <h1>새 콘텐츠 제작</h1>
+          <p>주제 하나로 5채널 초안과 채널 규격 이미지를 만듭니다.</p>
         </div>
       </div>
-      <div class="hbadges">
-        <span class="hbadge">네이버 <b>savejeong</b></span>
-        <span class="hbadge">티스토리 <b>10년 후의 나를 위해</b></span>
-        <span class="hbadge">인스타 <b>save_jeong</b></span>
-        <span class="hbadge">유튜브 <b>세픽</b></span>
-        <span class="hbadge">스레드 <b>@savejeong.pick</b> · 반말</span>
-        <span class="hbadge"><svg class="i" aria-hidden="true"><use href="#i-clock"></use></svg>매일 <b>07:30 · 16:30</b> 작성·자체 검수 → 확인 후 <b>08:00 · 17:00</b> 발행</span>
-        <span class="hbadge hold"><svg class="i" aria-hidden="true"><use href="#i-pause"></use></svg>쿠팡 파트너스 <b>AF3753560</b> — 승인 후 (현재 미사용)</span>
-      </div>
-    </section>
-
-    <details class="panel" id="stdPanel">
-      <summary><svg class="i" aria-hidden="true"><use href="#i-pin"></use></svg>5채널 최신 기준<span class="std-tag" style="margin-left:2px;">2026-11-27 09:30 반영 · 펼쳐서 확인</span></summary>
-      <div class="active-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>현재 적용 중 — 승인 전 순수 콘텐츠 모드</b> · 광고·제휴 링크·상품 링크·고지 문구는 넣지 않습니다. 아래 카드 중 <b><svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 홀드</b> 표시가 붙은 항목은 각 플랫폼이 승인·안정권에 들어간 뒤에만 켭니다.</div>
-      <div class="std-grid" style="margin-top:12px;">
-
-        <div class="std-card">
-          <div class="std-tag">공통 뼈대 · 예스24 크레마클럽 내서재 33권</div>
-          <h3>모든 채널은 이 4단으로 쓴다</h3>
-          <div class="std-flow"><span>3초 훅</span><i>→</i><span>문제 공감</span><i>→</i><span>해결책</span><i>→</i><span>댓글·행동 유도(CTA)</span></div>
-          <ul>
-            <li>훅은 문장이 아니라 <b>구조</b> — 3초 안에 기대·이득·난이도를 판정시킨다.</li>
-            <li>한 편에 <b>메시지 하나</b>. 조회수(확산)와 저장·클릭(전달)은 목표를 나눠 잰다.</li>
-            <li>블로그 제목·스레드 첫 줄·카드뉴스 표지에 같은 판정 구조를 이식한다.</li>
-            <li>AI 티 제거: <code>~알아보겠습니다</code>·<code>결론적으로</code>·<code>다양한</code> 금지, 날짜·숫자·장면으로 말한다.</li>
-          </ul>
-        </div>
-
-        <div class="std-card">
-          <div class="std-tag">스레드 · @savejeong.pick 실제 올라간 글 기준 (2026-11-27 09:20 확인)</div>
-          <h3>반말 일상 잡담 1~2줄 + 이어지는 답글 1~2개</h3>
-          <ul>
-            <li>전부 <b>반말</b> — <code>~습니다 / ~해요</code> 금지. 마침표는 거의 안 찍고 <b>?·!</b>로 끝맺음.</li>
-            <li>한 글 <b>1~2줄 · 30~100자</b>. <code>ㅋㅋㅋ</code>를 섞고, 이모지는 <b>0~1개를 맨 끝에만</b>.</li>
-            <li>마지막은 <b>질문형 댓글 유도</b> — <code>~있어?</code> <code>~있나?</code> <code>남겨줘</code>.</li>
-            <li>스레드 생활어를 자연스럽게 1개까지: <code>스친</code> <code>스하리</code> <code>반하리</code> <code>맞팔</code> <code>같이 크자</code>.</li>
-            <li><b>불릿(▪️✔️)·번호(1/3)·블로그식 CTA("저장해두고 열어보세요") 없음</b> — 본문 1개 + 이어지는 답글 1~2개.</li>
-          </ul>
-        </div>
-
-        <div class="std-card">
-          <div class="std-tag">유튜브 쇼핑 쇼츠 · 세픽 · 참고 영상 FdVnd0AFge8 · 상품 제휴 매칭은 <svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후</div>
-          <h3>20초 = 5블록, 자막은 시간대별로</h3>
-          <ul>
-            <li><b>루틴 5단계</b>: 급상승·일상 소재 발굴 → 20초 3초훅 대본 → 씬별 소스 → AI 편집 + 휴먼 터치 → 멀티 배포(릴스·틱톡)</li>
-            <li><b>0~3초</b> 3초 훅 → <b>3~8초</b> 문제 공감 → <b>8~15초</b> 상품 1개가 해결(전→후) → <b>15~20초</b> 댓글 유도 자막 <code>댓글에 OO 남겨주세요</code></li>
-            <li>씬마다 소스 지정(직촬·제품 컷·화면 캡처) + 자막은 <b>코드블록</b>으로 분리해 편집기에 바로 붙인다.</li>
-            <li>상품은 <b>1개만 확정</b>, 대본에 제품명 1회. 링크는 고정댓글·설명란에만.</li>
-            <li>승인 전에는 링크·고지 없이 <b>정보 전달용 쇼츠</b>로만. 상품은 “직접 써본 물건” 정도로 담백하게 소개한다.</li>
-          </ul>
-        </div>
-
-        <div class="std-card">
-          <div class="std-tag">인스타 카툰 · save_jeong</div>
-          <h3>블로그 글 → 손그림 인스타툰 4컷</h3>
-          <ul>
-            <li>네이버 블로그 원고의 <b>사건·숫자를 4컷으로 각색</b>. 새 이야기를 만들지 않는다.</li>
-            <li>AI 티 제거: 수채화 파스텔·연필 선·삐뚤빼뚤 말풍선. 얼굴 클로즈업·과한 그라데이션·3D 렌더 금지.</li>
-            <li>컷마다 <b>대사 · 장면 · 이미지 생성용 영어 프롬프트</b>, 마지막에 캡션 + 해시태그 10개.</li>
-            <li>스튜디오에서 <b>인스타 포맷 → 인스타툰 4컷</b>을 고르면 4컷 미리보기 PNG까지 나온다.</li>
-          </ul>
-        </div>
-
-        <div class="std-card">
-          <div class="std-tag">블로그 2종 · 3개 AI 비교 테스트(ChatGPT·Gemini·Claude) 보강</div>
-          <h3>소재를 고정하고, 두 블로그는 재료부터 나눈다</h3>
-          <ul>
-            <li><b>소재·맥락 고정</b>: 주제를 재정의하거나 딴 주제로 새지 않게. 실제 생활 맥락(직장인·아빠·초보 도전기)과 실제 숫자만 사용, 새 수치 창작 금지.</li>
-            <li><b>네이버 ~1,500자</b>(1,450~1,600) 경험·공감형: 한 사건을 1인칭으로. 표·체크리스트 금지.</li>
-            <li><b>티스토리 ~1,800자</b>(1,700~1,950) 정보형: 30일 실행 표 + 체크리스트 + FAQ. 감정 서사 금지.</li>
-            <li>두 글에 <b>같은 표·같은 문장·같은 소제목 금지</b>(중복 문서 회피).</li>
-            <li>저장 전 자체 점검: 글자수 · 해시태그 10개 · 메타 디스크립션 · CTA · <b>광고·제휴 링크 0개</b> · 금지어 0회.</li>
-          </ul>
-        </div>
-
-        <div class="hold-section-head"><svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인·안정권 진입 후 적용 (현재 홀드) — 지금은 쓰지 않습니다. 아래 항목은 각 플랫폼이 승인·안정권에 들어간 뒤에만 켭니다.</div>
-
-        <div class="std-card hold">
-          <div class="std-tag"><svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 홀드 · 제휴 · 광고 (공정위·플랫폼 규정)</div>
-          <h3>승인 후에만 붙이는 항목</h3>
-          <ul>
-            <li><b>쿠팡 파트너스 AF3753560</b> — 제휴 링크와 쇼츠 고정댓글 링크. 현재 미사용.</li>
-            <li><b>공정위 제휴 고지 3종</b> — 쿠팡 파트너스 / 네이버·티스토리 말미 / 인스타 캡션. 승인 후 링크를 넣을 때만 함께 넣습니다.</li>
-            <li><b>애드센스 · 애드포스트 수익화 배치</b> — 광고 코드 삽입과 수익 링크 정리는 승인 후.</li>
-            <li><b>스레드 제휴 댓글</b> “너무 많이 물어봐서 아래 링크 달게” — 승인 후, 링크가 있을 때만.</li>
-          </ul>
-          <div class="notice-box"><svg class="i i-14" aria-hidden="true"><use href="#i-clock"></use></svg> <b>매일 07:30 · 16:30 규칙</b> — 5채널 초안·이미지와 자체 검수를 여기서 만들고, <b>업로드는 원영님 확인 후 08:00 · 17:00</b>에만 진행합니다. 승인 전에는 광고·제휴 요소를 빼고 올립니다.</div>
-          <div class="std-actions"><button class="btn-mini" onclick="copyNotices()"><svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후 사용할 고지 문구 3종 복사 (보관용)</button></div>
-        </div>
-
-      </div>
-    </details>
 
     <section class="panel" id="kwPanel">
-      <div class="kw-panel-head">
-        <div class="ph-left">
-          <span class="p-icon"><svg class="i" aria-hidden="true"><use href="#i-search"></use></svg></span>
-          <div class="ph-title">
-            <h2>상위 노출 키워드 발굴</h2>
-            <span class="hint">씨앗 키워드 하나로 롱테일·검색의도별 조합 → 경쟁도·검색량 확인 링크 → 바로 글쓰기까지</span>
-          </div>
-        </div>
-        <div class="ph-right"><span class="hbadge">네이버 · 티스토리 경쟁도 링크</span></div>
+      <div class="ph">
+        <h2>키워드 발굴</h2>
+        <span class="ph-note">씨앗 키워드 → 검색 의도별 조합 → 글쓰기</span>
       </div>
       <div class="kw-row">
         <input type="text" id="seedKeyword" placeholder="씨앗 키워드 (예: SNS 수익화, 연말정산, 통장 쪼개기, 소액 투자)" />
@@ -1241,19 +1266,9 @@
     </section>
 
     <section class="panel" id="studioPanel">
-      <div class="kw-panel-head">
-        <div class="ph-left">
-          <span class="p-icon"><svg class="i" aria-hidden="true"><use href="#i-sliders"></use></svg></span>
-          <div class="ph-title">
-            <h2>스튜디오 입력</h2>
-            <span class="hint">주제·톤·포맷을 정하면 5개 채널 초안과 플랫폼 규격 이미지가 한 번에 만들어집니다.</span>
-          </div>
-        </div>
-        <div class="ph-right">
-          <span class="hbadge">5채널 동시 생성</span>
-          <span class="hbadge">SEO 실시간 점검</span>
-          <span class="hbadge">광고·제휴 없음</span>
-        </div>
+      <div class="ph">
+        <h2>주제와 설정</h2>
+        <span class="ph-note">5채널 동시 생성 · SEO 실시간 점검</span>
       </div>
       <div class="row">
         <div>
@@ -1273,7 +1288,7 @@
           </select>
         </div>
         <div>
-          <label for="aiEngine">실행 엔진 (API 키 입력 시 바로 생성)</label>
+          <label for="aiEngine">실행 엔진</label>
           <select id="aiEngine">
             <option value="template">API 없이 통합 프롬프트 & 구조 초안 생성</option>
             <option value="openai">OpenAI (ChatGPT API)</option>
@@ -1282,11 +1297,11 @@
           </select>
         </div>
         <div>
-          <label for="keyline">썸네일 보조 문구 (선택)</label>
+          <label for="keyline">썸네일 문구 <span class="lb-opt">선택</span></label>
           <input type="text" id="keyline" placeholder="예: 3년 해보고 남은 결론" />
         </div>
         <div>
-          <label for="targetKeyword">타깃 키워드 (SEO 점검 기준)</label>
+          <label for="targetKeyword">타깃 키워드</label>
           <input type="text" id="targetKeyword" placeholder="예: 통장 쪼개기" />
         </div>
         <div>
@@ -1309,15 +1324,14 @@
 
       <div class="row">
         <div style="grid-column: 1 / -1;">
-          <label for="context"><svg class="i i-14" aria-hidden="true"><use href="#i-paperclip"></use></svg> 실제 소재·맥락 고정 (주제가 딴 데로 새지 않게 — 비교 테스트 보강)</label>
-          <textarea id="context" style="min-height:62px;" placeholder="예: 11/24 생일 다음날 밤 11시 시작 / 첫 글 조회 41회 / 첫 영상 87회 / 링크 클릭 7회, 수익 210원 / 인스타 카툰은 접음 — 숫자는 이 값만 쓰고 새로 만들지 않기"></textarea>
-          <div class="std-tag" style="margin-top:5px;">사건·숫자·감정을 그대로 적으면 세 AI도 일반론으로 새지 않습니다. 비워두면 각 원고가 [대괄호] 자리로 나옵니다.</div>
+          <label for="context"><svg class="i i-14" aria-hidden="true"><use href="#i-paperclip"></use></svg> 실제 소재·숫자 <span class="lb-opt">선택</span></label>
+          <textarea id="context" style="min-height:62px;" placeholder="예: 11/24 밤 11시 시작 / 첫 글 조회 41회 / 링크 클릭 7회, 수익 210원 — 숫자는 이 값만 쓰기"></textarea>
         </div>
       </div>
 
       <div class="row">
         <div>
-          <label for="productKw"><svg class="i i-14" aria-hidden="true"><use href="#i-cart"></use></svg> 쇼츠 상품 후보 (제휴 없이 소개만 · 1개) — 제휴 매칭은 <svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후</label>
+          <label for="productKw"><svg class="i i-14" aria-hidden="true"><use href="#i-cart"></use></svg> 쇼츠 상품 후보 <span class="lb-opt">선택</span></label>
           <input type="text" id="productKw" placeholder="예: 무선 미니 키보드 (상품 1개만 확정)" />
         </div>
         <div>
@@ -1330,16 +1344,12 @@
       </div>
 
       <div>
-        <label for="topic">오늘의 주제 또는 메모 (예: "월급날 통장 쪼개기 실패한 썰", "소액으로 3일 단타 실험해 본 후기")</label>
+        <label for="topic">오늘의 주제</label>
         <textarea id="topic" placeholder="주제나 겪은 일, 전하고 싶은 핵심 메시지 한두 줄을 적어주세요. 입력하면 아래 5개 카드의 이미지도 실시간으로 바뀝니다."></textarea>
       </div>
 
-      <div class="mode-note" style="margin-top:10px;">
-        <svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>승인 대비 콘텐츠 모드 ON</b> — 블로그 원고는 처음부터 승인 가능한 형태로 나오고, <b>광고·제휴 요소는 넣지 않습니다</b>(승인 후 적용).
-        <b>티스토리(애드센스)</b>: 공백 제외 1,700~1,950자 · H2/H3 계층 · 30일 실행 표 · 체크리스트 · FAQ · 자체 제작 이미지+Alt &nbsp;|&nbsp;
-        <b>네이버(애드포스트)</b>: 1,450~1,600자 · 경험+정보 결합 · 태그 5~8개 · 표/체크리스트 없이 · 상업성 표현·외부 수익 링크 자제
-        <br><svg class="i i-14" aria-hidden="true"><use href="#i-pen"></use></svg> <b>AI 티 제거</b>: “~에 대해 알아보겠습니다 / ~하는 것이 중요합니다 / 결론적으로 / 첫째·둘째·셋째” 같은 상투어 없이, 인기 블로거의 실제 호흡으로 씁니다. “~더라고요 / ~거든요 / ~죠”를 자연스럽게 섞습니다.
-        <br><svg class="i i-14" aria-hidden="true"><use href="#i-layout"></use></svg> <b>공통 뼈대</b>: 3초 훅 → 문제 공감 → 해결책 → 댓글·행동 유도(CTA). 스레드는 <b>반말 일상 잡담 1~2줄 + 답글 1~2개</b>, 쇼츠는 20초 5블록, 인스타는 4컷 인스타툰까지.
+      <div class="mode-note mode-note--line" style="margin-top:10px;">
+        <svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>승인 전 순수 콘텐츠 모드</b> — 광고·제휴 없이 5채널 초안만 만듭니다.
       </div>
 
       <details>
@@ -1439,7 +1449,7 @@
       <!-- 3. 인스타그램 -->
       <div class="ch-card" data-ch="insta">
         <div class="ch-head">
-          <span class="badge b-insta">인스타 카툰 · save_jeong</span>
+          <span class="badge b-insta">인스타 카툰 · @savejeong.pick</span>
           <button class="btn-mini" onclick="copyText('outInsta')">복사</button>
         </div>
         <div class="hook-bar">
@@ -1560,16 +1570,21 @@
       </div>
     </section>
 
-    <section class="panel" id="calendarPanel">
-      <div class="kw-panel-head">
-        <div class="ph-left">
-          <span class="p-icon"><svg class="i" aria-hidden="true"><use href="#i-calendar"></use></svg></span>
-          <div class="ph-title">
-            <h2>날짜별 글 리스트 · 임시저장 · 예약 발송</h2>
-            <span class="hint">날짜를 골라 임시저장 → 예약 발송 설정. 기록은 이 브라우저(localStorage)에만 남습니다.</span>
-          </div>
+    </section>
+
+    <!-- ══════════ 발행 · 일정 ══════════ -->
+    <section class="view" id="view-publish" data-view="publish">
+      <div class="view-head">
+        <div>
+          <h1>발행 · 일정</h1>
+          <p>날짜별 초안을 확인하고 예약·발행 상태를 관리합니다.</p>
         </div>
-        <div class="ph-right"><span class="hbadge"><svg class="i i-14" aria-hidden="true"><use href="#i-clock"></use></svg> 08:00 · 17:00 발행</span></div>
+      </div>
+
+    <section class="panel" id="calendarPanel">
+      <div class="ph">
+        <h2>일정 · 상태</h2>
+        <span class="ph-note">08:00 · 17:00 확인 후 발행</span>
       </div>
       <div class="row" style="margin-top:12px;">
         <div>
@@ -1597,7 +1612,7 @@
         <button class="btn-outline" onclick="copyScheduleRequest()"><svg class="i i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 피클 예약 발송 요청 복사</button>
         <button class="btn-outline" onclick="deletePostByDate()"><svg class="i i-14" aria-hidden="true"><use href="#i-trash"></use></svg> 이 날짜 기록 삭제</button>
       </div>
-      <div class="post-hint"><svg class="i i-14" aria-hidden="true"><use href="#i-info"></use></svg> 이 HTML은 브라우저에서 혼자 도는 파일이라 <b>실제 자동 발행은 되지 않습니다.</b> 예약을 잡은 뒤 <b><svg class="i i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 피클 예약 발송 요청 복사</b>로 요청문을 복사해 피클에게 보내면, 피클이 그 일정으로 발행 예약을 등록합니다.</div>
+      <div class="post-hint"><svg class="i i-14" aria-hidden="true"><use href="#i-info"></use></svg> 실제 발행은 피클이 합니다. 예약을 잡고 <b>피클 예약 발송 요청 복사</b>를 눌러 피클 채팅에 붙여 보내세요.</div>
       <details style="margin-top:8px;">
         <summary style="font-size:12px;color:var(--muted);cursor:pointer;"><svg class="i i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 복사한 예약 요청문 보기 (복사가 안 될 때 여기서 직접 복사)</summary>
         <textarea id="scheduleRequest" style="margin-top:8px;min-height:86px;font-size:12px;" readonly></textarea>
@@ -1605,22 +1620,80 @@
       <div id="postList" class="post-list"></div>
     </section>
 
-    <section class="panel" id="metricsPanel">
-      <div class="kw-panel-head">
-        <div class="ph-left">
-          <span class="p-icon"><svg class="i" aria-hidden="true"><use href="#i-chart"></use></svg></span>
-          <div class="ph-title">
-            <h2>성과 · 트래픽 관리</h2>
-            <span class="hint">발행한 글의 조회수·방문수·반응을 기록하면 일자별 · 주차별 · 월별 · 연도별로 자동 합산됩니다.</span>
-          </div>
+    <section class="panel" id="picklePanel">
+      <div class="ph">
+        <h2>피클 지시</h2>
+        <span class="ph-note">복사해서 피클 채팅에 붙여 보내면 실행됩니다</span>
+      </div>
+      <div class="pickle-tags" id="pickleTags"></div>
+      <div class="row">
+        <div style="grid-column: 1 / -1;">
+          <label for="pickleInput">피클에게 할 말 (수정 · 발행 · 예약 · 말투 변경)</label>
+          <textarea id="pickleInput" style="min-height:70px;" placeholder="예: 2026-11-28 초안에서 스레드만 반말 톤으로 다시 뽑고, 나머지는 이대로 예약 발송 준비해줘"></textarea>
         </div>
-        <div class="ph-right">
-          <div class="seg" id="metricsView" role="tablist" aria-label="집계 단위">
-            <button type="button" class="seg-btn active" data-period="day">일자별</button>
-            <button type="button" class="seg-btn" data-period="week">주차별</button>
-            <button type="button" class="seg-btn" data-period="month">월별</button>
-            <button type="button" class="seg-btn" data-period="year">연도별</button>
-          </div>
+        <div>
+          <label for="pickleDate">연결할 날짜</label>
+          <input type="date" id="pickleDate" />
+        </div>
+        <div>
+          <label for="pickleChannel">연결할 채널</label>
+          <select id="pickleChannel">
+            <option value="">전체 (5채널)</option>
+            <option value="naver">네이버 블로그</option>
+            <option value="google">티스토리</option>
+            <option value="insta">인스타 카툰</option>
+            <option value="yt">유튜브 쇼츠</option>
+            <option value="threads">스레드</option>
+          </select>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:0;">
+        <button class="btn-primary" onclick="addPickleNote()"><svg class="i i-14" aria-hidden="true"><use href="#i-message"></use></svg> 기록 & 복사</button>
+        <button class="btn-outline" onclick="copyPickleMessage()"><svg class="i i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 피클에게 보낼 메시지 복사</button>
+        <button class="btn-outline" onclick="clearPickleNotes()"><svg class="i i-14" aria-hidden="true"><use href="#i-sparkles"></use></svg> 히스토리 비우기</button>
+      </div>
+      <div class="post-hint"><svg class="i i-14" aria-hidden="true"><use href="#i-info"></use></svg> 지시 기록은 이 브라우저에 남습니다. 복사한 문장을 피클 채팅에 붙여 보내면 그대로 실행됩니다.</div>
+      <details style="margin-top:8px;">
+        <summary style="font-size:12px;color:var(--muted);cursor:pointer;"><svg class="i i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 복사한 메시지 보기 (복사가 안 될 때 여기서 직접 복사)</summary>
+        <textarea id="pickleCopyBox" style="margin-top:8px;min-height:80px;font-size:12px;" readonly></textarea>
+      </details>
+      <div id="pickleHistory" class="pickle-history"></div>
+    </section>
+
+    <details class="panel" id="importPanel">
+      <summary><svg class="i" aria-hidden="true"><use href="#i-inbox"></use></svg>초안 가져오기 (JSON)</summary>
+      <div class="row" style="margin-top:12px;">
+        <div style="grid-column: 1 / -1;">
+          <label for="importJson">5채널 초안 JSON</label>
+          <textarea id="importJson" style="min-height:110px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:12px;" placeholder='{&quot;date&quot;:&quot;2026-11-28&quot;,&quot;topic&quot;:&quot;주제&quot;,&quot;status&quot;:&quot;임시저장&quot;,&quot;drafts&quot;:{&quot;naver&quot;:&quot;...&quot;,&quot;google&quot;:&quot;...&quot;,&quot;insta&quot;:&quot;...&quot;,&quot;yt&quot;:&quot;...&quot;,&quot;threads&quot;:&quot;...&quot;}}'></textarea>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:0;">
+        <button class="btn-primary" onclick="importDraftJson()"><svg class="i i-14" aria-hidden="true"><use href="#i-download"></use></svg> 불러와서 리스트에 추가</button>
+        <button class="btn-outline" onclick="fillImportSample()">예시 형식 채우기</button>
+      </div>
+      <div id="importResult" class="import-result"></div>
+    </details>
+
+    </section>
+
+    <!-- ══════════ 성과 · 수익 ══════════ -->
+    <section class="view" id="view-performance" data-view="performance">
+      <div class="view-head">
+        <div>
+          <h1>성과 · 수익</h1>
+          <p>조회·방문·반응과 콘텐츠별 수익을 한곳에서 기록합니다.</p>
+        </div>
+      </div>
+
+    <section class="panel" id="metricsPanel">
+      <div class="ph">
+        <h2>트래픽 기록</h2>
+        <div class="seg" id="metricsView" role="tablist" aria-label="집계 단위">
+          <button type="button" class="seg-btn active" data-period="day">일자별</button>
+          <button type="button" class="seg-btn" data-period="week">주차별</button>
+          <button type="button" class="seg-btn" data-period="month">월별</button>
+          <button type="button" class="seg-btn" data-period="year">연도별</button>
         </div>
       </div>
 
@@ -1636,15 +1709,18 @@
           <div class="kpi-sub" id="kpiVisitsSub">조회 대비 0%</div>
         </div>
         <div class="kpi">
-          <div class="kpi-top"><svg class="i" aria-hidden="true"><use href="#i-layers"></use></svg>발행 건수</div>
-          <div class="kpi-value" id="kpiPosts">0</div>
-          <div class="kpi-sub" id="kpiPostsSub">기록 0건</div>
-        </div>
-        <div class="kpi accent">
           <div class="kpi-top"><svg class="i" aria-hidden="true"><use href="#i-message"></use></svg>총 반응</div>
           <div class="kpi-value" id="kpiReactions">0</div>
           <div class="kpi-sub" id="kpiReactionsSub">글당 평균 0</div>
         </div>
+        <div class="kpi accent">
+          <div class="kpi-top"><svg class="i" aria-hidden="true"><use href="#i-cart"></use></svg>총 수익</div>
+          <div class="kpi-value" id="kpiRevenue">0원</div>
+          <div class="kpi-sub" id="kpiRevenueSub">콘텐츠별 수익 합계</div>
+        </div>
+      </div>
+      <div class="metrics-meta">
+        기록 <b id="kpiPosts">0</b>건 · <span id="kpiPostsSub">기록 0건</span>
       </div>
 
       <div class="metrics-form">
@@ -1705,73 +1781,208 @@
       </div>
     </section>
 
-    <section class="panel" id="picklePanel">
-      <div class="kw-panel-head">
-        <div class="ph-left">
-          <span class="p-icon"><svg class="i" aria-hidden="true"><use href="#i-message"></use></svg></span>
-          <div class="ph-title">
-            <h2>피클 지시 입력창 · 히스토리</h2>
-            <span class="hint">하고 싶은 말을 적고 <b>기록 &amp; 복사</b> → <b>피클에게 보낼 메시지 복사</b>로 붙여 보내면 피클이 실행합니다.</span>
-          </div>
+      <section class="panel" id="revenuePanel">
+        <div class="ph">
+          <h2>콘텐츠별 수익</h2>
+          <span class="ph-note" id="revCount">콘텐츠 0건</span>
         </div>
-      </div>
-      <div class="pickle-tags" id="pickleTags"></div>
-      <div class="row">
-        <div style="grid-column: 1 / -1;">
-          <label for="pickleInput">피클에게 할 말 (수정 · 발행 · 예약 · 말투 변경)</label>
-          <textarea id="pickleInput" style="min-height:70px;" placeholder="예: 2026-11-28 초안에서 스레드만 반말 톤으로 다시 뽑고, 나머지는 이대로 예약 발송 준비해줘"></textarea>
+        <div class="metrics-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>날짜</th><th>콘텐츠</th><th>조회</th><th>방문</th><th>수익 (원)</th></tr>
+            </thead>
+            <tbody id="revTableBody"></tbody>
+          </table>
         </div>
-        <div>
-          <label for="pickleDate">연결할 날짜</label>
-          <input type="date" id="pickleDate" />
+        <div class="rev-foot">
+          <span>합계</span>
+          <span id="revTotal">0원</span>
         </div>
-        <div>
-          <label for="pickleChannel">연결할 채널</label>
-          <select id="pickleChannel">
-            <option value="">전체 (5채널)</option>
-            <option value="naver">네이버 블로그</option>
-            <option value="google">티스토리</option>
-            <option value="insta">인스타 카툰</option>
-            <option value="yt">유튜브 쇼츠</option>
-            <option value="threads">스레드</option>
-          </select>
-        </div>
-      </div>
-      <div class="actions" style="margin-top:0;">
-        <button class="btn-primary" onclick="addPickleNote()"><svg class="i i-14" aria-hidden="true"><use href="#i-message"></use></svg> 기록 & 복사</button>
-        <button class="btn-outline" onclick="copyPickleMessage()"><svg class="i i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 피클에게 보낼 메시지 복사</button>
-        <button class="btn-outline" onclick="clearPickleNotes()"><svg class="i i-14" aria-hidden="true"><use href="#i-sparkles"></use></svg> 히스토리 비우기</button>
-      </div>
-      <div class="post-hint"><svg class="i i-14" aria-hidden="true"><use href="#i-info"></use></svg> 이 파일은 브라우저에서 혼자 돌기 때문에 <b>피클 서버로 바로 메시지를 보낼 수 없습니다.</b> 지시 기록은 이 브라우저에 남고, 복사한 문장을 피클 채팅에 붙여 보내면 그대로 지시가 됩니다.</div>
-      <details style="margin-top:8px;">
-        <summary style="font-size:12px;color:var(--muted);cursor:pointer;"><svg class="i i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 복사한 메시지 보기 (복사가 안 될 때 여기서 직접 복사)</summary>
-        <textarea id="pickleCopyBox" style="margin-top:8px;min-height:80px;font-size:12px;" readonly></textarea>
-      </details>
-      <div id="pickleHistory" class="pickle-history"></div>
+      </section>
     </section>
 
-    <section class="panel" id="importPanel">
-      <div class="kw-panel-head">
-        <div class="ph-left">
-          <span class="p-icon"><svg class="i" aria-hidden="true"><use href="#i-inbox"></use></svg></span>
-          <div class="ph-title">
-            <h2>초안 가져오기 (JSON)</h2>
-            <span class="hint">피클이 07:30 · 16:30에 만든 5채널 JSON을 붙여넣으면 <b>날짜별 글 리스트</b>에 추가되고 5개 초안이 바로 열립니다.</span>
+    <!-- ══════════ 기준 · 설정 ══════════ -->
+    <section class="view" id="view-settings" data-view="settings">
+      <div class="view-head">
+        <div>
+          <h1>기준 · 설정</h1>
+          <p>심사 기준, 채널 계정, 5채널 작성 규칙, 도구 링크.</p>
+        </div>
+        <div class="view-head-actions">
+          <a class="btn-outline" href="ai-prompts-hub.html" style="text-decoration:none;">프롬프트 허브</a>
+          <a class="btn-outline" href="compare-and-pick.html" style="text-decoration:none;">3AI 비교</a>
+        </div>
+      </div>
+
+    <!-- ── 5대 심사 기준 · 법적 안전 자체 검수 ── -->
+    <section class="panel" id="reviewPanel">
+      <div class="ph">
+        <h2>5대 심사 기준 <span class="ph-note">발행 전 자체 검수</span></h2>
+        <div class="ph-right">
+          <span class="ph-score">통과 <b id="reviewScore">0/5</b></span>
+          <div class="progress" title="자체 검수 진행률">
+            <div class="progress-track"><div class="progress-fill" id="reviewFill"></div></div>
+            <span class="progress-text" id="reviewText">0 / 5</span>
           </div>
         </div>
       </div>
-      <div class="row" style="margin-top:12px;">
-        <div style="grid-column: 1 / -1;">
-          <label for="importJson">5채널 초안 JSON</label>
-          <textarea id="importJson" style="min-height:110px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:12px;" placeholder='{&quot;date&quot;:&quot;2026-11-28&quot;,&quot;topic&quot;:&quot;주제&quot;,&quot;status&quot;:&quot;임시저장&quot;,&quot;drafts&quot;:{&quot;naver&quot;:&quot;...&quot;,&quot;google&quot;:&quot;...&quot;,&quot;insta&quot;:&quot;...&quot;,&quot;yt&quot;:&quot;...&quot;,&quot;threads&quot;:&quot;...&quot;}}'></textarea>
-        </div>
+      <div class="review-grid" id="reviewGrid">
+        <label class="review-item" data-review="adsense">
+          <input type="checkbox" data-review-box="adsense" />
+          <span class="review-head">
+            <span class="review-check"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg></span>
+            <span>
+              <span class="review-en">Google AdSense Approval</span>
+              <span class="review-ko">고유 콘텐츠 10~15편 · 개인정보처리방침·소개·문의 페이지 · 금지 콘텐츠 0건</span>
+            </span>
+          </span>
+          <span class="review-tag"><svg class="i" aria-hidden="true"><use href="#i-check-circle"></use></svg>애드센스 승인 요건</span>
+        </label>
+        <label class="review-item" data-review="seo">
+          <input type="checkbox" data-review-box="seo" />
+          <span class="review-head">
+            <span class="review-check"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg></span>
+            <span>
+              <span class="review-en">SEO Audit</span>
+              <span class="review-ko">제목 25~38자 · 키워드 앞배치 · H2/H3 · 키워드 3~6회 · Alt·태그</span>
+            </span>
+          </span>
+          <span class="review-tag"><svg class="i" aria-hidden="true"><use href="#i-trending"></use></svg>SEO 100점 점검</span>
+        </label>
+        <label class="review-item" data-review="quality">
+          <input type="checkbox" data-review-box="quality" />
+          <span class="review-head">
+            <span class="review-check"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg></span>
+            <span>
+              <span class="review-en">Content Quality Assessment</span>
+              <span class="review-ko">AI 티 제거 · 1인칭 장면·숫자 · 금지 상투어 0회 · 두 블로그 문장 중복 없음</span>
+            </span>
+          </span>
+          <span class="review-tag"><svg class="i" aria-hidden="true"><use href="#i-type"></use></svg>콘텐츠 품질</span>
+        </label>
+        <label class="review-item" data-review="compliance">
+          <input type="checkbox" data-review-box="compliance" />
+          <span class="review-head">
+            <span class="review-check"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg></span>
+            <span>
+              <span class="review-en">Website Compliance Review</span>
+              <span class="review-ko">광고·제휴 링크 0개 · 공정위 고지 홀드 · 인용 출처 표기 · 저작권 안전</span>
+            </span>
+          </span>
+          <span class="review-tag"><svg class="i" aria-hidden="true"><use href="#i-shield"></use></svg>법적 안전</span>
+        </label>
+        <label class="review-item" data-review="publisher">
+          <input type="checkbox" data-review-box="publisher" />
+          <span class="review-head">
+            <span class="review-check"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg></span>
+            <span>
+              <span class="review-en">Publisher Eligibility Review</span>
+              <span class="review-ko">발행 이력 · 계정 상태 정상 · 플랫폼 정책 위반 0건 · 수익화 신청 자격 확인</span>
+            </span>
+          </span>
+          <span class="review-tag"><svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>게시자 자격</span>
+        </label>
       </div>
-      <div class="actions" style="margin-top:0;">
-        <button class="btn-primary" onclick="importDraftJson()"><svg class="i i-14" aria-hidden="true"><use href="#i-download"></use></svg> 불러와서 리스트에 추가</button>
-        <button class="btn-outline" onclick="fillImportSample()">예시 형식 채우기</button>
-      </div>
-      <div id="importResult" class="import-result"></div>
     </section>
+
+    <!-- ── 운용 모드 · 채널 계정 ── -->
+    <section class="panel" id="workspacePanel">
+      <div class="ph">
+        <h2>채널 계정 · 운용 모드</h2>
+        <span class="ph-note">승인 전 순수 콘텐츠 모드 · 광고·제휴 홀드</span>
+      </div>
+      <div class="hbadges">
+        <span class="hbadge">네이버 <b>savejeong</b></span>
+        <span class="hbadge">티스토리 <b>10년 후의 나를 위해</b></span>
+        <span class="hbadge">인스타 <b>@savejeong.pick</b></span>
+        <span class="hbadge">유튜브 <b>세픽</b></span>
+        <span class="hbadge">스레드 <b>@savejeong.pick</b> · 반말</span>
+        <span class="hbadge"><svg class="i" aria-hidden="true"><use href="#i-clock"></use></svg>매일 <b>07:30 · 16:30</b> 작성·자체 검수 → 확인 후 <b>08:00 · 17:00</b> 발행</span>
+        <span class="hbadge hold"><svg class="i" aria-hidden="true"><use href="#i-pause"></use></svg>쿠팡 파트너스 <b>AF3753560</b> — 승인 후 (현재 미사용)</span>
+      </div>
+    </section>
+
+    <details class="panel" id="stdPanel">
+      <summary><svg class="i" aria-hidden="true"><use href="#i-pin"></use></svg>5채널 최신 기준<span class="std-tag" style="margin-left:2px;">2026-11-27 09:30 반영 · 펼쳐서 확인</span></summary>
+      <div class="active-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>현재 적용 중 — 승인 전 순수 콘텐츠 모드</b> · 광고·제휴 링크·상품 링크·고지 문구는 넣지 않습니다. 아래 카드 중 <b><svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 홀드</b> 표시가 붙은 항목은 각 플랫폼이 승인·안정권에 들어간 뒤에만 켭니다.</div>
+      <div class="std-grid" style="margin-top:12px;">
+
+        <div class="std-card">
+          <div class="std-tag">공통 뼈대 · 예스24 크레마클럽 내서재 33권</div>
+          <h3>모든 채널은 이 4단으로 쓴다</h3>
+          <div class="std-flow"><span>3초 훅</span><i>→</i><span>문제 공감</span><i>→</i><span>해결책</span><i>→</i><span>댓글·행동 유도(CTA)</span></div>
+          <ul>
+            <li>훅은 문장이 아니라 <b>구조</b> — 3초 안에 기대·이득·난이도를 판정시킨다.</li>
+            <li>한 편에 <b>메시지 하나</b>. 조회수(확산)와 저장·클릭(전달)은 목표를 나눠 잰다.</li>
+            <li>블로그 제목·스레드 첫 줄·카드뉴스 표지에 같은 판정 구조를 이식한다.</li>
+            <li>AI 티 제거: <code>~알아보겠습니다</code>·<code>결론적으로</code>·<code>다양한</code> 금지, 날짜·숫자·장면으로 말한다.</li>
+          </ul>
+        </div>
+
+        <div class="std-card">
+          <div class="std-tag">스레드 · @savejeong.pick 실제 올라간 글 기준 (2026-11-27 09:20 확인)</div>
+          <h3>반말 일상 잡담 1~2줄 + 이어지는 답글 1~2개</h3>
+          <ul>
+            <li>전부 <b>반말</b> — <code>~습니다 / ~해요</code> 금지. 마침표는 거의 안 찍고 <b>?·!</b>로 끝맺음.</li>
+            <li>한 글 <b>1~2줄 · 30~100자</b>. <code>ㅋㅋㅋ</code>를 섞고, 이모지는 <b>0~1개를 맨 끝에만</b>.</li>
+            <li>마지막은 <b>질문형 댓글 유도</b> — <code>~있어?</code> <code>~있나?</code> <code>남겨줘</code>.</li>
+            <li>스레드 생활어를 자연스럽게 1개까지: <code>스친</code> <code>스하리</code> <code>반하리</code> <code>맞팔</code> <code>같이 크자</code>.</li>
+            <li><b>불릿(▪️✔️)·번호(1/3)·블로그식 CTA("저장해두고 열어보세요") 없음</b> — 본문 1개 + 이어지는 답글 1~2개.</li>
+          </ul>
+        </div>
+
+        <div class="std-card">
+          <div class="std-tag">유튜브 쇼핑 쇼츠 · 세픽 · 참고 영상 FdVnd0AFge8 · 상품 제휴 매칭은 <svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후</div>
+          <h3>20초 = 5블록, 자막은 시간대별로</h3>
+          <ul>
+            <li><b>루틴 5단계</b>: 급상승·일상 소재 발굴 → 20초 3초훅 대본 → 씬별 소스 → AI 편집 + 휴먼 터치 → 멀티 배포(릴스·틱톡)</li>
+            <li><b>0~3초</b> 3초 훅 → <b>3~8초</b> 문제 공감 → <b>8~15초</b> 상품 1개가 해결(전→후) → <b>15~20초</b> 댓글 유도 자막 <code>댓글에 OO 남겨주세요</code></li>
+            <li>씬마다 소스 지정(직촬·제품 컷·화면 캡처) + 자막은 <b>코드블록</b>으로 분리해 편집기에 바로 붙인다.</li>
+            <li>상품은 <b>1개만 확정</b>, 대본에 제품명 1회. 링크는 고정댓글·설명란에만.</li>
+            <li>승인 전에는 링크·고지 없이 <b>정보 전달용 쇼츠</b>로만. 상품은 “직접 써본 물건” 정도로 담백하게 소개한다.</li>
+          </ul>
+        </div>
+
+        <div class="std-card">
+          <div class="std-tag">인스타 카툰 · @savejeong.pick</div>
+          <h3>블로그 글 → 손그림 인스타툰 4컷</h3>
+          <ul>
+            <li>네이버 블로그 원고의 <b>사건·숫자를 4컷으로 각색</b>. 새 이야기를 만들지 않는다.</li>
+            <li>AI 티 제거: 수채화 파스텔·연필 선·삐뚤빼뚤 말풍선. 얼굴 클로즈업·과한 그라데이션·3D 렌더 금지.</li>
+            <li>컷마다 <b>대사 · 장면 · 이미지 생성용 영어 프롬프트</b>, 마지막에 캡션 + 해시태그 10개.</li>
+            <li>스튜디오에서 <b>인스타 포맷 → 인스타툰 4컷</b>을 고르면 4컷 미리보기 PNG까지 나온다.</li>
+          </ul>
+        </div>
+
+        <div class="std-card">
+          <div class="std-tag">블로그 2종 · 3개 AI 비교 테스트(ChatGPT·Gemini·Claude) 보강</div>
+          <h3>소재를 고정하고, 두 블로그는 재료부터 나눈다</h3>
+          <ul>
+            <li><b>소재·맥락 고정</b>: 주제를 재정의하거나 딴 주제로 새지 않게. 실제 생활 맥락(직장인·아빠·초보 도전기)과 실제 숫자만 사용, 새 수치 창작 금지.</li>
+            <li><b>네이버 ~1,500자</b>(1,450~1,600) 경험·공감형: 한 사건을 1인칭으로. 표·체크리스트 금지.</li>
+            <li><b>티스토리 ~1,800자</b>(1,700~1,950) 정보형: 30일 실행 표 + 체크리스트 + FAQ. 감정 서사 금지.</li>
+            <li>두 글에 <b>같은 표·같은 문장·같은 소제목 금지</b>(중복 문서 회피).</li>
+            <li>저장 전 자체 점검: 글자수 · 해시태그 10개 · 메타 디스크립션 · CTA · <b>광고·제휴 링크 0개</b> · 금지어 0회.</li>
+          </ul>
+        </div>
+
+        <div class="hold-section-head"><svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인·안정권 진입 후 적용 (현재 홀드) — 지금은 쓰지 않습니다. 아래 항목은 각 플랫폼이 승인·안정권에 들어간 뒤에만 켭니다.</div>
+
+        <div class="std-card hold">
+          <div class="std-tag"><svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 홀드 · 제휴 · 광고 (공정위·플랫폼 규정)</div>
+          <h3>승인 후에만 붙이는 항목</h3>
+          <ul>
+            <li><b>쿠팡 파트너스 AF3753560</b> — 제휴 링크와 쇼츠 고정댓글 링크. 현재 미사용.</li>
+            <li><b>공정위 제휴 고지 3종</b> — 쿠팡 파트너스 / 네이버·티스토리 말미 / 인스타 캡션. 승인 후 링크를 넣을 때만 함께 넣습니다.</li>
+            <li><b>애드센스 · 애드포스트 수익화 배치</b> — 광고 코드 삽입과 수익 링크 정리는 승인 후.</li>
+            <li><b>스레드 제휴 댓글</b> “너무 많이 물어봐서 아래 링크 달게” — 승인 후, 링크가 있을 때만.</li>
+          </ul>
+          <div class="notice-box"><svg class="i i-14" aria-hidden="true"><use href="#i-clock"></use></svg> <b>매일 07:30 · 16:30 규칙</b> — 5채널 초안·이미지와 자체 검수를 여기서 만들고, <b>업로드는 원영님 확인 후 08:00 · 17:00</b>에만 진행합니다. 승인 전에는 광고·제휴 요소를 빼고 올립니다.</div>
+          <div class="std-actions"><button class="btn-mini" onclick="copyNotices()"><svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후 사용할 고지 문구 3종 복사 (보관용)</button></div>
+        </div>
+
+      </div>
+    </details>
 
     <details class="panel" id="usagePanel" style="margin-top:4px;">
       <summary><svg class="i" aria-hidden="true"><use href="#i-book"></use></svg>사용법 &amp; 이미지 활용 팁</summary>
@@ -1798,22 +2009,50 @@
       </ol>
     </details>
 
+    </section>
+
     <footer class="footer">
       <span><b>원영 콘텐츠 스튜디오</b> · 5채널 + 인스타툰 + 이미지</span>
-      <span>스케줄 <b>07:30 · 16:30 작성·자체 검수 → 08:00 · 17:00 발행</b></span>
+      <span>스케줄 <b>07:30 · 16:30 초안 → 08:00 · 17:00 발행</b></span>
       <span>데이터는 이 브라우저에만 저장</span>
       <span style="margin-left:auto;">승인 전 순수 콘텐츠 모드</span>
     </footer>
+  </main>
+
+  <!-- ── 첫 방문 가이드 (스포트라이트 온보딩) ── -->
+  <div class="tour-layer" id="tourLayer" aria-hidden="true">
+    <div class="tour-spot" id="tourSpot"></div>
+    <div class="tour-bubble" id="tourBubble" role="dialog" aria-modal="false" aria-labelledby="tourTitle">
+      <div class="tour-top">
+        <span class="tour-step" id="tourStep">1 / 4</span>
+        <span class="tour-dots" id="tourDots"></span>
+      </div>
+      <h3 id="tourTitle">콘텐츠 목록</h3>
+      <p id="tourText">여기서 오늘 만든 글과 채널별 발행 상태를 한눈에 봅니다.</p>
+      <div class="tour-actions">
+        <button type="button" class="tour-skip" id="tourSkip">건너뛰기</button>
+        <button type="button" class="tour-next btn-primary" id="tourNext">다음</button>
+      </div>
+    </div>
   </div>
 
   <!-- 07:30 · 16:30 초안 시드 (2026-11-27 확정본·SEO 재점검 원고·광고 없음) -->
   <script type="application/json" id="seedDraftsJson">
 {
 "date": "2026-11-27",
-"topic": "블랙프라이데이 당일 · 한국 몰 마감일 레이스",
-"status": "임시저장",
+"topic": "블랙프라이데이 마감일",
+"status": "발행 완료",
 "savedAt": "2026-11-27 10:25",
-"note": "2026-11-27 확정본 — 10:25 SEO 재점검 원고 · 광고·제휴 전부 제외(승인 전 홀드)",
+"publishedAt": "2026-11-27 11:47",
+"revenue": 0,
+"note": "2026-11-27 5채널 공개 발행 완료 · 광고·제휴 제외(승인 전 홀드)",
+"links": {
+"naver": "https://blog.naver.com/savejeong/224494333775",
+"google": "https://dodoapple0331.tistory.com/46",
+"insta": "https://www.instagram.com/p/DgOsoabE9Pl/",
+"yt": "https://www.youtube.com/shorts/t-iqY4qKVw8",
+"threads": "https://www.threads.com/@savejeong.pick/post/DgOjv0poy4w"
+},
 "drafts": {
 "naver": "# 제목 후보 (1개 선택)\n1. **블랙프라이데이 마감일 확인하고 패딩 세일 지나간 11월 가계부**\n2. 블랙프라이데이 마감일 앞두고 장바구니 비운 날 (패딩 세일 후기)\n3. 블랙프라이데이 마감일이 쇼핑몰마다 다른 이유, 제 기준 3가지\n\n---\n\n## 본문\n\n11월 마지막 주가 되니 스마트폰 알림이 전부 세일 이야기입니다. '최대 70% 할인', '오늘이 블랙프라이데이' 같은 문구를 보고 있으면 당장 장바구니를 털어야 손해 보는 기분이 듭니다. 저도 어제 퇴근길에 겨울 패딩 하나 보려다가 결제 직전까지 갔는데, 잠깐 멈춰서 가계부부터 열어 봤습니다.\n\n막상 세일 기간을 따져 보니 정작 중요한 건 할인율이 아니라 블랙프라이데이 마감일이었습니다. 오늘이 당일인데도 국내 쇼핑몰은 끝나는 날짜가 다 제각각이더군요. 쿠팡 블랙프라이데이(가전·디지털)와 롯데·현대·신세계백화점 겨울 정기세일은 11월 29일에 끝납니다. 무신사 무진장 26 겨울은 12월 2일, 에이블리와 알리익스프레스는 12월 3일이 마감입니다.\n\n주말에 천천히 고르면 되겠지 싶다가도, 이틀 뒤에 끝나는 행사를 보고 나면 조급해져서 안 사도 될 물건까지 담기 쉽습니다. 패딩 세일 배너가 하루에도 몇 번씩 뜨는데 마감이 코앞이라고 생각하면 판단이 흐려지더군요.\n\n![블프 마감일 확인하다 늦은 밤](projects/content-studio/daily/2026-11-27/naver-blog-cover.png)\n\n## 남들 다 살 때 왜 패딩에 돈이 몰렸을까\n\n이번 주 유통가 기사를 찾아보니 사람들이 지갑을 연 이유가 단순히 세일 때문만은 아니었습니다. 서울 최저기온이 영하 5.8도까지 내려가자 한파 수요가 한꺼번에 몰린 겁니다.\n\n- 신세계백화점은 11월 19~24일 아웃도어 매출이 직전 주 같은 요일보다 35%, 스포츠는 30% 늘었습니다.\n- 무신사 무진장 26 겨울 블랙프라이데이는 행사 시작 43시간 만에 누적 판매 1,000억 원을 넘겼습니다. 지난해 겨울 행사보다 6시간 빠른 속도입니다.\n- 11월 23일 하루에만 패딩·코트 같은 외투가 200억 원어치 팔렸고, 다음 날 오전 8시 외투 순위 상위 9개 중 7개가 패딩이었습니다.\n- 코오롱몰도 11월 1~18일 다운·패딩 거래액이 작년 같은 기간의 3.5배를 기록했습니다.\n\n문제는 이런 분위기일수록 '남들 다 사니까 나도 하나' 하는 심리가 붙는다는 점입니다. 블프 충동구매는 대개 이 지점에서 시작됩니다. 기사에 나온 프리미엄 다운은 50만~110만원대가 상위였고, 온라인 랭킹 1~3위는 4만~7만원대 경량·미드웨이트 패딩이었습니다. 가격 차이가 열 배 넘게 나는데도 세일 배너만 보면 일단 비싼 쪽에 눈이 가기 마련입니다.\n\n## 가계부 지키려고 세운 결제 기준 3가지\n\n그래서 이번 블프에는 장바구니에 넣기 전에 세 가지만 통과한 물건만 결제하기로 정했습니다.\n\n1. 할인 전 평소 가격부터 확인하기. 세일 기간 직전에 정가가 올라간 경우도 있어서, 어제 가격이나 타 사이트 가격과 비교하지 않으면 '가짜 할인'에 걸리기 쉽습니다.\n2. 이번 겨울 최소 10번 이상 손이 갈 물건만 사기. 싸다고 들인 옷이 옷장에 걸려만 있으면 그게 제일 비싼 지출입니다.\n3. 11월 고정지출·카드값 먼저 빼고 남은 예산 안에서만 고르기. 다음 달 카드값 생각하면 4만~7만원대 실속형으로 충분한지, 꼭 고가 라인이 필요한지 바로 답이 나옵니다.\n\n기준을 적어 두고 장바구니를 다시 열어 보니, 카드값과 관리비가 빠져나간 뒤 남는 금액이 생각보다 적었습니다. 그 예산으로 50만 원대 다운재킷까지 가는 건 무리라는 계산이 금방 나왔고, 원래 보던 5만~7만원대 경량 패딩만 남았습니다. 패딩 세일은 다음 달에도 또 오니까요. 블랙프라이데이 마감일이 지나면 정가로 돌아간다는 것도 크게 아쉽지 않았습니다.\n\n가계부 방어는 결제 버튼을 누르기 전 한 번 더 계산하는 일이더군요.\n\n이렇게 걸러 내고 나니 처음 담았던 품목 절반 이상이 빠졌습니다.\n\n## 이번 주에 끝나는 블프 일정 메모\n\n필요한 게 정말 있다면 마감 직전 품절 전에만 챙기시면 됩니다. 무신사 무진장처럼 인기 상품이 몰리는 행사는 블랙프라이데이 마감일보다 사이즈 소진이 먼저 오더군요.\n\n- 11/29 · 쿠팡 블랙프라이데이(가전·디지털), 롯데·현대·신세계 겨울 정기세일\n- 11/30 · 롯데하이마트, 오늘의집 '집요한세일', 코오롱몰 '아우터 위크'\n- 12/1 · 쿠팡 R.LUX 패션 행사\n- 12/2 · 무신사 '무진장 26 겨울'\n- 12/3 · 에이블리 '에블프', 알리익스프레스\n\n이번 블랙프라이데이 마감일은 다들 어떻게 챙기셨나요. 가계부 방어에 성공하셨는지, 아니면 꼭 필요했던 물건을 득템하셨는지 궁금합니다. 여러분만의 블프 충동구매 막는 기준이 있다면 댓글로 공유해 주세요.\n\n#해시태그: #블랙프라이데이 #짠테크 #가계부 #충동구매방지 #패딩세일 #무신사무진장 #블프마감일 #재테크일기\n\n---\n\n## 발행 메모\n- 이미지: 표지 1장 필수(첫 문단 아래), 본문 중간 1장(가계부 메모·랭킹 캡처로 교체 가능)\n- 해시태그: #블랙프라이데이 #짠테크 #가계부 #충동구매방지 #패딩세일 #무신사무진장 #블프마감일 #재테크일기\n- 광고·제휴: 없음. 애드포스트 승인 전까지 광고 삽입과 제휴 링크는 넣지 않고 본문만 발행\n- 확인 기준일: 2026-11-27. 마감일은 매체 보도 기준이며 연장될 수 있음\n- SEO 재점검(2026-11-27 10:25): 제목을 '블랙프라이데이 마감일' 앞배치형으로 교체, 타깃 키워드 6개를 본문에 자연 반영, 본문 1,300→1,589자(공백 제외) — 점검 항목 7/7 통과",
 "google": "# 블랙프라이데이 마감일: 11/29·12/2·12/3 종료일 정리\n\n메타 디스크립션(151자):\n2026년 11월 27일 기준으로 블랙프라이데이 마감일을 행사별로 정리했습니다. 쿠팡과 백화점 겨울 정기세일은 11월 29일, 무신사 무진장은 12월 2일, 에이블리와 알리는 12월 3일에 끝납니다. 결제 전 체크리스트와 30일 실행 표, FAQ까지 한 번에 확인하세요.\n2026년 11월 27일(금)은 블랙프라이데이 당일입니다. 다만 실제로 챙길 숫자는 시작일이 아니라 블랙프라이데이 마감일입니다. 2026 블랙프라이데이 기간은 11월 29일부터 12월 13일까지로 행사마다 다르고, 하루 차이로 같은 상품을 할인가로 못 삽니다. 마감일은 11월 24~27일 보도로 확인했습니다.\n\n## 1. 행사별 종료일\n\n### 11월 29일에 끝나는 행사\n\n| 채널 | 종료일 | 확인된 내용 |\n|---|---|---|\n| 쿠팡 | 11/29 | 가전·디지털, 삼성·LG·인텔 참여 |\n| 롯데·현대·신세계백화점 | 11/29 | 겨울 정기세일, 롯데 400여·신세계 370여 브랜드, 현대 패딩 물량 20% 확대 |\n\n### 11월 30일~12월 13일에 끝나는 행사\n\n| 채널 | 종료일 | 확인된 내용 |\n|---|---|---|\n| 롯데하이마트 | 11/30 | 블랙프라이데이 |\n| 오늘의집 | 11/30 | '집요한세일', 최저가 미달 차액 200%P |\n| 코오롱몰 | 11/30 | '아우터 위크', 본행사 거래액 전년 대비 2.1배 |\n| 쿠팡 | 12/1 | R.LUX 패션 |\n| 무신사 | 12/2 | '무진장 26 겨울', 1,500여 개·오프라인 11곳 |\n| 에이블리 | 12/3 | '에블프', 입점사 2,000여 곳·최대 93% |\n| 알리익스프레스 | 12/3 | 연말 할인전, 최대 70% |\n| 신세계사이먼 | 12/13 | 프리미엄 아울렛 전 점포 |\n\n겨울 정기세일 종료일은 백화점 세 곳 모두 11월 29일, 무신사 무진장 기간은 12월 2일입니다. 11월 30일은 가전·가구·패션이 겹칩니다.\n\n![세일 마감일을 확인하는 저녁](projects/content-studio/daily/2026-11-27/naver-blog-cover.png)\n\n## 2. 이번 주 수요 숫자\n\n- 신세계백화점 아웃도어 매출은 11/19~24 전주 같은 요일 대비 35%, 스포츠 30% 늘었습니다.\n- 무신사는 11/22 19시 시작 후 43시간(11/24 14시) 만에 1,000억 원을 넘겼습니다. 지난해보다 6시간 빠릅니다.\n- 11/23 외투 200억·신발 100억(전년 대비 68%↑), 11/24 08시 외투 상위 9개 중 7개가 패딩이었습니다.\n- 코오롱몰 다운·패딩 거래액은 11/1~18 전년 동기 3.5배, 앱 매출 비중 79%였습니다.\n- 서울 최저기온은 11/22 영하 5.8도까지 내려갔습니다.\n\n팔린 것은 비싼 한 벌이 아니라 겹쳐 입는 조합이었습니다(상위 9개 중 5개가 미드웨이트·경량 패딩, 플리스·후드 집업). 수요는 기온이 떨어질 때 바로 움직였고, 랭킹 1~3위 4만~7만원대와 프리미엄 다운 50만~110만원대는 열 배 차이입니다.\n\n## 3. 결제 전 체크리스트와 30일 실행 표\n\n### 결제 전 체크리스트\n\n- [ ] 이번 겨울에 몇 번 입을지 숫자로 적었는가\n- [ ] 행사 종료일을 확인했는가 (표 날짜는 연장될 수 있음)\n- [ ] 배송비·쿠폰까지 반영한 최종 결제 금액으로 비교했는가\n- [ ] 3주 전 가격보다 실제로 내려갔는가\n- [ ] 내 사이즈 재고가 남아 있는가 (인기 사이즈는 먼저 소진)\n- [ ] 반품·교환 조건을 확인했는가 (세일 상품은 교환 불가가 흔함)\n\n패딩 구매 체크리스트에서 자주 걸리는 건 세 번째 항목입니다. 표시 할인율은 정가 기준이라 쿠폰 유무에 따라 실제 차액이 뒤집힙니다.\n\n### 30일 실행 표\n\n| 기간 | 실행 내용 | 확인 지표 |\n|---|---|---|\n| 11/27~11/29 | 품목 3개만 추리고 최종 결제 금액 비교 | 장바구니 3개 이하 |\n| 11/30~12/3 | 남은 행사 종료일·사이즈 재고 확인 후 결제 | 결제 2건 이하 |\n| 12/4~12/13 | 아울렛·연장 행사 가격 재확인, 반품 기간 점검 | 반품·교환 0건 |\n| 12/14~12/26 | 정가 회귀 여부 기록, 다음 시즌 예산 정리 | 지출 기록 100% |\n\n![겨울 준비를 마친 부부](projects/content-studio/daily/2026-11-27/shorts-cover.png)\n\n## 4. 헷갈리는 지점과 FAQ\n\n**정부 통합 행사는 이미 끝났습니다.** '코리아 그랜드 페스티벌'은 10/29~11/15로 종료됐습니다.\n\n**마감일과 재고 소진은 다릅니다.** 무신사처럼 인기 상품이 몰리면 종료일보다 사이즈가 먼저 끊깁니다.\n\n**두꺼운 롱패딩만 찾으면 놓칩니다.** 런드리고가 2023년 9월~2026년 11월 패딩 세탁 122만 벌을 분석했더니, 경량 비중 7.8%→14.6%, 롱패딩 26.5%→18.7%로 엇갈렸습니다.\n\n**Q1. 블랙프라이데이 마감일이 연장되기도 하나요?**\n\nA. 연장을 발표하는 행사가 있습니다. 결제 전에 공식 공지를 확인하세요. 표의 날짜는 보도 기준입니다.\n\n**Q2. 11월 29일에 다 끝나면 12월엔 살 게 없나요?**\n\nA. 아닙니다. 무신사·에이블리는 12월 2~3일, 신세계사이먼은 12월 13일까지입니다.\n\n**Q3. 세일 상품도 교환이 되나요?**\n\nA. 행사마다 다릅니다. 세일 상품은 교환 불가가 흔하니 결제 전에 반품·교환 조건을 꼭 확인하세요.\n\n**세 줄 정리**\n\n1. 블랙프라이데이 마감일은 11/29, 12/2~3 두 번 크게 옵니다.\n2. 수요는 외투·방한화에 몰렸고 경량이 상위였습니다.\n3. 최종 결제 금액과 3주 전 가격만 비교해도 실수가 줄어듭니다.\n\n다음 글에서는 세일 연장 여부와 12월 첫 주 가격을 다루겠습니다.\n\n**참고 자료** — 뉴스투데이 11/25, 아주경제 11/26, 뉴스핌 11/24, 뉴시스 11/25, 뉴스브라이트·파이낸셜뉴스 11/26 보도.\n\n---\n\n## 발행 메모\n- 광고·제휴: 없음. 애드센스 승인 전까지 광고 코드와 제휴 링크를 넣지 않고 본문만 발행\n- 메타 디스크립션: 상단 frontmatter `meta_description` 값을 티스토리 메타 설명에 그대로 입력\n- 네이버 글과 중복 회피: 제목·도입·소제목·어조 모두 다름(네이버=1인칭 경험담, 티스토리=표·체크리스트 정보형)\n- 표는 모바일에서 가로 스크롤이 생기므로 3열 유지\n- SEO 재점검(2026-11-27 10:25): H1 54→35자, 키워드 앞배치, H2 4개·H3 4개, FAQ 3문항, 30일 실행 표 추가, 본문 2,303→1,942자 — 점검 항목 11/11 통과",
@@ -4273,7 +4512,7 @@ instaLine +
        - 저장된 기록이 없으면 새로 넣는다.
        - 이미 있으면 SEED_VERSION이 바뀐 경우에만 그 날짜의 원고를 최신 확정본으로 갱신한다
          (상태·예약 시각·피클 지시는 그대로 둔다). */
-    const SEED_VERSION = '2026-11-27-1025';
+    const SEED_VERSION = '2026-11-27-1300';
     const SEED_VERSION_KEY = 'wonyeong_studio_seed_version_v1';
     function readSeedVersion() {
       const raw = readLocal(SEED_VERSION_KEY);
@@ -4292,7 +4531,10 @@ instaLine +
           status: seed.status || '임시저장',
           scheduledAt: '',
           savedAt: seed.savedAt || nowStamp(),
+          publishedAt: seed.publishedAt || '',
           targetKeyword: seed.targetKeyword || '',
+          revenue: Number(seed.revenue) || 0,
+          links: seed.links || {},
           drafts: seed.drafts || {}
         });
         persistPosts();
@@ -4305,6 +4547,12 @@ instaLine +
         target.topic = seed.topic || target.topic;
         if (seed.targetKeyword) target.targetKeyword = seed.targetKeyword;
         target.drafts = Object.assign({}, target.drafts, seed.drafts);
+        if (seed.links) target.links = Object.assign({}, target.links || {}, seed.links);
+        if (seed.publishedAt && !target.publishedAt) target.publishedAt = seed.publishedAt;
+        if (seed.status === '발행 완료' && (target.status || '임시저장') === '임시저장') target.status = '발행 완료';
+        if (seed.revenue !== undefined && (target.revenue === undefined || target.revenue === null)) {
+          target.revenue = Number(seed.revenue) || 0;
+        }
         if (seed.savedAt) target.savedAt = seed.savedAt;
         persistPosts();
       }
@@ -4749,10 +4997,13 @@ instaLine +
     }
 
 
-    /* ===================== 워크스페이스 대시보드 · 섹션 내비 · 자체 검수 ===================== */
+    /* ===================== 자체 검수 · 대시보드 · 화면 전환 ===================== */
     const REVIEW_KEY = 'wonyeong_studio_review_v1';
     const REVIEW_ITEMS = ['adsense', 'seo', 'quality', 'compliance', 'publisher'];
+    const VIEWS = ['dashboard', 'create', 'publish', 'performance', 'settings'];
+    const CH_SHORT = { naver: '네이버', google: '티스토리', insta: '인스타', yt: '유튜브', threads: '스레드' };
     let latestSeo = {};
+    let activeView = 'dashboard';
 
     function readReviewState() {
       const raw = readLocal(REVIEW_KEY);
@@ -4800,70 +5051,387 @@ instaLine +
       if (h < 17) return '오늘 17:00';
       return '내일 08:00';
     }
-    function renderOverview() {
-      const today = todayISO();
-      const post = findPost(today);
-      const n = post ? draftCount(post.drafts) : 0;
-      const t = document.getElementById('statToday');
-      if (t) t.innerHTML = n + '<small>/5</small>';
-      const ts = document.getElementById('statTodaySub');
-      if (ts) ts.textContent = post ? today + ' · ' + (post.status || '임시저장') : '오늘 기록 없음';
-      const nx = document.getElementById('statNext');
-      if (nx) nx.textContent = nextPublishSlot();
-      const seo = document.getElementById('statSeo');
-      if (seo) {
-        const vals = ['naver', 'google'].map(k => latestSeo[k]).filter(v => typeof v === 'number');
-        seo.innerHTML = vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) + '<small>점</small>' : '—';
-      }
-      const pc = document.getElementById('statPosts');
-      if (pc) pc.innerHTML = postBook.length + '<small>일</small>';
-      const ps = document.getElementById('statPostsSub');
-      if (ps) {
-        const draft = postBook.filter(p => (p.status || '임시저장') === '임시저장').length;
-        const waiting = postBook.filter(p => p.status === '예약 대기').length;
-        ps.textContent = '임시저장 ' + draft + ' · 예약 ' + waiting;
-      }
+    /* 대시보드 '다음 할 일' — 예약이 있으면 그것부터, 없으면 오늘 스케줄 */
+    function nextAction() {
+      const waiting = postBook.filter(p => p.status === '예약 대기' && p.scheduleLabel)
+        .sort((a, b) => (a.scheduleLabel < b.scheduleLabel ? -1 : (a.scheduleLabel > b.scheduleLabel ? 1 : 0)))[0];
+      if (waiting) return { when: waiting.scheduleLabel, what: '예약 발행 확인 — ' + (waiting.topic || waiting.date) };
+      const now = new Date();
+      const t = now.getHours() * 60 + now.getMinutes();
+      if (t < 7 * 60 + 30) return { when: '오늘 07:30', what: '5채널 초안 작성 · 자체 검수' };
+      if (t < 8 * 60) return { when: '오늘 08:00', what: '초안 확인 후 1차 발행' };
+      if (t < 16 * 60 + 30) return { when: '오늘 16:30', what: '저녁 초안 검수' };
+      if (t < 17 * 60) return { when: '오늘 17:00', what: '초안 확인 후 2차 발행' };
+      return { when: '내일 07:30', what: '5채널 초안 작성' };
     }
 
-    /* 섹션 내비게이션 (스크롤 이동 + 현재 섹션 표시) */
-    const TAB_SECTIONS = ['panel-overview', 'reviewPanel', 'stdPanel', 'kwPanel', 'studioPanel', 'resultsSection', 'calendarPanel', 'metricsPanel', 'picklePanel', 'importPanel'];
-    function setActiveTab(id) {
-      const tabs = document.getElementById('studioTabs');
-      if (!tabs || !tabs.querySelectorAll) return;
-      tabs.querySelectorAll('.tab').forEach(b => {
-        if (b.dataset && b.dataset.goto === id) b.classList.add('active');
-        else b.classList.remove('active');
-      });
+    /* ===================== 콘텐츠 진행 · 수익 ===================== */
+    function byDateDesc(a, b) { return a.date < b.date ? 1 : (a.date > b.date ? -1 : 0); }
+    function channelLinks(post) { return (post && post.links) || {}; }
+    function channelState(post, key) {
+      if (channelLinks(post)[key]) return 'done';
+      if (post && post.drafts && String(post.drafts[key] || '').trim()) return 'ready';
+      return 'none';
     }
-    function goToSection(id) {
-      const el = document.getElementById(id);
-      if (el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setActiveTab(id);
+    function postPublishCount(post) {
+      return KEYS.filter(k => channelState(post, k) === 'done').length;
     }
-    function spyTabs() {
-      let current = TAB_SECTIONS[0];
-      let best = -Infinity;
-      TAB_SECTIONS.forEach(id => {
-        const el = document.getElementById(id);
-        if (!el || !el.getBoundingClientRect) return;
-        const top = el.getBoundingClientRect().top;
-        if (top <= 150 && top > best) { best = top; current = id; }
-      });
-      setActiveTab(current);
+    function postProgressPercent(post) {
+      const score = KEYS.reduce((a, k) => {
+        const st = channelState(post, k);
+        return a + (st === 'done' ? 1 : (st === 'ready' ? 0.5 : 0));
+      }, 0);
+      return Math.round(score / KEYS.length * 100);
     }
-    function initTabs() {
-      const tabs = document.getElementById('studioTabs');
-      if (!tabs || !tabs.addEventListener) return false;
-      tabs.addEventListener('click', (e) => {
-        const t = e.target;
-        const btn = t && t.closest ? t.closest('.tab[data-goto]') : null;
-        if (!btn) return;
-        goToSection(btn.dataset.goto);
-      });
-      if (window && window.addEventListener) window.addEventListener('scroll', spyTabs, { passive: true });
+    function postRevenue(post) { return Number(post && post.revenue) || 0; }
+    function totalRevenue() { return postBook.reduce((a, p) => a + postRevenue(p), 0); }
+    function money(n) { return Number(n || 0).toLocaleString('ko-KR'); }
+    function dateMetrics(date) {
+      const rows = Array.isArray(metrics) ? metrics.filter(m => m.date === date) : [];
+      return rows.reduce((a, m) => {
+        a.views += num(m.views); a.visits += num(m.visits); a.reactions += num(m.reactions);
+        return a;
+      }, { views: 0, visits: 0, reactions: 0 });
+    }
+    function setRevenue(date, value) {
+      const post = findPost(date);
+      if (!post) return false;
+      const n = Math.max(0, Math.round(Number(String(value == null ? '' : value).replace(/[^0-9]/g, '')) || 0));
+      post.revenue = n;
+      persistPosts();
+      renderDashboard();
+      renderRevenueTable();
+      renderMetrics();
+      statusText.textContent = date + ' 수익 ' + money(n) + '원으로 저장했습니다';
       return true;
     }
 
+    function dashRow(post) {
+      const st = post.status || '임시저장';
+      const cls = st === '발행 완료' ? 'done' : (st === '예약 대기' ? 'waiting' : 'draft');
+      const links = channelLinks(post);
+      const chips = KEYS.map(k => {
+        const state = channelState(post, k);
+        const name = CH_SHORT[k] || CH[k].name;
+        if (state === 'done' && links[k]) {
+          return '<a class="ch-dot done" data-ch="' + k + '" href="' + esc(links[k]) + '" target="_blank" rel="noopener" title="' + esc(CH[k].name) + ' 발행 글 열기">' + esc(name) + '</a>';
+        }
+        if (state === 'done') return '<span class="ch-dot done" data-ch="' + k + '">' + esc(name) + '</span>';
+        if (state === 'ready') return '<span class="ch-dot ready" data-ch="' + k + '" title="초안 작성됨">' + esc(name) + '</span>';
+        return '<span class="ch-dot none" data-ch="' + k + '" title="아직 없음">' + esc(name) + '</span>';
+      }).join('');
+      const pct = postProgressPercent(post);
+      const m = dateMetrics(post.date);
+      const md = String(post.date).slice(5).replace('-', '.');
+      const sched = (st === '예약 대기' && post.scheduleLabel) ? ' · ' + esc(post.scheduleLabel) : '';
+      return '<div class="crow" data-post="' + esc(post.date) + '">' +
+        '<div class="crow-main">' +
+          '<div class="crow-top">' +
+            '<span class="crow-date">' + esc(md) + '</span>' +
+            '<span class="crow-topic" title="' + esc(post.topic || '') + '">' + esc(post.topic || '(주제 미입력)') + '</span>' +
+            '<span class="st ' + cls + '">' + esc(st) + sched + '</span>' +
+          '</div>' +
+          '<div class="crow-meta">' +
+            '<span class="pbar' + (pct < 100 ? ' draft' : '') + '"><i style="width:' + pct + '%"></i></span>' +
+            '<span class="crow-pt">' + (postPublishCount(post) > 0
+              ? postPublishCount(post) + '/5'
+              : '초안 ' + draftCount(post.drafts) + '/5') + '</span>' +
+            '<span class="crow-chips">' + chips + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="crow-nums">' +
+          '<span class="crow-num' + (m.views ? '' : ' muted') + '">' + (m.views ? fmtNum(m.views) : '—') + '<em>조회</em></span>' +
+          '<span class="crow-num' + (m.visits ? '' : ' muted') + '">' + (m.visits ? fmtNum(m.visits) : '—') + '<em>방문</em></span>' +
+        '</div>' +
+        '<div class="crow-rev">' +
+          '<input type="text" inputmode="numeric" data-revenue="' + esc(post.date) + '" value="' + postRevenue(post) + '" aria-label="' + esc(post.date) + ' 수익(원)" />' +
+          '<span>원</span>' +
+        '</div>' +
+        '<div class="crow-acts">' +
+          '<button type="button" class="btn-mini" data-open-post="' + esc(post.date) + '">열기</button>' +
+        '</div>' +
+      '</div>';
+    }
+
+    function renderDashboard() {
+      const today = todayISO();
+      const tp = findPost(today);
+      const sub = document.getElementById('dashToday');
+      if (sub) {
+        const d = new Date();
+        const wd = ['일', '월', '화', '수', '목', '금', '토'][d.getDay()];
+        let line = today + ' ' + wd + '요일';
+        if (tp) line += ' · 오늘 5채널 ' + postPublishCount(tp) + '/5 발행';
+        sub.textContent = line;
+      }
+      const done = postBook.filter(p => (p.status || '임시저장') === '발행 완료').length;
+      const draftOnly = postBook.filter(p => (p.status || '임시저장') === '임시저장').length;
+      const c = document.getElementById('dashCount');
+      if (c) c.innerHTML = postBook.length + '<small>건</small>';
+      const cs = document.getElementById('dashCountSub');
+      if (cs) cs.textContent = '발행 완료 ' + done + ' · 임시저장 ' + draftOnly;
+      const avg = postBook.length
+        ? Math.round(postBook.reduce((a, p) => a + postProgressPercent(p), 0) / postBook.length)
+        : 0;
+      const pr = document.getElementById('dashProgress');
+      if (pr) pr.innerHTML = avg + '<small>%</small>';
+      const prs = document.getElementById('dashProgressSub');
+      if (prs) {
+        prs.textContent = postBook.length
+          ? '채널 발행 ' + postBook.reduce((a, p) => a + postPublishCount(p), 0) + '/' + (postBook.length * 5)
+          : '콘텐츠 없음';
+      }
+      const tot = metricsTotals();
+      const dv = document.getElementById('dashViews');
+      if (dv) dv.innerHTML = fmtNum(tot.views);
+      const dvs = document.getElementById('dashViewsSub');
+      if (dvs) dvs.textContent = '방문 ' + fmtNum(tot.visits) + (tot.views ? ' · 조회 대비 ' + Math.round(tot.visits / tot.views * 100) + '%' : '');
+      const rev = totalRevenue();
+      const dr = document.getElementById('dashRevenue');
+      if (dr) dr.innerHTML = money(rev) + '<small>원</small>';
+      const drs = document.getElementById('dashRevenueSub');
+      if (drs) drs.textContent = '수익 입력 ' + postBook.filter(p => postRevenue(p) > 0).length + '/' + postBook.length + '건';
+      const nx = nextAction();
+      const dn = document.getElementById('dashNext');
+      if (dn) dn.textContent = nx.when + ' · ' + nx.what;
+      const list = document.getElementById('dashList');
+      if (list) {
+        const sorted = postBook.slice().sort(byDateDesc);
+        list.innerHTML = sorted.length
+          ? sorted.map(dashRow).join('')
+          : '<div class="crow-empty">아직 콘텐츠가 없습니다. <button type="button" class="btn-mini" data-goto-view="create">+ 새 콘텐츠 만들기</button></div>';
+        const lc = document.getElementById('dashListCount');
+        if (lc) lc.textContent = sorted.length + '건';
+      }
+    }
+    /* 예전 이름 유지 (SEO 점수 갱신 시 호출) */
+    function renderOverview() { return renderDashboard(); }
+
+    function renderRevenueTable() {
+      const body = document.getElementById('revTableBody');
+      if (!body) return;
+      const sorted = postBook.slice().sort(byDateDesc);
+      if (!sorted.length) {
+        body.innerHTML = '<tr class="empty-row"><td colspan="5">콘텐츠가 없습니다. 새 콘텐츠를 만들면 여기에 쌓입니다.</td></tr>';
+      } else {
+        body.innerHTML = sorted.map(p => {
+          const m = dateMetrics(p.date);
+          return '<tr>' +
+            '<td>' + esc(p.date) + '</td>' +
+            '<td style="text-align:left;">' + esc(p.topic || '(주제 미입력)') + '</td>' +
+            '<td>' + fmtNum(m.views) + '</td>' +
+            '<td>' + fmtNum(m.visits) + '</td>' +
+            '<td><span class="rev-cell"><input type="text" inputmode="numeric" data-revenue="' + esc(p.date) + '" value="' + postRevenue(p) + '" aria-label="' + esc(p.date) + ' 수익(원)" /><span>원</span></span></td>' +
+          '</tr>';
+        }).join('');
+      }
+      const tot = document.getElementById('revTotal');
+      if (tot) tot.textContent = money(totalRevenue()) + '원';
+      const cnt = document.getElementById('revCount');
+      if (cnt) cnt.textContent = '콘텐츠 ' + sorted.length + '건';
+    }
+
+    /* ===================== 화면 전환 (탭 = 다른 화면) ===================== */
+    function switchView(name, opts) {
+      if (VIEWS.indexOf(name) === -1) return false;
+      activeView = name;
+      VIEWS.forEach(v => {
+        const el = document.getElementById('view-' + v);
+        if (el && el.classList) {
+          if (v === name) el.classList.add('active'); else el.classList.remove('active');
+        }
+      });
+      const tabs = document.getElementById('studioTabs');
+      if (tabs && tabs.querySelectorAll) {
+        tabs.querySelectorAll('.tab').forEach(b => {
+          const on = !!(b.dataset && b.dataset.view === name);
+          if (on) b.classList.add('active'); else b.classList.remove('active');
+          if (b.setAttribute) b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+      }
+      if (name === 'dashboard') renderDashboard();
+      if (name === 'performance') { renderMetrics(); renderRevenueTable(); }
+      /* 가이드 중에 다른 화면으로 넘어가면 가이드는 닫는다 (엉뚱한 곳을 가리키지 않게) */
+      if (tourActive && !(opts && opts.fromTour)) endTour(true);
+      if (!opts || opts.scroll !== false) {
+        try { if (window && typeof window.scrollTo === 'function') window.scrollTo(0, 0); } catch (e) { /* 무시 */ }
+      }
+      return true;
+    }
+    function getActiveView() { return activeView; }
+    function initViews() {
+      const tabs = document.getElementById('studioTabs');
+      if (tabs && tabs.addEventListener) {
+        tabs.addEventListener('click', (e) => {
+          const btn = (e.target && e.target.closest) ? e.target.closest('.tab[data-view]') : null;
+          if (!btn || !btn.dataset) return;
+          switchView(btn.dataset.view);
+        });
+      }
+      return switchView('dashboard', { scroll: false });
+    }
+
+    /* ===================== 첫 방문 가이드 (스포트라이트 투어) ===================== */
+    const TOUR_KEY = 'wonyeong_studio_tour_v1';
+    const TOUR_STEPS = [
+      { sel: '[data-tour="list"]', title: '콘텐츠 목록 · 진행 현황', text: '여기서 오늘 만든 글이 몇 개 발행됐는지, 채널별로 어디까지 나갔는지 한눈에 봅니다.' },
+      { sel: '[data-goto-view="create"]', title: '새 콘텐츠 만들기', text: '새 글은 여기서 시작합니다. 주제만 넣으면 5채널 초안과 이미지가 한 번에 나옵니다.' },
+      { sel: '.crow-rev input', title: '콘텐츠별 수익', text: '수익은 글 옆 칸에 바로 넣으면 총 수익에 합산되고 이 브라우저에 저장됩니다.' },
+      { sel: '.tab[data-view="performance"]', title: '성과 · 수익', text: '조회·방문·반응 기록과 콘텐츠별 수익은 이 탭에서 일·주·월·연도로 봅니다.' }
+    ];
+    let tourIndex = 0;
+    let tourActive = false;
+
+    function tourSeen() {
+      const v = readLocal(TOUR_KEY);
+      return !!v;
+    }
+    function getTourState() {
+      return { active: tourActive, index: tourIndex, total: TOUR_STEPS.length, seen: tourSeen() };
+    }
+    function tourTarget(step) {
+      if (!step) return null;
+      try {
+        if (document.querySelector) {
+          const el = document.querySelector(step.sel);
+          if (el) return el;
+        }
+      } catch (e) { /* 무시 */ }
+      return null;
+    }
+    function tourViewport() {
+      const w = (typeof window !== 'undefined' && window.innerWidth) ? window.innerWidth : 1200;
+      const h = (typeof window !== 'undefined' && window.innerHeight) ? window.innerHeight : 800;
+      return { w: w, h: h };
+    }
+    function placeTour() {
+      const layer = document.getElementById('tourLayer');
+      const spot = document.getElementById('tourSpot');
+      const bubble = document.getElementById('tourBubble');
+      if (!layer || !spot || !bubble) return false;
+      const vp = tourViewport();
+      const target = tourTarget(TOUR_STEPS[tourIndex]);
+      let rect = null;
+      if (target && target.getBoundingClientRect) {
+        const r = target.getBoundingClientRect();
+        if (r && (r.width > 0 || r.height > 0)) rect = r;
+      }
+      if (rect) {
+        const pad = 6;
+        const x = Math.max(6, Math.round(rect.left) - pad);
+        const y = Math.max(6, Math.round(rect.top) - pad);
+        const w = Math.min(vp.w - x - 6, Math.round(rect.width) + pad * 2);
+        const h = Math.min(vp.h - y - 6, Math.round(rect.height) + pad * 2);
+        spot.style.display = 'block';
+        spot.style.left = x + 'px';
+        spot.style.top = y + 'px';
+        spot.style.width = Math.max(10, w) + 'px';
+        spot.style.height = Math.max(10, h) + 'px';
+      } else {
+        spot.style.display = 'none';
+      }
+      const bw = Math.min(314, vp.w - 24);
+      bubble.style.width = bw + 'px';
+      bubble.style.transform = 'none';
+      let bx = 12, by = 12;
+      if (rect) {
+        bx = Math.min(Math.max(12, Math.round(rect.left)), Math.max(12, vp.w - bw - 12));
+        const bh = bubble.offsetHeight || 172;
+        by = Math.round(rect.bottom) + 14;
+        if (by + bh > vp.h - 12) by = Math.round(rect.top) - bh - 14;
+        if (by < 12) by = Math.max(12, vp.h - bh - 12);
+      } else {
+        bubble.style.transform = 'translateX(-50%)';
+        bx = Math.round(vp.w / 2);
+        by = Math.round(vp.h * 0.18);
+      }
+      bubble.style.left = bx + 'px';
+      bubble.style.top = by + 'px';
+      return true;
+    }
+    function renderTour() {
+      const step = TOUR_STEPS[tourIndex];
+      if (!step) return false;
+      const t = document.getElementById('tourTitle');
+      if (t) t.textContent = step.title;
+      const d = document.getElementById('tourText');
+      if (d) d.textContent = step.text;
+      const s = document.getElementById('tourStep');
+      if (s) s.textContent = (tourIndex + 1) + ' / ' + TOUR_STEPS.length;
+      const dots = document.getElementById('tourDots');
+      if (dots) {
+        let html = '';
+        for (let i = 0; i < TOUR_STEPS.length; i++) html += '<i' + (i === tourIndex ? ' class="on"' : '') + '></i>';
+        dots.innerHTML = html;
+      }
+      const btn = document.getElementById('tourNext');
+      if (btn) btn.textContent = tourIndex === TOUR_STEPS.length - 1 ? '시작하기' : '다음';
+      const target = tourTarget(step);
+      if (target && target.scrollIntoView) {
+        try { target.scrollIntoView({ block: 'center', inline: 'nearest' }); } catch (e) { /* 무시 */ }
+      }
+      placeTour();
+      if (typeof requestAnimationFrame === 'function') requestAnimationFrame(placeTour);
+      return true;
+    }
+    function startTour(opts) {
+      if (!document.getElementById('tourLayer')) return false;
+      tourIndex = 0;
+      tourActive = true;
+      switchView('dashboard', { scroll: false, fromTour: true });
+      const layer = document.getElementById('tourLayer');
+      if (layer && layer.classList) layer.classList.add('open');
+      if (layer && layer.setAttribute) layer.setAttribute('aria-hidden', 'false');
+      renderTour();
+      if (opts && opts.focus !== false) {
+        const btn = document.getElementById('tourNext');
+        if (btn && btn.focus) btn.focus();
+      }
+      return true;
+    }
+    function nextTour() {
+      if (!tourActive) return false;
+      if (tourIndex >= TOUR_STEPS.length - 1) {
+        endTour(true);
+        return false;
+      }
+      tourIndex += 1;
+      renderTour();
+      return true;
+    }
+    function endTour(markSeen) {
+      tourActive = false;
+      const layer = document.getElementById('tourLayer');
+      if (layer && layer.classList) layer.classList.remove('open');
+      if (layer && layer.setAttribute) layer.setAttribute('aria-hidden', 'true');
+      if (markSeen !== false) writeLocal(TOUR_KEY, 'done');
+      statusText.textContent = '준비 완료';
+      return true;
+    }
+    function maybeStartTour() {
+      if (tourSeen()) return false;
+      if (typeof setTimeout !== 'function') return false;
+      setTimeout(() => { try { startTour(); } catch (e) { /* 무시 */ } }, 600);
+      return true;
+    }
+    function initTour() {
+      const next = document.getElementById('tourNext');
+      const skip = document.getElementById('tourSkip');
+      const start = document.getElementById('tourStartBtn');
+      if (next && next.addEventListener) next.addEventListener('click', () => { nextTour(); });
+      if (skip && skip.addEventListener) skip.addEventListener('click', () => { endTour(true); });
+      if (start && start.addEventListener) start.addEventListener('click', () => { startTour(); });
+      document.addEventListener('keydown', (e) => {
+        if (!tourActive) return;
+        if (e.key === 'Escape') { endTour(true); return; }
+        if (e.key === 'Enter' || e.key === 'ArrowRight') { e.preventDefault(); nextTour(); }
+      });
+      if (typeof window !== 'undefined' && window.addEventListener) {
+        window.addEventListener('resize', () => { if (tourActive) placeTour(); });
+        window.addEventListener('scroll', () => { if (tourActive) placeTour(); }, { passive: true });
+      }
+      return true;
+    }
 
     /* ===================== 성과 · 트래픽 관리 ===================== */
     const METRICS_KEY = 'wonyeong_studio_metrics_v1';
@@ -5029,6 +5597,10 @@ instaLine +
         const val = [totals.views, totals.visits, totals.posts, totals.reactions][i];
         el.textContent = fmtNum(val);
       });
+      const krev = document.getElementById('kpiRevenue');
+      if (krev) krev.textContent = money(totalRevenue()) + '원';
+      const krevs = document.getElementById('kpiRevenueSub');
+      if (krevs) krevs.textContent = '수익 입력 ' + postBook.filter(p => postRevenue(p) > 0).length + '/' + postBook.length + '건';
       const range = document.getElementById('kpiRange');
       if (range) {
         range.textContent = metrics.length
@@ -5038,7 +5610,7 @@ instaLine +
       const vs = document.getElementById('kpiVisitsSub');
       if (vs) vs.textContent = totals.views ? '조회 대비 ' + Math.round(totals.visits / totals.views * 100) + '%' : '조회 대비 0%';
       const ps = document.getElementById('kpiPostsSub');
-      if (ps) ps.textContent = '기록 ' + totals.posts + '건';
+      if (ps) ps.textContent = '발행 콘텐츠 ' + postBook.length + '건';
       const rs = document.getElementById('kpiReactionsSub');
       if (rs) rs.textContent = '글당 평균 ' + (totals.posts ? (Math.round(totals.reactions / totals.posts * 10) / 10) : 0);
 
@@ -5085,6 +5657,7 @@ instaLine +
       }
       const note = document.getElementById('metricsNote');
       if (note) note.textContent = metrics.length ? '기록 ' + metrics.length + '건 · localStorage 저장' : '기록은 이 브라우저에만 저장됩니다';
+      renderRevenueTable();
     }
 
     function initMetrics() {
@@ -5109,10 +5682,25 @@ instaLine +
       const del = t.closest('[data-metric-del]');
       if (del) { removeMetricWithConfirm(del.dataset.metricDel); return; }
     });
-    /* 5대 심사 기준 체크박스 */
+    /* 화면 전환 · 대시보드에서 콘텐츠 열기 */
+    document.addEventListener('click', (e) => {
+      const t = e.target;
+      if (!t || !t.closest) return;
+      const go = t.closest('[data-goto-view]');
+      if (go && go.dataset) { switchView(go.dataset.gotoView); return; }
+      const open = t.closest('[data-open-post]');
+      if (open && open.dataset) {
+        loadPost(open.dataset.openPost);
+        switchView('create');
+        return;
+      }
+    });
+    /* 5대 심사 기준 체크박스 · 수익 입력 */
     document.addEventListener('change', (e) => {
       const t = e.target;
-      if (t && t.dataset && t.dataset.reviewBox) toggleReview(t.dataset.reviewBox);
+      if (!t) return;
+      if (t.dataset && t.dataset.reviewBox) { toggleReview(t.dataset.reviewBox); return; }
+      if (t.dataset && t.dataset.revenue) { setRevenue(t.dataset.revenue, t.value); }
     });
     /* 날짜별 글 리스트 · 피클 지시 버튼 (위임) */
     document.addEventListener('click', (e) => {
@@ -5216,10 +5804,13 @@ instaLine +
     initPostBook();
     restoreBgm();
     initMetrics();
-    initTabs();
+    renderRevenueTable();
     renderReview();
-    renderOverview();
-    statusText.textContent = '준비 완료 — 주제를 입력하면 5채널 초안이 만들어집니다';
+    initViews();
+    renderDashboard();
+    initTour();
+    maybeStartTour();
+    statusText.textContent = '준비 완료';
   </script>
 </body>
 </html>
