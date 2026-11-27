@@ -2326,7 +2326,8 @@
 
   <!-- 07:30 · 16:30 초안 시드 (2026-11-27 확정본·SEO 재점검 원고·광고 없음) -->
   <script type="application/json" id="seedDraftsJson">
-{
+/* 시드 데이터 — htmlpreview가 인라인 스크립트를 한 번 더 실행해도 문법 오류가 없도록 감싼다 */
+({
 "date": "2026-11-27",
 "topic": "블랙프라이데이 마감일",
 "status": "발행 완료",
@@ -2351,6 +2352,7 @@
 },
 "targetKeyword": "블랙프라이데이 마감일"
 }
+);
   </script>
 
   <script>
@@ -4808,10 +4810,18 @@ instaLine +
       if (raw === null) return null;
       try { return JSON.parse(raw); } catch (e) { return raw; }
     }
+    function seedJsonText() {
+      const el = document.getElementById('seedDraftsJson');
+      if (!el) return '';
+      const raw = String(el.textContent || '');
+      const a = raw.indexOf('{');
+      const b = raw.lastIndexOf('}');
+      return (a > -1 && b > a) ? raw.slice(a, b + 1) : '';
+    }
     function seedPostBook() {
       const el = document.getElementById('seedDraftsJson');
       let seed = null;
-      if (el) { try { seed = JSON.parse(el.textContent); } catch (e) { seed = null; } }
+      if (el) { try { seed = JSON.parse(seedJsonText()); } catch (e) { seed = null; } }
       if (!seed || !seed.date) return false;
       if (readLocal(POSTS_KEY) === null) {
         postBook.push({
