@@ -513,7 +513,7 @@
        ========================================================= */
     .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(204px, 1fr)); gap: 10px; }
     .review-item {
-      display: block;
+      display: flex; flex-direction: column;
       margin-bottom: 0;
       position: relative;
       border: 1px solid var(--border); border-radius: var(--radius);
@@ -536,11 +536,12 @@
     .review-en { display: block; font-size: 11.5px; font-weight: 750; letter-spacing: -0.01em; color: var(--text); line-height: 1.35; }
     .review-ko { display: block; font-size: 11px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
     .review-tag {
-      margin-top: 9px; display: inline-flex; align-items: center; gap: 4px;
+      margin-top: auto; padding-top: 0; align-self: flex-start; display: inline-flex; align-items: center; gap: 4px;
       font-size: 10.5px; font-weight: 700; color: var(--muted);
       background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 2px 7px;
     }
     .review-item.done .review-tag { color: #067647; background: var(--ok-soft); border-color: var(--ok-border); }
+    .review-head { margin-bottom: 9px; }
     .progress { display: flex; align-items: center; gap: 10px; min-width: 190px; }
     .progress-track { flex: 1 1 auto; height: 6px; border-radius: 999px; background: #ebedf2; overflow: hidden; }
     .progress-fill { height: 100%; width: 0%; border-radius: 999px; background: linear-gradient(90deg, #4f46e5, #10b981); transition: width 0.25s ease; }
