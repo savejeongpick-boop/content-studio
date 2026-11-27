@@ -1364,6 +1364,202 @@
       </div>
     </section>
 
+    <div class="section-label" id="resultsSectionLabel">5채널 결과 · 채널별 편집 · 이미지</div>
+    <section class="grid" id="resultsSection">
+      <!-- 1. 네이버 블로그 -->
+      <div class="ch-card" data-ch="naver">
+        <div class="ch-head">
+          <span class="badge b-naver">네이버 블로그 · savejeong</span>
+          <button class="btn-mini" onclick="copyText('outNaver')">복사</button>
+        </div>
+        <div class="hook-bar">
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-naver"></div></div>
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-naver"></div><input class="hook-kw-input" type="text" id="hook-kwin-naver" placeholder="직접 입력 후 Enter" /></div>
+          <div class="hook-preview" id="hook-prev-naver"></div>
+          <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('naver')">이 카드만 초안 다시 생성</button></div>
+        </div>
+        <textarea class="output" id="outNaver" placeholder="3초 훅 → 문제 공감 → 해결책 → 댓글 CTA + 제목 후보 3개 + 사진 위치 + 검색 태그가 여기에 생성됩니다."></textarea>
+        <div class="seo-box">
+          <div class="seo-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-search"></use></svg> 네이버 SEO · 승인 대비 점검</span><b class="seo-score" id="seoScore-naver">—</b></div>
+          <div id="seoList-naver"></div>
+        </div>
+        <div class="mode-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>승인 대비 콘텐츠 모드</b> · 1,450~1,600자 · 태그 5~8개 · 표·체크리스트 없이 경험담 · 3초 훅→공감→해결→댓글 CTA · 광고·제휴 없음</div>
+
+        <div class="img-block">
+          <div class="img-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 대표 이미지</span><b id="cap-naver">1200×900 · 4:3</b></div>
+          <div class="canvas-wrap"><canvas id="cv-naver"></canvas></div>
+          <input class="title-input" id="title-naver" data-ch="naver" placeholder="이미지에 넣을 제목 문구" />
+          <div class="tools">
+            <button class="btn-mini primary" onclick="downloadCard('naver')">PNG 다운로드</button>
+            <button class="btn-mini" onclick="copyImagePrompt('naver')">이미지 프롬프트 복사</button>
+          </div>
+        </div>
+
+        <details>
+          <summary><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
+          <div id="guide-naver"></div>
+        </details>
+      </div>
+
+      <!-- 2. 티스토리 (구글 SEO · 애드센스) -->
+      <div class="ch-card" data-ch="google">
+        <div class="ch-head">
+          <span class="badge b-google">티스토리 · 10년 후의 나를 위해</span>
+          <button class="btn-mini" onclick="copyText('outGoogle')">복사</button>
+        </div>
+        <div class="hook-bar">
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-google"></div></div>
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-google"></div><input class="hook-kw-input" type="text" id="hook-kwin-google" placeholder="직접 입력 후 Enter" /></div>
+          <div class="hook-preview" id="hook-prev-google"></div>
+          <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('google')">이 카드만 초안 다시 생성</button></div>
+        </div>
+        <textarea class="output" id="outGoogle" placeholder="H1·메타 디스크립션 + H2/H3 구조 + 30일 실행 표 + 체크리스트 + FAQ가 여기에 생성됩니다."></textarea>
+        <div class="seo-box">
+          <div class="seo-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-search"></use></svg> 구글 SEO · 승인 대비 점검</span><b class="seo-score" id="seoScore-google">—</b></div>
+          <div id="seoList-google"></div>
+        </div>
+        <div class="mode-note google"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>승인 대비 콘텐츠 모드</b> · 1,700~1,950자 · H2/H3 · 30일 실행 표 · 체크리스트 · FAQ · 전문 에디터 포맷 · 광고·제휴 없음</div>
+
+        <div class="img-block">
+          <div class="img-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> OG · 피처드 이미지</span><b id="cap-google">1200×630 · 1.91:1</b></div>
+          <div class="canvas-wrap"><canvas id="cv-google"></canvas></div>
+          <input class="title-input" id="title-google" data-ch="google" placeholder="이미지에 넣을 제목 문구" />
+          <div class="tools">
+            <button class="btn-mini primary" onclick="downloadCard('google')">PNG 다운로드</button>
+            <button class="btn-mini" onclick="copyImagePrompt('google')">이미지 프롬프트 복사</button>
+          </div>
+        </div>
+
+        <details>
+          <summary><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
+          <div id="guide-google"></div>
+        </details>
+      </div>
+
+      <!-- 3. 인스타그램 -->
+      <div class="ch-card" data-ch="insta">
+        <div class="ch-head">
+          <span class="badge b-insta">인스타 카툰 · save_jeong</span>
+          <button class="btn-mini" onclick="copyText('outInsta')">복사</button>
+        </div>
+        <div class="hook-bar">
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-insta"></div></div>
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-insta"></div><input class="hook-kw-input" type="text" id="hook-kwin-insta" placeholder="직접 입력 후 Enter" /></div>
+          <div class="hook-preview" id="hook-prev-insta"></div>
+          <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('insta')">이 카드만 초안 다시 생성</button></div>
+        </div>
+        <textarea class="output" id="outInsta" placeholder="카드뉴스 6장 / 인스타툰 4컷(컷별 대사·장면·영어 프롬프트) / 피드 1장 문구 + 캡션 + 해시태그가 여기에 생성됩니다."></textarea>
+        <div class="mode-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>AI 티 제로</b> · 포맷을 <b>인스타툰 4컷</b>으로 고르면 블로그 글을 손그림 만화로 각색 + 4컷 미리보기 PNG·컷별 영어 프롬프트까지</div>
+
+        <div class="img-block">
+          <div class="img-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 카드 미리보기</span><b id="cap-insta">1080×1350 · 4:5 · 카드뉴스 6장</b></div>
+          <div class="canvas-wrap"><canvas id="cv-insta"></canvas></div>
+          <div class="slide-nav" id="instaNav">
+            <button onclick="instaPrev()"><svg class="i i-14" aria-hidden="true"><use href="#i-chevron-left"></use></svg></button>
+            <span id="instaIndex">1 / 6</span>
+            <button onclick="instaNext()"><svg class="i i-14" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+          </div>
+          <div class="thumbs" id="instaThumbs"></div>
+          <input class="title-input" id="title-insta" data-ch="insta" placeholder="현재 장에 넣을 문구" />
+          <div class="tools">
+            <button class="btn-mini primary" onclick="downloadCard('insta')">현재 장 PNG</button>
+            <button class="btn-mini" onclick="downloadInstaAll()">6장 전체 PNG</button>
+            <button class="btn-mini" onclick="copyImagePrompt('insta')">이미지 프롬프트 복사</button>
+          </div>
+        </div>
+
+        <details>
+          <summary><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
+          <div id="guide-insta"></div>
+        </details>
+      </div>
+
+      <!-- 4. 유튜브 쇼핑 쇼츠 (세픽) -->
+      <div class="ch-card" data-ch="yt">
+        <div class="ch-head">
+          <span class="badge b-yt">유튜브 쇼핑 쇼츠 · 세픽</span>
+          <button class="btn-mini" onclick="copyText('outYt')">복사</button>
+        </div>
+        <div class="hook-bar">
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-yt"></div></div>
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-yt"></div><input class="hook-kw-input" type="text" id="hook-kwin-yt" placeholder="직접 입력 후 Enter" /></div>
+          <div class="hook-preview" id="hook-prev-yt"></div>
+          <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('yt')">이 카드만 초안 다시 생성</button></div>
+        </div>
+        <textarea class="output" id="outYt" placeholder="20초 5블록 대본(0~3초 훅 / 3~8초 공감 / 8~15초 소개 1개 / 15~20초 댓글 CTA) + 시간대별 자막 블록 + 씬별 소스가 여기에 생성됩니다. (제휴 링크·고지는 ⏸️ 승인 후)"></textarea>
+        <div class="mode-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>쇼핑 쇼츠 20초</b> · 상품 1개만 · 자막 코드블록 · 댓글 유도 자막 · 링크·고지 없이 정보 전달(제휴는 <svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후)</div>
+
+        <div class="hook-bar">
+          <div class="hook-row">
+            <span class="hook-label"><svg class="i" aria-hidden="true"><use href="#i-music"></use></svg>배경음악</span>
+            <select id="bgmPreset" class="bgm-select" onchange="onBgmPresetChange()">
+              <option value="cc0-upbeat-loop">① Upbeat loop — mistermender · CC0 · 표기 불필요 (추천)</option>
+              <option value="ccby-motivator">② Motivator — Kevin MacLeod · CC BY 4.0 · 표기 필요</option>
+              <option value="cc0-tropicorp">③ Tropicorp Advertisement — code_box · CC0 · 표기 불필요</option>
+              <option value="custom">직접 입력 (내가 고른 무료 곡)</option>
+              <option value="none">배경음악 없음</option>
+            </select>
+          </div>
+          <div class="hook-row" id="bgmCustomRow" style="display:none;">
+            <span class="hook-label">곡 정보</span>
+            <input class="hook-kw-input" type="text" id="bgmCustom" style="flex:1 1 220px;" placeholder="곡명 — 아티스트 · 라이선스(예: CC0 1.0) · 출처 URL" oninput="onBgmCustomInput()" />
+          </div>
+          <div class="bgm-license" id="bgmLicense"></div>
+          <div class="hook-tools">
+            <button class="btn-mini" onclick="bgmApplyToDraft()">이 설정을 초안에 반영</button>
+            <button class="btn-mini" onclick="bgmCopyCredit()">크레딧 복사</button>
+          </div>
+        </div>
+
+        <div class="img-block">
+          <div class="img-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 쇼츠 커버</span><b id="cap-yt">1080×1920 · 9:16</b></div>
+          <div class="canvas-wrap"><canvas id="cv-yt"></canvas></div>
+          <input class="title-input" id="title-yt" data-ch="yt" placeholder="커버에 넣을 6~10자 문구" />
+          <div class="tools">
+            <button class="btn-mini primary" onclick="downloadCard('yt')">PNG 다운로드</button>
+            <button class="btn-mini" onclick="copyImagePrompt('yt')">이미지 프롬프트 복사</button>
+          </div>
+        </div>
+
+        <details>
+          <summary><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
+          <div id="guide-yt"></div>
+        </details>
+      </div>
+
+      <!-- 5. 스레드 -->
+      <div class="ch-card" data-ch="threads">
+        <div class="ch-head">
+          <span class="badge b-threads">스레드 · @savejeong.pick</span>
+          <button class="btn-mini" onclick="copyText('outThreads')">복사</button>
+        </div>
+        <div class="hook-bar">
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-threads"></div></div>
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-threads"></div><input class="hook-kw-input" type="text" id="hook-kwin-threads" placeholder="직접 입력 후 Enter" /></div>
+          <div class="hook-preview" id="hook-prev-threads"></div>
+          <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('threads')">이 카드만 초안 다시 생성</button></div>
+        </div>
+        <textarea class="output" id="outThreads" placeholder="본문 1개(반말 1~2줄 · 30~100자 · ?·!로 끝) + 이어지는 답글 1~2개가 여기에 생성됩니다."></textarea>
+        <div class="mode-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>@savejeong.pick 실제 글 말투</b> · 전부 반말 · ㅋㅋㅋ · 이모지 0~1개(맨 끝) · 질문으로 댓글 유도 · 불릿·번호·블로그식 CTA 없음 · 링크·제휴 없음</div>
+
+        <div class="img-block">
+          <div class="img-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 포인트 카드</span><b id="cap-threads">1200×1200 · 1:1</b></div>
+          <div class="canvas-wrap"><canvas id="cv-threads"></canvas></div>
+          <input class="title-input" id="title-threads" data-ch="threads" placeholder="한 문장으로 넣을 포인트" />
+          <div class="tools">
+            <button class="btn-mini primary" onclick="downloadCard('threads')">PNG 다운로드</button>
+            <button class="btn-mini" onclick="copyImagePrompt('threads')">이미지 프롬프트 복사</button>
+            <button class="btn-mini" onclick="toggleThreadsRatio()">비율 1:1 ↔ 16:9</button>
+          </div>
+        </div>
+
+        <details>
+          <summary><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
+          <div id="guide-threads"></div>
+        </details>
+      </div>
+    </section>
+
     <section class="panel" id="calendarPanel">
       <div class="kw-panel-head">
         <div class="ph-left">
@@ -1575,202 +1771,6 @@
         <button class="btn-outline" onclick="fillImportSample()">예시 형식 채우기</button>
       </div>
       <div id="importResult" class="import-result"></div>
-    </section>
-
-    <div class="section-label" id="resultsSectionLabel">5채널 결과 · 채널별 편집 · 이미지</div>
-    <section class="grid" id="resultsSection">
-      <!-- 1. 네이버 블로그 -->
-      <div class="ch-card" data-ch="naver">
-        <div class="ch-head">
-          <span class="badge b-naver">네이버 블로그 · savejeong</span>
-          <button class="btn-mini" onclick="copyText('outNaver')">복사</button>
-        </div>
-        <div class="hook-bar">
-          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-naver"></div></div>
-          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-naver"></div><input class="hook-kw-input" type="text" id="hook-kwin-naver" placeholder="직접 입력 후 Enter" /></div>
-          <div class="hook-preview" id="hook-prev-naver"></div>
-          <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('naver')">이 카드만 초안 다시 생성</button></div>
-        </div>
-        <textarea class="output" id="outNaver" placeholder="3초 훅 → 문제 공감 → 해결책 → 댓글 CTA + 제목 후보 3개 + 사진 위치 + 검색 태그가 여기에 생성됩니다."></textarea>
-        <div class="seo-box">
-          <div class="seo-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-search"></use></svg> 네이버 SEO · 승인 대비 점검</span><b class="seo-score" id="seoScore-naver">—</b></div>
-          <div id="seoList-naver"></div>
-        </div>
-        <div class="mode-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>승인 대비 콘텐츠 모드</b> · 1,450~1,600자 · 태그 5~8개 · 표·체크리스트 없이 경험담 · 3초 훅→공감→해결→댓글 CTA · 광고·제휴 없음</div>
-
-        <div class="img-block">
-          <div class="img-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 대표 이미지</span><b id="cap-naver">1200×900 · 4:3</b></div>
-          <div class="canvas-wrap"><canvas id="cv-naver"></canvas></div>
-          <input class="title-input" id="title-naver" data-ch="naver" placeholder="이미지에 넣을 제목 문구" />
-          <div class="tools">
-            <button class="btn-mini primary" onclick="downloadCard('naver')">PNG 다운로드</button>
-            <button class="btn-mini" onclick="copyImagePrompt('naver')">이미지 프롬프트 복사</button>
-          </div>
-        </div>
-
-        <details>
-          <summary><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
-          <div id="guide-naver"></div>
-        </details>
-      </div>
-
-      <!-- 2. 티스토리 (구글 SEO · 애드센스) -->
-      <div class="ch-card" data-ch="google">
-        <div class="ch-head">
-          <span class="badge b-google">티스토리 · 10년 후의 나를 위해</span>
-          <button class="btn-mini" onclick="copyText('outGoogle')">복사</button>
-        </div>
-        <div class="hook-bar">
-          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-google"></div></div>
-          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-google"></div><input class="hook-kw-input" type="text" id="hook-kwin-google" placeholder="직접 입력 후 Enter" /></div>
-          <div class="hook-preview" id="hook-prev-google"></div>
-          <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('google')">이 카드만 초안 다시 생성</button></div>
-        </div>
-        <textarea class="output" id="outGoogle" placeholder="H1·메타 디스크립션 + H2/H3 구조 + 30일 실행 표 + 체크리스트 + FAQ가 여기에 생성됩니다."></textarea>
-        <div class="seo-box">
-          <div class="seo-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-search"></use></svg> 구글 SEO · 승인 대비 점검</span><b class="seo-score" id="seoScore-google">—</b></div>
-          <div id="seoList-google"></div>
-        </div>
-        <div class="mode-note google"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>승인 대비 콘텐츠 모드</b> · 1,700~1,950자 · H2/H3 · 30일 실행 표 · 체크리스트 · FAQ · 전문 에디터 포맷 · 광고·제휴 없음</div>
-
-        <div class="img-block">
-          <div class="img-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> OG · 피처드 이미지</span><b id="cap-google">1200×630 · 1.91:1</b></div>
-          <div class="canvas-wrap"><canvas id="cv-google"></canvas></div>
-          <input class="title-input" id="title-google" data-ch="google" placeholder="이미지에 넣을 제목 문구" />
-          <div class="tools">
-            <button class="btn-mini primary" onclick="downloadCard('google')">PNG 다운로드</button>
-            <button class="btn-mini" onclick="copyImagePrompt('google')">이미지 프롬프트 복사</button>
-          </div>
-        </div>
-
-        <details>
-          <summary><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
-          <div id="guide-google"></div>
-        </details>
-      </div>
-
-      <!-- 3. 인스타그램 -->
-      <div class="ch-card" data-ch="insta">
-        <div class="ch-head">
-          <span class="badge b-insta">인스타 카툰 · save_jeong</span>
-          <button class="btn-mini" onclick="copyText('outInsta')">복사</button>
-        </div>
-        <div class="hook-bar">
-          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-insta"></div></div>
-          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-insta"></div><input class="hook-kw-input" type="text" id="hook-kwin-insta" placeholder="직접 입력 후 Enter" /></div>
-          <div class="hook-preview" id="hook-prev-insta"></div>
-          <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('insta')">이 카드만 초안 다시 생성</button></div>
-        </div>
-        <textarea class="output" id="outInsta" placeholder="카드뉴스 6장 / 인스타툰 4컷(컷별 대사·장면·영어 프롬프트) / 피드 1장 문구 + 캡션 + 해시태그가 여기에 생성됩니다."></textarea>
-        <div class="mode-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>AI 티 제로</b> · 포맷을 <b>인스타툰 4컷</b>으로 고르면 블로그 글을 손그림 만화로 각색 + 4컷 미리보기 PNG·컷별 영어 프롬프트까지</div>
-
-        <div class="img-block">
-          <div class="img-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 카드 미리보기</span><b id="cap-insta">1080×1350 · 4:5 · 카드뉴스 6장</b></div>
-          <div class="canvas-wrap"><canvas id="cv-insta"></canvas></div>
-          <div class="slide-nav" id="instaNav">
-            <button onclick="instaPrev()"><svg class="i i-14" aria-hidden="true"><use href="#i-chevron-left"></use></svg></button>
-            <span id="instaIndex">1 / 6</span>
-            <button onclick="instaNext()"><svg class="i i-14" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
-          </div>
-          <div class="thumbs" id="instaThumbs"></div>
-          <input class="title-input" id="title-insta" data-ch="insta" placeholder="현재 장에 넣을 문구" />
-          <div class="tools">
-            <button class="btn-mini primary" onclick="downloadCard('insta')">현재 장 PNG</button>
-            <button class="btn-mini" onclick="downloadInstaAll()">6장 전체 PNG</button>
-            <button class="btn-mini" onclick="copyImagePrompt('insta')">이미지 프롬프트 복사</button>
-          </div>
-        </div>
-
-        <details>
-          <summary><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
-          <div id="guide-insta"></div>
-        </details>
-      </div>
-
-      <!-- 4. 유튜브 쇼핑 쇼츠 (세픽) -->
-      <div class="ch-card" data-ch="yt">
-        <div class="ch-head">
-          <span class="badge b-yt">유튜브 쇼핑 쇼츠 · 세픽</span>
-          <button class="btn-mini" onclick="copyText('outYt')">복사</button>
-        </div>
-        <div class="hook-bar">
-          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-yt"></div></div>
-          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-yt"></div><input class="hook-kw-input" type="text" id="hook-kwin-yt" placeholder="직접 입력 후 Enter" /></div>
-          <div class="hook-preview" id="hook-prev-yt"></div>
-          <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('yt')">이 카드만 초안 다시 생성</button></div>
-        </div>
-        <textarea class="output" id="outYt" placeholder="20초 5블록 대본(0~3초 훅 / 3~8초 공감 / 8~15초 소개 1개 / 15~20초 댓글 CTA) + 시간대별 자막 블록 + 씬별 소스가 여기에 생성됩니다. (제휴 링크·고지는 ⏸️ 승인 후)"></textarea>
-        <div class="mode-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>쇼핑 쇼츠 20초</b> · 상품 1개만 · 자막 코드블록 · 댓글 유도 자막 · 링크·고지 없이 정보 전달(제휴는 <svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후)</div>
-
-        <div class="hook-bar">
-          <div class="hook-row">
-            <span class="hook-label"><svg class="i" aria-hidden="true"><use href="#i-music"></use></svg>배경음악</span>
-            <select id="bgmPreset" class="bgm-select" onchange="onBgmPresetChange()">
-              <option value="cc0-upbeat-loop">① Upbeat loop — mistermender · CC0 · 표기 불필요 (추천)</option>
-              <option value="ccby-motivator">② Motivator — Kevin MacLeod · CC BY 4.0 · 표기 필요</option>
-              <option value="cc0-tropicorp">③ Tropicorp Advertisement — code_box · CC0 · 표기 불필요</option>
-              <option value="custom">직접 입력 (내가 고른 무료 곡)</option>
-              <option value="none">배경음악 없음</option>
-            </select>
-          </div>
-          <div class="hook-row" id="bgmCustomRow" style="display:none;">
-            <span class="hook-label">곡 정보</span>
-            <input class="hook-kw-input" type="text" id="bgmCustom" style="flex:1 1 220px;" placeholder="곡명 — 아티스트 · 라이선스(예: CC0 1.0) · 출처 URL" oninput="onBgmCustomInput()" />
-          </div>
-          <div class="bgm-license" id="bgmLicense"></div>
-          <div class="hook-tools">
-            <button class="btn-mini" onclick="bgmApplyToDraft()">이 설정을 초안에 반영</button>
-            <button class="btn-mini" onclick="bgmCopyCredit()">크레딧 복사</button>
-          </div>
-        </div>
-
-        <div class="img-block">
-          <div class="img-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 쇼츠 커버</span><b id="cap-yt">1080×1920 · 9:16</b></div>
-          <div class="canvas-wrap"><canvas id="cv-yt"></canvas></div>
-          <input class="title-input" id="title-yt" data-ch="yt" placeholder="커버에 넣을 6~10자 문구" />
-          <div class="tools">
-            <button class="btn-mini primary" onclick="downloadCard('yt')">PNG 다운로드</button>
-            <button class="btn-mini" onclick="copyImagePrompt('yt')">이미지 프롬프트 복사</button>
-          </div>
-        </div>
-
-        <details>
-          <summary><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
-          <div id="guide-yt"></div>
-        </details>
-      </div>
-
-      <!-- 5. 스레드 -->
-      <div class="ch-card" data-ch="threads">
-        <div class="ch-head">
-          <span class="badge b-threads">스레드 · @savejeong.pick</span>
-          <button class="btn-mini" onclick="copyText('outThreads')">복사</button>
-        </div>
-        <div class="hook-bar">
-          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-threads"></div></div>
-          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-threads"></div><input class="hook-kw-input" type="text" id="hook-kwin-threads" placeholder="직접 입력 후 Enter" /></div>
-          <div class="hook-preview" id="hook-prev-threads"></div>
-          <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('threads')">이 카드만 초안 다시 생성</button></div>
-        </div>
-        <textarea class="output" id="outThreads" placeholder="본문 1개(반말 1~2줄 · 30~100자 · ?·!로 끝) + 이어지는 답글 1~2개가 여기에 생성됩니다."></textarea>
-        <div class="mode-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>@savejeong.pick 실제 글 말투</b> · 전부 반말 · ㅋㅋㅋ · 이모지 0~1개(맨 끝) · 질문으로 댓글 유도 · 불릿·번호·블로그식 CTA 없음 · 링크·제휴 없음</div>
-
-        <div class="img-block">
-          <div class="img-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 포인트 카드</span><b id="cap-threads">1200×1200 · 1:1</b></div>
-          <div class="canvas-wrap"><canvas id="cv-threads"></canvas></div>
-          <input class="title-input" id="title-threads" data-ch="threads" placeholder="한 문장으로 넣을 포인트" />
-          <div class="tools">
-            <button class="btn-mini primary" onclick="downloadCard('threads')">PNG 다운로드</button>
-            <button class="btn-mini" onclick="copyImagePrompt('threads')">이미지 프롬프트 복사</button>
-            <button class="btn-mini" onclick="toggleThreadsRatio()">비율 1:1 ↔ 16:9</button>
-          </div>
-        </div>
-
-        <details>
-          <summary><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
-          <div id="guide-threads"></div>
-        </details>
-      </div>
     </section>
 
     <details class="panel" id="usagePanel" style="margin-top:4px;">
@@ -4842,9 +4842,12 @@ instaLine +
     }
     function spyTabs() {
       let current = TAB_SECTIONS[0];
+      let best = -Infinity;
       TAB_SECTIONS.forEach(id => {
         const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect && el.getBoundingClientRect().top <= 150) current = id;
+        if (!el || !el.getBoundingClientRect) return;
+        const top = el.getBoundingClientRect().top;
+        if (top <= 150 && top > best) { best = top; current = id; }
       });
       setActiveTab(current);
     }
