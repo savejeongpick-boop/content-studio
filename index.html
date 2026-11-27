@@ -392,7 +392,7 @@
       box-shadow: var(--shadow-sm); overflow: hidden;
     }
     .ctable-h, .crow {
-      display: grid; grid-template-columns: minmax(0, 1fr) 128px 104px 84px;
+      display: grid; grid-template-columns: minmax(0, 1fr) 118px 212px 76px;
       gap: 12px; align-items: center; padding: 10px 16px;
     }
     .ctable-h {
@@ -1083,6 +1083,7 @@
       .data-table th:nth-child(1), .data-table td:nth-child(1) { width: 30%; }
       #metricsHead th:nth-child(2), #metricsBody td:nth-child(2),
       #metricsHead th:nth-child(6), #metricsBody td:nth-child(6) { display: none; }
+      #revenuePanel .data-table { table-layout: auto; min-width: 460px; }
       #revenuePanel thead th:nth-child(3), #revTableBody td:nth-child(3),
       #revenuePanel thead th:nth-child(4), #revTableBody td:nth-child(4) { display: none; }
       .rev-cell input { width: 74px; }
@@ -1103,11 +1104,229 @@
       .kpi-value { font-size: 17px; }
       .metrics-recent-head { flex-direction: column; gap: 2px; }
     }
+    /* =========================================================
+       수익성(제작비·순수익·ROI) · 기간 필터 · TOP 랭킹
+       ========================================================= */
+    .tab { touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+    .fin-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; gap: 10px; margin: 0 0 14px; }
+    .fin-cell { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 10px 13px; box-shadow: var(--shadow-sm); min-width: 0; }
+    .fin-k { font-size: 11px; font-weight: 650; color: var(--muted); }
+    .fin-v { margin-top: 3px; font-size: 15px; font-weight: 750; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .fin-v small { font-size: 11px; font-weight: 600; color: var(--muted-2); margin-left: 2px; }
+    .fin-v.up { color: #067647; }
+    .fin-v.down { color: #b42318; }
+    .fin-go { display: flex; align-items: stretch; }
+    .fin-go button { height: 100%; }
+
+    .crow-money { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 3px 10px; font-size: 11px; color: var(--muted-2); font-variant-numeric: tabular-nums; }
+    .crow-money b { font-weight: 700; color: var(--text-2); }
+    .crow-money .roi { font-weight: 750; color: #067647; }
+    .crow-money .roi.neg { color: #b42318; }
+    .crow-money .roi.zero { color: var(--muted-2); font-weight: 600; }
+    .crow-pair { display: flex; flex-direction: column; gap: 4px; width: 100%; }
+    .crow-pair label { display: flex; align-items: center; gap: 4px; justify-content: flex-end; font-size: 10px; color: var(--muted-2); white-space: nowrap; }
+    .crow-pair label .k { width: 24px; text-align: left; }
+
+    .perf-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 12px; }
+    .perf-seg { display: inline-flex; gap: 4px; padding: 3px; background: var(--surface-3); border: 1px solid var(--border); border-radius: 10px; overflow-x: auto; }
+    .perf-btn { border: 0; background: transparent; border-radius: 8px; padding: 7px 13px; font-size: 12.5px; font-weight: 650; color: var(--muted); cursor: pointer; font-family: inherit; white-space: nowrap; touch-action: manipulation; }
+    .perf-btn:hover { color: var(--text); }
+    .perf-btn.active { background: #fff; color: var(--text); box-shadow: 0 1px 2px rgba(16, 24, 40, 0.1); }
+    .perf-custom { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--muted-2); }
+    .perf-custom input { padding: 6px 8px; font-size: 11.5px; border-radius: 8px; width: auto; }
+    .perf-range { margin-left: auto; font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .perf-range b { color: var(--text-2); font-weight: 700; }
+
+    .money-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .kpi-value small { font-size: 12px; font-weight: 650; color: var(--muted-2); margin-left: 2px; }
+    .kpi.win .kpi-value { color: #067647; }
+    .kpi.loss .kpi-value { color: #b42318; }
+
+    .top-list { display: flex; flex-direction: column; gap: 8px; }
+    .top-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) 84px 88px 78px; gap: 10px; align-items: center; padding: 11px 13px; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
+    .top-row.first { border-color: #dcd9ff; background: #fdfdff; }
+    .top-rank { font-size: 15px; font-weight: 800; color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; }
+    .top-row.first .top-rank { color: var(--accent-text); }
+    .top-main { min-width: 0; }
+    .top-topic { font-size: 13px; font-weight: 700; letter-spacing: -0.02em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .top-meta { margin-top: 3px; font-size: 11px; color: var(--muted-2); }
+    .top-num { text-align: right; font-size: 12.5px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--text-2); white-space: nowrap; }
+    .top-num em { display: block; font-style: normal; font-size: 10px; font-weight: 600; color: var(--muted-2); margin-top: 2px; }
+    .top-num.roi { color: #067647; }
+    .top-num.roi.neg { color: #b42318; }
+    .top-empty { padding: 22px 14px; text-align: center; font-size: 12.5px; color: var(--muted); }
+    .top-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+    .top-facts > div { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 9px 11px; min-width: 0; }
+    .top-facts span { display: block; font-size: 10.5px; color: var(--muted-2); }
+    .top-facts b { display: block; margin-top: 2px; font-size: 12.5px; font-weight: 700; color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rev-cell.cost input { width: 74px; }
+
+    @media (max-width: 860px) {
+      .fin-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .fin-strip .fin-cell:nth-child(3) { grid-column: 1 / -1; }
+      .fin-go { grid-column: 1 / -1; }
+      .fin-go button { width: 100%; }
+      .top-row { grid-template-columns: 28px minmax(0, 1fr) 74px 74px; }
+      .top-row .top-num.views { display: none; }
+    }
+    @media (max-width: 640px) {
+      .money-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+      .money-grid .kpi:last-child { grid-column: 1 / -1; }
+      .perf-range { margin-left: 0; width: 100%; }
+      .perf-seg { width: 100%; }
+      .perf-btn { flex: 1 0 auto; padding: 7px 10px; }
+      .perf-custom { width: 100%; }
+      .perf-custom input { flex: 1 1 0; min-width: 0; }
+      .top-row { grid-template-columns: 24px minmax(0, 1fr) 76px; }
+      .top-row .top-num.views, .top-row .top-num.roi { display: none; }
+      .top-facts { grid-template-columns: minmax(0, 1fr); }
+      .crow-pair label { justify-content: flex-start; }
+    }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       * { transition: none !important; animation: none !important; }
     }
   </style>
+
+  <!-- ── 화면(탭) 전환 안전망 ─────────────────────────────────────────
+       아래 본 스크립트가 어떤 이유로 중단되어도(구형 브라우저 문법 오류,
+       인앱 웹뷰 제약, 저장소 차단 등) 탭만큼은 반드시 동작하도록
+       ES5만으로 먼저 깔아 둔다. 본 스크립트가 준비되면 window.switchView를
+       그대로 사용하고, 실패하면 이 안전망이 클래스만 바꿔 화면을 전환한다. -->
+  <script>
+  (function () {
+    var VIEWS = ['dashboard', 'create', 'publish', 'performance', 'settings'];
+    function byId(id) { try { return document.getElementById(id); } catch (e) { return null; } }
+    function isView(v) {
+      for (var i = 0; i < VIEWS.length; i++) { if (VIEWS[i] === v) { return true; } }
+      return false;
+    }
+    function toggle(el, on) {
+      if (!el) { return; }
+      var cls = ' ' + (el.className || '') + ' ';
+      var has = cls.indexOf(' active ') > -1;
+      if (on && !has) { el.className = (el.className ? el.className + ' ' : '') + 'active'; }
+      else if (!on && has) { el.className = cls.replace(' active ', ' ').replace(/^\s+|\s+$/g, ''); }
+    }
+    function paint(name) {
+      var i, el, list, b;
+      for (i = 0; i < VIEWS.length; i++) {
+        el = byId('view-' + VIEWS[i]);
+        if (!el) { continue; }
+        toggle(el, VIEWS[i] === name);
+        if (el.getAttribute) { el.setAttribute('aria-hidden', VIEWS[i] === name ? 'false' : 'true'); }
+      }
+      if (document.querySelectorAll) {
+        list = document.querySelectorAll('.tab[data-view]');
+        for (i = 0; i < list.length; i++) {
+          b = list[i];
+          var on = b.getAttribute && b.getAttribute('data-view') === name;
+          toggle(b, !!on);
+          if (b.setAttribute) {
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+            b.setAttribute('aria-current', on ? 'page' : 'false');
+          }
+        }
+      }
+      try { window.__studioView = name; } catch (e) {}
+      return true;
+    }
+    /* 탭의 인라인 onclick과 아래 위임 리스너가 모두 이 함수를 부른다. */
+    window.studioGo = function (name) {
+      if (!isView(name)) { return false; }
+      var raw = (typeof window.switchView === 'function') ? window.switchView : null;
+      var done = false;
+      if (raw) {
+        try { done = raw(name) !== false; } catch (e) { done = false; }
+      }
+      if (!done) {
+        try { window.__studioView = name; } catch (e2) {}
+        paint(name);
+        try { if (window.scrollTo) { window.scrollTo(0, 0); } } catch (e3) {}
+      }
+      /* 같이 눌린 바로가기의 기간 설정 (예: 대시보드의 '이번 달 수익 →') */
+      var jump = window.__studioPerfJump;
+      window.__studioPerfJump = null;
+      if (jump && name === 'performance' && typeof window.setPerfPeriod === 'function') {
+        try { window.setPerfPeriod(jump); } catch (e4) { /* 무시 */ }
+      }
+      return true;
+    };
+    window.studioFallbackView = paint;
+
+    function viewFromNode(node) {
+      var n = node, v;
+      for (var i = 0; n && n !== document && i < 12; i++) {
+        if (n.getAttribute) {
+          v = n.getAttribute('data-view');
+          if (v && isView(v)) { return v; }
+          v = n.getAttribute('data-goto-view');
+          if (v && isView(v)) { return v; }
+          v = n.getAttribute('data-perf-jump');
+          if (v) { return null; }
+        }
+        n = n.parentNode;
+      }
+      return null;
+    }
+    function jumpFromNode(node) {
+      var n = node, j;
+      for (var i = 0; n && n !== document && i < 12; i++) {
+        if (n.getAttribute) { j = n.getAttribute('data-perf-jump'); if (j) { return j; } }
+        n = n.parentNode;
+      }
+      return null;
+    }
+    function onActivate(e) {
+      var v = viewFromNode(e && e.target);
+      if (!v) { return; }
+      var j = jumpFromNode(e.target);
+      if (j) { try { window.__studioPerfJump = j; } catch (err0) {} }
+      try { e.__studioViewHandled = true; } catch (err) {}
+      window.studioGo(v);
+    }
+    var touchStart = null;
+    if (document.addEventListener) {
+      document.addEventListener('click', onActivate, false);
+      /* iOS 인앱 웹뷰: 스크롤 관성 직후 click이 생략되는 경우 보완 (탭 이동은 중복 실행해도 무해) */
+      document.addEventListener('touchstart', function (e) {
+        var t = e.touches && e.touches[0];
+        if (t) { touchStart = { x: t.clientX, y: t.clientY, t: Date.now() }; }
+      }, false);
+      document.addEventListener('touchend', function (e) {
+        if (!touchStart) { return; }
+        var t = e.changedTouches && e.changedTouches[0];
+        var moved = t ? (Math.abs(t.clientX - touchStart.x) + Math.abs(t.clientY - touchStart.y)) : 99;
+        var held = Date.now() - touchStart.t;
+        touchStart = null;
+        if (moved > 12 || held > 800) { return; }
+        var v = viewFromNode(e.target);
+        if (!v) { return; }
+        var j = jumpFromNode(e.target);
+        if (j) { try { window.__studioPerfJump = j; } catch (err2) {} }
+        /* 화면이 먼저 바뀌면 같은 좌표의 click이 다른 버튼에 떨어질 수 있으니 중복 click을 막는다 */
+        try { if (e.cancelable && e.preventDefault) { e.preventDefault(); } } catch (err) {}
+        window.studioGo(v);
+      }, false);
+    }
+    /* 일부 기능이 로드되지 않았을 때만 조용히 알린다 (탭 이동은 계속 동작) */
+    if (typeof window.__studioReady === 'undefined') { window.__studioReady = false; }
+    function warnPartial() {
+      if (window.__studioReady || !document.body || document.getElementById('studioWarn')) { return; }
+      var d = document.createElement('div');
+      d.id = 'studioWarn';
+      d.style.cssText = 'position:fixed;left:12px;right:12px;bottom:12px;z-index:300;background:#1f2430;color:#fff;' +
+        'font:600 12.5px/1.5 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;padding:10px 12px;' +
+        'border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.24);';
+      d.textContent = '일부 기능을 불러오지 못했습니다. 화면 전환은 그대로 쓸 수 있고, 새로고침하면 대부분 해결됩니다.';
+      document.body.appendChild(d);
+      setTimeout(function () { if (d.parentNode) { d.parentNode.removeChild(d); } }, 9000);
+    }
+    if (window.addEventListener) {
+      window.addEventListener('load', function () { setTimeout(warnPartial, 2500); }, false);
+    }
+  })();
+  </script>
 </head>
 <body>
   <!-- ── 아이콘 스프라이트 : Lucide 스타일 24px 스트로크 (16~20px로 사용) ── -->
@@ -1176,11 +1395,11 @@
   <!-- ── 화면 탭 (실제 뷰 전환) ── -->
   <nav class="tabbar" aria-label="주요 화면">
     <div class="tabbar-inner" id="studioTabs" role="tablist">
-      <button type="button" class="tab active" data-view="dashboard" role="tab" aria-controls="view-dashboard" aria-selected="true"><svg class="i" aria-hidden="true"><use href="#i-layout"></use></svg>대시보드</button>
-      <button type="button" class="tab" data-view="create" role="tab" aria-controls="view-create" aria-selected="false"><svg class="i" aria-hidden="true"><use href="#i-sparkles"></use></svg>새 콘텐츠 제작</button>
-      <button type="button" class="tab" data-view="publish" role="tab" aria-controls="view-publish" aria-selected="false"><svg class="i" aria-hidden="true"><use href="#i-calendar"></use></svg>발행 · 일정</button>
-      <button type="button" class="tab" data-view="performance" role="tab" aria-controls="view-performance" aria-selected="false"><svg class="i" aria-hidden="true"><use href="#i-chart"></use></svg>성과 · 수익</button>
-      <button type="button" class="tab" data-view="settings" role="tab" aria-controls="view-settings" aria-selected="false"><svg class="i" aria-hidden="true"><use href="#i-sliders"></use></svg>기준 · 설정</button>
+      <button type="button" class="tab active" data-view="dashboard" role="tab" aria-controls="view-dashboard" aria-selected="true" onclick="return studioGo('dashboard')"><svg class="i" aria-hidden="true"><use href="#i-layout"></use></svg>대시보드</button>
+      <button type="button" class="tab" data-view="create" role="tab" aria-controls="view-create" aria-selected="false" onclick="return studioGo('create')"><svg class="i" aria-hidden="true"><use href="#i-sparkles"></use></svg>새 콘텐츠 제작</button>
+      <button type="button" class="tab" data-view="publish" role="tab" aria-controls="view-publish" aria-selected="false" onclick="return studioGo('publish')"><svg class="i" aria-hidden="true"><use href="#i-calendar"></use></svg>발행 · 일정</button>
+      <button type="button" class="tab" data-view="performance" role="tab" aria-controls="view-performance" aria-selected="false" onclick="return studioGo('performance')"><svg class="i" aria-hidden="true"><use href="#i-chart"></use></svg>성과 · 수익</button>
+      <button type="button" class="tab" data-view="settings" role="tab" aria-controls="view-settings" aria-selected="false" onclick="return studioGo('settings')"><svg class="i" aria-hidden="true"><use href="#i-sliders"></use></svg>기준 · 설정</button>
     </div>
   </nav>
 
@@ -1218,6 +1437,24 @@
         </div>
       </div>
 
+      <div class="fin-strip" data-tour="fin">
+        <div class="fin-cell">
+          <div class="fin-k">총 제작비</div>
+          <div class="fin-v" id="dashCost">0<small>원</small></div>
+        </div>
+        <div class="fin-cell">
+          <div class="fin-k">순수익 (수익 − 제작비)</div>
+          <div class="fin-v" id="dashNet">0<small>원</small></div>
+        </div>
+        <div class="fin-cell">
+          <div class="fin-k">평균 수익률 (ROI)</div>
+          <div class="fin-v" id="dashRoi">0%</div>
+        </div>
+        <div class="fin-go">
+          <button type="button" class="btn-outline" data-goto-view="performance" data-perf-jump="month">이번 달 수익 →</button>
+        </div>
+      </div>
+
       <div class="nextbar">
         <div class="nextbar-main">
           <span class="nextbar-k">다음 할 일</span>
@@ -1237,7 +1474,7 @@
         <div class="ctable-h">
           <span>콘텐츠</span>
           <span>조회 · 방문</span>
-          <span>수익</span>
+          <span>수익성 (비용·수익·ROI)</span>
           <span>관리</span>
         </div>
         <div id="dashList"></div>
@@ -1683,22 +1920,28 @@
       <div class="view-head">
         <div>
           <h1>성과 · 수익</h1>
-          <p>조회·방문·반응과 콘텐츠별 수익을 한곳에서 기록합니다.</p>
+          <p>조회·방문·반응과 콘텐츠별 제작비·수익·순수익·수익률을 한곳에서 기록합니다.</p>
         </div>
       </div>
 
-    <section class="panel" id="metricsPanel">
-      <div class="ph">
-        <h2>트래픽 기록</h2>
-        <div class="seg" id="metricsView" role="tablist" aria-label="집계 단위">
-          <button type="button" class="seg-btn active" data-period="day">일자별</button>
-          <button type="button" class="seg-btn" data-period="week">주차별</button>
-          <button type="button" class="seg-btn" data-period="month">월별</button>
-          <button type="button" class="seg-btn" data-period="year">연도별</button>
+      <!-- 기간 필터 -->
+      <div class="perf-bar" id="perfBar" data-tour="perf">
+        <div class="perf-seg" id="perfPeriod" role="group" aria-label="기간 필터">
+          <button type="button" class="perf-btn" data-perf="today" onclick="return setPerfPeriod('today')">오늘</button>
+          <button type="button" class="perf-btn" data-perf="week" onclick="return setPerfPeriod('week')">이번 주</button>
+          <button type="button" class="perf-btn" data-perf="month" onclick="return setPerfPeriod('month')">이번 달</button>
+          <button type="button" class="perf-btn active" data-perf="all" onclick="return setPerfPeriod('all')">전체</button>
         </div>
+        <div class="perf-custom">
+          <input type="date" id="perfFrom" aria-label="시작일" />
+          <span>~</span>
+          <input type="date" id="perfTo" aria-label="종료일" />
+          <button type="button" class="btn-mini" onclick="return setPerfPeriod('custom')">이 기간</button>
+        </div>
+        <div class="perf-range" id="perfRange">전체 기간</div>
       </div>
 
-      <div class="kpi-grid">
+      <div class="kpi-grid" style="margin-bottom:10px;">
         <div class="kpi">
           <div class="kpi-top"><svg class="i" aria-hidden="true"><use href="#i-chart"></use></svg>총 조회수</div>
           <div class="kpi-value" id="kpiViews">0</div>
@@ -1720,8 +1963,52 @@
           <div class="kpi-sub" id="kpiRevenueSub">콘텐츠별 수익 합계</div>
         </div>
       </div>
+
+      <!-- 수익성: 제작비 · 순수익 · 수익률(ROI) -->
+      <div class="kpi-grid money-grid" id="perfMoney" data-tour="money">
+        <div class="kpi">
+          <div class="kpi-top"><svg class="i" aria-hidden="true"><use href="#i-briefcase"></use></svg>총 제작비</div>
+          <div class="kpi-value" id="kpiCost">0원</div>
+          <div class="kpi-sub" id="kpiCostSub">비용 입력 0건</div>
+        </div>
+        <div class="kpi" id="kpiNetCard">
+          <div class="kpi-top"><svg class="i" aria-hidden="true"><use href="#i-check-circle"></use></svg>순수익</div>
+          <div class="kpi-value" id="kpiNet">0원</div>
+          <div class="kpi-sub" id="kpiNetSub">수익 − 제작비</div>
+        </div>
+        <div class="kpi" id="kpiRoiCard">
+          <div class="kpi-top"><svg class="i" aria-hidden="true"><use href="#i-target"></use></svg>수익률 (ROI)</div>
+          <div class="kpi-value" id="kpiRoi">0%</div>
+          <div class="kpi-sub" id="kpiRoiSub">제작비 대비 수익률</div>
+        </div>
+      </div>
       <div class="metrics-meta">
         기록 <b id="kpiPosts">0</b>건 · <span id="kpiPostsSub">기록 0건</span>
+      </div>
+
+      <!-- TOP 랭킹 -->
+      <section class="panel" id="topPanel">
+        <div class="ph">
+          <h2>🏆 성과 TOP 콘텐츠</h2>
+          <span class="ph-note" id="topNote">순수익 → 조회수 순</span>
+        </div>
+        <div id="topList" class="top-list"></div>
+        <div class="top-facts">
+          <div><span>수익 1위</span><b id="topBestRevenue">—</b></div>
+          <div><span>조회 1위</span><b id="topBestViews">—</b></div>
+          <div><span>채널 1위 (조회)</span><b id="topBestChannel">—</b></div>
+        </div>
+      </section>
+
+    <section class="panel" id="metricsPanel">
+      <div class="ph">
+        <h2>트래픽 기록</h2>
+        <div class="seg" id="metricsView" role="tablist" aria-label="집계 단위">
+          <button type="button" class="seg-btn active" data-period="day">일자별</button>
+          <button type="button" class="seg-btn" data-period="week">주차별</button>
+          <button type="button" class="seg-btn" data-period="month">월별</button>
+          <button type="button" class="seg-btn" data-period="year">연도별</button>
+        </div>
       </div>
 
       <div class="metrics-form">
@@ -1784,19 +2071,19 @@
 
       <section class="panel" id="revenuePanel">
         <div class="ph">
-          <h2>콘텐츠별 수익</h2>
+          <h2>콘텐츠별 손익</h2>
           <span class="ph-note" id="revCount">콘텐츠 0건</span>
         </div>
         <div class="metrics-table-wrap">
-          <table class="data-table">
+          <table class="data-table" id="revTable">
             <thead>
-              <tr><th>날짜</th><th>콘텐츠</th><th>조회</th><th>방문</th><th>수익 (원)</th></tr>
+              <tr><th>날짜</th><th>콘텐츠</th><th>조회</th><th>방문</th><th>제작비</th><th>수익</th><th>순수익</th><th>ROI</th></tr>
             </thead>
             <tbody id="revTableBody"></tbody>
           </table>
         </div>
         <div class="rev-foot">
-          <span>합계</span>
+          <span>합계 <span class="hint" id="revFootNote"></span></span>
           <span id="revTotal">0원</span>
         </div>
       </section>
@@ -2046,6 +2333,7 @@
 "savedAt": "2026-11-27 10:25",
 "publishedAt": "2026-11-27 11:47",
 "revenue": 0,
+"cost": 0,
 "note": "2026-11-27 5채널 공개 발행 완료 · 광고·제휴 제외(승인 전 홀드)",
 "links": {
 "naver": "https://blog.naver.com/savejeong/224494333775",
@@ -4535,6 +4823,7 @@ instaLine +
           publishedAt: seed.publishedAt || '',
           targetKeyword: seed.targetKeyword || '',
           revenue: Number(seed.revenue) || 0,
+          cost: Number(seed.cost) || 0,
           links: seed.links || {},
           drafts: seed.drafts || {}
         });
@@ -4553,6 +4842,9 @@ instaLine +
         if (seed.status === '발행 완료' && (target.status || '임시저장') === '임시저장') target.status = '발행 완료';
         if (seed.revenue !== undefined && (target.revenue === undefined || target.revenue === null)) {
           target.revenue = Number(seed.revenue) || 0;
+        }
+        if (seed.cost !== undefined && (target.cost === undefined || target.cost === null)) {
+          target.cost = Number(seed.cost) || 0;
         }
         if (seed.savedAt) target.savedAt = seed.savedAt;
         persistPosts();
@@ -5085,8 +5377,23 @@ instaLine +
       return Math.round(score / KEYS.length * 100);
     }
     function postRevenue(post) { return Number(post && post.revenue) || 0; }
+    function postCost(post) { return Number(post && post.cost) || 0; }
     function totalRevenue() { return postBook.reduce((a, p) => a + postRevenue(p), 0); }
-    function money(n) { return Number(n || 0).toLocaleString('ko-KR'); }
+    function totalCost() { return postBook.reduce((a, p) => a + postCost(p), 0); }
+    function postNet(post) { return postRevenue(post) - postCost(post); }
+    function totalNet() { return totalRevenue() - totalCost(); }
+    /* 수익률(ROI) — 제작비가 있으면 (수익-제작비)/제작비×100, 없으면 '무자본 수익' */
+    function roiValue(cost, revenue) {
+      const c = Number(cost) || 0, r = Number(revenue) || 0;
+      return c > 0 ? (r - c) / c * 100 : null;
+    }
+    function roiLabel(cost, revenue) {
+      const v = roiValue(cost, revenue);
+      if (v === null) return (Number(revenue) || 0) > 0 ? '무자본 수익' : '0%';
+      return v.toFixed(1) + '%';
+    }
+    function postRoiLabel(post) { return roiLabel(postCost(post), postRevenue(post)); }
+    function money(n) { return groupDigits(n); }
     function dateMetrics(date) {
       const rows = Array.isArray(metrics) ? metrics.filter(m => m.date === date) : [];
       return rows.reduce((a, m) => {
@@ -5094,17 +5401,25 @@ instaLine +
         return a;
       }, { views: 0, visits: 0, reactions: 0 });
     }
-    function setRevenue(date, value) {
+    function toWon(value) {
+      return Math.max(0, Math.round(Number(String(value == null ? '' : value).replace(/[^0-9]/g, '')) || 0));
+    }
+    function setPostMoney(field, date, value) {
       const post = findPost(date);
       if (!post) return false;
-      const n = Math.max(0, Math.round(Number(String(value == null ? '' : value).replace(/[^0-9]/g, '')) || 0));
-      post.revenue = n;
+      const n = toWon(value);
+      post[field] = n;
       persistPosts();
-      renderDashboard();
-      renderRevenueTable();
-      renderMetrics();
-      statusText.textContent = date + ' 수익 ' + money(n) + '원으로 저장했습니다';
+      refreshMoneyViews();
+      statusText.textContent = date + (field === 'cost' ? ' 제작비 ' : ' 수익 ') + money(n) + '원으로 저장했습니다';
       return true;
+    }
+    function setRevenue(date, value) { return setPostMoney('revenue', date, value); }
+    function setCost(date, value) { return setPostMoney('cost', date, value); }
+    function refreshMoneyViews() {
+      try { renderDashboard(); } catch (e) { /* 무시 */ }
+      try { renderRevenueTable(); } catch (e) { /* 무시 */ }
+      try { renderPerformance(); } catch (e) { /* 무시 */ }
     }
 
     function dashRow(post) {
@@ -5125,6 +5440,9 @@ instaLine +
       const m = dateMetrics(post.date);
       const md = String(post.date).slice(5).replace('-', '.');
       const sched = (st === '예약 대기' && post.scheduleLabel) ? ' · ' + esc(post.scheduleLabel) : '';
+      const net = postNet(post);
+      const roiV = roiValue(postCost(post), postRevenue(post));
+      const roiCls = roiV === null ? (postRevenue(post) > 0 ? 'roi' : 'roi zero') : (roiV >= 0 ? 'roi' : 'roi neg');
       return '<div class="crow" data-post="' + esc(post.date) + '">' +
         '<div class="crow-main">' +
           '<div class="crow-top">' +
@@ -5139,14 +5457,19 @@ instaLine +
               : '초안 ' + draftCount(post.drafts) + '/5') + '</span>' +
             '<span class="crow-chips">' + chips + '</span>' +
           '</div>' +
+          '<div class="crow-money">' +
+            '<span>제작비 <b>' + money(postCost(post)) + '원</b></span>' +
+            '<span>순수익 <b>' + money(net) + '원</b></span>' +
+            '<span class="' + roiCls + '">ROI <b>' + esc(postRoiLabel(post)) + '</b></span>' +
+          '</div>' +
         '</div>' +
         '<div class="crow-nums">' +
           '<span class="crow-num' + (m.views ? '' : ' muted') + '">' + (m.views ? fmtNum(m.views) : '—') + '<em>조회</em></span>' +
           '<span class="crow-num' + (m.visits ? '' : ' muted') + '">' + (m.visits ? fmtNum(m.visits) : '—') + '<em>방문</em></span>' +
         '</div>' +
-        '<div class="crow-rev">' +
-          '<input type="text" inputmode="numeric" data-revenue="' + esc(post.date) + '" value="' + postRevenue(post) + '" aria-label="' + esc(post.date) + ' 수익(원)" />' +
-          '<span>원</span>' +
+        '<div class="crow-pair">' +
+          '<label><span class="k">비용</span><input type="text" inputmode="numeric" data-cost="' + esc(post.date) + '" value="' + postCost(post) + '" aria-label="' + esc(post.date) + ' 제작비(원)" /><span>원</span></label>' +
+          '<label><span class="k">수익</span><input type="text" inputmode="numeric" data-revenue="' + esc(post.date) + '" value="' + postRevenue(post) + '" aria-label="' + esc(post.date) + ' 수익(원)" /><span>원</span></label>' +
         '</div>' +
         '<div class="crow-acts">' +
           '<button type="button" class="btn-mini" data-open-post="' + esc(post.date) + '">열기</button>' +
@@ -5191,7 +5514,20 @@ instaLine +
       const dr = document.getElementById('dashRevenue');
       if (dr) dr.innerHTML = money(rev) + '<small>원</small>';
       const drs = document.getElementById('dashRevenueSub');
-      if (drs) drs.textContent = '수익 입력 ' + postBook.filter(p => postRevenue(p) > 0).length + '/' + postBook.length + '건';
+      if (drs) drs.textContent = '순수익 ' + money(totalNet()) + '원';
+      const dc = document.getElementById('dashCost');
+      if (dc) dc.innerHTML = money(totalCost()) + '<small>원</small>';
+      const dnet = document.getElementById('dashNet');
+      if (dnet) {
+        const net = totalNet();
+        dnet.innerHTML = money(net) + '<small>원</small>';
+        dnet.className = 'fin-v' + (net > 0 ? ' up' : (net < 0 ? ' down' : ''));
+      }
+      const droi = document.getElementById('dashRoi');
+      if (droi) {
+        droi.textContent = roiLabel(totalCost(), totalRevenue());
+        droi.className = 'fin-v' + (totalNet() > 0 ? ' up' : (totalNet() < 0 ? ' down' : ''));
+      }
       const nx = nextAction();
       const dn = document.getElementById('dashNext');
       if (dn) dn.textContent = nx.when + ' · ' + nx.what;
@@ -5211,25 +5547,212 @@ instaLine +
     function renderRevenueTable() {
       const body = document.getElementById('revTableBody');
       if (!body) return;
-      const sorted = postBook.slice().sort(byDateDesc);
+      const range = perfRange(perfPeriod);
+      const sorted = perfPosts(range).slice().sort(byDateDesc);
       if (!sorted.length) {
-        body.innerHTML = '<tr class="empty-row"><td colspan="5">콘텐츠가 없습니다. 새 콘텐츠를 만들면 여기에 쌓입니다.</td></tr>';
+        body.innerHTML = '<tr class="empty-row"><td colspan="8">' + (postBook.length ? '이 기간에 해당하는 콘텐츠가 없습니다. 기간을 [전체]로 바꿔 보세요.' : '콘텐츠가 없습니다. 새 콘텐츠를 만들면 여기에 쌓입니다.') + '</td></tr>';
       } else {
         body.innerHTML = sorted.map(p => {
           const m = dateMetrics(p.date);
+          const net = postNet(p);
+          const rv = roiValue(postCost(p), postRevenue(p));
           return '<tr>' +
             '<td>' + esc(p.date) + '</td>' +
             '<td style="text-align:left;">' + esc(p.topic || '(주제 미입력)') + '</td>' +
             '<td>' + fmtNum(m.views) + '</td>' +
             '<td>' + fmtNum(m.visits) + '</td>' +
+            '<td><span class="rev-cell cost"><input type="text" inputmode="numeric" data-cost="' + esc(p.date) + '" value="' + postCost(p) + '" aria-label="' + esc(p.date) + ' 제작비(원)" /><span>원</span></span></td>' +
             '<td><span class="rev-cell"><input type="text" inputmode="numeric" data-revenue="' + esc(p.date) + '" value="' + postRevenue(p) + '" aria-label="' + esc(p.date) + ' 수익(원)" /><span>원</span></span></td>' +
+            '<td class="num-strong">' + money(net) + '원</td>' +
+            '<td class="num-strong" style="color:' + (rv === null ? 'inherit' : (rv >= 0 ? '#067647' : '#b42318')) + ';">' + esc(roiLabel(postCost(p), postRevenue(p))) + '</td>' +
           '</tr>';
         }).join('');
       }
+      const sum = perfSum(range);
       const tot = document.getElementById('revTotal');
-      if (tot) tot.textContent = money(totalRevenue()) + '원';
+      if (tot) tot.textContent = money(sum.net) + '원';
+      const note = document.getElementById('revFootNote');
+      if (note) note.textContent = '수익 ' + money(sum.revenue) + '원 · 제작비 ' + money(sum.cost) + '원 · 순수익 ' + money(sum.net) + '원';
       const cnt = document.getElementById('revCount');
-      if (cnt) cnt.textContent = '콘텐츠 ' + sorted.length + '건';
+      if (cnt) cnt.textContent = '콘텐츠 ' + sorted.length + '건 · ' + range.label;
+    }
+
+    /* ===================== 기간 필터 (오늘 · 이번 주 · 이번 달 · 전체) ===================== */
+    const PERF_PERIODS = ['today', 'week', 'month', 'all', 'custom'];
+    const PERF_LABEL = { today: '오늘', week: '이번 주', month: '이번 달', all: '전체', custom: '직접 설정' };
+    let perfPeriod = 'all';
+
+    function ymd(d) { return d.getFullYear() + '-' + two(d.getMonth() + 1) + '-' + two(d.getDate()); }
+    function perfRange(mode) {
+      const today = todayISO();
+      const now = new Date();
+      if (mode === 'today') return { from: today, to: today, label: '오늘 (' + today + ')' };
+      if (mode === 'week') {
+        const day = now.getDay() || 7;            /* 월=1 … 일=7 */
+        const mon = new Date(now.getTime()); mon.setDate(now.getDate() - (day - 1));
+        const sun = new Date(mon.getTime()); sun.setDate(mon.getDate() + 6);
+        return { from: ymd(mon), to: ymd(sun), label: '이번 주 (' + ymd(mon).slice(5).replace('-', '/') + '~' + ymd(sun).slice(5).replace('-', '/') + ')' };
+      }
+      if (mode === 'month') {
+        const from = today.slice(0, 8) + '01';
+        const last = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+        return { from: from, to: ymd(last), label: '이번 달 (' + today.slice(0, 7) + ')' };
+      }
+      if (mode === 'custom') {
+        const fEl = document.getElementById('perfFrom');
+        const tEl = document.getElementById('perfTo');
+        const f = fEl ? String(fEl.value || '').trim() : '';
+        const t = tEl ? String(tEl.value || '').trim() : '';
+        const from = /^\d{4}-\d{2}-\d{2}$/.test(f) ? f : '';
+        const to = /^\d{4}-\d{2}-\d{2}$/.test(t) ? t : '';
+        if (!from && !to) return { from: '', to: '', label: '전체 기간' };
+        const a = from || to, b = to || from;
+        return { from: (a <= b ? a : b), to: (a <= b ? b : a), label: '직접 설정 (' + (a <= b ? a : b) + '~' + (a <= b ? b : a) + ')' };
+      }
+      return { from: '', to: '', label: '전체 기간' };
+    }
+    function inRange(date, range) {
+      if (!range || (!range.from && !range.to)) return true;
+      const d = String(date || '').slice(0, 10);
+      if (range.from && d < range.from) return false;
+      if (range.to && d > range.to) return false;
+      return true;
+    }
+    function perfPosts(range) { return postBook.filter(p => inRange(p.date, range)); }
+    function perfMetrics(range) { return metrics.filter(m => inRange(m.date, range)); }
+    function perfSum(range) {
+      const r = range || perfRange(perfPeriod);
+      const posts = perfPosts(r);
+      const ms = perfMetrics(r);
+      const cost = posts.reduce((a, p) => a + postCost(p), 0);
+      const revenue = posts.reduce((a, p) => a + postRevenue(p), 0);
+      const views = ms.reduce((a, m) => a + num(m.views), 0);
+      const visits = ms.reduce((a, m) => a + num(m.visits), 0);
+      const reactions = ms.reduce((a, m) => a + num(m.reactions), 0);
+      return {
+        range: r, posts: posts, metrics: ms, cost: cost, revenue: revenue, net: revenue - cost,
+        views: views, visits: visits, reactions: reactions, roi: roiLabel(cost, revenue)
+      };
+    }
+    function setPerfPeriod(mode) {
+      if (PERF_PERIODS.indexOf(mode) === -1) return false;
+      const r = perfRange(mode);
+      if (mode === 'custom' && !r.from && !r.to) {
+        if (statusText) statusText.textContent = '시작일과 종료일을 먼저 골라 주세요';
+        return false;
+      }
+      perfPeriod = mode;
+      const box = document.getElementById('perfPeriod');
+      if (box && box.querySelectorAll) {
+        box.querySelectorAll('.perf-btn').forEach(b => {
+          if (b.dataset && b.dataset.perf === mode) b.classList.add('active');
+          else b.classList.remove('active');
+        });
+      }
+      if (mode !== 'custom' && mode !== 'all') {
+        const fEl = document.getElementById('perfFrom');
+        const tEl = document.getElementById('perfTo');
+        if (fEl) fEl.value = r.from;
+        if (tEl) tEl.value = r.to;
+      }
+      renderMetrics();
+      renderRevenueTable();
+      renderPerformance();
+      if (statusText) {
+        statusText.textContent = r.from
+          ? mode + ' 합계: 수익 ' + money(perfSum(r).revenue) + '원 · 제작비 ' + money(perfSum(r).cost) + '원 · 순수익 ' + money(perfSum(r).net) + '원'
+          : '전체 기간 합계를 다시 계산했습니다';
+      }
+      return true;
+    }
+
+    /* ===================== 성과 · 수익 (KPI + TOP 랭킹) ===================== */
+    function setTxt(id, txt) { const el = document.getElementById(id); if (el) el.textContent = txt; }
+    function setCardTone(id, positive) {
+      const el = document.getElementById(id);
+      if (!el || !el.classList) return;
+      if (positive === true) { el.classList.add('win'); el.classList.remove('loss'); }
+      else if (positive === false) { el.classList.add('loss'); el.classList.remove('win'); }
+      else { el.classList.remove('win'); el.classList.remove('loss'); }
+    }
+
+    function renderPerformance() {
+      const range = perfRange(perfPeriod);
+      const s = perfSum(range);
+      setTxt('kpiViews', fmtNum(s.views));
+      setTxt('kpiVisits', fmtNum(s.visits));
+      setTxt('kpiReactions', fmtNum(s.reactions));
+      setTxt('kpiPosts', String(s.metrics.length));
+      setTxt('kpiPostsSub', PERF_LABEL[perfPeriod] + ' 기록 ' + s.metrics.length + '건');
+      setTxt('kpiRoi', s.roi);
+      setTxt('kpiCost', money(s.cost) + '원');
+      setTxt('kpiNet', money(s.net) + '원');
+      setTxt('kpiRevenue', money(s.revenue) + '원');
+      setTxt('kpiVisitsSub', s.views ? '조회 대비 ' + Math.round(s.visits / s.views * 100) + '%' : '조회 대비 0%');
+      setTxt('kpiReactionsSub', '글당 평균 ' + (s.metrics.length ? (Math.round(s.reactions / s.metrics.length * 10) / 10) : 0));
+      setTxt('kpiCostSub', '비용 입력 ' + s.posts.filter(p => postCost(p) > 0).length + '/' + s.posts.length + '건');
+      setTxt('kpiNetSub', '수익 ' + money(s.revenue) + ' − 제작비 ' + money(s.cost));
+      setTxt('kpiRoiSub', s.cost > 0 ? '제작비 ' + money(s.cost) + '원 대비' : (s.revenue > 0 ? '제작비 0원 · 무자본 수익' : '제작비·수익을 입력해 보세요'));
+      setTxt('kpiRevenueSub', s.cost > 0 ? '순수익 ' + money(s.net) + '원 · ROI ' + s.roi : '제작비를 넣으면 순수익·ROI가 나옵니다');
+      setCardTone('kpiNetCard', s.net > 0 ? true : (s.net < 0 ? false : null));
+      setCardTone('kpiRoiCard', s.net > 0 ? true : (s.net < 0 ? false : null));
+      const rg = document.getElementById('perfRange');
+      if (rg) rg.innerHTML = '<b>' + esc(range.label) + '</b> · 콘텐츠 ' + s.posts.length + '건 · 기록 ' + s.metrics.length + '건';
+      const rng = document.getElementById('kpiRange');
+      if (rng) rng.textContent = PERF_LABEL[perfPeriod] + ' · 콘텐츠 ' + s.posts.length + '건';
+      renderTop(s);
+    }
+
+    function renderTop(sum) {
+      const box = document.getElementById('topList');
+      const s = sum || perfSum(perfRange(perfPeriod));
+      const rows = s.posts.map(p => {
+        const m = dateMetrics(p.date);
+        return {
+          post: p, views: m.views, visits: m.visits,
+          revenue: postRevenue(p), cost: postCost(p), net: postNet(p),
+          roi: postRoiLabel(p), roiV: roiValue(postCost(p), postRevenue(p))
+        };
+      }).sort((a, b) => (b.net - a.net) || (b.views - a.views) || (b.revenue - a.revenue));
+      if (box) {
+        if (!rows.length) {
+          box.innerHTML = '<div class="top-empty">' + (postBook.length
+            ? '이 기간에 해당하는 콘텐츠가 없습니다. [전체]로 바꾸면 지금까지의 순위를 볼 수 있습니다.'
+            : '아직 콘텐츠가 없습니다. 발행한 글의 수익·제작비를 넣으면 여기에 순위가 생깁니다.') + '</div>';
+        } else {
+          const medals = ['🥇', '🥈', '🥉'];
+          box.innerHTML = rows.slice(0, 8).map((r, i) => {
+            const rank = i < 3 ? medals[i] : String(i + 1);
+            const rev = r.revenue > 0 ? money(r.revenue) + '원' : '—';
+            return '<div class="top-row' + (i === 0 ? ' first' : '') + '">' +
+              '<div class="top-rank">' + rank + '</div>' +
+              '<div class="top-main">' +
+                '<div class="top-topic" title="' + esc(r.post.topic || '') + '">' + esc(r.post.topic || '(주제 미입력)') + '</div>' +
+                '<div class="top-meta">' + esc(r.post.date) + ' · 수익 ' + rev + ' · 제작비 ' + money(r.cost) + '원</div>' +
+              '</div>' +
+              '<div class="top-num views">' + fmtNum(r.views) + '<em>조회</em></div>' +
+              '<div class="top-num">' + money(r.net) + '원<em>순수익</em></div>' +
+              '<div class="top-num roi' + (r.roiV !== null && r.roiV < 0 ? ' neg' : '') + '">' + esc(r.roi) + '<em>ROI</em></div>' +
+            '</div>';
+          }).join('');
+          const note = document.getElementById('topNote');
+          if (note) note.textContent = '순수익 → 조회수 순 · ' + rows.length + '건 중 상위 ' + Math.min(8, rows.length) + '건';
+        }
+      }
+      /* 한눈 요약 */
+      const byRev = rows.slice().sort((a, b) => (b.revenue - a.revenue) || (b.net - a.net))[0];
+      const byViews = rows.slice().sort((a, b) => b.views - a.views)[0];
+      const chMap = {};
+      s.metrics.forEach(m => {
+        const k = METRIC_CHANNELS[m.channel] ? m.channel : 'naver';
+        if (!chMap[k]) chMap[k] = { views: 0, visits: 0 };
+        chMap[k].views += num(m.views); chMap[k].visits += num(m.visits);
+      });
+      const chKeys = Object.keys(chMap).sort((a, b) => chMap[b].views - chMap[a].views);
+      const best = (obj, fn) => (obj && (obj.revenue > 0 || obj.views > 0)) ? fn(obj) : '—';
+      setTxt('topBestRevenue', best(byRev, o => (o.post.topic || '(주제 미입력)') + ' · ' + money(o.revenue) + '원 (ROI ' + o.roi + ')'));
+      setTxt('topBestViews', best(byViews, o => (o.post.topic || '(주제 미입력)') + ' · 조회 ' + fmtNum(o.views)));
+      setTxt('topBestChannel', chKeys.length ? (METRIC_CHANNELS[chKeys[0]] || chKeys[0]) + ' · 조회 ' + fmtNum(chMap[chKeys[0]].views) : '—');
     }
 
     /* ===================== 화면 전환 (탭 = 다른 화면) ===================== */
@@ -5241,6 +5764,7 @@ instaLine +
         if (el && el.classList) {
           if (v === name) el.classList.add('active'); else el.classList.remove('active');
         }
+        if (el && el.setAttribute) el.setAttribute('aria-hidden', v === name ? 'false' : 'true');
       });
       const tabs = document.getElementById('studioTabs');
       if (tabs && tabs.querySelectorAll) {
@@ -5250,26 +5774,43 @@ instaLine +
           if (b.setAttribute) b.setAttribute('aria-selected', on ? 'true' : 'false');
         });
       }
-      if (name === 'dashboard') renderDashboard();
-      if (name === 'performance') { renderMetrics(); renderRevenueTable(); }
+      /* 화면별 렌더 — 한 곳이 실패해도 전환 자체는 성공해야 한다 */
+      if (name === 'dashboard') { try { renderDashboard(); } catch (e) { /* 무시 */ } }
+      if (name === 'performance') {
+        try { renderMetrics(); } catch (e) { /* 무시 */ }
+        try { renderPerformance(); } catch (e) { /* 무시 */ }
+        try { renderRevenueTable(); } catch (e) { /* 무시 */ }
+      }
+      if (name === 'publish') { try { renderPostList(); } catch (e) { /* 무시 */ } }
       /* 가이드 중에 다른 화면으로 넘어가면 가이드는 닫는다 (엉뚱한 곳을 가리키지 않게) */
-      if (tourActive && !(opts && opts.fromTour)) endTour(true);
+      try { if (tourActive && !(opts && opts.fromTour)) endTour(true); } catch (e) { /* 무시 */ }
       if (!opts || opts.scroll !== false) {
         try { if (window && typeof window.scrollTo === 'function') window.scrollTo(0, 0); } catch (e) { /* 무시 */ }
       }
       return true;
     }
+    /* 헤더의 안전망(studioGo)이 본 함수를 찾을 수 있게 명시적으로 노출한다. */
+    try { window.switchView = switchView; } catch (e) { /* 무시 */ }
     function getActiveView() { return activeView; }
     function initViews() {
       const tabs = document.getElementById('studioTabs');
-      if (tabs && tabs.addEventListener) {
+      if (tabs && tabs.addEventListener && !tabs.__studioBound) {
+        tabs.__studioBound = true;
         tabs.addEventListener('click', (e) => {
-          const btn = (e.target && e.target.closest) ? e.target.closest('.tab[data-view]') : null;
+          if (e && e.__studioViewHandled) return;   /* 헤더 안전망이 이미 처리 */
+          let btn = null;
+          try { btn = (e.target && e.target.closest) ? e.target.closest('.tab[data-view]') : null; } catch (err) { btn = null; }
           if (!btn || !btn.dataset) return;
           switchView(btn.dataset.view);
         });
       }
-      return switchView('dashboard', { scroll: false });
+      /* 주소 뒤 #performance 처럼 해시로 들어와도 그 화면을 연다 */
+      let initial = activeView;
+      try {
+        const h = String((window.location && window.location.hash) || '').replace(/^#/, '');
+        if (VIEWS.indexOf(h) > -1) initial = h;
+      } catch (e) { /* 무시 */ }
+      return switchView(initial || 'dashboard', { scroll: false });
     }
 
     /* ===================== 첫 방문 가이드 (스포트라이트 투어) ===================== */
@@ -5277,7 +5818,7 @@ instaLine +
     const TOUR_STEPS = [
       { sel: '[data-tour="list"]', title: '콘텐츠 목록 · 진행 현황', text: '여기서 오늘 만든 글이 몇 개 발행됐는지, 채널별로 어디까지 나갔는지 한눈에 봅니다.' },
       { sel: '[data-goto-view="create"]', title: '새 콘텐츠 만들기', text: '새 글은 여기서 시작합니다. 주제만 넣으면 5채널 초안과 이미지가 한 번에 나옵니다.' },
-      { sel: '.crow-rev input', title: '콘텐츠별 수익', text: '수익은 글 옆 칸에 바로 넣으면 총 수익에 합산되고 이 브라우저에 저장됩니다.' },
+      { sel: '.crow-pair input, .crow-rev input', title: '콘텐츠별 비용 · 수익', text: '제작비와 수익을 넣으면 순수익과 수익률(ROI)이 바로 계산됩니다. 입력한 값은 이 브라우저에 저장됩니다.' },
       { sel: '.tab[data-view="performance"]', title: '성과 · 수익', text: '조회·방문·반응 기록과 콘텐츠별 수익은 이 탭에서 일·주·월·연도로 봅니다.' }
     ];
     let tourIndex = 0;
@@ -5548,10 +6089,11 @@ instaLine +
       return { key: date, label: date, sub: '(' + wd + ')' };
     }
 
-    function aggregateMetrics(view) {
+    function aggregateMetrics(view, list) {
       const mode = METRIC_VIEWS.indexOf(view) > -1 ? view : metricsView;
+      const src = Array.isArray(list) ? list : metrics;
       const map = {};
-      metrics.forEach(m => {
+      src.forEach(m => {
         const b = bucketOf(String(m.date), mode);
         if (!map[b.key]) map[b.key] = { key: b.key, label: b.label, sub: b.sub, posts: 0, views: 0, visits: 0, reactions: 0 };
         const row = map[b.key];
@@ -5563,8 +6105,9 @@ instaLine +
       return Object.keys(map).map(k => map[k]).sort((a, b) => (a.key < b.key ? 1 : (a.key > b.key ? -1 : 0)));
     }
 
-    function metricsTotals() {
-      return metrics.reduce((acc, m) => {
+    function metricsTotals(list) {
+      const src = Array.isArray(list) ? list : metrics;
+      return src.reduce((acc, m) => {
         acc.posts += 1;
         acc.views += num(m.views);
         acc.visits += num(m.visits);
@@ -5573,7 +6116,13 @@ instaLine +
       }, { posts: 0, views: 0, visits: 0, reactions: 0 });
     }
 
-    function fmtNum(n) { return Number(n || 0).toLocaleString('ko-KR'); }
+    function groupDigits(n) {
+      const v = Math.round(Number(n) || 0);
+      try { return v.toLocaleString('ko-KR'); } catch (e) { /* Intl 없는 웹뷰 */ }
+      const s = String(Math.abs(v));
+      return (v < 0 ? '-' : '') + s.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+    function fmtNum(n) { return groupDigits(n); }
 
     function setMetricsView(view) {
       if (METRIC_VIEWS.indexOf(view) === -1) return false;
@@ -5590,30 +6139,9 @@ instaLine +
     }
 
     function renderMetrics() {
-      const rows = aggregateMetrics(metricsView);
-      const totals = metricsTotals();
-      ['kpiViews', 'kpiVisits', 'kpiPosts', 'kpiReactions'].forEach((id, i) => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        const val = [totals.views, totals.visits, totals.posts, totals.reactions][i];
-        el.textContent = fmtNum(val);
-      });
-      const krev = document.getElementById('kpiRevenue');
-      if (krev) krev.textContent = money(totalRevenue()) + '원';
-      const krevs = document.getElementById('kpiRevenueSub');
-      if (krevs) krevs.textContent = '수익 입력 ' + postBook.filter(p => postRevenue(p) > 0).length + '/' + postBook.length + '건';
-      const range = document.getElementById('kpiRange');
-      if (range) {
-        range.textContent = metrics.length
-          ? PERIOD_LABEL[metricsView] + ' ' + rows.length + '개 · 기록 ' + metrics.length + '건'
-          : '기록 없음';
-      }
-      const vs = document.getElementById('kpiVisitsSub');
-      if (vs) vs.textContent = totals.views ? '조회 대비 ' + Math.round(totals.visits / totals.views * 100) + '%' : '조회 대비 0%';
-      const ps = document.getElementById('kpiPostsSub');
-      if (ps) ps.textContent = '발행 콘텐츠 ' + postBook.length + '건';
-      const rs = document.getElementById('kpiReactionsSub');
-      if (rs) rs.textContent = '글당 평균 ' + (totals.posts ? (Math.round(totals.reactions / totals.posts * 10) / 10) : 0);
+      const list = perfMetrics(perfRange(perfPeriod));
+      const rows = aggregateMetrics(metricsView, list);
+      const totals = metricsTotals(list);
 
       const head = document.getElementById('metricsHead');
       if (head) {
@@ -5657,8 +6185,9 @@ instaLine +
         }
       }
       const note = document.getElementById('metricsNote');
-      if (note) note.textContent = metrics.length ? '기록 ' + metrics.length + '건 · localStorage 저장' : '기록은 이 브라우저에만 저장됩니다';
+      if (note) note.textContent = list.length ? '기록 ' + list.length + '건 · localStorage 저장' : '기록은 이 브라우저에만 저장됩니다';
       renderRevenueTable();
+      renderPerformance();
     }
 
     function initMetrics() {
@@ -5670,12 +6199,22 @@ instaLine +
     }
 
     /* ===================== 이벤트 연결 ===================== */
-    document.getElementById('postStatusFilter').addEventListener('change', (e) => {
+    /* 요소가 없거나 바인딩이 실패해도 뒤의 연결이 죽지 않게 하는 헬퍼 */
+    function onEl(id, type, fn) {
+      const el = document.getElementById(id);
+      if (!el || !el.addEventListener) return false;
+      try { el.addEventListener(type, fn); return true; } catch (e) { return false; }
+    }
+    function onDoc(type, fn) {
+      try { document.addEventListener(type, fn); return true; } catch (e) { return false; }
+    }
+
+    onEl('postStatusFilter', 'change', (e) => {
       postFilter = e.target.value;
       renderPostList();
     });
     /* 성과 보기 전환 · 기록 삭제 */
-    document.addEventListener('click', (e) => {
+    onDoc('click', (e) => {
       const t = e.target;
       if (!t || !t.closest) return;
       const seg = t.closest('.seg-btn[data-period]');
@@ -5683,12 +6222,16 @@ instaLine +
       const del = t.closest('[data-metric-del]');
       if (del) { removeMetricWithConfirm(del.dataset.metricDel); return; }
     });
-    /* 화면 전환 · 대시보드에서 콘텐츠 열기 */
-    document.addEventListener('click', (e) => {
+    /* 화면 전환 · 기간 바로보기 · 대시보드에서 콘텐츠 열기 */
+    onDoc('click', (e) => {
       const t = e.target;
       if (!t || !t.closest) return;
       const go = t.closest('[data-goto-view]');
-      if (go && go.dataset) { switchView(go.dataset.gotoView); return; }
+      if (go && go.dataset) {
+        if (go.dataset.perfJump) { try { setPerfPeriod(go.dataset.perfJump); } catch (err) { /* 무시 */ } }
+        switchView(go.dataset.gotoView);
+        return;
+      }
       const open = t.closest('[data-open-post]');
       if (open && open.dataset) {
         loadPost(open.dataset.openPost);
@@ -5696,11 +6239,12 @@ instaLine +
         return;
       }
     });
-    /* 5대 심사 기준 체크박스 · 수익 입력 */
-    document.addEventListener('change', (e) => {
+    /* 5대 심사 기준 체크박스 · 제작비/수익 입력 */
+    onDoc('change', (e) => {
       const t = e.target;
       if (!t) return;
       if (t.dataset && t.dataset.reviewBox) { toggleReview(t.dataset.reviewBox); return; }
+      if (t.dataset && t.dataset.cost) { setCost(t.dataset.cost, t.value); return; }
       if (t.dataset && t.dataset.revenue) { setRevenue(t.dataset.revenue, t.value); }
     });
     /* 날짜별 글 리스트 · 피클 지시 버튼 (위임) */
@@ -5720,11 +6264,11 @@ instaLine +
       const ndelEl = t.closest('[data-note-del]');
       if (ndelEl) { deletePickleNote(ndelEl.dataset.noteDel); return; }
     });
-    document.getElementById('imgStyle').addEventListener('change', () => {
+    onEl('imgStyle', 'change', () => {
       drawAll();
       statusText.textContent = '이미지 스타일이 5장에 모두 적용되었습니다';
     });
-    document.getElementById('instaFormat').addEventListener('change', (e) => {
+    onEl('instaFormat', 'change', (e) => {
       instaFormat = e.target.value;
       instaSlide = 0;
       instaOverrides = {};
@@ -5739,20 +6283,20 @@ instaLine +
           ? '인스타 포맷: 인스타툰 4컷 — 위 원고의 컷별 대사로 손그림 4컷 미리보기를 그렸습니다. PNG로 저장하세요'
           : '인스타 포맷: 일반 피드 1장 — 사진 한 장 + 캡션으로 생성합니다');
     });
-    document.getElementById('keyline').addEventListener('input', () => drawAll());
-    document.getElementById('targetKeyword').addEventListener('input', () => {
+    onEl('keyline', 'input', () => drawAll());
+    onEl('targetKeyword', 'input', () => {
       renderSeo('naver');
       renderSeo('google');
       renderHookBars();
     });
-    document.getElementById('seedKeyword').addEventListener('input', () => renderHookBars());
-    document.getElementById('outNaver').addEventListener('input', () => renderSeo('naver'));
-    document.getElementById('outGoogle').addEventListener('input', () => renderSeo('google'));
-    document.getElementById('seedKeyword').addEventListener('keydown', (e) => {
+    onEl('seedKeyword', 'input', () => renderHookBars());
+    onEl('outNaver', 'input', () => renderSeo('naver'));
+    onEl('outGoogle', 'input', () => renderSeo('google'));
+    onEl('seedKeyword', 'keydown', (e) => {
       if (e.key === 'Enter') { e.preventDefault(); researchKeywords(); }
     });
-    document.getElementById('category').addEventListener('change', () => { drawAll(); refreshGuides(); renderHookBars(); });
-    document.getElementById('topic').addEventListener('input', () => {
+    onEl('category', 'change', () => { drawAll(); refreshGuides(); renderHookBars(); });
+    onEl('topic', 'input', () => {
       clearTimeout(guideTimer);
       guideTimer = setTimeout(() => {
         drawAll();
@@ -5762,6 +6306,7 @@ instaLine +
         renderSeo('google');
       }, 350);
     });
+    onEl('perfApply', 'click', () => setPerfPeriod('custom'));
 
     /* 후킹 스타일 · 제목 키워드 선택기 */
     document.addEventListener('click', (e) => {
@@ -5791,26 +6336,42 @@ instaLine +
     });
 
     /* 초기 상태 */
-    document.getElementById('title-naver').value = '월급날 통장 쪼개기, 3년 해보고 남은 것';
-    document.getElementById('title-google').value = '월급 통장 쪼개기 총정리: 조건·방법·주의점 5가지';
-    document.getElementById('title-insta').value = '통장 쪼개기, 아직도 감으로 하시나요?';
-    document.getElementById('title-yt').value = '통장 쪼개기 3년, 남은 건';
-    document.getElementById('title-threads').value = '결국 기준 하나였음';
-    syncInstaInput();
-    drawAll();
-    refreshGuides();
-    renderHookBars();
-    renderSeo('naver');
-    renderSeo('google');
-    initPostBook();
-    restoreBgm();
-    initMetrics();
-    renderRevenueTable();
-    renderReview();
-    initViews();
-    renderDashboard();
-    initTour();
-    maybeStartTour();
+    /* ===================== 초기화 =====================
+       화면 전환을 가장 먼저 걸고, 각 단계는 따로 감싸서
+       한 기능이 실패해도 탭 이동과 나머지 화면은 살아 있게 한다. */
+    function safeRun(label, fn) {
+      try { return fn(); } catch (e) {
+        try { if (typeof console !== 'undefined' && console.error) console.error('[studio] ' + label, e); } catch (e2) { /* 무시 */ }
+        return null;
+      }
+    }
+    safeRun('views', initViews);            /* ← 탭 전환은 무슨 일이 있어도 제일 먼저 */
+    safeRun('titles', () => {
+      const t1 = document.getElementById('title-naver');
+      if (t1) t1.value = '월급날 통장 쪼개기, 3년 해보고 남은 것';
+      const t2 = document.getElementById('title-google');
+      if (t2) t2.value = '월급 통장 쪼개기 총정리: 조건·방법·주의점 5가지';
+      const t3 = document.getElementById('title-insta');
+      if (t3) t3.value = '통장 쪼개기, 아직도 감으로 하시나요?';
+      const t4 = document.getElementById('title-yt');
+      if (t4) t4.value = '통장 쪼개기 3년, 남은 건';
+      const t5 = document.getElementById('title-threads');
+      if (t5) t5.value = '결국 기준 하나였음';
+    });
+    safeRun('canvas', () => { syncInstaInput(); drawAll(); });
+    safeRun('guides', () => { refreshGuides(); renderHookBars(); });
+    safeRun('seo', () => { renderSeo('naver'); renderSeo('google'); });
+    safeRun('posts', initPostBook);
+    safeRun('bgm', restoreBgm);
+    safeRun('metrics', initMetrics);
+    safeRun('revenue', renderRevenueTable);
+    safeRun('performance', renderPerformance);
+    safeRun('review', renderReview);
+    safeRun('dashboard', renderDashboard);
+    safeRun('views-final', initViews);         /* 재확인(중복 호출은 안전) */
+    safeRun('tour', initTour);
+    safeRun('tour-auto', maybeStartTour);
+    try { window.__studioReady = true; } catch (e) { /* 무시 */ }
     statusText.textContent = '준비 완료';
   </script>
 </body>
