@@ -14,11 +14,19 @@
 <body>
   <figure>
     <figcaption>스튜디오 · 390px</figcaption>
-    <iframe src="https://htmlpreview.github.io/?https://raw.githubusercontent.com/savejeongpick-boop/content-studio/main/index.html" width="390" height="900"></iframe>
+    <iframe id="f1" width="390" height="900"></iframe>
   </figure>
   <figure>
     <figcaption>프롬프트 허브 · 390px</figcaption>
-    <iframe src="https://htmlpreview.github.io/?https://raw.githubusercontent.com/savejeongpick-boop/content-studio/main/ai-prompts-hub.html" width="390" height="900"></iframe>
+    <iframe id="f2" width="390" height="900"></iframe>
   </figure>
+  <script>
+    var base = 'https://raw.githubusercontent.com/savejeongpick-boop/content-studio/main/';
+    ['index.html', 'ai-prompts-hub.html'].forEach(function (name, i) {
+      fetch(base + name + '?t=' + Date.now()).then(function (r) { return r.text(); }).then(function (html) {
+        document.getElementById(i ? 'f2' : 'f1').srcdoc = html;
+      });
+    });
+  </script>
 </body>
 </html>
