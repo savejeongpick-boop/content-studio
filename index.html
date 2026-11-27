@@ -380,6 +380,8 @@
        ========================================================= */
     .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); gap: 10px; }
     .review-item {
+      display: block;
+      margin-bottom: 0;
       position: relative;
       border: 1px solid var(--border); border-radius: var(--radius);
       background: var(--surface-2); padding: 12px 13px;
@@ -388,7 +390,8 @@
     .review-item:hover { border-color: #cfd3dd; background: #fff; }
     .review-item.done { background: #f7fdfa; border-color: var(--ok-border); }
     .review-item input { position: absolute; opacity: 0; pointer-events: none; }
-    .review-head { display: flex; align-items: flex-start; gap: 9px; }
+    .review-head { display: flex; align-items: flex-start; gap: 9px; font-weight: inherit; }
+    .review-head > span:last-child { display: block; min-width: 0; flex: 1 1 auto; }
     .review-check {
       width: 18px; height: 18px; flex: 0 0 auto; margin-top: 1px;
       border-radius: 6px; border: 1.5px solid #c8cdd7; background: #fff;
@@ -397,10 +400,10 @@
     }
     .review-check .i { width: 12px; height: 12px; stroke-width: 2.6; }
     .review-item.done .review-check { background: var(--ok); border-color: var(--ok); color: #fff; }
-    .review-en { font-size: 11.5px; font-weight: 750; letter-spacing: -0.01em; color: var(--text); line-height: 1.35; }
-    .review-ko { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+    .review-en { display: block; font-size: 11.5px; font-weight: 750; letter-spacing: -0.01em; color: var(--text); line-height: 1.35; }
+    .review-ko { display: block; font-size: 11px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
     .review-tag {
-      margin-top: 8px; display: inline-flex; align-items: center; gap: 4px;
+      margin-top: 9px; display: inline-flex; align-items: center; gap: 4px;
       font-size: 10.5px; font-weight: 700; color: var(--muted);
       background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 2px 7px;
     }
@@ -533,7 +536,7 @@
     }
     .hchip:hover { border-color: var(--ch-accent); color: var(--text); }
     .hchip.active { background: var(--ch-accent); border-color: var(--ch-accent); color: #fff; }
-    .hchip.kw.active::before { content: "<svg class="i-14" aria-hidden="true"><use href="#i-check"></use></svg> "; font-weight: 800; }
+    .hchip.kw.active::before { content: "<svg class="i i-14" aria-hidden="true"><use href="#i-check"></use></svg> "; font-weight: 800; }
     input.hook-kw-input {
       width: auto; flex: 1 1 110px; min-width: 110px;
       font-size: 11px; padding: 4px 10px; border-radius: 999px;
@@ -1044,7 +1047,7 @@
 
     <details class="panel" id="stdPanel">
       <summary><svg class="i" aria-hidden="true"><use href="#i-pin"></use></svg>5채널 최신 기준<span class="std-tag" style="margin-left:2px;">2026-11-27 09:30 반영 · 펼쳐서 확인</span></summary>
-      <div class="active-note"><svg class="i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>현재 적용 중 — 승인 전 순수 콘텐츠 모드</b> · 광고·제휴 링크·상품 링크·고지 문구는 넣지 않습니다. 아래 카드 중 <b><svg class="i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 홀드</b> 표시가 붙은 항목은 각 플랫폼이 승인·안정권에 들어간 뒤에만 켭니다.</div>
+      <div class="active-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>현재 적용 중 — 승인 전 순수 콘텐츠 모드</b> · 광고·제휴 링크·상품 링크·고지 문구는 넣지 않습니다. 아래 카드 중 <b><svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 홀드</b> 표시가 붙은 항목은 각 플랫폼이 승인·안정권에 들어간 뒤에만 켭니다.</div>
       <div class="std-grid" style="margin-top:12px;">
 
         <div class="std-card">
@@ -1072,7 +1075,7 @@
         </div>
 
         <div class="std-card">
-          <div class="std-tag">유튜브 쇼핑 쇼츠 · 세픽 · 참고 영상 FdVnd0AFge8 · 상품 제휴 매칭은 <svg class="i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후</div>
+          <div class="std-tag">유튜브 쇼핑 쇼츠 · 세픽 · 참고 영상 FdVnd0AFge8 · 상품 제휴 매칭은 <svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후</div>
           <h3>20초 = 5블록, 자막은 시간대별로</h3>
           <ul>
             <li><b>루틴 5단계</b>: 급상승·일상 소재 발굴 → 20초 3초훅 대본 → 씬별 소스 → AI 편집 + 휴먼 터치 → 멀티 배포(릴스·틱톡)</li>
@@ -1106,10 +1109,10 @@
           </ul>
         </div>
 
-        <div class="hold-section-head"><svg class="i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인·안정권 진입 후 적용 (현재 홀드) — 지금은 쓰지 않습니다. 아래 항목은 각 플랫폼이 승인·안정권에 들어간 뒤에만 켭니다.</div>
+        <div class="hold-section-head"><svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인·안정권 진입 후 적용 (현재 홀드) — 지금은 쓰지 않습니다. 아래 항목은 각 플랫폼이 승인·안정권에 들어간 뒤에만 켭니다.</div>
 
         <div class="std-card hold">
-          <div class="std-tag"><svg class="i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 홀드 · 제휴 · 광고 (공정위·플랫폼 규정)</div>
+          <div class="std-tag"><svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 홀드 · 제휴 · 광고 (공정위·플랫폼 규정)</div>
           <h3>승인 후에만 붙이는 항목</h3>
           <ul>
             <li><b>쿠팡 파트너스 AF3753560</b> — 제휴 링크와 쇼츠 고정댓글 링크. 현재 미사용.</li>
@@ -1117,8 +1120,8 @@
             <li><b>애드센스 · 애드포스트 수익화 배치</b> — 광고 코드 삽입과 수익 링크 정리는 승인 후.</li>
             <li><b>스레드 제휴 댓글</b> “너무 많이 물어봐서 아래 링크 달게” — 승인 후, 링크가 있을 때만.</li>
           </ul>
-          <div class="notice-box"><svg class="i-14" aria-hidden="true"><use href="#i-clock"></use></svg> <b>매일 07:30 · 16:30 규칙</b> — 5채널 초안·이미지와 자체 검수를 여기서 만들고, <b>업로드는 원영님 확인 후 08:00 · 17:00</b>에만 진행합니다. 승인 전에는 광고·제휴 요소를 빼고 올립니다.</div>
-          <div class="std-actions"><button class="btn-mini" onclick="copyNotices()"><svg class="i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후 사용할 고지 문구 3종 복사 (보관용)</button></div>
+          <div class="notice-box"><svg class="i i-14" aria-hidden="true"><use href="#i-clock"></use></svg> <b>매일 07:30 · 16:30 규칙</b> — 5채널 초안·이미지와 자체 검수를 여기서 만들고, <b>업로드는 원영님 확인 후 08:00 · 17:00</b>에만 진행합니다. 승인 전에는 광고·제휴 요소를 빼고 올립니다.</div>
+          <div class="std-actions"><button class="btn-mini" onclick="copyNotices()"><svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후 사용할 고지 문구 3종 복사 (보관용)</button></div>
         </div>
 
       </div>
@@ -1212,7 +1215,7 @@
 
       <div class="row">
         <div style="grid-column: 1 / -1;">
-          <label for="context"><svg class="i-14" aria-hidden="true"><use href="#i-paperclip"></use></svg> 실제 소재·맥락 고정 (주제가 딴 데로 새지 않게 — 비교 테스트 보강)</label>
+          <label for="context"><svg class="i i-14" aria-hidden="true"><use href="#i-paperclip"></use></svg> 실제 소재·맥락 고정 (주제가 딴 데로 새지 않게 — 비교 테스트 보강)</label>
           <textarea id="context" style="min-height:62px;" placeholder="예: 11/24 생일 다음날 밤 11시 시작 / 첫 글 조회 41회 / 첫 영상 87회 / 링크 클릭 7회, 수익 210원 / 인스타 카툰은 접음 — 숫자는 이 값만 쓰고 새로 만들지 않기"></textarea>
           <div class="std-tag" style="margin-top:5px;">사건·숫자·감정을 그대로 적으면 세 AI도 일반론으로 새지 않습니다. 비워두면 각 원고가 [대괄호] 자리로 나옵니다.</div>
         </div>
@@ -1220,11 +1223,11 @@
 
       <div class="row">
         <div>
-          <label for="productKw"><svg class="i-14" aria-hidden="true"><use href="#i-cart"></use></svg> 쇼츠 상품 후보 (제휴 없이 소개만 · 1개) — 제휴 매칭은 <svg class="i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후</label>
+          <label for="productKw"><svg class="i i-14" aria-hidden="true"><use href="#i-cart"></use></svg> 쇼츠 상품 후보 (제휴 없이 소개만 · 1개) — 제휴 매칭은 <svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후</label>
           <input type="text" id="productKw" placeholder="예: 무선 미니 키보드 (상품 1개만 확정)" />
         </div>
         <div>
-          <label for="affToggle"><svg class="i-14" aria-hidden="true"><use href="#i-briefcase"></use></svg> 제휴 링크·고지</label>
+          <label for="affToggle"><svg class="i i-14" aria-hidden="true"><use href="#i-briefcase"></use></svg> 제휴 링크·고지</label>
           <select id="affToggle">
             <option value="off" selected>제휴·광고 없음 (승인 전 홀드 — 기본값)</option>
             <option value="on">[승인 후 사용] 승인·안정권 후 적용: 제휴 고지 자동 삽입 + 링크는 댓글·고정댓글 분리</option>
@@ -1238,15 +1241,15 @@
       </div>
 
       <div class="mode-note" style="margin-top:10px;">
-        <svg class="i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>승인 대비 콘텐츠 모드 ON</b> — 블로그 원고는 처음부터 승인 가능한 형태로 나오고, <b>광고·제휴 요소는 넣지 않습니다</b>(승인 후 적용).
+        <svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>승인 대비 콘텐츠 모드 ON</b> — 블로그 원고는 처음부터 승인 가능한 형태로 나오고, <b>광고·제휴 요소는 넣지 않습니다</b>(승인 후 적용).
         <b>티스토리(애드센스)</b>: 공백 제외 1,700~1,950자 · H2/H3 계층 · 30일 실행 표 · 체크리스트 · FAQ · 자체 제작 이미지+Alt &nbsp;|&nbsp;
         <b>네이버(애드포스트)</b>: 1,450~1,600자 · 경험+정보 결합 · 태그 5~8개 · 표/체크리스트 없이 · 상업성 표현·외부 수익 링크 자제
-        <br><svg class="i-14" aria-hidden="true"><use href="#i-pen"></use></svg> <b>AI 티 제거</b>: “~에 대해 알아보겠습니다 / ~하는 것이 중요합니다 / 결론적으로 / 첫째·둘째·셋째” 같은 상투어 없이, 인기 블로거의 실제 호흡으로 씁니다. “~더라고요 / ~거든요 / ~죠”를 자연스럽게 섞습니다.
-        <br><svg class="i-14" aria-hidden="true"><use href="#i-layout"></use></svg> <b>공통 뼈대</b>: 3초 훅 → 문제 공감 → 해결책 → 댓글·행동 유도(CTA). 스레드는 <b>반말 일상 잡담 1~2줄 + 답글 1~2개</b>, 쇼츠는 20초 5블록, 인스타는 4컷 인스타툰까지.
+        <br><svg class="i i-14" aria-hidden="true"><use href="#i-pen"></use></svg> <b>AI 티 제거</b>: “~에 대해 알아보겠습니다 / ~하는 것이 중요합니다 / 결론적으로 / 첫째·둘째·셋째” 같은 상투어 없이, 인기 블로거의 실제 호흡으로 씁니다. “~더라고요 / ~거든요 / ~죠”를 자연스럽게 섞습니다.
+        <br><svg class="i i-14" aria-hidden="true"><use href="#i-layout"></use></svg> <b>공통 뼈대</b>: 3초 훅 → 문제 공감 → 해결책 → 댓글·행동 유도(CTA). 스레드는 <b>반말 일상 잡담 1~2줄 + 답글 1~2개</b>, 쇼츠는 20초 5블록, 인스타는 4컷 인스타툰까지.
       </div>
 
       <details>
-        <summary><svg class="i-14" aria-hidden="true"><use href="#i-key"></use></svg> API 키 설정 (선택 — 브라우저에만 저장되며 외부 서버로 전송되지 않습니다)</summary>
+        <summary><svg class="i i-14" aria-hidden="true"><use href="#i-key"></use></svg> API 키 설정 (선택 — 브라우저에만 저장되며 외부 서버로 전송되지 않습니다)</summary>
         <div class="row" style="margin-top: 10px;">
           <div>
             <label for="apiKey">선택한 엔진의 API Key</label>
@@ -1262,7 +1265,7 @@
       <div class="actions">
         <button class="btn-primary" onclick="runStudio()">5개 채널 동시 생성</button>
         <button class="btn-secondary" onclick="copyMasterPrompt()">AI 복붙용 통합 프롬프트 복사</button>
-        <button class="btn-outline" onclick="downloadAll()"><svg class="i-14" aria-hidden="true"><use href="#i-image"></use></svg> 이미지 5장 일괄 다운로드</button>
+        <button class="btn-outline" onclick="downloadAll()"><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 이미지 5장 일괄 다운로드</button>
         <button class="btn-outline" onclick="clearAll()">초기화</button>
       </div>
     </section>
@@ -1276,15 +1279,15 @@
             <span class="hint">날짜를 골라 임시저장 → 예약 발송 설정. 기록은 이 브라우저(localStorage)에만 남습니다.</span>
           </div>
         </div>
-        <div class="ph-right"><span class="hbadge"><svg class="i-14" aria-hidden="true"><use href="#i-clock"></use></svg> 08:00 · 17:00 발행</span></div>
+        <div class="ph-right"><span class="hbadge"><svg class="i i-14" aria-hidden="true"><use href="#i-clock"></use></svg> 08:00 · 17:00 발행</span></div>
       </div>
       <div class="row" style="margin-top:12px;">
         <div>
-          <label for="postDate"><svg class="i-14" aria-hidden="true"><use href="#i-calendar"></use></svg> 글 날짜</label>
+          <label for="postDate"><svg class="i i-14" aria-hidden="true"><use href="#i-calendar"></use></svg> 글 날짜</label>
           <input type="date" id="postDate" />
         </div>
         <div>
-          <label for="schedAt"><svg class="i-14" aria-hidden="true"><use href="#i-clock"></use></svg> 예약 발송 일시</label>
+          <label for="schedAt"><svg class="i i-14" aria-hidden="true"><use href="#i-clock"></use></svg> 예약 발송 일시</label>
           <input type="datetime-local" id="schedAt" />
         </div>
         <div>
@@ -1298,15 +1301,15 @@
         </div>
       </div>
       <div class="actions" style="margin-top:0;">
-        <button class="btn-primary" onclick="saveDraftPost()"><svg class="i-14" aria-hidden="true"><use href="#i-save"></use></svg> 임시저장</button>
-        <button class="btn-secondary" onclick="setScheduledPost()"><svg class="i-14" aria-hidden="true"><use href="#i-clock"></use></svg> 예약 발송 설정</button>
-        <button class="btn-outline" onclick="markPostPublished()"><svg class="i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> 발행 완료로 표시</button>
-        <button class="btn-outline" onclick="copyScheduleRequest()"><svg class="i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 피클 예약 발송 요청 복사</button>
-        <button class="btn-outline" onclick="deletePostByDate()"><svg class="i-14" aria-hidden="true"><use href="#i-trash"></use></svg> 이 날짜 기록 삭제</button>
+        <button class="btn-primary" onclick="saveDraftPost()"><svg class="i i-14" aria-hidden="true"><use href="#i-save"></use></svg> 임시저장</button>
+        <button class="btn-secondary" onclick="setScheduledPost()"><svg class="i i-14" aria-hidden="true"><use href="#i-clock"></use></svg> 예약 발송 설정</button>
+        <button class="btn-outline" onclick="markPostPublished()"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> 발행 완료로 표시</button>
+        <button class="btn-outline" onclick="copyScheduleRequest()"><svg class="i i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 피클 예약 발송 요청 복사</button>
+        <button class="btn-outline" onclick="deletePostByDate()"><svg class="i i-14" aria-hidden="true"><use href="#i-trash"></use></svg> 이 날짜 기록 삭제</button>
       </div>
-      <div class="post-hint"><svg class="i-14" aria-hidden="true"><use href="#i-info"></use></svg> 이 HTML은 브라우저에서 혼자 도는 파일이라 <b>실제 자동 발행은 되지 않습니다.</b> 예약을 잡은 뒤 <b><svg class="i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 피클 예약 발송 요청 복사</b>로 요청문을 복사해 피클에게 보내면, 피클이 그 일정으로 발행 예약을 등록합니다.</div>
+      <div class="post-hint"><svg class="i i-14" aria-hidden="true"><use href="#i-info"></use></svg> 이 HTML은 브라우저에서 혼자 도는 파일이라 <b>실제 자동 발행은 되지 않습니다.</b> 예약을 잡은 뒤 <b><svg class="i i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 피클 예약 발송 요청 복사</b>로 요청문을 복사해 피클에게 보내면, 피클이 그 일정으로 발행 예약을 등록합니다.</div>
       <details style="margin-top:8px;">
-        <summary style="font-size:12px;color:var(--muted);cursor:pointer;"><svg class="i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 복사한 예약 요청문 보기 (복사가 안 될 때 여기서 직접 복사)</summary>
+        <summary style="font-size:12px;color:var(--muted);cursor:pointer;"><svg class="i i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 복사한 예약 요청문 보기 (복사가 안 될 때 여기서 직접 복사)</summary>
         <textarea id="scheduleRequest" style="margin-top:8px;min-height:86px;font-size:12px;" readonly></textarea>
       </details>
       <div id="postList" class="post-list"></div>
@@ -1345,13 +1348,13 @@
         </div>
       </div>
       <div class="actions" style="margin-top:0;">
-        <button class="btn-primary" onclick="addPickleNote()"><svg class="i-14" aria-hidden="true"><use href="#i-message"></use></svg> 기록 & 복사</button>
-        <button class="btn-outline" onclick="copyPickleMessage()"><svg class="i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 피클에게 보낼 메시지 복사</button>
-        <button class="btn-outline" onclick="clearPickleNotes()"><svg class="i-14" aria-hidden="true"><use href="#i-sparkles"></use></svg> 히스토리 비우기</button>
+        <button class="btn-primary" onclick="addPickleNote()"><svg class="i i-14" aria-hidden="true"><use href="#i-message"></use></svg> 기록 & 복사</button>
+        <button class="btn-outline" onclick="copyPickleMessage()"><svg class="i i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 피클에게 보낼 메시지 복사</button>
+        <button class="btn-outline" onclick="clearPickleNotes()"><svg class="i i-14" aria-hidden="true"><use href="#i-sparkles"></use></svg> 히스토리 비우기</button>
       </div>
-      <div class="post-hint"><svg class="i-14" aria-hidden="true"><use href="#i-info"></use></svg> 이 파일은 브라우저에서 혼자 돌기 때문에 <b>피클 서버로 바로 메시지를 보낼 수 없습니다.</b> 지시 기록은 이 브라우저에 남고, 복사한 문장을 피클 채팅에 붙여 보내면 그대로 지시가 됩니다.</div>
+      <div class="post-hint"><svg class="i i-14" aria-hidden="true"><use href="#i-info"></use></svg> 이 파일은 브라우저에서 혼자 돌기 때문에 <b>피클 서버로 바로 메시지를 보낼 수 없습니다.</b> 지시 기록은 이 브라우저에 남고, 복사한 문장을 피클 채팅에 붙여 보내면 그대로 지시가 됩니다.</div>
       <details style="margin-top:8px;">
-        <summary style="font-size:12px;color:var(--muted);cursor:pointer;"><svg class="i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 복사한 메시지 보기 (복사가 안 될 때 여기서 직접 복사)</summary>
+        <summary style="font-size:12px;color:var(--muted);cursor:pointer;"><svg class="i i-14" aria-hidden="true"><use href="#i-clipboard"></use></svg> 복사한 메시지 보기 (복사가 안 될 때 여기서 직접 복사)</summary>
         <textarea id="pickleCopyBox" style="margin-top:8px;min-height:80px;font-size:12px;" readonly></textarea>
       </details>
       <div id="pickleHistory" class="pickle-history"></div>
@@ -1374,7 +1377,7 @@
         </div>
       </div>
       <div class="actions" style="margin-top:0;">
-        <button class="btn-primary" onclick="importDraftJson()"><svg class="i-14" aria-hidden="true"><use href="#i-download"></use></svg> 불러와서 리스트에 추가</button>
+        <button class="btn-primary" onclick="importDraftJson()"><svg class="i i-14" aria-hidden="true"><use href="#i-download"></use></svg> 불러와서 리스트에 추가</button>
         <button class="btn-outline" onclick="fillImportSample()">예시 형식 채우기</button>
       </div>
       <div id="importResult" class="import-result"></div>
@@ -1389,20 +1392,20 @@
           <button class="btn-mini" onclick="copyText('outNaver')">복사</button>
         </div>
         <div class="hook-bar">
-          <div class="hook-row"><span class="hook-label"><svg class="i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-naver"></div></div>
-          <div class="hook-row"><span class="hook-label"><svg class="i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-naver"></div><input class="hook-kw-input" type="text" id="hook-kwin-naver" placeholder="직접 입력 후 Enter" /></div>
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-naver"></div></div>
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-naver"></div><input class="hook-kw-input" type="text" id="hook-kwin-naver" placeholder="직접 입력 후 Enter" /></div>
           <div class="hook-preview" id="hook-prev-naver"></div>
           <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('naver')">이 카드만 초안 다시 생성</button></div>
         </div>
         <textarea class="output" id="outNaver" placeholder="3초 훅 → 문제 공감 → 해결책 → 댓글 CTA + 제목 후보 3개 + 사진 위치 + 검색 태그가 여기에 생성됩니다."></textarea>
         <div class="seo-box">
-          <div class="seo-head"><span><svg class="i-14" aria-hidden="true"><use href="#i-search"></use></svg> 네이버 SEO · 승인 대비 점검</span><b class="seo-score" id="seoScore-naver">—</b></div>
+          <div class="seo-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-search"></use></svg> 네이버 SEO · 승인 대비 점검</span><b class="seo-score" id="seoScore-naver">—</b></div>
           <div id="seoList-naver"></div>
         </div>
-        <div class="mode-note"><svg class="i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>승인 대비 콘텐츠 모드</b> · 1,450~1,600자 · 태그 5~8개 · 표·체크리스트 없이 경험담 · 3초 훅→공감→해결→댓글 CTA · 광고·제휴 없음</div>
+        <div class="mode-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>승인 대비 콘텐츠 모드</b> · 1,450~1,600자 · 태그 5~8개 · 표·체크리스트 없이 경험담 · 3초 훅→공감→해결→댓글 CTA · 광고·제휴 없음</div>
 
         <div class="img-block">
-          <div class="img-head"><span><svg class="i-14" aria-hidden="true"><use href="#i-image"></use></svg> 대표 이미지</span><b id="cap-naver">1200×900 · 4:3</b></div>
+          <div class="img-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 대표 이미지</span><b id="cap-naver">1200×900 · 4:3</b></div>
           <div class="canvas-wrap"><canvas id="cv-naver"></canvas></div>
           <input class="title-input" id="title-naver" data-ch="naver" placeholder="이미지에 넣을 제목 문구" />
           <div class="tools">
@@ -1412,7 +1415,7 @@
         </div>
 
         <details>
-          <summary><svg class="i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
+          <summary><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
           <div id="guide-naver"></div>
         </details>
       </div>
@@ -1424,20 +1427,20 @@
           <button class="btn-mini" onclick="copyText('outGoogle')">복사</button>
         </div>
         <div class="hook-bar">
-          <div class="hook-row"><span class="hook-label"><svg class="i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-google"></div></div>
-          <div class="hook-row"><span class="hook-label"><svg class="i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-google"></div><input class="hook-kw-input" type="text" id="hook-kwin-google" placeholder="직접 입력 후 Enter" /></div>
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-google"></div></div>
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-google"></div><input class="hook-kw-input" type="text" id="hook-kwin-google" placeholder="직접 입력 후 Enter" /></div>
           <div class="hook-preview" id="hook-prev-google"></div>
           <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('google')">이 카드만 초안 다시 생성</button></div>
         </div>
         <textarea class="output" id="outGoogle" placeholder="H1·메타 디스크립션 + H2/H3 구조 + 30일 실행 표 + 체크리스트 + FAQ가 여기에 생성됩니다."></textarea>
         <div class="seo-box">
-          <div class="seo-head"><span><svg class="i-14" aria-hidden="true"><use href="#i-search"></use></svg> 구글 SEO · 승인 대비 점검</span><b class="seo-score" id="seoScore-google">—</b></div>
+          <div class="seo-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-search"></use></svg> 구글 SEO · 승인 대비 점검</span><b class="seo-score" id="seoScore-google">—</b></div>
           <div id="seoList-google"></div>
         </div>
-        <div class="mode-note google"><svg class="i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>승인 대비 콘텐츠 모드</b> · 1,700~1,950자 · H2/H3 · 30일 실행 표 · 체크리스트 · FAQ · 전문 에디터 포맷 · 광고·제휴 없음</div>
+        <div class="mode-note google"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>승인 대비 콘텐츠 모드</b> · 1,700~1,950자 · H2/H3 · 30일 실행 표 · 체크리스트 · FAQ · 전문 에디터 포맷 · 광고·제휴 없음</div>
 
         <div class="img-block">
-          <div class="img-head"><span><svg class="i-14" aria-hidden="true"><use href="#i-image"></use></svg> OG · 피처드 이미지</span><b id="cap-google">1200×630 · 1.91:1</b></div>
+          <div class="img-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> OG · 피처드 이미지</span><b id="cap-google">1200×630 · 1.91:1</b></div>
           <div class="canvas-wrap"><canvas id="cv-google"></canvas></div>
           <input class="title-input" id="title-google" data-ch="google" placeholder="이미지에 넣을 제목 문구" />
           <div class="tools">
@@ -1447,7 +1450,7 @@
         </div>
 
         <details>
-          <summary><svg class="i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
+          <summary><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
           <div id="guide-google"></div>
         </details>
       </div>
@@ -1459,21 +1462,21 @@
           <button class="btn-mini" onclick="copyText('outInsta')">복사</button>
         </div>
         <div class="hook-bar">
-          <div class="hook-row"><span class="hook-label"><svg class="i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-insta"></div></div>
-          <div class="hook-row"><span class="hook-label"><svg class="i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-insta"></div><input class="hook-kw-input" type="text" id="hook-kwin-insta" placeholder="직접 입력 후 Enter" /></div>
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-insta"></div></div>
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-insta"></div><input class="hook-kw-input" type="text" id="hook-kwin-insta" placeholder="직접 입력 후 Enter" /></div>
           <div class="hook-preview" id="hook-prev-insta"></div>
           <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('insta')">이 카드만 초안 다시 생성</button></div>
         </div>
         <textarea class="output" id="outInsta" placeholder="카드뉴스 6장 / 인스타툰 4컷(컷별 대사·장면·영어 프롬프트) / 피드 1장 문구 + 캡션 + 해시태그가 여기에 생성됩니다."></textarea>
-        <div class="mode-note"><svg class="i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>AI 티 제로</b> · 포맷을 <b>인스타툰 4컷</b>으로 고르면 블로그 글을 손그림 만화로 각색 + 4컷 미리보기 PNG·컷별 영어 프롬프트까지</div>
+        <div class="mode-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>AI 티 제로</b> · 포맷을 <b>인스타툰 4컷</b>으로 고르면 블로그 글을 손그림 만화로 각색 + 4컷 미리보기 PNG·컷별 영어 프롬프트까지</div>
 
         <div class="img-block">
-          <div class="img-head"><span><svg class="i-14" aria-hidden="true"><use href="#i-image"></use></svg> 카드 미리보기</span><b id="cap-insta">1080×1350 · 4:5 · 카드뉴스 6장</b></div>
+          <div class="img-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 카드 미리보기</span><b id="cap-insta">1080×1350 · 4:5 · 카드뉴스 6장</b></div>
           <div class="canvas-wrap"><canvas id="cv-insta"></canvas></div>
           <div class="slide-nav" id="instaNav">
-            <button onclick="instaPrev()"><svg class="i-14" aria-hidden="true"><use href="#i-chevron-left"></use></svg></button>
+            <button onclick="instaPrev()"><svg class="i i-14" aria-hidden="true"><use href="#i-chevron-left"></use></svg></button>
             <span id="instaIndex">1 / 6</span>
-            <button onclick="instaNext()"><svg class="i-14" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+            <button onclick="instaNext()"><svg class="i i-14" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
           </div>
           <div class="thumbs" id="instaThumbs"></div>
           <input class="title-input" id="title-insta" data-ch="insta" placeholder="현재 장에 넣을 문구" />
@@ -1485,7 +1488,7 @@
         </div>
 
         <details>
-          <summary><svg class="i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
+          <summary><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
           <div id="guide-insta"></div>
         </details>
       </div>
@@ -1497,13 +1500,13 @@
           <button class="btn-mini" onclick="copyText('outYt')">복사</button>
         </div>
         <div class="hook-bar">
-          <div class="hook-row"><span class="hook-label"><svg class="i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-yt"></div></div>
-          <div class="hook-row"><span class="hook-label"><svg class="i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-yt"></div><input class="hook-kw-input" type="text" id="hook-kwin-yt" placeholder="직접 입력 후 Enter" /></div>
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-yt"></div></div>
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-yt"></div><input class="hook-kw-input" type="text" id="hook-kwin-yt" placeholder="직접 입력 후 Enter" /></div>
           <div class="hook-preview" id="hook-prev-yt"></div>
           <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('yt')">이 카드만 초안 다시 생성</button></div>
         </div>
         <textarea class="output" id="outYt" placeholder="20초 5블록 대본(0~3초 훅 / 3~8초 공감 / 8~15초 소개 1개 / 15~20초 댓글 CTA) + 시간대별 자막 블록 + 씬별 소스가 여기에 생성됩니다. (제휴 링크·고지는 ⏸️ 승인 후)"></textarea>
-        <div class="mode-note"><svg class="i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>쇼핑 쇼츠 20초</b> · 상품 1개만 · 자막 코드블록 · 댓글 유도 자막 · 링크·고지 없이 정보 전달(제휴는 <svg class="i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후)</div>
+        <div class="mode-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>쇼핑 쇼츠 20초</b> · 상품 1개만 · 자막 코드블록 · 댓글 유도 자막 · 링크·고지 없이 정보 전달(제휴는 <svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후)</div>
 
         <div class="hook-bar">
           <div class="hook-row">
@@ -1528,7 +1531,7 @@
         </div>
 
         <div class="img-block">
-          <div class="img-head"><span><svg class="i-14" aria-hidden="true"><use href="#i-image"></use></svg> 쇼츠 커버</span><b id="cap-yt">1080×1920 · 9:16</b></div>
+          <div class="img-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 쇼츠 커버</span><b id="cap-yt">1080×1920 · 9:16</b></div>
           <div class="canvas-wrap"><canvas id="cv-yt"></canvas></div>
           <input class="title-input" id="title-yt" data-ch="yt" placeholder="커버에 넣을 6~10자 문구" />
           <div class="tools">
@@ -1538,7 +1541,7 @@
         </div>
 
         <details>
-          <summary><svg class="i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
+          <summary><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
           <div id="guide-yt"></div>
         </details>
       </div>
@@ -1550,16 +1553,16 @@
           <button class="btn-mini" onclick="copyText('outThreads')">복사</button>
         </div>
         <div class="hook-bar">
-          <div class="hook-row"><span class="hook-label"><svg class="i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-threads"></div></div>
-          <div class="hook-row"><span class="hook-label"><svg class="i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-threads"></div><input class="hook-kw-input" type="text" id="hook-kwin-threads" placeholder="직접 입력 후 Enter" /></div>
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</span><div class="hook-chips" id="hook-chips-threads"></div></div>
+          <div class="hook-row"><span class="hook-label"><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</span><div class="hook-chips" id="hook-kws-threads"></div><input class="hook-kw-input" type="text" id="hook-kwin-threads" placeholder="직접 입력 후 Enter" /></div>
           <div class="hook-preview" id="hook-prev-threads"></div>
           <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('threads')">이 카드만 초안 다시 생성</button></div>
         </div>
         <textarea class="output" id="outThreads" placeholder="본문 1개(반말 1~2줄 · 30~100자 · ?·!로 끝) + 이어지는 답글 1~2개가 여기에 생성됩니다."></textarea>
-        <div class="mode-note"><svg class="i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>@savejeong.pick 실제 글 말투</b> · 전부 반말 · ㅋㅋㅋ · 이모지 0~1개(맨 끝) · 질문으로 댓글 유도 · 불릿·번호·블로그식 CTA 없음 · 링크·제휴 없음</div>
+        <div class="mode-note"><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> <b>@savejeong.pick 실제 글 말투</b> · 전부 반말 · ㅋㅋㅋ · 이모지 0~1개(맨 끝) · 질문으로 댓글 유도 · 불릿·번호·블로그식 CTA 없음 · 링크·제휴 없음</div>
 
         <div class="img-block">
-          <div class="img-head"><span><svg class="i-14" aria-hidden="true"><use href="#i-image"></use></svg> 포인트 카드</span><b id="cap-threads">1200×1200 · 1:1</b></div>
+          <div class="img-head"><span><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 포인트 카드</span><b id="cap-threads">1200×1200 · 1:1</b></div>
           <div class="canvas-wrap"><canvas id="cv-threads"></canvas></div>
           <input class="title-input" id="title-threads" data-ch="threads" placeholder="한 문장으로 넣을 포인트" />
           <div class="tools">
@@ -1570,7 +1573,7 @@
         </div>
 
         <details>
-          <summary><svg class="i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
+          <summary><svg class="i i-14" aria-hidden="true"><use href="#i-image"></use></svg> 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
           <div id="guide-threads"></div>
         </details>
       </div>
@@ -1580,19 +1583,19 @@
       <summary><svg class="i" aria-hidden="true"><use href="#i-book"></use></svg>사용법 &amp; 이미지 활용 팁</summary>
       <ol class="usage" style="margin:10px 0 0 18px; padding:0;">
         <li><b>주제 입력 → 5개 채널 동시 생성</b>: API 키 없이도 구조 초안 5개가 즉시 나옵니다. [대괄호]는 본인 경험으로 채워 넣는 자리입니다.</li>
-        <li><b><svg class="i-14" aria-hidden="true"><use href="#i-pin"></use></svg> 5채널 최신 기준</b>: 맨 위 접이식 패널이 <b><svg class="i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> 현재 적용 중(순수 콘텐츠 규칙)</b>과 <b><svg class="i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인·안정권 후 적용(광고·제휴)</b>으로 나뉘어 있습니다. 예스24 33권 4단 뼈대, @savejeong.pick 반말 말투, 20초 쇼츠 5블록, 인스타툰 4컷, 블로그 2종 보강점은 지금 쓰고, AF3753560·공정위 고지 3종·쇼츠 고정댓글 링크는 승인 후 홀드 카드에서 꺼내 씁니다.</li>
-        <li><b><svg class="i-14" aria-hidden="true"><use href="#i-paperclip"></use></svg> 실제 소재·맥락 고정</b>: 사건·숫자(날짜, 조회수, 수익)를 적으면 그것이 초안과 통합 프롬프트에 그대로 들어가고, “숫자는 주어진 값만 쓰고 새로 만들지 말 것” 지시가 함께 붙습니다. 3개 AI 비교에서 가장 효과가 컸던 장치입니다.</li>
+        <li><b><svg class="i i-14" aria-hidden="true"><use href="#i-pin"></use></svg> 5채널 최신 기준</b>: 맨 위 접이식 패널이 <b><svg class="i i-14" aria-hidden="true"><use href="#i-check-circle"></use></svg> 현재 적용 중(순수 콘텐츠 규칙)</b>과 <b><svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인·안정권 후 적용(광고·제휴)</b>으로 나뉘어 있습니다. 예스24 33권 4단 뼈대, @savejeong.pick 반말 말투, 20초 쇼츠 5블록, 인스타툰 4컷, 블로그 2종 보강점은 지금 쓰고, AF3753560·공정위 고지 3종·쇼츠 고정댓글 링크는 승인 후 홀드 카드에서 꺼내 씁니다.</li>
+        <li><b><svg class="i i-14" aria-hidden="true"><use href="#i-paperclip"></use></svg> 실제 소재·맥락 고정</b>: 사건·숫자(날짜, 조회수, 수익)를 적으면 그것이 초안과 통합 프롬프트에 그대로 들어가고, “숫자는 주어진 값만 쓰고 새로 만들지 말 것” 지시가 함께 붙습니다. 3개 AI 비교에서 가장 효과가 컸던 장치입니다.</li>
         <li><b>AI로 실제 원고 생성</b>: 엔진을 OpenAI/Gemini/Claude로 바꾸고 API 키를 넣으면 5채널 원고가 한 번에 채워집니다.</li>
-        <li><b>플랫폼별 후킹 · 제목 키워드</b>: 각 카드 위의 <b><svg class="i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</b> 칩을 누르면 그 플랫폼이 잘 먹는 제목·도입 훅 스타일(네이버=경험 후기·경고·체크리스트·질문, 구글=숫자·비교·단계·FAQ, 인스타=저장·반전·숫자·초보, 숏폼=반전·결론·실수·비포애프터, 스레드=고백·토론·인사이트·질문)로 이 카드의 초안 제목·첫 문장과 썸네일/카드뉴스 제목이 바로 바뀝니다. <b><svg class="i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</b> 칩을 누르면 그 키워드가 제목 앞에 붙고(최대 3개, 직접 입력도 가능), 네이버·구글 SEO 점수가 새 제목 기준으로 다시 계산됩니다. 이미 쓴 초안은 제목·도입 줄만 제자리에서 교체되고, 본문을 처음부터 다시 만들고 싶을 때만 <b>이 카드만 초안 다시 생성</b>을 누르세요.</li>
+        <li><b>플랫폼별 후킹 · 제목 키워드</b>: 각 카드 위의 <b><svg class="i i-14" aria-hidden="true"><use href="#i-target"></use></svg> 후킹</b> 칩을 누르면 그 플랫폼이 잘 먹는 제목·도입 훅 스타일(네이버=경험 후기·경고·체크리스트·질문, 구글=숫자·비교·단계·FAQ, 인스타=저장·반전·숫자·초보, 숏폼=반전·결론·실수·비포애프터, 스레드=고백·토론·인사이트·질문)로 이 카드의 초안 제목·첫 문장과 썸네일/카드뉴스 제목이 바로 바뀝니다. <b><svg class="i i-14" aria-hidden="true"><use href="#i-tag"></use></svg> 제목 키워드</b> 칩을 누르면 그 키워드가 제목 앞에 붙고(최대 3개, 직접 입력도 가능), 네이버·구글 SEO 점수가 새 제목 기준으로 다시 계산됩니다. 이미 쓴 초안은 제목·도입 줄만 제자리에서 교체되고, 본문을 처음부터 다시 만들고 싶을 때만 <b>이 카드만 초안 다시 생성</b>을 누르세요.</li>
         <li><b>상위 노출 키워드</b>: 씨앗 키워드를 넣고 <b>키워드 발굴</b>을 누르면 정보형·비교형·후기형·질문형 조합이 나옵니다. 칩을 누르면 주제칸에 바로 들어가고, 옆의 N/G로 네이버·구글 검색결과를 열어 경쟁도를 확인하세요. 실제 검색량은 아래 데이터랩·트렌드 링크에서 보세요.</li>
         <li><b>SEO 점검</b>: 네이버·구글 원고 카드의 점수는 제목 길이(25~38자)·키워드 앞배치·분량·H2/H3·키워드 반복(3~6회)·이미지/Alt·태그를 실시간으로 계산합니다. 80점 이상이면 발행 가능한 수준입니다.</li>
         <li><b>인스타 포맷</b>: 상단에서 <b>카드뉴스 6장</b> · <b>인스타툰 4컷</b> · <b>일반 피드(사진 1장)</b>을 고를 수 있습니다. 카드뉴스는 썸네일로 장을 넘겨보고, 인스타툰은 네이버 블로그 글을 4컷으로 각색해 컷별 대사·장면·영어 프롬프트와 손그림 느낌의 4컷 미리보기 PNG를 만듭니다.</li>
         <li><b>AI 티 제거</b>: 블로그 원고는 실제 인기 블로거 포맷으로 나옵니다. 네이버는 장면·시행착오 중심의 후기형, 구글은 결론 먼저·수치·비교표 중심의 전문 에디터형입니다. 상투어(“~에 대해 알아보겠습니다”, “결론적으로”, “첫째·둘째·셋째”)는 프롬프트에서 금지되어 있습니다.</li>
-        <li><b>승인 대비 모드</b>: 티스토리 원고는 <b>애드센스 기준</b>(1,700~1,950자 · H2/H3 · 실행 표 · FAQ · 고유 콘텐츠), 네이버 원고는 <b>애드포스트 기준</b>(1,450~1,600자 · 태그 5~8개 · 상업성 표현 자제)으로 나옵니다. 광고 코드·제휴 요소는 넣지 않습니다(<svg class="i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후). 각 원고 끝의 <b>승인 체크</b>를 발행 전에 확인하세요.</li>
+        <li><b>승인 대비 모드</b>: 티스토리 원고는 <b>애드센스 기준</b>(1,700~1,950자 · H2/H3 · 실행 표 · FAQ · 고유 콘텐츠), 네이버 원고는 <b>애드포스트 기준</b>(1,450~1,600자 · 태그 5~8개 · 상업성 표현 자제)으로 나옵니다. 광고 코드·제휴 요소는 넣지 않습니다(<svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 승인 후). 각 원고 끝의 <b>승인 체크</b>를 발행 전에 확인하세요.</li>
         <li><b>심사 전 준비</b>: 사이트에 개인정보처리방침 · 소개 · 문의 페이지를 먼저 올리고, 최소 10~15편을 발행한 뒤 신청하면 승인 가능성이 높아집니다.</li>
         <li><b>티스토리 vs 네이버 블로그</b>: 같은 주제라도 티스토리 원고는 H2/H3·30일 실행 표·체크리스트·FAQ 중심의 정보형(1,700~1,950자), 네이버는 1인칭 경험 후기형(1,450~1,600자)으로 <u>문장·소재·구조를 분리</u>해 중복 문서 판정을 피합니다. 두 원고의 첫 문단·소제목이 겹치면 티스토리 쪽을 다시 생성하세요.</li>
         <li><b>이미지</b>: 각 카드의 캔버스에 제목 문구를 넣으면 실시간 렌더링됩니다. 문구를 고친 뒤 <b>PNG 다운로드</b>를 누르면 플랫폼 규격 그대로 저장됩니다.</li>
-        <li><b><svg class="i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 제휴 · 고지 (현재 홀드)</b>: 기본값은 <b>“제휴·광고 없음 (승인 전 홀드 — 기본값)”</b>입니다. 각 플랫폼이 승인·안정권에 들어간 뒤 <b><svg class="i-14" aria-hidden="true"><use href="#i-briefcase"></use></svg> 제휴 링크·고지</b>를 <b>[승인 후 사용]</b>으로 바꾸면 네이버·티스토리 말미 고지, 인스타 캡션 고지, 쇼츠 고정댓글(AF3753560)이 붙습니다. 스레드는 승인 후에도 링크를 본문에 넣지 않고 댓글로만 분리합니다.</li>
+        <li><b><svg class="i i-14" aria-hidden="true"><use href="#i-pause"></use></svg> 제휴 · 고지 (현재 홀드)</b>: 기본값은 <b>“제휴·광고 없음 (승인 전 홀드 — 기본값)”</b>입니다. 각 플랫폼이 승인·안정권에 들어간 뒤 <b><svg class="i i-14" aria-hidden="true"><use href="#i-briefcase"></use></svg> 제휴 링크·고지</b>를 <b>[승인 후 사용]</b>으로 바꾸면 네이버·티스토리 말미 고지, 인스타 캡션 고지, 쇼츠 고정댓글(AF3753560)이 붙습니다. 스레드는 승인 후에도 링크를 본문에 넣지 않고 댓글로만 분리합니다.</li>
         <li><b>스레드 말투 (@savejeong.pick 실제 글)</b>: 전부 반말, 마침표 대신 <b>?·!</b>, 1~2줄 30~100자, <code>ㅋㅋㅋ</code>와 이모지 0~1개(맨 끝), 마지막은 질문으로 댓글 유도(<code>~있어?</code> <code>~있나?</code> <code>남겨줘</code>). <code>스친·스하리·반하리·맞팔</code> 생활어를 자연스럽게. <b>불릿·번호(1/3)·블로그식 CTA는 쓰지 않고</b> 본문 1개 + 이어지는 답글 1~2개로 씁니다.</li>
         <li><b>쇼핑 쇼츠</b>: 20초 = 0~3초 훅 / 3~8초 문제 공감 / 8~15초 소개 1개(전→후) / 15~20초 댓글 유도. 자막은 시간대별 코드블록으로 나오니 편집기에 그대로 붙이고, 상품명·가격은 게시 전에 실제 페이지에서 확인하세요. 링크·고지는 승인 후에만 붙입니다.</li>
         <li><b>이미지 스타일</b>: 라이트·딥네이비·그라데이션 중 선택하면 5장이 함께 바뀝니다. 같은 스타일을 반복하면 계정 피드가 통일돼 보입니다.</li>
