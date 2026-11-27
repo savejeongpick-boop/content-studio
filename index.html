@@ -125,6 +125,8 @@
     .pill.schedule { background: #fff; color: var(--text-2); }
     .pill.schedule b { color: var(--accent-text); }
     .pill.plan { background: var(--surface-3); border-color: var(--border); color: var(--muted); font-weight: 650; }
+    a.pill { text-decoration: none; }
+    a.pill:hover { border-color: var(--accent); color: var(--accent-text); }
     .pill.review { border-color: #ddd9ff; background: var(--accent-soft); color: var(--accent-text); }
     .pill.review b { color: var(--accent-text); }
     .status {
@@ -794,7 +796,7 @@
     @media (max-width: 860px) {
       .appbar { gap: 10px; padding: 0 12px; }
       .brand-sub { display: none; }
-      .pill.schedule { display: none; }
+      .pill.schedule, .pill.hub-link { display: none; }
       .status { max-width: 40vw; }
       .wrap { padding: 16px 12px 56px; }
       .panel { padding: 14px; border-radius: var(--radius); }
@@ -896,6 +898,7 @@
     </div>
     <div class="appbar-spacer"></div>
     <div class="appbar-meta">
+      <a class="pill hub-link" href="ai-prompts-hub.html" title="AI별 복사용 프롬프트 허브"><svg class="i i-14" aria-hidden="true"><use href="#i-external"></use></svg>프롬프트 허브</a>
       <span class="pill review" title="5대 심사 기준 · 법적 안전 자체 검수"><svg class="i i-14" aria-hidden="true"><use href="#i-shield"></use></svg>심사 기준 <b id="reviewScore">0/5</b></span>
       <span class="pill schedule" title="매일 07:30 · 16:30 작성·자체 검수 → 확인 후 08:00 · 17:00 발행"><svg class="i i-14" aria-hidden="true"><use href="#i-clock"></use></svg>매일 <b>07:30 · 16:30</b> 작성·검수 → <b>08:00 · 17:00</b> 발행</span>
       <span class="status" id="statusText">준비 완료</span>
