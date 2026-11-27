@@ -1,0 +1,4011 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>원영 콘텐츠 스튜디오 · 5채널(네이버·티스토리·인스타툰·쇼핑쇼츠·스레드) + 이미지 스튜디오</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #181a20;
+      --muted: #687082;
+      --border: #e4e7ef;
+      --accent: #5b4bff;
+      --accent-soft: #efedff;
+      --naver: #03c75a;
+      --google: #4285f4;
+      --insta: #e1306c;
+      --youtube: #ff0033;
+      --threads: #111111;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Malgun Gothic", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      word-break: keep-all;
+    }
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    h1 {
+      font-size: 22px;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 10px rgba(16, 24, 40, 0.03);
+    }
+    .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    input[type="text"], input[type="password"], select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      font-family: inherit;
+      background: #fff;
+      color: var(--text);
+    }
+    textarea { min-height: 92px; resize: vertical; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 14px;
+    }
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.08s ease, opacity 0.15s ease;
+      font-family: inherit;
+    }
+    button:active { transform: scale(0.98); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-secondary { background: var(--accent-soft); color: var(--accent); }
+    .btn-outline { background: #fff; color: var(--text); border: 1px solid var(--border); }
+    .btn-mini {
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-mini.primary { background: var(--accent); color: #fff; border-color: transparent; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 14px;
+    }
+    .ch-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 2px 10px rgba(16, 24, 40, 0.03);
+    }
+    .ch-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .b-naver { background: var(--naver); }
+    .b-google { background: var(--google); }
+    .b-insta { background: var(--insta); }
+    .b-yt { background: var(--youtube); }
+    .b-threads { background: var(--threads); }
+    .output {
+      width: 100%;
+      min-height: 260px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 13px;
+      white-space: pre-wrap;
+      background: #fafbfe;
+      overflow-y: auto;
+      line-height: 1.6;
+    }
+    .status { font-size: 13px; color: var(--muted); }
+
+    /* 이미지 블록 */
+    .img-block {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      background: #fcfcff;
+    }
+    .img-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .img-head b { color: var(--text); font-weight: 700; }
+    .canvas-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background:
+        linear-gradient(45deg, #eef1f7 25%, transparent 25%) 0 0/16px 16px,
+        linear-gradient(-45deg, #eef1f7 25%, transparent 25%) 0 8px/16px 16px,
+        #f7f8fc;
+      border-radius: 8px;
+      padding: 8px;
+      min-height: 90px;
+    }
+    .canvas-wrap canvas {
+      max-width: 100%;
+      max-height: 430px;
+      width: auto;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+      box-shadow: 0 4px 18px rgba(16, 24, 40, 0.12);
+    }
+    .title-input {
+      margin-top: 8px;
+      font-size: 12.5px;
+      padding: 8px 10px;
+      background: #fff;
+    }
+    .slide-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .slide-nav button {
+      padding: 5px 11px;
+      font-size: 12px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .thumbs {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 5px;
+      margin-top: 8px;
+    }
+    .thumbs canvas {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      display: block;
+      background: #eef1f7;
+    }
+    .thumbs canvas.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-soft);
+    }
+    .tools {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    details {
+      margin-top: 4px;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text);
+      padding: 4px 0;
+      font-size: 12.5px;
+    }
+    .g-item {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 8px;
+      padding: 6px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+    .g-k { color: var(--muted); font-weight: 700; font-size: 11px; padding-top: 1px; }
+    .g-v { color: var(--text); font-size: 12px; line-height: 1.5; }
+    .g-label { font-weight: 700; color: var(--text); font-size: 11.5px; margin: 10px 0 4px; }
+    .g-cuts { margin: 0 0 0 16px; padding: 0; }
+    .g-cuts li { margin-bottom: 4px; font-size: 12px; color: var(--text); }
+    .g-tip {
+      margin-top: 10px;
+      padding: 9px 11px;
+      background: var(--accent-soft);
+      color: #3a2fc4;
+      border-radius: 8px;
+      font-size: 11.5px;
+      line-height: 1.55;
+    }
+    .usage li { margin-bottom: 6px; font-size: 12.5px; color: var(--text); }
+    .mode-badge {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #0b7a45;
+      background: #e8f9f0;
+      border: 1px solid #bfe9d4;
+      padding: 4px 11px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .mode-note {
+      font-size: 11.5px;
+      line-height: 1.55;
+      color: #0b7a45;
+      background: #f2fbf7;
+      border: 1px solid #d6f0e3;
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+    .mode-note.google { color: #1a56c4; background: #f2f6ff; border-color: #d6e4fb; }
+    .mode-note b { font-weight: 700; }
+
+    /* 키워드 발굴 */
+    .kw-panel-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .kw-panel-head h2 {
+      font-size: 16px;
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+    .kw-panel-head .hint { font-size: 12px; color: var(--muted); }
+    .kw-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .kw-row input { flex: 1 1 240px; }
+    .kw-status { font-size: 12px; color: var(--muted); margin-top: 10px; min-height: 16px; }
+    .kw-group { margin-top: 16px; }
+    .kw-group-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .kw-group-title .hint { font-weight: 500; color: var(--muted); font-size: 11.5px; }
+    .kw-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      display: inline-flex;
+      align-items: stretch;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #fff;
+      overflow: hidden;
+    }
+    .chip:hover { border-color: var(--accent); }
+    .chip-main {
+      border: 0;
+      background: transparent;
+      padding: 6px 11px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      border-radius: 0;
+    }
+    .chip-main:hover { color: var(--accent); }
+    .chip-ico {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 8px;
+      font-size: 10.5px;
+      font-weight: 800;
+      text-decoration: none;
+      color: var(--muted);
+      border-left: 1px solid var(--border);
+    }
+    .chip-ico.naver { color: #03c75a; }
+    .chip-ico.google { color: #4285f4; }
+    .kw-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+    }
+    .kw-link {
+      font-size: 11.5px;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 8px;
+      padding: 7px 10px;
+    }
+    .kw-link:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* 플랫폼별 후킹 · 제목 키워드 선택기 */
+    .ch-card { --ch-accent: var(--accent); }
+    .ch-card[data-ch="naver"] { --ch-accent: var(--naver); }
+    .ch-card[data-ch="google"] { --ch-accent: var(--google); }
+    .ch-card[data-ch="insta"] { --ch-accent: var(--insta); }
+    .ch-card[data-ch="yt"] { --ch-accent: var(--youtube); }
+    .ch-card[data-ch="threads"] { --ch-accent: var(--threads); }
+    .hook-bar {
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--ch-accent);
+      border-radius: 12px;
+      padding: 9px 11px 10px;
+      background: #fbfcff;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .hook-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .hook-label {
+      font-size: 10.5px;
+      font-weight: 800;
+      color: var(--muted);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+    .hook-chips { display: flex; flex-wrap: wrap; gap: 5px; flex: 1 1 auto; }
+    .hchip {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.5;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .hchip:hover { border-color: var(--ch-accent); }
+    .hchip.active { background: var(--ch-accent); border-color: var(--ch-accent); color: #fff; }
+    .hchip.kw.active::before { content: "✓ "; font-weight: 800; }
+    input.hook-kw-input {
+      width: auto;
+      flex: 1 1 104px;
+      min-width: 104px;
+      font-size: 11.5px;
+      padding: 5px 10px;
+      border-radius: 999px;
+    }
+    .hook-preview { font-size: 11px; line-height: 1.5; color: var(--muted); }
+    .hook-preview b { color: var(--text); font-weight: 700; }
+    .hook-preview .hp-title { color: var(--text); font-weight: 700; }
+    .hook-tools { display: flex; gap: 6px; flex-wrap: wrap; }
+    .hook-tools button { font-size: 11px; padding: 5px 9px; border-radius: 8px; }
+
+    /* SEO 점검 */
+    .seo-box {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fbfcff;
+    }
+    .seo-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .seo-score {
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 2px 9px;
+      border-radius: 999px;
+      background: #eef0f6;
+      color: var(--muted);
+    }
+    .seo-score.good { background: #e8f9f0; color: #0b7a45; }
+    .seo-score.mid { background: #fff5e2; color: #a05a00; }
+    .seo-score.bad { background: #ffecec; color: #c02929; }
+    .seo-item {
+      display: grid;
+      grid-template-columns: 16px 1fr;
+      gap: 6px;
+      font-size: 11.5px;
+      line-height: 1.5;
+      padding: 3px 0;
+      color: var(--text);
+    }
+    .seo-m { line-height: 1.4; }
+    .seo-detail { color: var(--muted); }
+    .seo-item b { font-weight: 600; }
+
+    /* 5채널 최신 기준 패널 */
+    .hbadges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .hbadge {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+    .hbadge b { color: var(--text); font-weight: 700; }
+    .std-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; }
+    .std-card {
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: #fbfcff;
+    }
+    .std-card h3 { margin: 2px 0 8px; font-size: 13.5px; letter-spacing: -0.01em; }
+    .std-tag { font-size: 10.5px; font-weight: 800; color: var(--muted); letter-spacing: 0.01em; }
+    .std-card ul, .std-card ol { margin: 6px 0 0 16px; padding: 0; }
+    .std-card li { font-size: 12px; line-height: 1.55; margin-bottom: 4px; color: var(--text); }
+    .std-card code {
+      background: #eef0f8;
+      border-radius: 5px;
+      padding: 1px 5px;
+      font-size: 11.5px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .std-flow { display: flex; flex-wrap: wrap; gap: 5px; margin: 4px 0 8px; align-items: center; }
+    .std-flow span {
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--accent-soft);
+      color: #3a2fc4;
+      border-radius: 999px;
+      padding: 4px 9px;
+    }
+    .std-flow i { color: var(--muted); font-style: normal; font-weight: 800; font-size: 11px; }
+    .notice-box {
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: #fff8ec;
+      border: 1px solid #f2e2c4;
+      border-radius: 10px;
+      font-size: 11.5px;
+      line-height: 1.6;
+      color: #6a4b12;
+    }
+    .notice-box b { color: #4a3308; }
+    .std-actions { margin-top: 10px; }
+    /* 승인 전 홀드 표시 */
+    .mode-badge.hold {
+      color: #7a4a08;
+      background: #fff6e5;
+      border-color: #f0d9a8;
+      margin-left: 6px;
+    }
+    .hbadge.hold { color: #8a5a11; background: #fff8ec; border-color: #f0dcb4; }
+    .active-note {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      line-height: 1.6;
+      color: #0b6b3d;
+      background: #e8f9f0;
+      border: 1px solid #bfe9d4;
+      border-radius: 10px;
+      padding: 8px 11px;
+      margin: 10px 0 0;
+    }
+    .hold-section-head {
+      grid-column: 1 / -1;
+      margin-top: 6px;
+      padding: 9px 12px;
+      border: 1px dashed #e0c48c;
+      border-radius: 10px;
+      background: #fffaef;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.55;
+      color: #7a4a08;
+    }
+    .std-card.hold { border-left-color: #d99a2b; background: #fffdf6; }
+    .std-card.hold .std-tag { color: #a9711b; }
+
+    /* 날짜별 글 리스트 · 피클 지시 */
+    .post-hint {
+      margin-top: 10px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      background: #fff8ec;
+      border: 1px solid #f2e2c4;
+      font-size: 11.5px;
+      line-height: 1.6;
+      color: #6a4b12;
+    }
+    .post-hint b { color: #4a3308; }
+    .post-list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; max-height: 360px; overflow-y: auto; }
+    .post-empty { font-size: 12.5px; color: var(--muted); padding: 16px; text-align: center; border: 1px dashed var(--border); border-radius: 12px; }
+    .post-row {
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;
+      border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; background: #fbfcff;
+    }
+    .post-main { min-width: 200px; flex: 1 1 260px; cursor: pointer; }
+    .post-main:hover .post-date { color: var(--accent); }
+    .post-date { font-size: 12.5px; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+    .post-chip { font-size: 10.5px; font-weight: 800; padding: 2px 8px; border-radius: 999px; border: 1px solid; }
+    .post-chip.draft { color: #5b4bff; background: #efedff; border-color: #d8d2ff; }
+    .post-chip.waiting { color: #7a4a08; background: #fff3dc; border-color: #eed9ae; }
+    .post-chip.done { color: #0b6b3d; background: #e8f9f0; border-color: #bfe9d4; }
+    .post-topic { font-size: 13px; margin-top: 2px; }
+    .post-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .post-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+    .pickle-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 12px; }
+    .ptag {
+      border: 1px solid var(--border); background: #fff; color: var(--text);
+      font-size: 11.5px; font-weight: 700; padding: 6px 11px; border-radius: 999px;
+    }
+    .ptag:hover { border-color: var(--accent); color: var(--accent); }
+    .pickle-history { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; max-height: 340px; overflow-y: auto; }
+    .note-row { border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 12px; padding: 9px 12px; background: #fbfcff; }
+    .note-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; font-size: 11px; color: var(--muted); }
+    .note-head b { color: var(--text); font-size: 11.5px; }
+    .note-text { font-size: 12.5px; white-space: pre-wrap; margin: 5px 0 7px; }
+    .import-result { margin-top: 10px; font-size: 12px; font-weight: 700; }
+    .import-result.ok { color: #0b6b3d; }
+    .import-result.err { color: #b3261e; }
+    input[type="date"], input[type="datetime-local"] {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      background: #fff;
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>✍️ 원영 콘텐츠 스튜디오 <span style="font-size:13px;color:#5b4bff;font-weight:700;">5채널 + 인스타툰 + 이미지</span></h1>
+        <div class="sub">주제 1번 입력 → 네이버 블로그 · 티스토리 · 인스타 카툰(인스타툰 4컷) · 유튜브 쇼핑 쇼츠 · 스레드 + 플랫폼별 최적화 이미지(PNG)까지</div>
+        <div class="sub" style="margin-top:2px;">✅ 지금은 <b>승인 전 순수 콘텐츠 모드</b>(광고·제휴 없음) · ⏸️ <b>AF3753560 · 공정위 고지 3종 · 쇼츠 고정댓글 링크</b>는 승인·안정권 진입 후 적용</div>
+        <span class="mode-badge">✅ 현재 적용 중 — 승인 전 순수 콘텐츠 모드 (광고·제휴 없음)</span>
+        <span class="mode-badge hold">⏸️ 승인·안정권 후 적용 (현재 홀드) — 애드센스·애드포스트 수익화 · 제휴 고지</span>
+        <div class="hbadges">
+          <span class="hbadge">네이버 <b>savejeong</b></span>
+          <span class="hbadge">티스토리 <b>10년 후의 나를 위해</b></span>
+          <span class="hbadge">인스타 <b>save_jeong</b></span>
+          <span class="hbadge">유튜브 <b>세픽</b></span>
+          <span class="hbadge">스레드 <b>@savejeong.pick</b> · 반말</span>
+          <span class="hbadge hold">⏸️ 쿠팡 파트너스 <b>AF3753560</b> — 승인 후 (현재 미사용)</span>
+          <span class="hbadge">매일 <b>09:00</b> 작성 · 업로드는 확인 후</span>
+        </div>
+      </div>
+      <div class="status" id="statusText">준비 완료</div>
+    </header>
+
+    <details class="panel" id="stdPanel">
+      <summary style="font-size:15px;">📌 5채널 최신 기준 (2026-11-27 09:30 반영 · 펼쳐서 확인) — ✅ 현재 적용 중(순수 콘텐츠) + ⏸️ 승인·안정권 후 적용(광고·제휴)로 분리</summary>
+      <div class="active-note">✅ <b>현재 적용 중 — 승인 전 순수 콘텐츠 모드</b> · 광고·제휴 링크·상품 링크·고지 문구는 넣지 않습니다. 아래 카드 중 <b>⏸️ 홀드</b> 표시가 붙은 항목은 각 플랫폼이 승인·안정권에 들어간 뒤에만 켭니다.</div>
+      <div class="std-grid" style="margin-top:12px;">
+
+        <div class="std-card">
+          <div class="std-tag">공통 뼈대 · 예스24 크레마클럽 내서재 33권</div>
+          <h3>모든 채널은 이 4단으로 쓴다</h3>
+          <div class="std-flow"><span>3초 훅</span><i>→</i><span>문제 공감</span><i>→</i><span>해결책</span><i>→</i><span>댓글·행동 유도(CTA)</span></div>
+          <ul>
+            <li>훅은 문장이 아니라 <b>구조</b> — 3초 안에 기대·이득·난이도를 판정시킨다.</li>
+            <li>한 편에 <b>메시지 하나</b>. 조회수(확산)와 저장·클릭(전달)은 목표를 나눠 잰다.</li>
+            <li>블로그 제목·스레드 첫 줄·카드뉴스 표지에 같은 판정 구조를 이식한다.</li>
+            <li>AI 티 제거: <code>~알아보겠습니다</code>·<code>결론적으로</code>·<code>다양한</code> 금지, 날짜·숫자·장면으로 말한다.</li>
+          </ul>
+        </div>
+
+        <div class="std-card">
+          <div class="std-tag">스레드 · @savejeong.pick 실제 올라간 글 기준 (2026-11-27 09:20 확인)</div>
+          <h3>반말 일상 잡담 1~2줄 + 이어지는 답글 1~2개</h3>
+          <ul>
+            <li>전부 <b>반말</b> — <code>~습니다 / ~해요</code> 금지. 마침표는 거의 안 찍고 <b>?·!</b>로 끝맺음.</li>
+            <li>한 글 <b>1~2줄 · 30~100자</b>. <code>ㅋㅋㅋ</code>를 섞고, 이모지는 <b>0~1개를 맨 끝에만</b>.</li>
+            <li>마지막은 <b>질문형 댓글 유도</b> — <code>~있어?</code> <code>~있나?</code> <code>남겨줘</code>.</li>
+            <li>스레드 생활어를 자연스럽게 1개까지: <code>스친</code> <code>스하리</code> <code>반하리</code> <code>맞팔</code> <code>같이 크자</code>.</li>
+            <li><b>불릿(▪️✔️)·번호(1/3)·블로그식 CTA("저장해두고 열어보세요") 없음</b> — 본문 1개 + 이어지는 답글 1~2개.</li>
+          </ul>
+        </div>
+
+        <div class="std-card">
+          <div class="std-tag">유튜브 쇼핑 쇼츠 · 세픽 · 참고 영상 FdVnd0AFge8 · 상품 제휴 매칭은 ⏸️ 승인 후</div>
+          <h3>20초 = 5블록, 자막은 시간대별로</h3>
+          <ul>
+            <li><b>루틴 5단계</b>: 급상승·일상 소재 발굴 → 20초 3초훅 대본 → 씬별 소스 → AI 편집 + 휴먼 터치 → 멀티 배포(릴스·틱톡)</li>
+            <li><b>0~3초</b> 3초 훅 → <b>3~8초</b> 문제 공감 → <b>8~15초</b> 상품 1개가 해결(전→후) → <b>15~20초</b> 댓글 유도 자막 <code>댓글에 OO 남겨주세요</code></li>
+            <li>씬마다 소스 지정(직촬·제품 컷·화면 캡처) + 자막은 <b>코드블록</b>으로 분리해 편집기에 바로 붙인다.</li>
+            <li>상품은 <b>1개만 확정</b>, 대본에 제품명 1회. 링크는 고정댓글·설명란에만.</li>
+            <li>승인 전에는 링크·고지 없이 <b>정보 전달용 쇼츠</b>로만. 상품은 “직접 써본 물건” 정도로 담백하게 소개한다.</li>
+          </ul>
+        </div>
+
+        <div class="std-card">
+          <div class="std-tag">인스타 카툰 · save_jeong</div>
+          <h3>블로그 글 → 손그림 인스타툰 4컷</h3>
+          <ul>
+            <li>네이버 블로그 원고의 <b>사건·숫자를 4컷으로 각색</b>. 새 이야기를 만들지 않는다.</li>
+            <li>AI 티 제거: 수채화 파스텔·연필 선·삐뚤빼뚤 말풍선. 얼굴 클로즈업·과한 그라데이션·3D 렌더 금지.</li>
+            <li>컷마다 <b>대사 · 장면 · 이미지 생성용 영어 프롬프트</b>, 마지막에 캡션 + 해시태그 10개.</li>
+            <li>스튜디오에서 <b>인스타 포맷 → 인스타툰 4컷</b>을 고르면 4컷 미리보기 PNG까지 나온다.</li>
+          </ul>
+        </div>
+
+        <div class="std-card">
+          <div class="std-tag">블로그 2종 · 3개 AI 비교 테스트(ChatGPT·Gemini·Claude) 보강</div>
+          <h3>소재를 고정하고, 두 블로그는 재료부터 나눈다</h3>
+          <ul>
+            <li><b>소재·맥락 고정</b>: 주제를 재정의하거나 딴 주제로 새지 않게. 실제 생활 맥락(직장인·아빠·초보 도전기)과 실제 숫자만 사용, 새 수치 창작 금지.</li>
+            <li><b>네이버 ~1,500자</b>(1,450~1,600) 경험·공감형: 한 사건을 1인칭으로. 표·체크리스트 금지.</li>
+            <li><b>티스토리 ~1,800자</b>(1,700~1,950) 정보형: 30일 실행 표 + 체크리스트 + FAQ. 감정 서사 금지.</li>
+            <li>두 글에 <b>같은 표·같은 문장·같은 소제목 금지</b>(중복 문서 회피).</li>
+            <li>저장 전 자체 점검: 글자수 · 해시태그 10개 · 메타 디스크립션 · CTA · <b>광고·제휴 링크 0개</b> · 금지어 0회.</li>
+          </ul>
+        </div>
+
+        <div class="hold-section-head">⏸️ 승인·안정권 진입 후 적용 (현재 홀드) — 지금은 쓰지 않습니다. 아래 항목은 각 플랫폼이 승인·안정권에 들어간 뒤에만 켭니다.</div>
+
+        <div class="std-card hold">
+          <div class="std-tag">⏸️ 홀드 · 제휴 · 광고 (공정위·플랫폼 규정)</div>
+          <h3>승인 후에만 붙이는 항목</h3>
+          <ul>
+            <li><b>쿠팡 파트너스 AF3753560</b> — 제휴 링크와 쇼츠 고정댓글 링크. 현재 미사용.</li>
+            <li><b>공정위 제휴 고지 3종</b> — 쿠팡 파트너스 / 네이버·티스토리 말미 / 인스타 캡션. 승인 후 링크를 넣을 때만 함께 넣습니다.</li>
+            <li><b>애드센스 · 애드포스트 수익화 배치</b> — 광고 코드 삽입과 수익 링크 정리는 승인 후.</li>
+            <li><b>스레드 제휴 댓글</b> “너무 많이 물어봐서 아래 링크 달게” — 승인 후, 링크가 있을 때만.</li>
+          </ul>
+          <div class="notice-box">⏰ <b>매일 09:00 규칙</b> — 5채널 초안·이미지만 만들고 <b>업로드는 원영님 확인 후</b>에만 진행합니다. 승인 전에는 광고·제휴 요소를 빼고 올립니다.</div>
+          <div class="std-actions"><button class="btn-mini" onclick="copyNotices()">⏸️ 승인 후 사용할 고지 문구 3종 복사 (보관용)</button></div>
+        </div>
+
+      </div>
+    </details>
+
+    <section class="panel" id="kwPanel">
+      <div class="kw-panel-head">
+        <h2>🔍 상위 노출 키워드 검색</h2>
+        <span class="hint">씨앗 키워드 하나로 롱테일·검색의도별 키워드 → 경쟁도/검색량 확인 링크 → 바로 글쓰기까지</span>
+      </div>
+      <div class="kw-row">
+        <input type="text" id="seedKeyword" placeholder="씨앗 키워드 (예: SNS 수익화, 연말정산, 통장 쪼개기, 소액 투자)" />
+        <button class="btn-primary" onclick="researchKeywords()">키워드 발굴</button>
+      </div>
+      <div class="kw-status" id="kwStatus">키워드를 입력하고 <b>키워드 발굴</b>을 누르면 검색 의도별 조합이 나옵니다. 칩을 누르면 아래 스튜디오 주제칸에 바로 들어갑니다.</div>
+      <div id="kwResults"></div>
+    </section>
+
+    <section class="panel" id="studioPanel">
+      <div class="row">
+        <div>
+          <label for="category">카테고리</label>
+          <select id="category">
+            <option value="재테크">재테크 (투자 · 절약 · 자산관리)</option>
+            <option value="일상">일상 (경험 · 생각 · 라이프스타일)</option>
+            <option value="재테크+일상">재테크 + 일상 (생활 속 돈 이야기)</option>
+          </select>
+        </div>
+        <div>
+          <label for="tone">말투 / 톤</label>
+          <select id="tone">
+            <option value="친근하고 현실적인 40대 직장인·투자자 톤 (과장 없이 담백하게)">친근하고 현실적인 톤</option>
+            <option value="인사이트 중심의 깔끔한 전문가 톤">깔끔한 전문가 톤</option>
+            <option value="가볍고 위트 있는 대화형 톤">가볍고 위트 있는 톤</option>
+          </select>
+        </div>
+        <div>
+          <label for="aiEngine">실행 엔진 (API 키 입력 시 바로 생성)</label>
+          <select id="aiEngine">
+            <option value="template">API 없이 통합 프롬프트 & 구조 초안 생성</option>
+            <option value="openai">OpenAI (ChatGPT API)</option>
+            <option value="gemini">Google (Gemini API)</option>
+            <option value="claude">Anthropic (Claude API)</option>
+          </select>
+        </div>
+        <div>
+          <label for="keyline">썸네일 보조 문구 (선택)</label>
+          <input type="text" id="keyline" placeholder="예: 3년 해보고 남은 결론" />
+        </div>
+        <div>
+          <label for="targetKeyword">타깃 키워드 (SEO 점검 기준)</label>
+          <input type="text" id="targetKeyword" placeholder="예: 통장 쪼개기" />
+        </div>
+        <div>
+          <label for="instaFormat">인스타 포맷</label>
+          <select id="instaFormat">
+            <option value="carousel">카드뉴스 6장 (슬라이드)</option>
+            <option value="toon">인스타툰 4컷 (손그림 만화)</option>
+            <option value="feed">일반 피드 (사진 1장 + 캡션)</option>
+          </select>
+        </div>
+        <div>
+          <label for="imgStyle">이미지 스타일</label>
+          <select id="imgStyle">
+            <option value="light">미니멀 라이트 (흰 배경)</option>
+            <option value="dark">딥 네이비 (어두운 배경)</option>
+            <option value="bold">컬러 그라데이션 (강한 배경)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div style="grid-column: 1 / -1;">
+          <label for="context">🧷 실제 소재·맥락 고정 (주제가 딴 데로 새지 않게 — 비교 테스트 보강)</label>
+          <textarea id="context" style="min-height:62px;" placeholder="예: 11/24 생일 다음날 밤 11시 시작 / 첫 글 조회 41회 / 첫 영상 87회 / 링크 클릭 7회, 수익 210원 / 인스타 카툰은 접음 — 숫자는 이 값만 쓰고 새로 만들지 않기"></textarea>
+          <div class="std-tag" style="margin-top:5px;">사건·숫자·감정을 그대로 적으면 세 AI도 일반론으로 새지 않습니다. 비워두면 각 원고가 [대괄호] 자리로 나옵니다.</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="productKw">🛒 쇼츠 상품 후보 (제휴 없이 소개만 · 1개) — 제휴 매칭은 ⏸️ 승인 후</label>
+          <input type="text" id="productKw" placeholder="예: 무선 미니 키보드 (상품 1개만 확정)" />
+        </div>
+        <div>
+          <label for="affToggle">💼 제휴 링크·고지</label>
+          <select id="affToggle">
+            <option value="off" selected>제휴·광고 없음 (승인 전 홀드 — 기본값)</option>
+            <option value="on">[승인 후 사용] 승인·안정권 후 적용: 제휴 고지 자동 삽입 + 링크는 댓글·고정댓글 분리</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label for="topic">오늘의 주제 또는 메모 (예: "월급날 통장 쪼개기 실패한 썰", "소액으로 3일 단타 실험해 본 후기")</label>
+        <textarea id="topic" placeholder="주제나 겪은 일, 전하고 싶은 핵심 메시지 한두 줄을 적어주세요. 입력하면 아래 5개 카드의 이미지도 실시간으로 바뀝니다."></textarea>
+      </div>
+
+      <div class="mode-note" style="margin-top:10px;">
+        ✅ <b>승인 대비 콘텐츠 모드 ON</b> — 블로그 원고는 처음부터 승인 가능한 형태로 나오고, <b>광고·제휴 요소는 넣지 않습니다</b>(승인 후 적용).
+        <b>티스토리(애드센스)</b>: 공백 제외 1,700~1,950자 · H2/H3 계층 · 30일 실행 표 · 체크리스트 · FAQ · 자체 제작 이미지+Alt &nbsp;|&nbsp;
+        <b>네이버(애드포스트)</b>: 1,450~1,600자 · 경험+정보 결합 · 태그 5~8개 · 표/체크리스트 없이 · 상업성 표현·외부 수익 링크 자제
+        <br>✍️ <b>AI 티 제거</b>: “~에 대해 알아보겠습니다 / ~하는 것이 중요합니다 / 결론적으로 / 첫째·둘째·셋째” 같은 상투어 없이, 인기 블로거의 실제 호흡으로 씁니다. “~더라고요 / ~거든요 / ~죠”를 자연스럽게 섞습니다.
+        <br>🧱 <b>공통 뼈대</b>: 3초 훅 → 문제 공감 → 해결책 → 댓글·행동 유도(CTA). 스레드는 <b>반말 일상 잡담 1~2줄 + 답글 1~2개</b>, 쇼츠는 20초 5블록, 인스타는 4컷 인스타툰까지.
+      </div>
+
+      <details>
+        <summary>🔑 API 키 설정 (선택 — 브라우저에만 저장되며 외부 서버로 전송되지 않습니다)</summary>
+        <div class="row" style="margin-top: 10px;">
+          <div>
+            <label for="apiKey">선택한 엔진의 API Key</label>
+            <input type="password" id="apiKey" placeholder="sk-... / AIza... / sk-ant-..." />
+          </div>
+          <div>
+            <label for="modelName">모델명 (비워두면 기본값 사용)</label>
+            <input type="text" id="modelName" placeholder="예: gpt-4o-mini / gemini-2.5-flash / claude-sonnet-4-20250514" />
+          </div>
+        </div>
+      </details>
+
+      <div class="actions">
+        <button class="btn-primary" onclick="runStudio()">5개 채널 동시 생성</button>
+        <button class="btn-secondary" onclick="copyMasterPrompt()">AI 복붙용 통합 프롬프트 복사</button>
+        <button class="btn-outline" onclick="downloadAll()">🖼 이미지 5장 일괄 다운로드</button>
+        <button class="btn-outline" onclick="clearAll()">초기화</button>
+      </div>
+    </section>
+
+    <section class="panel" id="calendarPanel">
+      <div class="kw-panel-head">
+        <h2>📅 날짜별 글 리스트 · 임시저장 · 예약 발송</h2>
+        <span class="hint">날짜를 골라 <b>💾 임시저장</b> → <b>⏰ 예약 발송 설정</b>. 기록은 이 브라우저(localStorage)에만 남습니다.</span>
+      </div>
+      <div class="row" style="margin-top:12px;">
+        <div>
+          <label for="postDate">📆 글 날짜</label>
+          <input type="date" id="postDate" />
+        </div>
+        <div>
+          <label for="schedAt">⏰ 예약 발송 일시</label>
+          <input type="datetime-local" id="schedAt" />
+        </div>
+        <div>
+          <label for="postStatusFilter">보기</label>
+          <select id="postStatusFilter">
+            <option value="all">전체</option>
+            <option value="임시저장">임시저장</option>
+            <option value="예약 대기">예약 대기</option>
+            <option value="발행 완료">발행 완료</option>
+          </select>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:0;">
+        <button class="btn-primary" onclick="saveDraftPost()">💾 임시저장</button>
+        <button class="btn-secondary" onclick="setScheduledPost()">⏰ 예약 발송 설정</button>
+        <button class="btn-outline" onclick="markPostPublished()">✅ 발행 완료로 표시</button>
+        <button class="btn-outline" onclick="copyScheduleRequest()">📋 피클 예약 발송 요청 복사</button>
+        <button class="btn-outline" onclick="deletePostByDate()">🗑 이 날짜 기록 삭제</button>
+      </div>
+      <div class="post-hint">ℹ️ 이 HTML은 브라우저에서 혼자 도는 파일이라 <b>실제 자동 발행은 되지 않습니다.</b> 예약을 잡은 뒤 <b>📋 피클 예약 발송 요청 복사</b>로 요청문을 복사해 피클에게 보내면, 피클이 그 일정으로 발행 예약을 등록합니다.</div>
+      <details style="margin-top:8px;">
+        <summary style="font-size:12px;color:var(--muted);cursor:pointer;">📋 복사한 예약 요청문 보기 (복사가 안 될 때 여기서 직접 복사)</summary>
+        <textarea id="scheduleRequest" style="margin-top:8px;min-height:86px;font-size:12px;" readonly></textarea>
+      </details>
+      <div id="postList" class="post-list"></div>
+    </section>
+
+    <section class="panel" id="picklePanel">
+      <div class="kw-panel-head">
+        <h2>💬 피클 지시 입력창 & 히스토리</h2>
+        <span class="hint">하고 싶은 말을 적고 <b>기록 & 복사</b> → <b>📋 피클에게 보낼 메시지 복사</b>로 붙여 보내면 피클이 실행합니다.</span>
+      </div>
+      <div class="pickle-tags" id="pickleTags"></div>
+      <div class="row">
+        <div style="grid-column: 1 / -1;">
+          <label for="pickleInput">피클에게 할 말 (수정 · 발행 · 예약 · 말투 변경)</label>
+          <textarea id="pickleInput" style="min-height:70px;" placeholder="예: 2026-11-28 초안에서 스레드만 반말 톤으로 다시 뽑고, 나머지는 이대로 예약 발송 준비해줘"></textarea>
+        </div>
+        <div>
+          <label for="pickleDate">연결할 날짜</label>
+          <input type="date" id="pickleDate" />
+        </div>
+        <div>
+          <label for="pickleChannel">연결할 채널</label>
+          <select id="pickleChannel">
+            <option value="">전체 (5채널)</option>
+            <option value="naver">네이버 블로그</option>
+            <option value="google">티스토리</option>
+            <option value="insta">인스타 카툰</option>
+            <option value="yt">유튜브 쇼츠</option>
+            <option value="threads">스레드</option>
+          </select>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:0;">
+        <button class="btn-primary" onclick="addPickleNote()">💬 기록 & 복사</button>
+        <button class="btn-outline" onclick="copyPickleMessage()">📋 피클에게 보낼 메시지 복사</button>
+        <button class="btn-outline" onclick="clearPickleNotes()">🧹 히스토리 비우기</button>
+      </div>
+      <div class="post-hint">ℹ️ 이 파일은 브라우저에서 혼자 돌기 때문에 <b>피클 서버로 바로 메시지를 보낼 수 없습니다.</b> 지시 기록은 이 브라우저에 남고, 복사한 문장을 피클 채팅에 붙여 보내면 그대로 지시가 됩니다.</div>
+      <details style="margin-top:8px;">
+        <summary style="font-size:12px;color:var(--muted);cursor:pointer;">📋 복사한 메시지 보기 (복사가 안 될 때 여기서 직접 복사)</summary>
+        <textarea id="pickleCopyBox" style="margin-top:8px;min-height:80px;font-size:12px;" readonly></textarea>
+      </details>
+      <div id="pickleHistory" class="pickle-history"></div>
+    </section>
+
+    <section class="panel" id="importPanel">
+      <div class="kw-panel-head">
+        <h2>📥 9시 초안 가져오기 (JSON)</h2>
+        <span class="hint">피클이 아침 9시에 만든 5채널 JSON을 붙여넣으면 <b>날짜별 글 리스트</b>에 추가되고 5개 초안이 바로 열립니다.</span>
+      </div>
+      <div class="row" style="margin-top:12px;">
+        <div style="grid-column: 1 / -1;">
+          <label for="importJson">5채널 초안 JSON</label>
+          <textarea id="importJson" style="min-height:110px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:12px;" placeholder='{&quot;date&quot;:&quot;2026-11-28&quot;,&quot;topic&quot;:&quot;주제&quot;,&quot;status&quot;:&quot;임시저장&quot;,&quot;drafts&quot;:{&quot;naver&quot;:&quot;...&quot;,&quot;google&quot;:&quot;...&quot;,&quot;insta&quot;:&quot;...&quot;,&quot;yt&quot;:&quot;...&quot;,&quot;threads&quot;:&quot;...&quot;}}'></textarea>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:0;">
+        <button class="btn-primary" onclick="importDraftJson()">📥 불러와서 리스트에 추가</button>
+        <button class="btn-outline" onclick="fillImportSample()">예시 형식 채우기</button>
+      </div>
+      <div id="importResult" class="import-result"></div>
+    </section>
+
+    <section class="grid">
+      <!-- 1. 네이버 블로그 -->
+      <div class="ch-card" data-ch="naver">
+        <div class="ch-head">
+          <span class="badge b-naver">네이버 블로그 · savejeong</span>
+          <button class="btn-mini" onclick="copyText('outNaver')">복사</button>
+        </div>
+        <div class="hook-bar">
+          <div class="hook-row"><span class="hook-label">🎯 후킹</span><div class="hook-chips" id="hook-chips-naver"></div></div>
+          <div class="hook-row"><span class="hook-label">🏷 제목 키워드</span><div class="hook-chips" id="hook-kws-naver"></div><input class="hook-kw-input" type="text" id="hook-kwin-naver" placeholder="직접 입력 후 Enter" /></div>
+          <div class="hook-preview" id="hook-prev-naver"></div>
+          <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('naver')">이 카드만 초안 다시 생성</button></div>
+        </div>
+        <textarea class="output" id="outNaver" placeholder="3초 훅 → 문제 공감 → 해결책 → 댓글 CTA + 제목 후보 3개 + 사진 위치 + 검색 태그가 여기에 생성됩니다."></textarea>
+        <div class="seo-box">
+          <div class="seo-head"><span>🔎 네이버 SEO · 승인 대비 점검</span><b class="seo-score" id="seoScore-naver">—</b></div>
+          <div id="seoList-naver"></div>
+        </div>
+        <div class="mode-note">✅ <b>승인 대비 콘텐츠 모드</b> · 1,450~1,600자 · 태그 5~8개 · 표·체크리스트 없이 경험담 · 3초 훅→공감→해결→댓글 CTA · 광고·제휴 없음</div>
+
+        <div class="img-block">
+          <div class="img-head"><span>🖼 대표 이미지</span><b id="cap-naver">1200×900 · 4:3</b></div>
+          <div class="canvas-wrap"><canvas id="cv-naver"></canvas></div>
+          <input class="title-input" id="title-naver" data-ch="naver" placeholder="이미지에 넣을 제목 문구" />
+          <div class="tools">
+            <button class="btn-mini primary" onclick="downloadCard('naver')">PNG 다운로드</button>
+            <button class="btn-mini" onclick="copyImagePrompt('naver')">이미지 프롬프트 복사</button>
+          </div>
+        </div>
+
+        <details>
+          <summary>🖼 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
+          <div id="guide-naver"></div>
+        </details>
+      </div>
+
+      <!-- 2. 티스토리 (구글 SEO · 애드센스) -->
+      <div class="ch-card" data-ch="google">
+        <div class="ch-head">
+          <span class="badge b-google">티스토리 · 10년 후의 나를 위해</span>
+          <button class="btn-mini" onclick="copyText('outGoogle')">복사</button>
+        </div>
+        <div class="hook-bar">
+          <div class="hook-row"><span class="hook-label">🎯 후킹</span><div class="hook-chips" id="hook-chips-google"></div></div>
+          <div class="hook-row"><span class="hook-label">🏷 제목 키워드</span><div class="hook-chips" id="hook-kws-google"></div><input class="hook-kw-input" type="text" id="hook-kwin-google" placeholder="직접 입력 후 Enter" /></div>
+          <div class="hook-preview" id="hook-prev-google"></div>
+          <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('google')">이 카드만 초안 다시 생성</button></div>
+        </div>
+        <textarea class="output" id="outGoogle" placeholder="H1·메타 디스크립션 + H2/H3 구조 + 30일 실행 표 + 체크리스트 + FAQ가 여기에 생성됩니다."></textarea>
+        <div class="seo-box">
+          <div class="seo-head"><span>🔎 구글 SEO · 승인 대비 점검</span><b class="seo-score" id="seoScore-google">—</b></div>
+          <div id="seoList-google"></div>
+        </div>
+        <div class="mode-note google">✅ <b>승인 대비 콘텐츠 모드</b> · 1,700~1,950자 · H2/H3 · 30일 실행 표 · 체크리스트 · FAQ · 전문 에디터 포맷 · 광고·제휴 없음</div>
+
+        <div class="img-block">
+          <div class="img-head"><span>🖼 OG · 피처드 이미지</span><b id="cap-google">1200×630 · 1.91:1</b></div>
+          <div class="canvas-wrap"><canvas id="cv-google"></canvas></div>
+          <input class="title-input" id="title-google" data-ch="google" placeholder="이미지에 넣을 제목 문구" />
+          <div class="tools">
+            <button class="btn-mini primary" onclick="downloadCard('google')">PNG 다운로드</button>
+            <button class="btn-mini" onclick="copyImagePrompt('google')">이미지 프롬프트 복사</button>
+          </div>
+        </div>
+
+        <details>
+          <summary>🖼 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
+          <div id="guide-google"></div>
+        </details>
+      </div>
+
+      <!-- 3. 인스타그램 -->
+      <div class="ch-card" data-ch="insta">
+        <div class="ch-head">
+          <span class="badge b-insta">인스타 카툰 · save_jeong</span>
+          <button class="btn-mini" onclick="copyText('outInsta')">복사</button>
+        </div>
+        <div class="hook-bar">
+          <div class="hook-row"><span class="hook-label">🎯 후킹</span><div class="hook-chips" id="hook-chips-insta"></div></div>
+          <div class="hook-row"><span class="hook-label">🏷 제목 키워드</span><div class="hook-chips" id="hook-kws-insta"></div><input class="hook-kw-input" type="text" id="hook-kwin-insta" placeholder="직접 입력 후 Enter" /></div>
+          <div class="hook-preview" id="hook-prev-insta"></div>
+          <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('insta')">이 카드만 초안 다시 생성</button></div>
+        </div>
+        <textarea class="output" id="outInsta" placeholder="카드뉴스 6장 / 인스타툰 4컷(컷별 대사·장면·영어 프롬프트) / 피드 1장 문구 + 캡션 + 해시태그가 여기에 생성됩니다."></textarea>
+        <div class="mode-note">✅ <b>AI 티 제로</b> · 포맷을 <b>인스타툰 4컷</b>으로 고르면 블로그 글을 손그림 만화로 각색 + 4컷 미리보기 PNG·컷별 영어 프롬프트까지</div>
+
+        <div class="img-block">
+          <div class="img-head"><span>🖼 카드 미리보기</span><b id="cap-insta">1080×1350 · 4:5 · 카드뉴스 6장</b></div>
+          <div class="canvas-wrap"><canvas id="cv-insta"></canvas></div>
+          <div class="slide-nav" id="instaNav">
+            <button onclick="instaPrev()">◀</button>
+            <span id="instaIndex">1 / 6</span>
+            <button onclick="instaNext()">▶</button>
+          </div>
+          <div class="thumbs" id="instaThumbs"></div>
+          <input class="title-input" id="title-insta" data-ch="insta" placeholder="현재 장에 넣을 문구" />
+          <div class="tools">
+            <button class="btn-mini primary" onclick="downloadCard('insta')">현재 장 PNG</button>
+            <button class="btn-mini" onclick="downloadInstaAll()">6장 전체 PNG</button>
+            <button class="btn-mini" onclick="copyImagePrompt('insta')">이미지 프롬프트 복사</button>
+          </div>
+        </div>
+
+        <details>
+          <summary>🖼 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
+          <div id="guide-insta"></div>
+        </details>
+      </div>
+
+      <!-- 4. 유튜브 쇼핑 쇼츠 (세픽) -->
+      <div class="ch-card" data-ch="yt">
+        <div class="ch-head">
+          <span class="badge b-yt">유튜브 쇼핑 쇼츠 · 세픽</span>
+          <button class="btn-mini" onclick="copyText('outYt')">복사</button>
+        </div>
+        <div class="hook-bar">
+          <div class="hook-row"><span class="hook-label">🎯 후킹</span><div class="hook-chips" id="hook-chips-yt"></div></div>
+          <div class="hook-row"><span class="hook-label">🏷 제목 키워드</span><div class="hook-chips" id="hook-kws-yt"></div><input class="hook-kw-input" type="text" id="hook-kwin-yt" placeholder="직접 입력 후 Enter" /></div>
+          <div class="hook-preview" id="hook-prev-yt"></div>
+          <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('yt')">이 카드만 초안 다시 생성</button></div>
+        </div>
+        <textarea class="output" id="outYt" placeholder="20초 5블록 대본(0~3초 훅 / 3~8초 공감 / 8~15초 소개 1개 / 15~20초 댓글 CTA) + 시간대별 자막 블록 + 씬별 소스가 여기에 생성됩니다. (제휴 링크·고지는 ⏸️ 승인 후)"></textarea>
+        <div class="mode-note">✅ <b>쇼핑 쇼츠 20초</b> · 상품 1개만 · 자막 코드블록 · 댓글 유도 자막 · 링크·고지 없이 정보 전달(제휴는 ⏸️ 승인 후)</div>
+
+        <div class="img-block">
+          <div class="img-head"><span>🖼 쇼츠 커버</span><b id="cap-yt">1080×1920 · 9:16</b></div>
+          <div class="canvas-wrap"><canvas id="cv-yt"></canvas></div>
+          <input class="title-input" id="title-yt" data-ch="yt" placeholder="커버에 넣을 6~10자 문구" />
+          <div class="tools">
+            <button class="btn-mini primary" onclick="downloadCard('yt')">PNG 다운로드</button>
+            <button class="btn-mini" onclick="copyImagePrompt('yt')">이미지 프롬프트 복사</button>
+          </div>
+        </div>
+
+        <details>
+          <summary>🖼 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
+          <div id="guide-yt"></div>
+        </details>
+      </div>
+
+      <!-- 5. 스레드 -->
+      <div class="ch-card" data-ch="threads">
+        <div class="ch-head">
+          <span class="badge b-threads">스레드 · @savejeong.pick</span>
+          <button class="btn-mini" onclick="copyText('outThreads')">복사</button>
+        </div>
+        <div class="hook-bar">
+          <div class="hook-row"><span class="hook-label">🎯 후킹</span><div class="hook-chips" id="hook-chips-threads"></div></div>
+          <div class="hook-row"><span class="hook-label">🏷 제목 키워드</span><div class="hook-chips" id="hook-kws-threads"></div><input class="hook-kw-input" type="text" id="hook-kwin-threads" placeholder="직접 입력 후 Enter" /></div>
+          <div class="hook-preview" id="hook-prev-threads"></div>
+          <div class="hook-tools"><button class="btn-mini" onclick="regenChannel('threads')">이 카드만 초안 다시 생성</button></div>
+        </div>
+        <textarea class="output" id="outThreads" placeholder="본문 1개(반말 1~2줄 · 30~100자 · ?·!로 끝) + 이어지는 답글 1~2개가 여기에 생성됩니다."></textarea>
+        <div class="mode-note">✅ <b>@savejeong.pick 실제 글 말투</b> · 전부 반말 · ㅋㅋㅋ · 이모지 0~1개(맨 끝) · 질문으로 댓글 유도 · 불릿·번호·블로그식 CTA 없음 · 링크·제휴 없음</div>
+
+        <div class="img-block">
+          <div class="img-head"><span>🖼 포인트 카드</span><b id="cap-threads">1200×1200 · 1:1</b></div>
+          <div class="canvas-wrap"><canvas id="cv-threads"></canvas></div>
+          <input class="title-input" id="title-threads" data-ch="threads" placeholder="한 문장으로 넣을 포인트" />
+          <div class="tools">
+            <button class="btn-mini primary" onclick="downloadCard('threads')">PNG 다운로드</button>
+            <button class="btn-mini" onclick="copyImagePrompt('threads')">이미지 프롬프트 복사</button>
+            <button class="btn-mini" onclick="toggleThreadsRatio()">비율 1:1 ↔ 16:9</button>
+          </div>
+        </div>
+
+        <details>
+          <summary>🖼 노출 최적화 이미지 가이드 (규격 · Alt · 파일명 · 컷)</summary>
+          <div id="guide-threads"></div>
+        </details>
+      </div>
+    </section>
+
+    <details class="panel" style="margin-top:18px;">
+      <summary>📖 사용법 & 이미지 활용 팁</summary>
+      <ol class="usage" style="margin:10px 0 0 18px; padding:0;">
+        <li><b>주제 입력 → 5개 채널 동시 생성</b>: API 키 없이도 구조 초안 5개가 즉시 나옵니다. [대괄호]는 본인 경험으로 채워 넣는 자리입니다.</li>
+        <li><b>📌 5채널 최신 기준</b>: 맨 위 접이식 패널이 <b>✅ 현재 적용 중(순수 콘텐츠 규칙)</b>과 <b>⏸️ 승인·안정권 후 적용(광고·제휴)</b>으로 나뉘어 있습니다. 예스24 33권 4단 뼈대, @savejeong.pick 반말 말투, 20초 쇼츠 5블록, 인스타툰 4컷, 블로그 2종 보강점은 지금 쓰고, AF3753560·공정위 고지 3종·쇼츠 고정댓글 링크는 승인 후 홀드 카드에서 꺼내 씁니다.</li>
+        <li><b>🧷 실제 소재·맥락 고정</b>: 사건·숫자(날짜, 조회수, 수익)를 적으면 그것이 초안과 통합 프롬프트에 그대로 들어가고, “숫자는 주어진 값만 쓰고 새로 만들지 말 것” 지시가 함께 붙습니다. 3개 AI 비교에서 가장 효과가 컸던 장치입니다.</li>
+        <li><b>AI로 실제 원고 생성</b>: 엔진을 OpenAI/Gemini/Claude로 바꾸고 API 키를 넣으면 5채널 원고가 한 번에 채워집니다.</li>
+        <li><b>플랫폼별 후킹 · 제목 키워드</b>: 각 카드 위의 <b>🎯 후킹</b> 칩을 누르면 그 플랫폼이 잘 먹는 제목·도입 훅 스타일(네이버=경험 후기·경고·체크리스트·질문, 구글=숫자·비교·단계·FAQ, 인스타=저장·반전·숫자·초보, 숏폼=반전·결론·실수·비포애프터, 스레드=고백·토론·인사이트·질문)로 이 카드의 초안 제목·첫 문장과 썸네일/카드뉴스 제목이 바로 바뀝니다. <b>🏷 제목 키워드</b> 칩을 누르면 그 키워드가 제목 앞에 붙고(최대 3개, 직접 입력도 가능), 네이버·구글 SEO 점수가 새 제목 기준으로 다시 계산됩니다. 이미 쓴 초안은 제목·도입 줄만 제자리에서 교체되고, 본문을 처음부터 다시 만들고 싶을 때만 <b>이 카드만 초안 다시 생성</b>을 누르세요.</li>
+        <li><b>상위 노출 키워드</b>: 씨앗 키워드를 넣고 <b>키워드 발굴</b>을 누르면 정보형·비교형·후기형·질문형 조합이 나옵니다. 칩을 누르면 주제칸에 바로 들어가고, 옆의 N/G로 네이버·구글 검색결과를 열어 경쟁도를 확인하세요. 실제 검색량은 아래 데이터랩·트렌드 링크에서 보세요.</li>
+        <li><b>SEO 점검</b>: 네이버·구글 원고 카드의 점수는 제목 길이(25~38자)·키워드 앞배치·분량·H2/H3·키워드 반복(3~6회)·이미지/Alt·태그를 실시간으로 계산합니다. 80점 이상이면 발행 가능한 수준입니다.</li>
+        <li><b>인스타 포맷</b>: 상단에서 <b>카드뉴스 6장</b> · <b>인스타툰 4컷</b> · <b>일반 피드(사진 1장)</b>을 고를 수 있습니다. 카드뉴스는 썸네일로 장을 넘겨보고, 인스타툰은 네이버 블로그 글을 4컷으로 각색해 컷별 대사·장면·영어 프롬프트와 손그림 느낌의 4컷 미리보기 PNG를 만듭니다.</li>
+        <li><b>AI 티 제거</b>: 블로그 원고는 실제 인기 블로거 포맷으로 나옵니다. 네이버는 장면·시행착오 중심의 후기형, 구글은 결론 먼저·수치·비교표 중심의 전문 에디터형입니다. 상투어(“~에 대해 알아보겠습니다”, “결론적으로”, “첫째·둘째·셋째”)는 프롬프트에서 금지되어 있습니다.</li>
+        <li><b>승인 대비 모드</b>: 티스토리 원고는 <b>애드센스 기준</b>(1,700~1,950자 · H2/H3 · 실행 표 · FAQ · 고유 콘텐츠), 네이버 원고는 <b>애드포스트 기준</b>(1,450~1,600자 · 태그 5~8개 · 상업성 표현 자제)으로 나옵니다. 광고 코드·제휴 요소는 넣지 않습니다(⏸️ 승인 후). 각 원고 끝의 <b>승인 체크</b>를 발행 전에 확인하세요.</li>
+        <li><b>심사 전 준비</b>: 사이트에 개인정보처리방침 · 소개 · 문의 페이지를 먼저 올리고, 최소 10~15편을 발행한 뒤 신청하면 승인 가능성이 높아집니다.</li>
+        <li><b>티스토리 vs 네이버 블로그</b>: 같은 주제라도 티스토리 원고는 H2/H3·30일 실행 표·체크리스트·FAQ 중심의 정보형(1,700~1,950자), 네이버는 1인칭 경험 후기형(1,450~1,600자)으로 <u>문장·소재·구조를 분리</u>해 중복 문서 판정을 피합니다. 두 원고의 첫 문단·소제목이 겹치면 티스토리 쪽을 다시 생성하세요.</li>
+        <li><b>이미지</b>: 각 카드의 캔버스에 제목 문구를 넣으면 실시간 렌더링됩니다. 문구를 고친 뒤 <b>PNG 다운로드</b>를 누르면 플랫폼 규격 그대로 저장됩니다.</li>
+        <li><b>⏸️ 제휴 · 고지 (현재 홀드)</b>: 기본값은 <b>“제휴·광고 없음 (승인 전 홀드 — 기본값)”</b>입니다. 각 플랫폼이 승인·안정권에 들어간 뒤 <b>💼 제휴 링크·고지</b>를 <b>[승인 후 사용]</b>으로 바꾸면 네이버·티스토리 말미 고지, 인스타 캡션 고지, 쇼츠 고정댓글(AF3753560)이 붙습니다. 스레드는 승인 후에도 링크를 본문에 넣지 않고 댓글로만 분리합니다.</li>
+        <li><b>스레드 말투 (@savejeong.pick 실제 글)</b>: 전부 반말, 마침표 대신 <b>?·!</b>, 1~2줄 30~100자, <code>ㅋㅋㅋ</code>와 이모지 0~1개(맨 끝), 마지막은 질문으로 댓글 유도(<code>~있어?</code> <code>~있나?</code> <code>남겨줘</code>). <code>스친·스하리·반하리·맞팔</code> 생활어를 자연스럽게. <b>불릿·번호(1/3)·블로그식 CTA는 쓰지 않고</b> 본문 1개 + 이어지는 답글 1~2개로 씁니다.</li>
+        <li><b>쇼핑 쇼츠</b>: 20초 = 0~3초 훅 / 3~8초 문제 공감 / 8~15초 소개 1개(전→후) / 15~20초 댓글 유도. 자막은 시간대별 코드블록으로 나오니 편집기에 그대로 붙이고, 상품명·가격은 게시 전에 실제 페이지에서 확인하세요. 링크·고지는 승인 후에만 붙입니다.</li>
+        <li><b>이미지 스타일</b>: 라이트·딥네이비·그라데이션 중 선택하면 5장이 함께 바뀝니다. 같은 스타일을 반복하면 계정 피드가 통일돼 보입니다.</li>
+        <li><b>이미지 프롬프트 복사</b>: Midjourney·DALL·E·Gemini 등에 붙여넣어 배경 사진/일러스트를 만들 때 사용하세요. 글자는 캔버스 PNG로 얹는 편이 가장 깔끔합니다. 인스타툰 모드에서는 컷별 영어 프롬프트 4줄이 복사됩니다.</li>
+        <li><b>파일명</b>: 다운로드 파일명에 주제 키워드가 자동으로 들어갑니다. 업로드할 때도 이름을 바꾸지 말고 그대로 올리면 이미지 검색에 유리합니다.</li>
+      </ol>
+    </details>
+  </div>
+
+  <!-- 아침 9시 초안 시드 (2026-11-27 확정본·광고 없음) -->
+  <script type="application/json" id="seedDraftsJson">
+{
+"date": "2026-11-27",
+"topic": "블랙프라이데이 당일 · 한국 몰 마감일 레이스",
+"status": "임시저장",
+"savedAt": "2026-11-27 09:00",
+"note": "2026-11-27 확정본 본문만 — 광고·제휴 전부 제외(승인 전 홀드)",
+"drafts": {
+"naver": "# 제목 후보 (1개 선택)\n1. **블프 할인율에 속지 않으려고 정한 11월 결제 기준 3가지**\n2. 패딩 하나 사려다 가계부 지킨 이야기 (블프 마감일 정리)\n3. 70% 할인 문구 앞에서 지갑 닫고 먼저 확인한 숫자들\n\n---\n\n## 본문\n\n11월 마지막 주가 되니 스마트폰 알림이 전부 세일 이야기입니다. '최대 70% 할인', '오늘이 블랙프라이데이' 같은 문구를 보고 있으면 당장 장바구니를 털어야 손해 보는 기분이 듭니다. 저도 어제 퇴근길에 겨울 패딩 하나 보려다가 결제 직전까지 갔는데, 잠깐 멈춰서 가계부부터 열어 봤습니다.\n\n막상 세일 기간을 따져 보니 정작 중요한 건 할인율이 아니라 마감일이었습니다. 오늘이 블랙프라이데이 당일인데도 국내 쇼핑몰은 끝나는 날짜가 다 제각각이더군요. 쿠팡 가전·디지털 블랙프라이데이와 롯데·현대·신세계백화점 겨울 정기세일은 11월 29일에 끝납니다. 무신사 '무진장 26 겨울'은 12월 2일, 에이블리와 알리익스프레스는 12월 3일이 마감입니다.\n\n주말에 천천히 고르면 되겠지 싶다가도, 이틀 뒤에 끝나는 행사를 보고 나면 조급해져서 안 사도 될 물건까지 담기 쉽습니다.\n\n![블프 마감일 확인하다 늦은 밤](projects/content-studio/daily/2026-11-27/naver-blog-cover.png)\n\n## 남들 다 살 때 왜 패딩에 돈이 몰렸을까\n\n이번 주 유통가 기사를 찾아보니 사람들이 지갑을 연 이유가 단순히 세일 때문만은 아니었습니다. 서울 최저기온이 영하 5.8도까지 내려가자 한파 수요가 한꺼번에 몰린 겁니다.\n\n- 신세계백화점은 11월 19~24일 아웃도어 매출이 직전 주 같은 요일보다 35%, 스포츠는 30% 늘었습니다.\n- 무신사 '무진장 26 겨울 블랙프라이데이'는 행사 시작 43시간 만에 누적 판매 1,000억 원을 넘겼습니다. 지난해 겨울 행사보다 6시간 빠른 속도입니다.\n- 11월 23일 하루에만 패딩·코트 같은 외투가 200억 원어치 팔렸고, 다음 날 오전 8시 외투 순위 상위 9개 중 7개가 패딩이었습니다.\n- 코오롱몰도 11월 1~18일 다운·패딩 거래액이 작년 같은 기간의 3.5배를 기록했습니다.\n\n문제는 이런 분위기일수록 '남들 다 사니까 나도 하나' 하는 심리가 붙는다는 점입니다. 기사에 나온 프리미엄 다운은 50만~110만원대가 상위였고, 온라인 랭킹 1~3위는 4만~7만원대 경량·미드웨이트 패딩이었습니다. 가격 차이가 열 배 넘게 나는데도 세일 배너만 보면 일단 비싼 쪽에 눈이 가기 마련입니다.\n\n## 가계부 지키려고 세운 결제 기준 3가지\n\n그래서 이번 블프에는 장바구니에 넣기 전에 세 가지만 통과한 물건만 결제하기로 정했습니다.\n\n1. 할인 전 평소 가격부터 확인하기. 세일 기간 직전에 정가가 올라간 경우도 있어서, 어제 가격이나 타 사이트 가격과 비교하지 않으면 '가짜 할인'에 걸리기 쉽습니다.\n2. 이번 겨울 최소 10번 이상 손이 갈 물건만 사기. 싸다고 들인 옷이 옷장에 걸려만 있으면 그게 제일 비싼 지출입니다.\n3. 11월 고정지출·카드값 먼저 빼고 남은 예산 안에서만 고르기. 다음 달 카드값 생각하면 4만~7만원대 실속형으로 충분한지, 꼭 고가 라인이 필요한지 바로 답이 나옵니다.\n\n이렇게 걸러 내고 나니 처음 장바구니에 담았던 품목 절반 이상이 자연스럽게 빠졌습니다.\n\n## 이번 주에 끝나는 블프 일정 메모\n\n필요한 게 정말 있다면 마감 직전 품절 전에만 챙기시면 됩니다.\n\n- 11/29 · 쿠팡 가전·디지털 블랙프라이데이, 롯데·현대·신세계 겨울 정기세일\n- 11/30 · 롯데하이마트 블랙프라이데이, 오늘의집 '집요한세일', 코오롱몰 '아우터 위크'\n- 12/1 · 쿠팡 R.LUX 패션 블랙프라이데이\n- 12/2 · 무신사 '무진장 26 겨울'\n- 12/3 · 에이블리 '에블프', 알리익스프레스\n\n이번 블프에 가계부 방어 성공하셨나요, 아니면 꼭 필요했던 물건 득템하셨나요? 여러분만의 충동구매 막는 기준이 있다면 댓글로 공유해 주세요.\n",
+"google": "# 2026년 블랙프라이데이 마감일 총정리: 11월 29일·30일·12월 2일에 각각 무엇이 끝나는가\n\n2026년 11월 27일(금)은 블랙프라이데이 당일입니다. 다만 국내 유통가에서 실제로 챙겨야 할 숫자는 '시작일'이 아니라 '종료일'입니다. 행사마다 마감이 11월 29일부터 12월 13일까지 흩어져 있어서, 하루 차이로 같은 상품을 할인가로 못 사는 일이 생깁니다.\n\n이 글은 ① 지금 열려 있는 행사의 마감일 표 ② 이번 주 판매 숫자와 그 해석 ③ 구매 전 확인 체크리스트 ④ 헷갈리기 쉬운 세 가지 순서로 정리했습니다. 기준 시점은 2026년 11월 27일이며, 마감일은 각 유통사 발표를 인용 보도한 기사로 확인한 값입니다.\n\n## 1. 지금 열려 있는 행사와 종료일\n\n| 채널 | 행사 | 종료일 | 확인된 내용 |\n|---|---|---|---|\n| 쿠팡 | 가전·디지털 블랙프라이데이 | 11/29 | 삼성·LG·인텔 참여, 11/23~27 브랜드별 라이브 방송 추가 할인·경품 |\n| 롯데·현대·신세계백화점 | 겨울 정기세일 | 11/29 | 롯데 400여·신세계 370여 브랜드, 현대는 패딩·코트 물량 전년 대비 20% 확대 |\n| 롯데하이마트 | 블랙프라이데이 | 11/30 | — |\n| 오늘의집 | 집요한세일 | 11/30 | 최저가 미달 시 차액 200% 포인트 보상(최대 1만 포인트) |\n| 코오롱몰 | 아우터 위크 | 11/30 | 본행사(11/5~18) 거래액 전년 대비 2.1배 |\n| 쿠팡 | R.LUX 패션 블랙프라이데이 | 12/1 | — |\n| 무신사 | 무진장 26 겨울 | 12/2 | 인기 상품 1,500여 개, 전국 오프라인 매장 11곳 동시 진행 |\n| 에이블리 | 에블프 | 12/3 | 2,000여 입점사, 최대 93% 할인 |\n| 알리익스프레스 | 연말 할인전 | 12/3 | 최대 70% 할인 |\n| 신세계사이먼 | 사이먼 블랙 프라이데이 | 12/13 | 프리미엄 아울렛 전 점포 |\n\n한 줄로 줄이면 이렇습니다. **11월 29일이 첫 번째 분수령, 12월 2~3일이 마지막 분수령**입니다. 11월 30일은 가전·가구·패션 아웃렛이 겹치는 날이고, 12월 중순까지 남는 것은 아울렛 행사뿐입니다.\n\n## 2. 숫자로 보는 이번 주 수요\n\n| 지표 | 수치 | 기준·기간 |\n|---|---|---|\n| 신세계백화점 아웃도어 매출 | 전주 같은 요일 대비 +35% | 11/19~24 |\n| 신세계백화점 스포츠 매출 | +30% | 11/19~24 |\n| 무신사 누적 판매액 1,000억 원 돌파 | 행사 시작 후 43시간 | 11/22 19시 시작 → 11/24 14시 |\n| 무신사 하루 외투 판매액 | 200억 원 | 11/23 |\n| 무신사 외투 순위 상위 9개 중 패딩 | 7개 | 11/24 08시 집계 |\n| 코오롱몰 다운·패딩 거래액 | 전년 동기 3.5배 | 11/1~18 |\n| 코오롱몰 모바일 앱 매출 비중 | 79% | 본행사 기간 |\n\n여기서 읽을 것은 세 가지입니다.\n\n첫째, 이번 주 판매를 끌어올린 품목은 **겨울 외투와 방한화**입니다. 무신사는 11/23 하루 신발 판매액도 100억 원을 넘었고 전년 대비 약 68% 늘었습니다.\n\n둘째, 팔린 것은 비싼 한 벌이 아니라 **겹쳐 입는 조합**입니다. 상위 9개 중 5개가 레이어링용 아우터(미드웨이트·라이트·경량 패딩, 플리스·후드 집업)였습니다.\n\n셋째, 수요는 **기온이 떨어지는 즉시** 움직입니다. 해당 기간 서울 최저기온은 영하권이었고 11/22에는 영하 5.8도까지 내려갔습니다. 세일 기간이 길어도 구매는 추위가 오는 날에 몰립니다.\n\n![세일 마감일을 확인하는 저녁](projects/content-studio/daily/2026-11-27/naver-blog-cover.png)\n\n## 3. 결제 전 확인 체크리스트\n\n- [ ] 이 상품을 이번 겨울에 몇 번 입을지 숫자로 적어봤는가\n- [ ] 해당 행사의 **종료일**을 확인했는가 (표의 날짜는 연장될 수 있음)\n- [ ] 할인가가 아니라 **최종 결제 금액**을 기준으로 비교했는가 (배송비·쿠폰 포함)\n- [ ] 3주 전 가격과 비교해 실제로 내려갔는가\n- [ ] 내 사이즈 재고가 남아 있는가 (인기 사이즈는 마감일 전에 먼저 소진)\n- [ ] 반품·교환 기간과 조건을 확인했는가 (세일 상품은 교환 불가가 흔함)\n- [ ] 같은 상품이 다른 채널에서 더 싼지 한 번만 더 검색했는가\n- [ ] 결제 수단 혜택(카드 청구할인·포인트)까지 반영했는가\n\n체크리스트에서 가장 자주 걸리는 항목은 3번입니다. 표시 할인율은 정가 기준이라, 쿠폰이 붙는 채널과 안 붙는 채널의 실제 차액이 뒤집히는 경우가 많습니다.\n\n## 4. 헷갈리기 쉬운 세 가지\n\n**① 정부 통합 행사는 이미 끝났습니다.** '코리아 그랜드 페스티벌'은 10월 29일~11월 15일로 종료됐습니다. 검색하면 지난해 코리아세일페스타 정보가 함께 나오므로 날짜를 그대로 믿으면 안 됩니다.\n\n**② 마감일은 '행사 종료일'이고, 재고 소진은 그보다 빠릅니다.** 무신사처럼 인기 상품이 몰리는 행사는 마감일보다 사이즈 절벽이 먼저 옵니다.\n\n**③ 두꺼운 롱패딩만 찾으면 놓치는 게 있습니다.** 세탁 서비스 런드리고가 2023년 9월~2026년 11월 패딩 세탁 122만 벌을 분석한 결과, 경량패딩 비중은 7.8%에서 14.6%로 늘고 롱패딩은 26.5%에서 18.7%로 줄었습니다. 올겨울 구매 기준은 '가장 두꺼운 것'이 아니라 '기온에 따라 더하고 덜어 낼 수 있는가'입니다.\n\n![겨울 준비를 마친 부부](projects/content-studio/daily/2026-11-27/shorts-cover.png)\n\n## 5. 정리\n\n1. 마감일은 11/29 → 11/30 → 12/2~3 순서로 세 번 옵니다.\n2. 이번 주 수요는 외투·방한화에 집중됐고, 경량·미드웨이트가 상위를 차지했습니다.\n3. 결제 전에는 최종 결제 금액과 3주 전 가격을 비교하는 두 항목만 확실히 하면 실수를 크게 줄일 수 있습니다.\n\n다음 글에서는 이번 주에 끝나는 세일이 실제로 연장되는지, 12월 첫 주에 가격이 어떻게 바뀌는지 확인해서 정리하겠습니다. 필요하신 분은 구독으로 받아보세요.\n\n**참고 자료**\n- 뉴스투데이, 2026-11-25, 「블랙프라이데이가 달라졌다…AI·전문관·온오프라인 연계로 승부」\n- 아주경제, 2026-11-26, 「[강추위에 웃는 유통가] 겨울 장사가 1년 실적 가른다」\n- 뉴스핌, 2026-11-24, 「무신사 겨울 블프, 43시간 만에 판매액 1000억원…역대 최단기」\n- 뉴스브라이트 2026-11-27 / 파이낸셜뉴스 2026-11-26, 코오롱몰 블랙프라이데이 실적\n- 뉴시스, 2026-11-25, 「12월 코앞에도 '가벼운 패딩' 인기…소재 경쟁」\n",
+"insta": "# 표지 카피 (이미지 위에 얹을 텍스트)\n\n- 메인: **\"주말에 보자\" 했더니 마감이 이틀 뒤였습니다**\n- 서브: 부부가 블프 마감일을 알아낸 날 · 4컷\n\n# 4컷 대사 & 자막\n\n**1컷 — 거실, 저녁**\n- 아내: \"여보, 나 패딩 하나 사야겠어. 이번 주 너무 추워.\"\n- 남편: \"블프잖아~ 주말에 같이 보자.\"\n- 자막: 11월 넷째 주 목요일 밤\n\n**2컷 — 서재, 밤 11시**\n- 남편(혼잣말): \"…그거 언제까지인데?\"\n- 화면 자막: 쿠팡·백화점 **11/29** / 무신사 **12/2** / 에이블리·알리 **12/3**\n- 효과: 달력에 빨간 동그라미, 식은땀 한 방울\n\n**3컷 — 폰 클로즈업**\n- 남편: \"다들 벌써 샀어…?\"\n- 화면 자막: 무신사 **43시간에 1,000억** · 하루 외투 **200억** · 외투 TOP9 중 **7개가 패딩**\n- 효과: 머리 위 동전, 계산기\n\n**4컷 — 현관, 눈 오는 밤**\n- 아내: \"역시 이건 지금 사길 잘했다.\"\n- 남편: \"다음엔 11월 첫째 주에 사자. 응?\"\n- 자막: 결론 — 세일은 **시작일**이 아니라 **마감일**이 핵심\n\n# 피드 캡션\n\n아내가 패딩 사자길래 \"블프니까 주말에 보자\" 했습니다.\n그런데 마감이 이틀 뒤였습니다. 11/29. 👇\n\n이번 주 사람들이 실제로 산 건 패딩이었어요.\n무신사는 43시간에 1,000억, 하루 외투 200억, 외투 순위 9개 중 7개가 패딩.\n서울 최저기온이 영하 5.8도까지 내려간 주였으니까요.\n\n세일은 시작일보다 마감일이 중요합니다.\n11/29에 쿠팡 가전·백화점 겨울세일이 끝나고, 12/2에 무신사, 12/3에 에이블리가 끝나요.\n\n저장해두고 11월 마지막 주에 한 번만 열어보세요.\n우리 집은 그렇게 패딩 두 벌을 샀습니다. (가계부는 조용히 넘어가기로 했어요)\n\n이번 블프에 뭐 사셨나요? 댓글로 알려주세요 🧣\n\n# 해시태그\n#인스타툰 #부부일상 #부부툰 #아빠일상 #육아일상 #일상툰 #그림일기 #카툰 #손그림\n#블랙프라이데이 #블프 #패딩 #겨울준비 #겨울패딩 #가성비패딩 #무신사\n#살림 #가계부 #짠테크 #재테크 #절약 #세일정보 #11월 #겨울옷\n\n# 대체 텍스트(alt)\n- 표지: 눈 내리는 저녁 거실에서 아내가 장바구니를 든 채 달력을 가리키고, 남편이 휴대폰을 보며 머리를 긁적이는 수채화풍 일러스트.\n- 4컷: 소파에서 아내가 패딩 이야기를 하는 1컷, 밤에 달력과 씨름하는 2컷, 휴대폰을 보고 놀라는 3컷, 나란히 패딩을 입고 서 있는 4컷.\n",
+"yt": "# 제목 후보\n1. **43시간에 1,000억…이번 주 사람들이 산 건 패딩입니다 #shorts**\n2. 무신사 외투 TOP9 중 7개가 패딩, 지금 사야 할 이유 #shorts\n3. 블프 마감 11/29, 패딩 살 때 3개만 보세요 #shorts\n\n# 20초 대본 (시간대별 자막 블록)\n\n| 시간 | 자막(화면 표시) | 내레이션 | 화면 |\n|---|---|---|---|\n| 0.0~1.0s | **43시간에 1,000억** | \"43시간에 1,000억.\" | 숫자만 크게, 손글씨 폰트, 배경 단색 |\n| 1.0~3.0s | 그중 **하루 외투 200억** / TOP9 중 **7개가 패딩** | \"그중 하루 외투만 200억. 인기 순위 아홉 개 중 일곱 개가 패딩입니다.\" | 무신사 랭킹 화면 캡처(출처 자막 삽입) |\n| 3.0~7.0s | 서울 최저 **-5.8도** / 백화점 아웃도어 **+35%** | \"그 주 서울은 영하 5.8도까지 내려갔고, 백화점 아웃도어 매출은 35% 뛰었습니다.\" | 영하 온도 그래픽 + 매장 진열대 B롤 |\n| 7.0~12.0s | **11/29** 쿠팡·백화점 / **12/2** 무신사 / **12/3** 에이블리 | \"그런데 지금 열린 세일, 대부분 11월 29일에 끝납니다. 무신사는 12월 2일, 에이블리는 12월 3일이 마지막입니다.\" | 달력 애니메이션, 날짜 순차 등장 |\n| 12.0~16.0s | 볼 것 3개 / **충전재 · 무게 · 마감일** | \"패딩 고를 때는 충전재, 무게, 마감일. 이 세 개만 보세요.\" | 손가락으로 3개 짚는 클로즈업 |\n| 16.0~18.0s | 상위 1~3위는 **4만~7만원대** | \"이번 주 상위 1~3위는 4만에서 7만원대 경량 패딩이었습니다.\" | 랭킹 화면 캡처 3장 컷 편집 |\n| 18.0~20.0s | **댓글에 '패딩' 남겨주세요** | \"고르는 기준 더 궁금하면 댓글에 패딩이라고 남겨주세요. 정리해서 답글에 달아둘게요.\" | 세픽 캐릭터 + 댓글 아이콘 |\n\n- 자막은 전부 상단 1/3에 배치(유튜브 UI가 하단을 가림)\n- 3초 안에 숫자 2개(1,000억·200억)를 동시에 노출 → 기대·이득·난이도 중 '기대'와 '이득' 확보\n- 제품 소개가 아니라 정보 전달 영상이므로 16초에도 가격 비교 정보만 넣고 상품 링크·구매 유도는 넣지 않음\n\n# 씬별 소스 가이드\n\n| 씬 | 소스 | 촬영·편집 팁 |\n|---|---|---|\n| 0~1s | 타이포 모션(캡컷 텍스트 애니메이션) | 검정 배경 + 흰 글씨, 1초에 1개 정보 |\n| 1~3s | 무신사 '무진장' 랭킹 페이지 캡처 | 화면 하단에 \"자료: 무신사 2026.11.24 08:00 집계\" 자막 고정 |\n| 3~7s | 뉴스 기사 캡처(아주경제 11/26) + 겨울 매장 B롤 | 기사 캡처는 헤드라인만 3초 이내 |\n| 7~12s | 직접 촬영한 달력 + 손글씨 날짜 3장 | 11/29, 12/2, 12/3만 크게 |\n| 12~16s | 세픽 표지 이미지(shorts-cover.png) 활용 + 텍스트 3개 | 캐릭터 컷을 0.5초씩 3번 |\n| 16~18s | 무신사 랭킹 화면 캡처 3장(또는 직접 찍은 겨울 외투 컷) | 가격 텍스트는 넣지 말고 \"4만~7만원대\"만 |\n| 18~20s | 세픽 캐릭터 + 댓글 말풍선 | 댓글 유도 문구 유지, 외부 주소 안내 없음 |\n\n- 배경음: 저작권 프리 통통 튀는 비트, 20초 내내 동일 트랙\n- 무신사 로고가 나오는 컷은 3초 이내, 출처 표기 필수\n\n# 설명란(고정 텍스트)\n\n이번 주 유통가 판매 숫자와 11월 말 세일 마감일을 20초로 정리했습니다.\n패딩·방한화 고를 때 확인할 기준과 마감일은 아래 타임라인에서 확인하세요.\n\n⏱ 타임라인\n00:00 43시간에 1,000억\n00:03 영하 5.8도, 아웃도어 +35%\n00:07 마감일: 11/29 · 12/2 · 12/3\n00:12 패딩 고를 때 볼 것 3개\n\n📌 자료\n무신사 무진장 26 겨울 랭킹(2026.11.24 08:00 집계), 아주경제 2026.11.26, 뉴스핌 2026.11.24\n\n# 고정 댓글\n\n패딩 고르는 기준 세 개만 정리하면\n충전재 · 무게 · 마감일입니다\n이번 주 상위 1~3위는 4만~7만원대 경량 패딩이었어요\n궁금한 거 있으면 이 댓글에 남겨주세요, 하나씩 답글 달게요\n",
+"threads": "# 본문 (발행할 글 1개)\n\n블프라서 패딩이나 볼까 했더니\n사람들이 이번 주에 진짜 산 건 패딩이었음 ㅋㅋ\n\n근데 세일 달력 보면 할인율보다 마감일이 더 급함\n쿠팡·백화점 11/29, 무신사 12/2, 에이블리·알리 12/3\n살 거면 이번 주에 끝내고, 아니면 12월엔 그냥 정가임\n\n이번 블프에 뭐 살 거야? 댓글 남겨주면 나도 구경 갈게 🧣\n\n---\n\n# 이어지는 답글 1 (본문에 답글로 연결)\n\n마감일만 정리하면 이럼\n11/29 쿠팡 가전·백화점 겨울세일\n11/30 롯데하이마트·오늘의집·코오롱몰\n12/2 무신사, 12/3 에이블리·알리\n무신사는 이번 주에 43시간 만에 1,000억, 하루 외투만 200억 팔았대\n사이즈는 마감보다 먼저 없어지니까 인기 사이즈면 오늘 보는 게 나음\n\n# 이어지는 답글 2 (선택 — 본문이 길어 보이면 생략)\n\n패딩 고를 때 나는 충전재·무게·마감일만 봄\n이번 주 상위 1~3위도 4만~7만원대 경량이었고\n살 게 있으면 오늘 장바구니 한 번만 열어보자\n"
+}
+}
+  </script>
+
+  <script>
+    /* ===================== 기본 설정 ===================== */
+    const FONT = '"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif';
+    const KEYS = ['naver', 'google', 'insta', 'yt', 'threads'];
+
+    const CH = {
+      naver:   { name: '네이버 블로그', accent: '#03c75a', accent2: '#0f9d58', w: 1200, h: 900,  ratio: '4:3',    use: '대표 이미지',  prefix: 'naver',     sub: '직접 겪고 정리한 현실 후기', outId: 'outNaver' },
+      google:  { name: '티스토리',     accent: '#4285f4', accent2: '#7b61ff', w: 1200, h: 630,  ratio: '1.91:1', use: 'OG·피처드',   prefix: 'google-og', sub: '조건·실행표·주의점 한 번에', outId: 'outGoogle' },
+      insta:   { name: '인스타 카툰',  accent: '#e1306c', accent2: '#6228d7', w: 1080, h: 1350, ratio: '4:5',    use: '카툰 표지',    prefix: 'insta',     sub: '4컷으로 보는 우리집 이야기', outId: 'outInsta' },
+      yt:      { name: '쇼핑 쇼츠',    accent: '#ff0033', accent2: '#ff7a18', w: 1080, h: 1920, ratio: '9:16',   use: '쇼츠 커버',    prefix: 'shorts',    sub: '끝까지 보면 달라집니다',    outId: 'outYt' },
+      threads: { name: '스레드',       accent: '#111111', accent2: '#4b4b4b', w: 1200, h: 1200, ratio: '1:1',    use: '포인트 카드',  prefix: 'threads',   sub: '너는 오늘 어땠어?',   outId: 'outThreads' }
+    };
+
+    /* ===================== 플랫폼별 후킹 · 제목 키워드 ===================== */
+    /* {K} 선택한 제목 키워드(없으면 주제) · {T} 주제 · {C} 카테고리 */
+    const HOOKS = {
+      naver: [
+        { id: 'exp', label: '솔직 경험·후기형', desc: '직접 겪은 장면·시행착오로 시작 (애드포스트에 유리)',
+          titles: ['{K} 3년 해보고 남은 결론 (솔직 후기)', '{K} 하면서 제일 많이 후회한 것', '{K} 처음 시작한 사람에게 해주고 싶은 말'],
+          intro: '지난 [요일] 저녁, [구체적 상황]에서 한참 멈춰 있었습니다.\n{K} 하면서 남들은 쉽게들 하던데, 제 계산기에는 [실제 숫자]만 찍혀 있었거든요.\n그날 밤에 적어둔 메모가 아직 남아 있습니다.',
+          prompt: '직접 겪은 장면(시간·장소·숫자)으로 시작하고, 시행착오 → 깨달음 → 지금도 지키는 기준 순서로 쓴다. 제목은 1인칭 경험 후기 각도.' },
+        { id: 'warn', label: '실수·주의 경고형', desc: '흔한 실수와 손실을 먼저 짚고 대안 제시',
+          titles: ['{K} 하기 전에 꼭 알아야 할 실수 5가지', '{K} 이렇게 하면 오히려 손해입니다', '{K} 초보가 제일 많이 하는 실수'],
+          intro: '처음 석 달은 저도 똑같이 했습니다. 결과는 [구체적 손실].\n{K}에서 위험한 건 방법이 아니라 순서였습니다.\n제가 밟은 실수부터 적어둡니다. 같은 데서 멈추지 마세요.',
+          prompt: '흔한 실수와 그 결과(손실·시간)를 먼저 제시하고, 실수마다 반드시 대안을 붙인다. 겁주기만 하지 않는다.' },
+        { id: 'check', label: '체크리스트·총정리형', desc: '준비물부터 순서까지 한 번에 정리',
+          titles: ['{K} 총정리: 준비물부터 순서까지 한 번에', '{K} 한 장 체크리스트 (2026년)', '{K} 시작 전 점검할 것 7가지'],
+          intro: '이 글 하나로 {K} 준비는 끝납니다.\n제가 실제로 쓰는 체크리스트를 그대로 옮겨 적었습니다.\n[ ] 칸부터 하나씩 지워보세요.',
+          prompt: '준비물 → 순서 → 체크리스트 순으로 빠짐없이, 각 항목은 한 줄로 끊는다. 마지막에 3줄 요약.' },
+        { id: 'ask', label: '질문·공감 자극형', desc: '독자가 속으로 하던 질문을 첫 문장에',
+          titles: ['{K} 왜 매달 똑같이 실패할까요? 3가지 이유', '{K} 해봤는데 안 되는 이유', '{K} 지금 시작해도 늦지 않았을까요'],
+          intro: '{K}, 열심히 하는데 결과가 안 보인다면 이유가 하나 있습니다.\n저도 그 이유를 찾는 데 [기간]이 걸렸습니다.\n혹시 지금 [상황]이라면, 이 글 끝까지 읽어보세요.',
+          prompt: '독자가 속으로 하던 질문을 첫 문장에 그대로 던지고, 답을 미루며 경험으로 끌고 간다. 마지막에 다시 질문을 던져 댓글을 부른다.' }
+      ],
+      google: [
+        { id: 'number', label: '숫자·비용·기간 명시형', desc: '첫 문단에 비용·기간을 숫자로 못 박기',
+          titles: ['{K} 비용·기간 총정리 (2026년 기준)', '{K} 3개월·120만 원, 실제로 든 비용', '{K} 준비 기간 2주, 실제 비용은 얼마?'],
+          intro: '{K}의 결론부터 말하면, 최소 비용 [금액]과 준비 기간 [기간]이면 시작할 수 있습니다.\n다만 [조건]을 넘기면 비용이 두 배로 늘어납니다.\n아래 표에서 내 조건이 어디에 해당하는지 먼저 확인하세요.',
+          prompt: '첫 문단에 비용과 기간을 숫자로 못 박고, 조건별로 숫자가 어떻게 달라지는지 표로 보여준다.' },
+        { id: 'compare', label: 'A vs B 비교 분석형', desc: '두 대안을 표로 비교하고 선택 기준 제시',
+          titles: ['{K} A vs B 비교: 내 조건엔 뭐가 유리할까', '{K} 방식 비교: 비용·난이도·장단점', '{K} 두 방법, 조건별 선택 기준'],
+          intro: '{K}는 크게 [A]와 [B]로 나뉘고, 결론은 [조건]에 따라 달라집니다.\n[A]는 [장점]이지만 [단점]이 있고, [B]는 그 반대입니다.\n비교표에서 내 상황에 맞는 쪽을 먼저 고르세요.',
+          prompt: '두 대안을 장단점·비용·난이도·적합한 사람 기준의 표로 비교하고, 조건별 선택 기준을 명시한다.' },
+        { id: 'guide', label: '단계별 완벽 가이드형', desc: 'H2를 단계로 나눠 순서대로 안내',
+          titles: ['{K} 4단계 완벽 가이드: 순서대로 따라하기', '{K} 처음부터 끝까지 순서 정리', '{K} 단계별 실행법 (초보용)'],
+          intro: '{K}는 4단계면 끝납니다. 준비 → 세팅 → 실행 → 점검 순서입니다.\n각 단계에서 놓치기 쉬운 지점만 따로 표시했습니다.\n1단계부터 순서대로 따라오세요.',
+          prompt: 'H2를 단계로 나누고 각 단계에 소요 시간·준비물·체크포인트를 붙인다.' },
+        { id: 'faq', label: '문제해결·FAQ형', desc: '증상 → 원인 → 해결, 질문형 목차',
+          titles: ['{K} 안 될 때 확인할 것 7가지 (원인별 정리)', '{K} 자주 하는 질문 10개 정리', '{K} 실패 원인과 해결법'],
+          intro: '{K}가 안 되는 원인은 대부분 [원인 1]과 [원인 2] 둘 중 하나입니다.\n먼저 [체크 항목]을 확인하면 절반은 해결됩니다.\n아래 FAQ에서 내 증상과 같은 항목을 찾아보세요.',
+          prompt: '증상 → 원인 → 해결 순으로 정리하고, 실제 질문 형태의 FAQ를 5개 이상 붙인다.' }
+      ],
+      insta: [
+        { id: 'save', label: '저장 유도(꿀팁 모음)형', desc: '표지는 꿀팁 N개 + 저장, 장마다 팁 1개',
+          titles: ['{K} 꿀팁 5개 저장해두세요', '{K} 이것만 알면 끝', '{K} 3분 정리, 저장각'],
+          intro: '저장해두면 두고두고 쓰는 {K} 팁만 모았어요.',
+          prompt: '표지는 “꿀팁 N개 · 저장” 각도로 7단어 이내, 2~5장은 팁 1개씩, 마지막 장은 저장 CTA.' },
+        { id: 'twist', label: '공감·반전 훅형', desc: '통념을 먼저 말하고 3장에서 뒤집기',
+          titles: ['{K}, 다들 반대로 하고 있어요', '{K} 열심히 했는데 왜 안 될까', '{K}의 진짜 이유'],
+          intro: '{K} 열심히 했는데 결과가 없다면, 방향이 반대일 수 있어요.',
+          prompt: '2장에서 통념을 먼저 말하고 3장에서 뒤집는다. 표지는 반전을 암시하는 짧은 문장.' },
+        { id: 'number', label: '숫자 리스트형', desc: '표지에 숫자, 장마다 번호와 근거 한 줄',
+          titles: ['{K} 3가지만 바꾸면 됩니다', '{K} 효과 본 것 딱 3가지', '{K} 3단계면 충분해요'],
+          intro: '{K}에서 진짜 효과 본 건 딱 3가지였어요.',
+          prompt: '표지에 숫자를 넣고, 장마다 번호와 한 문장. 숫자 뒤에 근거 한 줄.' },
+        { id: 'beginner', label: '초보 탈출 가이드형', desc: '첫 달에 할 일만 순서대로',
+          titles: ['{K} 초보가 첫 달에 하는 일', '{K} 처음 시작할 때 순서', '{K} 초보 탈출 4주 플랜'],
+          intro: '{K} 처음 시작하는 분들이 첫 달에 꼭 하는 것만 모았어요.',
+          prompt: '첫 달에 할 일만 골라 순서대로. 어려운 용어는 풀어서.' }
+      ],
+      yt: [
+        { id: 'reverse', label: '3초 반전·충격 훅형', desc: '0~3초에 통념을 부정하는 한 문장',
+          titles: ['{K}, 이거 모르고 시작하면 시간만 버립니다', '{K} 반대로 하면 바로 됩니다', '{K} 아직도 이렇게 하세요?'],
+          cover: '{K} 반전',
+          intro: '"{K}, 이거 모르고 시작하면 시간만 버립니다."',
+          prompt: '0~3초에 통념을 부정하는 한 문장, 3~10초에 반전 근거, 이후 3가지로 정리.' },
+        { id: 'conclusion', label: '결론 선제시형', desc: '첫 3초에 결론, 근거는 뒤에',
+          titles: ['{K}, 결론부터 말합니다', '{K} 답은 하나였습니다', '{K} 3초 만에 정리해드림'],
+          cover: '{K} 결론',
+          intro: '"{K}, 결론부터 말하면 [핵심 한 문장]입니다."',
+          prompt: '첫 3초에 결론을 말하고, 왜 그런지 근거를 뒤에 붙인다.' },
+        { id: 'mistake', label: '흔한 실수 경고형', desc: '0~3초에 실수 한 문장, 이어서 대안',
+          titles: ['{K}에서 다들 하는 실수', '{K} 하다가 처음부터 다시 하는 이유', '{K} 이 실수 조심하세요'],
+          cover: '{K} 흔한 실수',
+          intro: '"{K} 하다가 이 실수 하면 처음부터 다시 해야 합니다."',
+          prompt: '0~3초에 실수를 한 문장으로, 이어서 왜 위험한지와 대안을 보여준다.' },
+        { id: 'beforeafter', label: '비포·애프터 비교형', desc: '화면을 나눠 전후를 보여주기',
+          titles: ['{K} 전 vs 후, 뭐가 달라졌나', '{K} 하나 바꿨더니 이렇게 됐습니다', '{K} 비포·애프터 비교'],
+          cover: '전 vs 후',
+          intro: '"{K} 전과 후, 딱 하나만 바꿨습니다."',
+          prompt: '화면을 좌우/상하로 나눠 전후를 보여주고, 바꾼 것 하나를 명확히 말한다.' }
+      ],
+      threads: [
+        { id: 'confess', label: '일상 잡담·혼잣말형', desc: '반말로 툭 던지는 하루 잡담 (실제 글 말투)',
+          titles: ['{K} 해보니 결국 이게 답이더라', '{K} 해보고 남은 건 별거 없었음', '{K} 요즘 이 생각만 함 ㅋㅋ'],
+          intro: '{K} 해보니까 결국 별거 없더라 작은 거 하나씩 고친 게 다였음 ㅋㅋ 너는 요즘 뭐가 제일 잘 되고 있어?',
+          prompt: '@savejeong.pick 실제 글처럼 반말 일상 잡담으로. 1~2줄 30~100자, 마침표 대신 ?·!, ㅋㅋㅋ 섞고 이모지는 맨 끝에 0~1개, 마지막은 질문으로 댓글을 부른다. 불릿·번호(1/3)·"저장해두세요" 금지.' },
+        { id: 'debate', label: '두 입장·댓글 유도형', desc: '내 방식을 반말로 던지고 "너네는?"으로 끝',
+          titles: ['{K} 이게 나만 이래?', '{K} 너네는 어느 쪽이야?', '{K} 이 방식 저 방식 뭐가 나아?'],
+          intro: '{K} 이거 나만 이렇게 하는 건가 ㅋㅋ 나는 [방식] 쪽인데 너네는 어느 쪽이야?',
+          prompt: '의견을 반말로 툭 던지고 "너네는 어느 쪽이야?"로 끝낸다. 1~2줄, 번호·불릿 없이. 스친·맞팔 생활어는 1개까지만.' },
+        { id: 'insight', label: '한 줄 짧은 통찰형', desc: '짧은 단정 한 줄 + 근거 한 줄 + 질문',
+          titles: ['{K} 핵심은 결국 이 한 줄이었음', '{K} 하고 제일 오래 남은 말', '{K} 3년 하고 남은 건 이거 하나'],
+          intro: '{K} 하면서 제일 크게 남은 건 결국 [한 줄] 이거였음 너는 어떤 말이 제일 오래 남아?',
+          prompt: '짧은 단정 한 줄 + 근거 한 줄, 마지막은 질문. 반말, ㅋㅋㅋ 1회까지, 이모지 0~1개를 맨 끝에.' },
+        { id: 'ask', label: '질문·스친 찾기형', desc: '답하기 쉬운 질문 하나로 대화를 연다',
+          titles: ['{K} 지금 제일 막히는 거 뭐야?', '{K} 어디서 멈췄어?', '{K} 해본 스친 있어?'],
+          intro: '{K} 하다가 막힌 데가 있어서 묻는 건데 너는 어떻게 했어? 댓글 남겨줘',
+          prompt: '답하기 쉬운 질문 하나로 시작해 반말로 끝낸다. "남겨줘·있어?·있나?" 형태, 이모지 0~1개.' }
+      ]
+    };
+
+    const hookState = {
+      naver:   { style: 'exp', keywords: [] },
+      google:  { style: 'number', keywords: [] },
+      insta:   { style: 'save', keywords: [] },
+      yt:      { style: 'reverse', keywords: [] },
+      threads: { style: 'confess', keywords: [] }
+    };
+    let discoveredKeywords = [];
+
+    const keyInput = document.getElementById('apiKey');
+    const engineSelect = document.getElementById('aiEngine');
+    const statusText = document.getElementById('statusText');
+
+    let threadsWide = false;
+    let instaFormat = 'carousel';
+    let instaSlide = 0;
+    let instaOverrides = {};
+    let guideTimer = null;
+
+    try { keyInput.value = localStorage.getItem('wonyeong_studio_key') || ''; } catch (e) { keyInput.value = ''; }
+    keyInput.addEventListener('input', () => {
+      try { localStorage.setItem('wonyeong_studio_key', keyInput.value.trim()); } catch (e) { /* 저장 불가 환경 */ }
+    });
+
+    /* ===================== 유틸 ===================== */
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function slug(s) {
+      return String(s || '').trim()
+        .replace(/[\\/:*?"<>|#]/g, '')
+        .replace(/[—–]/g, '-')
+        .replace(/\s+/g, '-')
+        .replace(/-{2,}/g, '-')
+        .replace(/^-|-$/g, '')
+        .slice(0, 36) || 'card';
+    }
+    function hexA(hex, a) {
+      const v = String(hex).replace('#', '');
+      const n = v.length === 3 ? v.split('').map(c => c + c).join('') : v;
+      const r = parseInt(n.slice(0, 2), 16), g = parseInt(n.slice(2, 4), 16), b = parseInt(n.slice(4, 6), 16);
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+    }
+    function roundRect(ctx, x, y, w, h, r) {
+      const rr = Math.min(r, w / 2, h / 2);
+      ctx.beginPath();
+      ctx.moveTo(x + rr, y);
+      ctx.lineTo(x + w - rr, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + rr);
+      ctx.lineTo(x + w, y + h - rr);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - rr, y + h);
+      ctx.lineTo(x + rr, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - rr);
+      ctx.lineTo(x, y + rr);
+      ctx.quadraticCurveTo(x, y, x + rr, y);
+      ctx.closePath();
+    }
+    function wrapText(ctx, text, maxWidth) {
+      const out = [];
+      const paras = String(text).split(/\n/);
+      for (const para of paras) {
+        const words = para.split(/\s+/).filter(Boolean);
+        let line = '';
+        for (const word of words) {
+          const test = line ? line + ' ' + word : word;
+          if (ctx.measureText(test).width <= maxWidth) { line = test; continue; }
+          if (line) { out.push(line); line = ''; }
+          if (ctx.measureText(word).width <= maxWidth) { line = word; continue; }
+          let buf = '';
+          for (const ch of word) {
+            if (buf && ctx.measureText(buf + ch).width > maxWidth) { out.push(buf); buf = ch; }
+            else buf += ch;
+          }
+          line = buf;
+        }
+        if (line) out.push(line);
+      }
+      return out.length ? out : [''];
+    }
+
+    /* ===================== 후킹 · 키워드 엔진 ===================== */
+    function topicValue() {
+      return (document.getElementById('topic').value || '').trim().replace(/\s+/g, ' ');
+    }
+    /* 실제 소재·제휴 고지 입력값 */
+    function contextValue() {
+      const el = document.getElementById('context');
+      return el ? (el.value || '').trim().replace(/\s+/g, ' ') : '';
+    }
+    function productValue() {
+      const el = document.getElementById('productKw');
+      return el ? (el.value || '').trim() : '';
+    }
+    function affOn() {
+      const el = document.getElementById('affToggle');
+      return !!el && el.value === 'on';   // 기본값은 승인 전 홀드(제휴·광고 없음)
+    }
+    const NOTICE = {
+      coupang: '이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.',
+      blog: '이 글에는 제휴 링크가 포함되어 있으며, 링크를 통한 구매 시 일정 수수료를 받을 수 있습니다.',
+      insta: '게시물에 제휴 링크가 포함될 수 있으며, 구매 시 수수료를 받을 수 있습니다.',
+      threadsComment: '너무 많이 물어봐서 아래 링크 달게.'
+    };
+    function copyNotices() {
+      const text = '[⏸️ 승인·안정권 진입 후 사용 — 제휴 · 광고 고지 (보관용)]\n' +
+        '※ 각 플랫폼 승인·안정권 진입 전까지는 붙이지 않습니다.\n' +
+        '· 쿠팡 파트너스(공정위): ' + NOTICE.coupang + '\n' +
+        '· 네이버·티스토리 말미: ' + NOTICE.blog + '\n' +
+        '· 인스타 캡션 말미: ' + NOTICE.insta + '\n' +
+        '· 쇼츠 고정댓글·설명란: ' + NOTICE.coupang + '\n' +
+        '· 스레드 제휴 댓글: “너무 많이 물어봐서 아래 링크 달게” + 쿠팡 파트너스 고지';
+      navigator.clipboard.writeText(text).then(
+        () => { statusText.textContent = '승인 후 사용할 제휴 고지 문구 3종을 복사했습니다 (현재 홀드)'; },
+        () => { statusText.textContent = '클립보드 복사에 실패했습니다 (브라우저 권한 확인)'; }
+      );
+    }
+    function shortTopic(max) {
+      const t = topicValue();
+      if (!t) return '';
+      const first = t.split(/[\n,·—]/)[0].trim() || t;
+      return first.slice(0, max || 28);
+    }
+    /* 쇼츠 댓글 유도용 키워드 — 단어 중간에서 잘리지 않게 */
+    function ctaKeyword() {
+      const words = shortTopic(18).replace(/\s+$/, '').split(' ').filter(Boolean);
+      const pick = words.length > 2 ? words.slice(0, 2).join(' ') : words.join(' ');
+      return (pick || '정보').slice(0, 12);
+    }
+    /* 단어 경계에서 자르기 */
+    function clipWords(s, max) {
+      const t = String(s == null ? '' : s).replace(/\s+/g, ' ').trim();
+      if (t.length <= max) return t;
+      const cut = t.slice(0, max);
+      const sp = cut.lastIndexOf(' ');
+      return (sp > 6 ? cut.slice(0, sp) : cut) + '…';
+    }
+    function hookBase(key) {
+      const sel = hookState[key].keywords;
+      if (sel.length) return sel.join(' ');
+      const target = (document.getElementById('targetKeyword').value || '').trim();
+      if (target) return target.slice(0, 30);
+      const t = shortTopic(28);
+      if (t) return t;
+      const seed = (document.getElementById('seedKeyword').value || '').trim();
+      return seed || '오늘의 주제';
+    }
+    function hookFill(tpl, key) {
+      const K = hookBase(key);
+      const T = shortTopic(28) || '오늘의 주제';
+      const C = document.getElementById('category').value;
+      return String(tpl)
+        .replace(/\{K\}/g, () => K)
+        .replace(/\{T\}/g, () => T)
+        .replace(/\{C\}/g, () => C);
+    }
+    function hookDef(key) {
+      const list = HOOKS[key] || [];
+      return list.filter(d => d.id === hookState[key].style)[0] || list[0];
+    }
+    function hookTitles(key) {
+      return hookDef(key).titles.map(t => cleanTitle(hookFill(t, key)));
+    }
+    function hookTitle(key) { return hookTitles(key)[0]; }
+    function hookIntro(key) { return hookFill(hookDef(key).intro, key); }
+    function hookCover(key) {
+      const d = hookDef(key);
+      let t = d.cover ? hookFill(d.cover, key) : hookTitle(key);
+      if (t.length > 18) {
+        const cut = t.slice(0, 18);
+        const sp = cut.lastIndexOf(' ');
+        t = sp > 4 ? cut.slice(0, sp) : cut;
+      }
+      return t;
+    }
+    function firstLine(s) {
+      return String(s || '').split('\n')[0].replace(/^["'“”]+|["'“”]+$/g, '').trim();
+    }
+    function cardLine(s) {
+      return firstLine(s).replace(/[.!?。]+$/g, '').trim();
+    }
+    function hookTag(key) { return ' · 후킹: ' + hookDef(key).label; }
+
+    function keywordCandidates() {
+      const list = [];
+      const add = (v) => {
+        const k = String(v || '').replace(/\s+/g, ' ').trim();
+        if (k && k.length <= 30 && list.indexOf(k) === -1) list.push(k);
+      };
+      add(document.getElementById('targetKeyword').value);
+      add(shortTopic(28));
+      add(document.getElementById('seedKeyword').value);
+      discoveredKeywords.slice(0, 4).forEach(add);
+      add(String(document.getElementById('category').value).split('+')[0]);
+      return list.slice(0, 7);
+    }
+
+    function renderHookBars() {
+      const cands = keywordCandidates();
+      KEYS.forEach(key => {
+        const box = document.getElementById('hook-chips-' + key);
+        if (!box) return;
+        box.innerHTML = (HOOKS[key] || []).map(d =>
+          '<button class="hchip' + (d.id === hookState[key].style ? ' active' : '') + '" data-ch="' + key +
+          '" data-hook="' + esc(d.id) + '" title="' + esc(d.desc) + '">' + esc(d.label) + '</button>'
+        ).join('');
+
+        const kbox = document.getElementById('hook-kws-' + key);
+        if (kbox) {
+          const sel = hookState[key].keywords;
+          const list = cands.slice();
+          sel.forEach(k => { if (list.indexOf(k) === -1) list.push(k); });
+          kbox.innerHTML = list.length
+            ? list.map(k =>
+                '<button class="hchip kw' + (sel.indexOf(k) > -1 ? ' active' : '') + '" data-ch="' + key +
+                '" data-hkw="' + esc(k) + '" title="제목 앞에 배치할 키워드">' + esc(k) + '</button>'
+              ).join('')
+            : '<span class="hook-preview">주제·씨앗 키워드를 입력하면 후보가 생깁니다</span>';
+        }
+        updateHookPreview(key);
+      });
+    }
+
+    function updateHookPreview(key) {
+      const el = document.getElementById('hook-prev-' + key);
+      if (!el) return;
+      const d = hookDef(key);
+      const hasBase = hookState[key].keywords.length > 0 || !!shortTopic(28);
+      if (!hasBase) {
+        el.innerHTML = '<b>' + esc(d.label) + '</b> · ' + esc(d.desc) +
+          '<br>주제를 입력하면 이 스타일로 만든 제목이 여기에 표시됩니다.';
+        return;
+      }
+      const titles = hookTitles(key);
+      const len = titles[0].length;
+      const isBlog = (key === 'naver' || key === 'google');
+      const lenTxt = isBlog
+        ? ' · ' + len + '자 ' + ((len >= 25 && len <= 38) ? '✅' : '⚠️ 권장 25~38자')
+        : '';
+      el.innerHTML = '<b>키워드</b> ' + esc(hookBase(key)) + lenTxt +
+        '<br><span class="hp-title">“' + esc(titles[0]) + '”</span>';
+    }
+
+    function setHookStyle(key, id) {
+      if (!HOOKS[key] || !HOOKS[key].filter(d => d.id === id).length) return;
+      hookState[key].style = id;
+      applyHook(key);
+      statusText.textContent = CH[key].name + ' 후킹: ' + hookDef(key).label + ' — 제목·도입 훅·이미지 제목에 반영했습니다';
+    }
+
+    function toggleHookKeyword(key, kw) {
+      const st = hookState[key];
+      const i = st.keywords.indexOf(kw);
+      if (i > -1) {
+        st.keywords.splice(i, 1);
+      } else {
+        st.keywords.push(kw);
+        if (st.keywords.length > 3) st.keywords.shift();
+        if ((key === 'naver' || key === 'google') && !document.getElementById('targetKeyword').value.trim()) {
+          document.getElementById('targetKeyword').value = kw;
+        }
+      }
+      applyHook(key);
+      statusText.textContent = st.keywords.length
+        ? CH[key].name + ' 제목 키워드: ' + st.keywords.join(' + ') + ' (앞배치)'
+        : CH[key].name + ' 제목 키워드 해제 — 주제를 그대로 씁니다';
+    }
+
+    function addHookKeyword(key, raw) {
+      const kw = String(raw || '').replace(/\s+/g, ' ').trim().slice(0, 30);
+      if (!kw) return;
+      const st = hookState[key];
+      if (st.keywords.indexOf(kw) === -1) {
+        st.keywords.push(kw);
+        if (st.keywords.length > 3) st.keywords.shift();
+        if ((key === 'naver' || key === 'google') && !document.getElementById('targetKeyword').value.trim()) {
+          document.getElementById('targetKeyword').value = kw;
+        }
+      }
+      applyHook(key);
+      statusText.textContent = CH[key].name + ' 제목 키워드에 "' + kw + '"를 넣었습니다';
+    }
+
+    /* 선택이 바뀌면 이 채널만 다시 반영: 초안 제목·도입 훅 → 이미지 제목 → SEO */
+    function applyHook(key) {
+      const el = document.getElementById(CH[key].outId);
+      const hasBase = hookState[key].keywords.length > 0 || !!topicValue();
+      if (el && !el.value.trim() && hasBase) {
+        fillChannelDraft(key);
+      } else if (el) {
+        patchDraft(key);
+      }
+      renderHookBars();
+      if (hasBase || (el && el.value.trim())) syncChannelVisual(key);
+      if (key === 'naver' || key === 'google') renderSeo(key);
+    }
+
+    function syncChannelVisual(key) {
+      const input = document.getElementById('title-' + key);
+      if (key === 'insta') {
+        if (instaCarousel()) syncInstaInput();
+        else if (input) input.value = hookTitle(key);
+        drawInsta();
+        return;
+      }
+      if (input) {
+        if (key === 'yt') input.value = hookCover(key);
+        else if (key === 'threads') {
+          let t = hookTitle(key);
+          if (t.length > 24) {
+            const cut = t.slice(0, 24);
+            const sp = cut.lastIndexOf(' ');
+            t = sp > 6 ? cut.slice(0, sp) : cut;
+          }
+          input.value = t;
+        } else input.value = hookTitle(key);
+      }
+      drawCard(key);
+    }
+
+    /* 기존 초안(템플릿·AI·직접 수정)의 제목·첫 훅 줄만 제자리에서 교체 */
+    function patchDraft(key) {
+      const el = document.getElementById(CH[key].outId);
+      if (!el) return;
+      let v = el.value;
+      if (!v.trim()) return;
+      const before = v;
+      const d = hookDef(key);
+      const title = hookTitle(key);
+      const intro = hookIntro(key);
+      const short = cardLine(intro);
+
+      v = v.replace(/( · 후킹: )[^\n]*$/m, (m, a) => a + d.label);
+
+      if (key === 'naver') {
+        if (/\[제목 후보[^\]\n]*\]/.test(v)) {
+          v = v.replace(/(\[제목 후보[^\]\n]*\]\s*\n+\s*1\.\s*)([^\n]+)/, (m, a) => a + title);
+        } else {
+          v = '[제목 후보 3개 — 선택한 후킹: ' + d.label + ']\n1. ' + title + '\n\n' + v;
+        }
+        v = v.replace(/(\[오프닝[^\]\n]*\]\s*\n)([\s\S]*?)(\n\s*\n)/, (m, a, b, c) => a + intro + c);
+      } else if (key === 'google') {
+        if (/\[H1 제목 후보[^\]\n]*\]/.test(v)) {
+          v = v.replace(/(\[H1 제목 후보[^\]\n]*\]\s*\n+\s*1\.\s*)([^\n]+)/, (m, a) => a + title);
+        } else {
+          v = '[H1 제목 후보 — 선택한 후킹: ' + d.label + ']\n1. ' + title + '\n\n' + v;
+        }
+        v = v.replace(/(\[도입[^\]\n]*\]\s*\n)([\s\S]*?)(\n\s*\n)/, (m, a, b, c) => a + intro + c);
+      } else if (key === 'insta') {
+        if (instaCarousel()) {
+          v = v.replace(/(1장\s*\(표지\)\s*[:：]\s*)([^\n]+)/, (m, a) => a + title);
+          v = v.replace(/(2장\s*\(문제\)\s*[:：]\s*)([^\n]+)/, (m, a) => a + short);
+          v = v.replace(/(\[피드 캡션[^\]\n]*\]\s*\n)([^\n]+)/, (m, a) => a + short);
+        } else if (instaFormat === 'toon') {
+          v = v.replace(/(\[제목 — 4컷 인스타툰[^\]\n]*\]\s*\n)([^\n]+)/, (m, a) => a + title);
+          v = v.replace(/(1컷\s*\|\s*대사\s*[:：]\s*)[^|\n]*/, (m, a) => a + '"' + short + '" ');
+        } else {
+          v = v.replace(/(\[표지 카피[^\]\n]*\]\s*\n)([^\n]+)/, (m, a) => a + title);
+          v = v.replace(/(첫 줄\s*[:：]\s*)([^\n]+)/, (m, a) => a + short);
+        }
+      } else if (key === 'yt') {
+        v = v.replace(/(\[0~3초 훅\]\s*\n)(\([^\n]*\)\s*\n)?([^\n]+)/, (m, a, b) => a + (b || '') + intro);
+        if (/\[영상 제목/.test(v)) {
+          v = v.replace(/(\[영상 제목[^\]\n]*\]\s*\n+\s*1\.\s*)([^\n]+)/, (m, a) => a + title);
+        } else {
+          v = '[영상 제목 — 선택한 후킹: ' + d.label + ']\n1. ' + title + '\n\n' + v;
+        }
+      } else if (key === 'threads') {
+        v = v.replace(/(\[본문[^\]\n]*\]\s*\n)([^\n]+)/, (m, a) => a + intro);
+      }
+
+      if (v !== before) el.value = v;
+    }
+
+    function fillChannelDraft(key) {
+      const topic = topicValue();
+      if (!topic) return false;
+      const cat = document.getElementById('category').value;
+      const tone = document.getElementById('tone').value;
+      if (key === 'naver') fillNaver(topic, cat, tone);
+      else if (key === 'google') fillGoogle(topic, cat, tone);
+      else if (key === 'insta') fillInsta(topic, cat, tone);
+      else if (key === 'yt') fillYt(topic, cat, tone);
+      else if (key === 'threads') fillThreads(topic, cat, tone);
+      return true;
+    }
+
+    function regenChannel(key) {
+      if (!topicValue()) {
+        statusText.textContent = '주제를 먼저 입력해 주세요';
+        document.getElementById('topic').focus();
+        return;
+      }
+      fillChannelDraft(key);
+      renderHookBars();
+      syncChannelVisual(key);
+      if (key === 'naver' || key === 'google') renderSeo(key);
+      statusText.textContent = CH[key].name + ' 초안을 "' + hookDef(key).label + '" · ' +
+        hookBase(key) + '(으)로 다시 만들었습니다';
+    }
+
+    /* ===================== 통합 프롬프트 ===================== */
+    function hookPromptBlock() {
+      const nameMap = { naver: 'naver_blog', google: 'google_blog', insta: 'instagram', yt: 'youtube_shorts', threads: 'threads' };
+      const lines = KEYS.map(key => {
+        const d = hookDef(key);
+        const base = hookBase(key);
+        const ex = hookTitles(key)[0];
+        const dPrompt = (key === 'insta' && instaFormat === 'toon')
+          ? '표지는 4컷 인스타툰 첫 칸(문제 제기)이고, 2컷 시도·숫자 / 3컷 반전 / 4컷 저장·질문으로 이어진다. 장을 나누는 카드뉴스가 아니라 만화 칸으로 쓴다.'
+          : d.prompt;
+        return '- ' + nameMap[key] + ': 후킹 스타일 "' + d.label + '" — ' + dPrompt +
+          ' 제목 첫 8자 안에 "' + base + '"가 들어가게 하고, 이 각도로 쓴다(예시 문구를 그대로 복사하지 말 것): "' + ex + '".';
+      });
+      return '[★플랫폼별 후킹·제목 설정 — 각 채널의 제목과 도입부에 반드시 반영]\n' + lines.join('\n') + '\n\n';
+    }
+
+    function buildMasterPrompt(topic, category, tone, format) {
+      const instaLine = (format === 'toon')
+        ? '3) instagram — 인스타툰 4컷(손그림): 네이버 원고의 사건·숫자를 4컷으로 각색한다. 컷마다 (1) 대사 40자 이내 (2) 장면 (3) 이미지 생성용 영어 프롬프트 1줄. 마지막 컷은 저장·질문 유도. 톤은 아기자기한 손그림·파스텔 수채화·삐뚤빼뚤 연필선, 3D·실사 얼굴·과한 그라데이션 금지. 그 아래 캡션 2~3줄 + 해시태그 10개.\n'
+        : (format === 'feed'
+        ? '3) instagram — 일반 피드(사진 1장): 사진에 얹을 표지 카피(7단어 이내) 1개 + 캡션 5~8줄(첫 2줄에 훅, 줄바꿈 포함) + 해시태그 10개.\n'
+        : '3) instagram — 카드뉴스 6장: 한 장에 한 문장(20자 내외). 아래 형식 그대로 장별 줄바꿈:\n  1장(표지): 훅(7단어 이내)\n  2장(문제): 공감\n  3장(핵심1): 숫자 포함\n  4장(핵심2)\n  5장(정리): 체크리스트 3줄\n  6장(저장 유도): 저장·팔로우\n  그 아래 캡션 3줄 + 해시태그 10개.\n');
+      return '당신은 한국어 1인 미디어 콘텐츠 에디터이자 검색 노출(SEO) 전략가입니다.\n' +
+'아래 주제 하나로 5개 플랫폼용 콘텐츠를 한 번에 작성하세요.\n\n' +
+'[최우선 규칙 — 반드시 지킬 것]\n' +
+'1. 내가 준 주제를 재정의하거나 다른 주제로 바꾸지 않는다.\n' +
+'2. 이전 대화·프로젝트 메모리에서 소재(여행, 귀농, 생활비 절약 등)를 가져오지 않는다.\n' +
+'3. 주제에 없는 업종·상품 예시를 쓰지 않는다.\n' +
+'4. 숫자는 아래 [소재]에 준 값만 쓴다. 없는 수치를 새로 만들지 않는다.\n' +
+'5. 채널은 5개 전부 출력한다 — 네이버 블로그 · 티스토리 · 인스타 카툰 · 유튜브 쇼핑 쇼츠 · 스레드. 채널 이름도 그대로 표기한다(4채널 아님).\n\n' +
+'[조건]\n' +
+'- 분야: ' + category + '\n' +
+'- 말투/톤: ' + tone + '\n' +
+'- 주제/메모: ' + topic + '\n' +
+'- 소재(실제 맥락·숫자 — 이 값만 사용): ' + (contextValue() || '(미입력 — [대괄호] 자리로 두고 수치를 지어내지 않는다)') + '\n' +
+'- 쇼츠 상품 후보(1개만): ' + (productValue() || '(미입력 — 주제에 맞는 실사용 아이템 1개를 고른다)') + '\n\n' +
+hookPromptBlock() +
+'[★공통 뼈대 — 예스24 크레마클럽 33권 노트]\n' +
+'모든 채널: 3초 훅 → 문제 공감 → 해결책 → 댓글·행동 유도(CTA). 한 편에 메시지 하나. 마지막에 저장·질문을 부르는 문장을 반드시 넣는다.\n' +
+'문체: 문장 길이를 흔들고(한 줄짜리 문장 섞기), 날짜·숫자·장소·감정으로 말한다. 금지: "~에 대해 알아보겠습니다", "~하는 것이 중요합니다", "결론적으로", "다양한 방법이 있습니다", "첫째/둘째/셋째" 나열, "이처럼", "또한", "따라서", "도움이 되셨길 바랍니다".\n' +
+'네이버 본문에는 "~더라고요 / ~거든요 / ~죠"를 각각 1회 이상 자연스럽게 넣는다.\n\n' +
+'[★최우선: 심사 승인 기준 — 애드센스 · 애드포스트]\n' +
+'블로그 원고 2종(naver_blog, google_blog)은 광고 심사를 처음부터 통과할 수 있는 형태로 작성합니다.\n' +
+'공통 금지: 과장·수익 보장·낚시성 제목, 반말/비속어, 은어, 이모지 남발(문단당 1개 이하), 타사 이미지·뉴스 캡처, 출처 없는 단정, 특정 상품의 구매 유도.\n' +
+'공통 필수: 완결된 문장, 1인칭 또는 중립 서술, 직접 확인한 내용과 일반 정보의 구분, 자체 제작 이미지(Canvas PNG) 사용 및 Alt 텍스트 지정.\n' +
+'· naver_blog(애드포스트 승인 모드): 공백 제외 1,450~1,600자. 진정성 있는 도입부(경험·상황 3문장) + 실용 정보 3가지 이상 + 3줄 요약. 태그는 핵심 5~8개만(상업성·홍보성 키워드 제외). 외부 링크는 2개 이하, 수익성·제휴 링크는 넣지 않음. 표와 FAQ·체크리스트는 넣지 않음(티스토리 원고와 역할 분리). 사진 위치 [사진: ...] 3곳 이상.\n' +
+'· google_blog(티스토리 · 애드센스 승인 모드): 공백 제외 1,700~1,950자. H1 1개 + 메타 디스크립션(150~160자) + 목차 + H2 3~4개·H3 2~4개 계층 + 3줄 정의 + 30일 실행 표(기간/실행 내용/확인 지표) + 단계별 설명 + 주의사항 + 결론 + FAQ 3문항(답 40~80자) + 내부링크 2·외부 권위 링크 1 자리. 정보 밀도를 위해 각 H2마다 2~3문단 이상. 감정 서사·개인 후기는 넣지 않는다. ※ 네이버 원고와 제목 각도·첫 문단·소제목·표·문장을 절대 겹치지 않게 작성해 중복 문서 판정을 피할 것.\n\n' +
+'[★문체 — AI가 쓴 티를 없애는 규칙]\n' +
+'금지 표현: "~에 대해 알아보겠습니다", "~하는 것이 중요합니다", "결론적으로", "다양한 방법이 있습니다", "첫째/둘째/셋째" 나열, "이처럼", "또한", "따라서", "~라고 할 수 있습니다", "도움이 되셨길 바랍니다".\n' +
+'금지 구조: 모든 문단이 3~4문장으로 똑같은 길이, 장점/단점/결론처럼 대칭적인 소제목, 추상적 미사여구, 같은 접속어 반복.\n' +
+'대신: 문장 길이를 흔들기(한 줄짜리 문장 섞기), 날짜·숫자·장소·감정 같은 구체적 디테일, 사람이 쓰는 말투, 소제목은 실제로 검색할 법한 말.\n\n' +
+'[채널별 요구사항]\n' +
+'1) naver_blog — 애드포스트 기준 + 인기 블로거 포맷: [장면·고민 오프닝(인사말 없이) → 직접 부딪힌 시행착오와 숫자 → 핵심만 짚는 소제목 3개 + 체크포인트 → [사진: ...] 위치와 캡션 → 담백한 마무리 + 질문]. 1~2문장마다 줄바꿈, 모바일 호흡.\n' +
+'2) google_blog(티스토리) — 애드센스 기준 + 전문 에디터 포맷: [첫 문단에 핵심 결론 → 조건·수치 표 → 30일 실행 표 → 가장 많이 하는 실수 → 체크리스트 → 실전 FAQ]. 문단 2~3문장, 표·목록으로 끊기.\n' +
+instaLine +
+'4) youtube_shorts — 20초 쇼핑 쇼츠: 0~3초 훅 / 3~8초 문제 공감 / 8~15초 소개 1개가 해결(전→후) / 15~20초 "댓글에 [키워드] 남겨주세요" CTA. 시간대별 자막을 코드블록으로 따로 뽑고, 씬마다 소스(직촬·제품 컷·화면 캡처)를 지정한다. 상품은 1개만, 대본에 제품명 1회. 링크·제휴·고지는 넣지 않는다(승인 후에만 고정댓글·설명란에).\n' +
+'5) threads — @savejeong.pick 실제 올라간 글 말투를 그대로 따른다: 전부 반말(~습니다/~해요 금지), 마침표를 거의 쓰지 않고 ?·!로 끝맺음, 한 글 1~2줄 30~100자, ㅋㅋㅋ 섞고 이모지는 0~1개를 맨 끝에만, 마지막은 질문으로 댓글 유도(~있어? ~있나? 남겨줘). "스친·스하리·반하리·맞팔·같이 크자" 같은 스레드 생활어를 1개까지 자연스럽게. 불릿(▪️✔️)·번호(1/3)·"저장해두고 열어보세요" 같은 블로그식 CTA 금지. 본문 1개 + 이어지는 답글 1~2개 구성(번호 표기 없이). 링크·제휴·고지 없음.\n\n' +
+'[이미지 지침 — 각 채널 텍스트 맨 끝에 "🖼 이미지 플랜" 블록으로 포함]\n' +
+'- 모든 이미지는 자체 제작(Canvas PNG) 또는 저작권 프리 소스만. 타사 로고·뉴스 캡처·워터마크 금지.\n' +
+'- 네이버: 1200×900(4:3) 대표 1장 + 본문 8~15장. 컷별 문구, Alt 예시(키워드+상황), 파일명 naver_키워드_01.jpg\n' +
+'- 구글: OG 1200×630(1.91:1) + 본문 1600×900(16:9) 3~5장 + 비교표/도식 1개. Alt는 서술형 125자 이내, 파일명은 영문 소문자·하이픈·키워드.webp\n' +
+'- 인스타: 1080×1350(4:5) 표지 + 4~6장. 표지 7단어 이내, 대체 텍스트 직접 입력용 문장 제안\n' +
+'- 숏폼: 1080×1920(9:16) 커버. 상하 UI 가림 영역(상단 220px·하단 380px) 피해 중앙 배치, 커버 글자 6~10자\n' +
+'- 스레드: 1200×1200(1:1) 또는 1200×675(16:9) 한 문장 카드 1~3장\n' +
+'- 이미지 안 텍스트는 크고 짧게, 본문 내용과 일치하게\n\n' +
+(affOn()
+  ? '[⏸️ 승인 후 적용 켜짐 — 제휴 · 광고 고지]\n' +
+    '- 쿠팡 파트너스(쇼츠 고정댓글·설명란, 제휴 글): 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다. (AF3753560)\n' +
+    '- 네이버·티스토리 말미: 이 글에는 제휴 링크가 포함되어 있으며, 링크를 통한 구매 시 일정 수수료를 받을 수 있습니다.\n' +
+    '- 인스타 캡션 말미: 게시물에 제휴 링크가 포함될 수 있으며, 구매 시 수수료를 받을 수 있습니다.\n' +
+    '- 스레드: 본문에는 링크 없음, 제휴 댓글에만 고지.\n\n'
+  : '[⏸️ 제휴·광고 홀드 — 승인·안정권 진입 전까지]\n' +
+    '각 플랫폼 승인·안정권 진입 전까지는 광고·제휴 링크·고지 문구·상품 링크(AF3753560)를 넣지 않는다. 5채널 모두 순수 콘텐츠만 쓴다. 제휴 고지 3종은 승인 후에만 사용한다.\n\n') +
+'[출력 전 자체 점검 — 출력 맨 끝에 이 표를 그대로 붙일 것]\n' +
+'- 네이버 본문 글자수(공백 포함): ___자 (목표 1,450~1,600)\n' +
+'- 티스토리 본문 글자수(공백 포함): ___자 (목표 1,700~1,950)\n' +
+'- 인스타 해시태그: __개 (목표 10) · 티스토리 메타 디스크립션: 있음/없음\n' +
+'- 티스토리 30일 실행 표: 있음/없음 · 쇼츠 댓글 키워드 CTA: 있음/없음\n' +
+(affOn() ? '- 쿠팡 파트너스 AF3753560 표기: 있음/없음 · 제휴 고지: 있음/없음\n' : '- 광고·제휴 링크·고지: 0개 (승인 전 홀드 — 반드시 0)\n') +
+'- 금지어(알아보겠습니다/결론적으로/다양한/혁신적인): __회 (목표 0)\n' +
+'부족한 항목이 있으면 출력 전에 먼저 보강한다.\n\n' +
+'[출력 형식]\n' +
+'반드시 아래 JSON 형식으로만 응답하세요. 각 값은 줄바꿈을 포함한 하나의 문자열입니다.\n' +
+'{\n' +
+'  "naver_blog": "...",\n' +
+'  "google_blog": "...",\n' +
+'  "instagram": "...",\n' +
+'  "youtube_shorts": "...",\n' +
+'  "threads": "..."\n' +
+'}';
+    }
+
+    /* ===================== 로컬 구조 초안 ===================== */
+    function fillTemplate(topic, category, tone) {
+      fillNaver(topic, category, tone);
+      fillGoogle(topic, category, tone);
+      fillInsta(topic, category, tone);
+      fillYt(topic, category, tone);
+      fillThreads(topic, category, tone);
+      applyTitles();
+      drawAll();
+      refreshGuides();
+      renderSeo('naver');
+      renderSeo('google');
+      renderHookBars();
+    }
+
+    /* ---------- 네이버: 인기 블로거 포맷 (애드포스트 승인 대비) ---------- */
+    function fillNaver(topic, category, tone) {
+      const tag = '#' + String(category).split('+').join(' #');
+      const meta = '[작성 메타] 분야: ' + category + ' · 톤: ' + tone;
+      const nt = hookTitles('naver');
+
+      document.getElementById('outNaver').value = [
+        meta + ' · 심사: 애드포스트 승인 대비 · 뼈대: 3초 훅 → 문제 공감 → 해결책 → 댓글 CTA' + hookTag('naver'),
+        '[작성 목표] 공백 제외 1,450~1,600자 · 태그 5~8개 · 표·체크리스트 없이 1인칭 경험담',
+        '[문체] 인사말 없이 장면부터. 1~2문장마다 줄바꿈. “~더라고요 / ~거든요 / ~죠”를 각 1회 이상. 상투어 금지: "소개하는 글입니다 / 중요합니다 / 결론적으로 / 여러 가지 방법 / 첫째·둘째·셋째"',
+        '[소재 고정] ' + (contextValue() || '아래 [대괄호] 자리를 실제 겪은 사건·숫자로만 채운다. 새 수치를 만들지 않는다.'),
+        '',
+        '[제목 후보 3개 — 25~38자, 키워드 앞 · 후킹: ' + hookDef('naver').label + ']',
+        '1. ' + nt[0],
+        '2. ' + nt[1],
+        '3. ' + nt[2],
+        '[후킹 포인트] ' + hookDef('naver').prompt,
+        '',
+        '[오프닝 — 장면 + 공감 3~4줄]',
+        hookIntro('naver'),
+        '',
+        '(사진 1 — [그날 메모/앱 화면]. 캡션: "이 숫자를 보고 처음으로 기준을 만들었습니다")',
+        '',
+        '[본문 1 — 시행착오]',
+        '처음엔 [첫 시도]부터 했습니다.',
+        '남들 한다는 건 거의 다 해봤어요. 근데 [실패 지점]에서 계속 미끄러졌습니다.',
+        '이유는 단순했습니다. [한 줄 이유]',
+        '[두 번째 시도]는 조금 달랐습니다. [달라진 점]',
+        '',
+        '[소제목 1] ' + topic + ', 제일 먼저 바꾼 건 이거였습니다',
+        '[구체적 행동 1~2문장, 숫자 포함]',
+        '이거 하나 바꾸니까 [결과]가 눈에 보이기 시작했습니다.',
+        '',
+        '[소제목 2] 돈이 새는 지점은 따로 있었습니다',
+        '[발견한 지점]',
+        '- [항목 1] — [금액/비중]',
+        '- [항목 2] — [금액/비중]',
+        '숫자로 놓고 보니까 [느낀 점].',
+        '',
+        '(사진 2 — [가계부/통장 전후 비교]. 캡션: "왼쪽이 작년, 오른쪽이 지금")',
+        '',
+        '[소제목 3] 지금도 지키는 기준 3가지',
+        '1) [기준 1 — 숫자로]',
+        '2) [기준 2]',
+        '3) [기준 3]',
+        '',
+        '[체크포인트 — 이 글에서 가져갈 것]',
+        '- [ ] [오늘 바로 할 수 있는 한 가지]',
+        '- [ ] [이번 주에 점검할 것]',
+        '- [ ] [한 달 뒤 확인할 숫자]',
+        '',
+        '(사진 3 — [지금 상태]. 캡션: "3년 지나도 이 화면은 매주 봅니다")',
+        '',
+        '[마무리 — 2~3문장, 담백하게]',
+        topic + '은 결국 [한 문장 정리].',
+        '요즘은 [현재 상태] 정도로 지내고 있습니다.',
+        '지금 [비슷한 지점]에서 막혀 계신 분은, 어디서 제일 답답한지 댓글로 남겨주세요.',
+        '',
+        '[댓글 CTA — 마지막 문장 고정]',
+        '겪어보신 분은 [질문]을 댓글로 남겨주세요. 제가 겪은 순서대로 답글 달게요.',
+        '',
+        '[사진 위치 정리] 오프닝 뒤 / 소제목 2 앞 / 마무리 앞 — 3곳에 캡션과 함께',
+        '',
+        '[태그 — 핵심 5~8개만, 상업성·홍보성 키워드 제외]',
+        tag + ' #생활재테크 #직장인재테크 #' + String(topic).replace(/\s+/g, '') + ' #후기',
+        '',
+        '[애드포스트 승인 체크]',
+        '- [ ] 공백 제외 1,450~1,600자 (템플릿의 각 항목을 2~3문장으로 살 붙이기)',
+        '- [ ] 도입부 3문장 안에 실제 경험·상황이 드러나는가',
+        '- [ ] 실용 정보 3가지 이상 + 마무리 3줄 요약',
+        '- [ ] 태그 5~8개, 구매 유도·수익 보장 표현 없음',
+        '- [ ] 외부 링크 2개 이하, 수익성·제휴 링크 없음',
+        '- [ ] 자체 제작 이미지 5장 이상, 워터마크·타사 로고 없음',
+        '',
+        '🖼 이미지 플랜 (네이버 1200×900 · 4:3 · 대표 1 + 본문 8~15장)',
+        '- 컷1 대표: 제목 + 핵심 문구 타이포 카드 (아래 PNG 사용)',
+        '- 컷2: 시작 무렵 메모/가계부 스크린샷 (개인정보 모자이크)',
+        '- 컷3: 전/후 비교 이미지 (두 장 나란히)',
+        '- 컷4: 체크리스트 3줄 요약 카드',
+        '- Alt 예시: "' + topic + ' 직접 해보고 정리한 전/후 비교 — ' + category + ' 초보 기준"',
+        '- 파일명: naver_' + slug(topic) + '_01.jpg'
+      ].join('\n') + (affOn() ? '\n\n[제휴 고지 — 말미 고정]\n' + NOTICE.blog : '');
+    }
+
+    /* ---------- 구글: 전문 에디터 포맷 (애드센스 승인 대비) ---------- */
+    function fillGoogle(topic, category, tone) {
+      const meta = '[작성 메타] 분야: ' + category + ' · 톤: ' + tone;
+      const gt = hookTitles('google');
+
+      document.getElementById('outGoogle').value = [
+        meta + ' · 검색 의도: 정보형 · 심사: 애드센스 승인 대비' + hookTag('google'),
+        '[작성 목표] 공백 제외 1,700~1,950자 · H2 3~4 / H3 2~4 · 30일 실행 표 · FAQ 3 · 고유 콘텐츠',
+        '[문체] 첫 문단은 결론. 2~3문장 단위로 문단 나누기. 금지: "알아보려 합니다 / 중요합니다 / 결론적으로 / 여러 방법 / 첫째·둘째·셋째"',
+        '',
+        '[H1 제목 후보 3개 — 키워드 앞배치, 25~38자 · 후킹: ' + hookDef('google').label + ']',
+        '1. ' + gt[0],
+        '2. ' + gt[1],
+        '3. ' + gt[2],
+        '[후킹 포인트] ' + hookDef('google').prompt,
+        '',
+        '[메타 디스크립션 — 150~160자]',
+        topic + '의 핵심 개념부터 준비물, 3단계 실행 방법, 자주 하는 실수까지 한 번에 정리했습니다. 비교표와 체크리스트로 5분 안에 확인하세요.',
+        '',
+        '[목차]',
+        '1. ' + topic + '이란? (3줄 정의)',
+        '2. 준비물과 시작 조건',
+        '3. 3단계 실행 방법',
+        '4. 자주 하는 실수 5가지',
+        '5. 30일 실행 표 (기간 / 실행 내용 / 확인 지표)',
+        '6. 실행 체크리스트',
+        '7. 결론',
+        '8. FAQ',
+        '',
+        '[도입 — 첫 문단에 결론부터]',
+        hookIntro('google'),
+        '',
+        '## 1. ' + topic + '이란? — 3줄 정의',
+        '- 정의: [한 문장 정의]',
+        '- 대상: [누구에게 필요한지]',
+        '- 기대 효과: [무엇이 달라지는지 — 수치 대신 범위로]',
+        '',
+        '### 1-1. 헷갈리는 개념 구분',
+        '[비슷한 개념 A]와 [개념 B]를 혼동하는 경우가 많습니다. 차이는 [핵심 차이 한 줄]입니다.',
+        '',
+        '## 2. 준비물과 시작 조건',
+        '| 항목 | 최소 조건 | 권장 | 비고 |',
+        '| --- | --- | --- | --- |',
+        '| [항목1] | [최소] | [권장] | [주의] |',
+        '| [항목2] | [최소] | [권장] | [주의] |',
+        '| [항목3] | [최소] | [권장] | [주의] |',
+        '| 예상 비용 | [0원 가능 여부] | [월 n원] | [숨은 비용] |',
+        '',
+        '## 3. 3단계 실행 방법',
+        '### 3-1. 1단계 — [준비]',
+        '[무엇을, 어떤 순서로] (소요: 약 n분)',
+        '### 3-2. 2단계 — [실행]',
+        '[핵심 행동 1가지] + [체크 포인트]',
+        '### 3-3. 3단계 — [점검·유지]',
+        '[무엇을 기록하고 무엇을 조정하는지]',
+        '',
+        '## 4. 자주 하는 실수 5가지',
+        '1) [실수1] — [대안]',
+        '2) [실수2] — [대안]',
+        '3) [실수3] — [대안]',
+        '4) [실수4] — [대안]',
+        '5) [실수5] — [대안]',
+        '',
+        '## 5. 30일 실행 표 (기간 / 실행 내용 / 확인 지표)',
+        '| 기간 | 실행 내용 | 확인 지표 |',
+        '| --- | --- | --- |',
+        '| 1주차 | [세팅 + 첫 발행] | [글 n편 · 조회 n회] |',
+        '| 2주차 | [주제 2개로 확장] | [저장·댓글 n개] |',
+        '| 3주차 | [콘텐츠 확장·반응 점검] | [댓글·저장 n회] |',
+        '| 4주차 | [잘된 것만 남기고 정리] | [수익 n원 · 다음 달 계획] |',
+        '',
+        '## 6. 실행 체크리스트',
+        '- [ ] [준비물 확인]',
+        '- [ ] [1단계 완료]',
+        '- [ ] [2단계 첫 회차 실행]',
+        '- [ ] [결과 기록]',
+        '- [ ] [다음 주 점검 일정 잡기]',
+        '',
+        '## 7. 결론',
+        topic + '은(는) [한 문장 요약]입니다. 처음에는 [최소 조건]만 갖추고 [첫 행동]부터 시작해 보세요.',
+        '[재확인 시점]에 [점검 지표]를 확인하면 방향을 잃지 않습니다. 아래 FAQ까지 읽으면 실제 적용 전 확인할 사항은 모두 점검한 상태가 됩니다.',
+        '',
+        '## 8. FAQ',
+        '**Q1. ' + topic + '은 얼마나 걸리나요?**',
+        'A1. [준비 n일 + 첫 결과까지 n주] 정도가 평균입니다. [변수]에 따라 달라집니다.',
+        '**Q2. 초보도 할 수 있나요?**',
+        'A2. [필요한 최소 조건]만 갖추면 가능합니다. 다만 [주의 조건]은 미리 확인하세요.',
+        '**Q3. 가장 흔한 실패 원인은 무엇인가요?**',
+        'A3. [실패 원인 1가지]입니다. [예방법]을 먼저 적용해 보세요.',
+        '',
+        '[링크 자리]',
+        '- 내부링크 2: [관련 글 1 제목/URL] · [관련 글 2 제목/URL]',
+        '- 외부 권위 링크 1: [공공기관·공식 문서 URL]',
+        '',
+        '[카테고리 / 태그]',
+        '카테고리: ' + category + ' / 태그: ' + String(topic).replace(/\s+/g, ', ') + ', ' + category + ' 가이드, 초보, 체크리스트',
+        '',
+        '[애드센스 승인 체크]',
+        '- [ ] 공백 제외 1,700~1,950자, 각 H2마다 2~3문단',
+        '- [ ] H1 1개 · H2 3개 이상 · H3로 세분화 · 목차와 실제 순서 일치',
+        '- [ ] 표 1개 · 단계 설명 · 주의사항 · 결론 · FAQ 3문항',
+        '- [ ] 다른 글(특히 네이버 원고)과 같은 문장·같은 이미지 없음',
+        '- [ ] 자체 제작 이미지 3장 이상 + 서술형 Alt + 캡션',
+        '- [ ] 사이트에 개인정보처리방침 · 소개 · 문의 페이지 게시(애드센스 심사 필수)',
+        '- [ ] 광고·제휴 링크 없음(승인 전 홀드), 낚시성 제목 아님',
+        '- [ ] 타사 이미지·뉴스 캡처 없음 · 인용 출처 표기 · 무단 재업로드 금지 확인',
+        '- [ ] 제휴·광고 링크·고지 0개 (승인 후에만)',
+        '',
+        '🖼 이미지 플랜 (티스토리 OG 1200×630 + 본문 1600×900 · 3~5장)',
+        '- 컷1 피처드: 제목 + H2 목차 3줄 요약 (아래 PNG 사용, 글 상단 H1 바로 아래 배치)',
+        '- 컷2: 개념 도식 — 3단계 화살표 인포그래픽',
+        '- 컷3: 비교표 스크린샷 (가능하면 실제 HTML 표로 넣고 이미지는 보조)',
+        '- 컷4: FAQ 3문항 요약 카드',
+        '- Alt 예시: "' + topic + ' 절차를 4단계로 정리한 인포그래픽"',
+        '- 파일명: how-to-' + slug(topic) + '-guide-1200x630.webp',
+        '',
+        '⚠️ 중복 방지: 위 문장·소제목을 네이버 원고와 그대로 쓰지 마세요. 첫 문단은 경험담이 아니라 정의/조건으로 시작합니다.'
+      ].join('\n') + (affOn() ? '\n\n[제휴 고지 — 말미 고정]\n' + NOTICE.blog : '');
+    }
+
+    /* ---------- 유튜브 쇼핑 쇼츠: 20초 5블록 (FdVnd0AFge8 + AF3753560) ---------- */
+    function fillYt(topic, category, tone) {
+      const meta = '[작성 메타] 분야: ' + category + ' · 톤: ' + tone;
+      const ytT = hookTitles('yt');
+
+      document.getElementById('outYt').value = [
+        meta + ' · 20초 쇼핑 쇼츠(세픽)' + (affOn() ? ' · 쿠팡 파트너스 AF3753560' : ' · 승인 전 순수 콘텐츠 모드(링크·제휴 없음)') + hookTag('yt'),
+        affOn() ? '[목표] 댓글 키워드 반응 → 고정댓글 링크 클릭. 상품은 1개만.' : '[목표] 끝까지 보게 만들고 댓글 반응 받기. 링크 없이 정보만, 소개 물건은 1개만.',
+        '[상품] ' + (productValue() || '[주제에 맞는 실사용 물건 1개]') + ' — 대본에 제품명 1회만. 가격·옵션은 게시 전 실제 페이지에서 확인',
+        '',
+        '[영상 제목 — 25~38자 · 후킹: ' + hookDef('yt').label + ']',
+        '1. ' + ytT[0],
+        '2. ' + ytT[1],
+        '3. ' + ytT[2],
+        '',
+        '[0~3초 훅]',
+        '(화면: 정면 클로즈업 + 화면 중앙 큰 자막)',
+        hookIntro('yt'),
+        '',
+        '[3~8초 문제 공감]',
+        '(화면: 직촬 — 평소 불편하던 순간 그대로 / 자막: 숫자 1개)',
+        '"이거 매번 이렇게 하고 있었어요. 3초면 되는 일인데."',
+        '',
+        '[8~15초 상품 1개가 해결]',
+        '(화면: 제품 컷 — 쓰는 장면 → 결과 컷, 전/후 같은 구도)',
+        '제품명: ' + (productValue() || '[상품명 1회만]'),
+        '나레이션: "이거 하나 바꿔더니 3초 만에 끝났어요."',
+        '(자막: 8~12초 "왜 이렇게 편해졌지" / 12~15초 "이유는 이거 하나")',
+        '',
+        '[15~20초 댓글 유도]',
+        '(화면: 제품 + 중앙 자막)',
+        '자막·나레이션: 댓글에 “' + ctaKeyword() + '” 남겨주세요' + (affOn() ? '. 링크는 고정댓글에 있어요.' : ' ㅋㅋ'),
+        '',
+        '[자막 블록 — 편집기에 그대로 붙여넣기]',
+        '```',
+        '0:00-0:03  [훅 한 줄]',
+        '0:03-0:08  이거 매번 이렇게 하고 있었어요',
+        '0:08-0:12  이거 하나 바꿔더니',
+        '0:12-0:15  3초 만에 끝났어요',
+        '0:15-0:20  댓글에 ' + ctaKeyword() + ' 남겨주세요',
+        '```',
+        '',
+        '[씬별 소스 — 5컷]',
+        '1) 0~3초 직촬(얼굴 or 손) — 폰 세로 촬영, 자막 크게',
+        '2) 3~8초 불편 장면 B롤 — 실제 쓰던 물건',
+        '3) 8~12초 제품 사용 컷 — 언박싱·손에 쥔 장면',
+        '4) 12~15초 전/후 비교 컷 — 같은 구도로 두 번 촬영',
+        '5) 15~20초 제품 + 자막 정지 컷',
+        '',
+        '[고정댓글 · 설명란]',
+        affOn() ? '고지: ' + NOTICE.coupang : '승인 전 홀드 — 링크·고지 넣지 않고 정보만',
+        affOn() ? '링크: 쿠팡 파트너스 AF3753560 — ' + (productValue() || '[상품명]') : '링크: 없음 — 궁금한 점만 댓글로 받기',
+        '[주의] 영상 안에 링크 노출 금지 · 승인 후에도 링크는 고정댓글·설명란에만',
+        '',
+        '🖼 이미지 플랜 (쇼츠 1080×1920 · 9:16)',
+        '- 커버: 6~10자 문구, 세로 중앙 배치 (상단 220px·하단 380px는 앱 UI에 가림)',
+        '- 영상 내 자막 컷: 3초마다 전환, 한 화면에 한 문장',
+        '- 파일명: shorts_' + slug(topic) + '_cover.png'
+      ].join('\n');
+    }
+
+    /* ---------- 스레드 (@savejeong.pick 실제 올라간 글 말투) ---------- */
+    function fillThreads(topic, category, tone) {
+      const meta = '[작성 메타] 분야: ' + category + ' · 톤: ' + tone;
+      const ctx = contextValue();
+
+      const lines = [
+        meta + ' · @savejeong.pick 실제 글 말투(반말 일상 잡담) · 본문 1개 + 이어지는 답글 1~2개' + hookTag('threads'),
+        '[말투] 전부 반말(~습니다/~해요 금지) · 마침표 대신 ?·! · 1~2줄 30~100자 · ㅋㅋㅋ · 이모지 0~1개는 맨 끝에만 · 마지막은 질문',
+        '[금지] 불릿(▪️✔️) · 번호(1/3) · "저장해두고 열어보세요" 같은 블로그식 CTA · 링크·제휴·고지(⏸️ 승인 후)',
+        '[소재 고정] ' + (ctx || '[대괄호]는 실제 겪은 장면·숫자로만 채운다. 새 사건·수치를 만들지 않는다.'),
+        '',
+        '[본문 — 발행할 글 1개]',
+        hookIntro('threads'),
+        '',
+        '[답글 1 — 본문에 이어 붙이기]',
+        '기록 보면 숫자는 [위 소재의 숫자]가 전부였음 그래도 그중 하나 바꾼 게 제일 컸어 ㅋㅋ',
+        '',
+        '[답글 2 — 선택 (본문이 길어 보이면 생략)]',
+        '궁금한 거 있으면 남겨줘 내가 아는 데까지는 답해줄게',
+        '',
+        '[생활어 — 한 글에 1개까지만]',
+        '스친(스레드 친구) · 스하리(스레드 하리 보내기) · 반하리(답하리) · 맞팔 · 같이 크자',
+        '',
+        '🖼 이미지 플랜 (스레드 1200×1200 · 1:1 또는 1200×675 · 16:9 · 선택)',
+        '- 실제 글은 이미지 없이 올라간 경우가 많음 → 필요할 때만 포인트 카드 1장',
+        '- 카드 문구: 본문 첫 줄을 반말 그대로, 20자 안으로 줄여서',
+        '- 파일명: threads_' + slug(topic) + '_point.png'
+      ];
+      document.getElementById('outThreads').value = lines.join('\n');
+    }
+
+    /* ---------- 인스타그램: 피드 / 카드뉴스 ---------- */
+    function fillInsta(topic, category, tone) {
+      const meta = '[작성 메타] 분야: ' + category + ' · 톤: ' + tone;
+      const tag = '#' + String(category).split('+').join(' #');
+      const it = hookTitles('insta');
+      const iLine = cardLine(hookIntro('insta'));
+      const el = document.getElementById('outInsta');
+      let lines;
+
+      if (instaFormat === 'toon') {
+        const c = contextValue();
+        const cuts = [
+          {
+            line: shortTopic(12) + ', 이거 모르고 시작하면 시간만 버려요',
+            scene: '밤 11시, 노트북 앞에서 인상 쓴 아빠',
+            en: 'a tired dad sitting at a laptop at 11pm, hand-drawn Korean webtoon panel, soft watercolor pastel palette, wobbly ink outline, simple warm background, empty speech bubble space on the right, no text'
+          },
+          {
+            line: c ? '숫자는 이랬어요 — ' + clipWords(c, 34) : '했는데 첫 기록은 [실제 숫자]였어요',
+            scene: '부엌 식탁에서 폰 화면을 같이 보는 부부',
+            en: 'a couple leaning over a phone on a kitchen table, cozy pastel interior, hand-drawn comic panel, soft pencil texture, empty speech bubble on the left, no text'
+          },
+          {
+            line: '링크 클릭은 [숫자]번. 근데 순서를 바꿨더니 달라졌어요',
+            scene: '메모장에 3줄을 적는 손과 커피잔',
+            en: 'close-up of a hand writing three lines in a small notebook beside a coffee cup, warm morning light, hand-drawn instatoon panel, no text'
+          },
+          {
+            line: '이 순서 저장해두세요. 여러분은 어디서 막혔어요?',
+            scene: '식탁에 붙은 체크리스트 3줄',
+            en: 'a small checklist note taped on a kitchen wall, cute pastel illustration, hand-drawn webtoon panel, empty speech bubble on top, no text'
+          }
+        ];
+        lines = [
+          meta + ' · 포맷: 인스타툰 4컷(손그림)' + hookTag('insta'),
+          '[근거] 아래 네이버 블로그 원고의 사건·숫자를 그대로 4컷으로 각색한다. 새 이야기를 만들지 않는다.',
+          '[소재 고정] ' + (c || '[대괄호]를 실제 겪은 장면·숫자로만 채운다.'),
+          '',
+          '[제목 — 4컷 인스타툰 · 후킹: ' + hookDef('insta').label + ']',
+          it[0],
+          '[톤] 아기자기한 손그림 · 파스텔 수채화 · 삐뚤빼뚤 연필선 · 부부 일상 대화체. AI 티(3D 렌더·실사 얼굴·과한 그라데이션·정형화된 말풍선) 금지.',
+          '[대사 규칙] 한 컷 40자 이내, 실제 말하듯. 마지막 컷은 저장·질문 유도.',
+          '',
+          '1컷 | 대사: "' + cuts[0].line + '" | 장면: ' + cuts[0].scene + ' | 프롬프트: ' + cuts[0].en,
+          '2컷 | 대사: "' + cuts[1].line + '" | 장면: ' + cuts[1].scene + ' | 프롬프트: ' + cuts[1].en,
+          '3컷 | 대사: "' + cuts[2].line + '" | 장면: ' + cuts[2].scene + ' | 프롬프트: ' + cuts[2].en,
+          '4컷 | 대사: "' + cuts[3].line + '" | 장면: ' + cuts[3].scene + ' | 프롬프트: ' + cuts[3].en,
+          '',
+          '[캡션 — 첫 2줄이 승부처]',
+          '첫 줄: ' + cardLine(hookIntro('insta')),
+          '둘째 줄: 4컷으로 정리했어요. 저장해두면 [상황]일 때 바로 꺼내 볼 수 있어요.',
+          'CTA: 궁금한 점은 댓글로. 다음 편에서 [다음 소재]로 이어갈게요.',
+          '',
+          '[해시태그 10개]',
+          tag + ' #인스타툰 #육아툰 #부부일상 #아빠일기 #살림팁 #재테크기초 #돈공부 #정보공유 #저장각',
+          '',
+          '[이미지 생성 팁] 1080×1350 세로 4단. 칸마다 파스텔 배경 + 캐릭터 1명 + 말풍선 1개. 글자는 아래 캔버스 PNG로 얹는다.'
+        ];
+        if (affOn()) lines.push('', '[제휴 고지 — 캡션 말미]', NOTICE.insta);
+        el.value = lines.join('\n');
+        const ti = document.getElementById('title-insta');
+        if (ti) ti.value = it[0];
+        instaSlide = 0;
+        instaOverrides = {};
+        drawInsta();
+        return;
+      }
+
+      if (instaFormat === 'feed') {
+        lines = [
+          meta + ' · 포맷: 일반 피드(사진 1장)' + hookTag('insta'),
+          '',
+          '[표지 카피 — 사진 위에 얹을 문구, 7단어 이내]',
+          it[0],
+          '',
+          '[사진 1장 콘셉트]',
+          '- [장면: 책상 위 가계부/앱 화면/손글씨 메모] 한 장',
+          '- 글자는 사진의 빈 공간에 두 줄 이내',
+          '',
+          '[캡션 — 첫 2줄이 승부처]',
+          '첫 줄: ' + iLine,
+          '둘째 줄: 답은 의외로 단순합니다.',
+          '',
+          '본문 4~6줄: [겪은 일 1줄] / [구체적 숫자 1줄] / [적용법 2줄] — 줄바꿈으로 호흡',
+          '',
+          'CTA: 저장해두고 필요할 때 꺼내 보세요. 궁금한 점은 댓글로.',
+          '',
+          '[해시태그 10개]',
+          tag + ' #재테크기초 #자기계발 #돈공부 #직장인재테크 #정보공유 #저장각',
+          '',
+          '🖼 이미지 플랜 (인스타 피드 1080×1350 · 1장)',
+          '- 아래 PNG 그대로 업로드 (문구 수정 가능)',
+          '- 대체 텍스트: "' + topic + ' — ' + category + ' 핵심 한 줄 정리" (게시 전 고급 설정 → 대체 텍스트)',
+          '- 파일명: insta_' + slug(topic) + '_feed.png'
+        ];
+      } else {
+        lines = [
+          meta + ' · 포맷: 카드뉴스 6장' + hookTag('insta'),
+          '',
+          '[카드뉴스 6장 — 장당 20자 내외]',
+          '1장(표지): ' + it[0],
+          '2장(문제): ' + iLine,
+          '3장(핵심1): 기준 하나만 세우면 달라집니다',
+          '4장(핵심2): 숫자로 확인하면 답이 보입니다',
+          '5장(정리): 오늘 바로 쓰는 체크리스트 3가지',
+          '6장(저장 유도): 저장해 두고 필요할 때 꺼내 보세요',
+          '',
+          '[피드 캡션 3줄]',
+          iLine,
+          '핵심만 6장으로 압축했습니다.',
+          '여러분은 어떻게 하고 계신가요? 댓글로 알려주세요.',
+          '',
+          '[해시태그 10개]',
+          tag + ' #카드뉴스 #재테크기초 #자기계발 #돈공부 #직장인재테크 #정보공유 #저장각',
+          '',
+          '🖼 이미지 플랜 (인스타 1080×1350 · 4:5 · 카드뉴스 6장)',
+          '- 1장 표지 → 6장 저장 유도 (아래에서 장별 미리보기·PNG 다운로드)',
+          '- 대체 텍스트: "' + topic + ' 카드뉴스 — ' + category + ' 핵심 3가지 요약" (게시 전 고급 설정 → 대체 텍스트)',
+          '- 파일명: insta_' + slug(topic) + '_01of6.png'
+        ];
+      }
+      if (affOn()) lines.push('', '[제휴 고지 — 캡션 말미]', NOTICE.insta);
+      el.value = lines.join('\n');
+      instaSlide = 0;
+      instaOverrides = {};
+      syncInstaInput();
+    }
+
+    /* ===================== 제목 추출 ===================== */
+    function pickTitle(key) {
+      const raw = (document.getElementById(CH[key].outId).value || '');
+      if (!raw.trim()) return '';
+      let m;
+      if (key === 'google') {
+        m = raw.match(/\[H1[^\]]*\]\s*\n+\s*1\.\s*([^\n]+)/);
+        if (m) return cleanTitle(m[1]);
+      }
+      if (key === 'naver') {
+        m = raw.match(/\[제목 후보[^\]]*\]\s*\n+\s*1\.\s*([^\n]+)/);
+        if (m) return cleanTitle(m[1]);
+      }
+      if (key === 'insta') {
+        m = raw.match(/1장\s*\(표지\)\s*[:：]\s*["“']?([^"”'\n]+)["”']?/);
+        if (m) return cleanTitle(m[1]);
+        m = raw.match(/\[표지[^\]]*\]\s*\n+\s*(?:["“']([^"”'\n]+)["”']|([^\n]+))/);
+        if (m) return cleanTitle(m[1] || m[2]);
+      }
+      if (key === 'yt') {
+        m = raw.match(/"([^"\n]{4,60})"/);
+        if (m) return cleanTitle(m[1]);
+      }
+      if (key === 'threads') {
+        m = raw.match(/\[본문[^\]]*\]\s*\n+([^\n]+)/);
+        if (m) return cleanTitle(m[1]);
+      }
+      m = raw.match(/^\s*1\.\s*([^\n]+)/m);
+      return m ? cleanTitle(m[1]) : '';
+    }
+    function cleanTitle(s) {
+      return String(s).replace(/^["'“”]+|["'“”]+$/g, '').replace(/\s+/g, ' ').trim().slice(0, 90);
+    }
+    function applyTitles() {
+      KEYS.forEach(key => {
+        const input = document.getElementById('title-' + key);
+        if (!input) return;
+        if (key === 'yt') { input.value = hookCover(key); return; }
+        let t = pickTitle(key);
+        if (key === 'threads' && t.length > 24) {
+          const cut = t.slice(0, 24);
+          const sp = cut.lastIndexOf(' ');
+          t = sp > 6 ? cut.slice(0, sp) : cut;
+        }
+        if (t) input.value = t;
+      });
+    }
+
+    /* ===================== 캔버스 렌더링 ===================== */
+    function drawAll() {
+      KEYS.forEach(drawCard);
+    }
+
+    function paintCard(ctx, w, h, o) {
+      const accent = o.accent;
+      const accent2 = o.accent2;
+      const style = (document.getElementById('imgStyle') || {}).value || 'light';
+      const bold = style === 'bold';
+      const dark = style === 'dark';
+      const base = Math.sqrt((w * h) / (1200 * 900));
+      const textMain = (bold || dark) ? '#ffffff' : '#12141c';
+      const textSub = bold ? 'rgba(255,255,255,0.86)' : (dark ? 'rgba(255,255,255,0.72)' : '#5a6274');
+      const lineCol = bold ? 'rgba(255,255,255,0.30)' : (dark ? 'rgba(255,255,255,0.16)' : 'rgba(15,20,40,0.12)');
+
+      /* 배경 */
+      if (bold) {
+        const g = ctx.createLinearGradient(0, 0, w, h);
+        g.addColorStop(0, accent);
+        g.addColorStop(1, accent2);
+        ctx.fillStyle = g;
+      } else if (dark) {
+        const g = ctx.createLinearGradient(0, 0, w, h);
+        g.addColorStop(0, '#0b0e15');
+        g.addColorStop(1, '#1c2333');
+        ctx.fillStyle = g;
+      } else {
+        const g = ctx.createLinearGradient(0, 0, w, h);
+        g.addColorStop(0, '#ffffff');
+        g.addColorStop(1, '#eef1f9');
+        ctx.fillStyle = g;
+      }
+      ctx.fillRect(0, 0, w, h);
+
+      /* 장식: 우상단 글로우 + 좌하단 외곽 원 */
+      const glowR = Math.min(w, h) * 0.62;
+      const gx = w * 0.95, gy = h * 0.02;
+      const rg = ctx.createRadialGradient(gx, gy, 0, gx, gy, glowR);
+      rg.addColorStop(0, hexA(bold ? '#ffffff' : accent, bold ? 0.26 : 0.18));
+      rg.addColorStop(1, hexA(bold ? '#ffffff' : accent, 0));
+      ctx.fillStyle = rg;
+      ctx.beginPath();
+      ctx.arc(gx, gy, glowR, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(-w * 0.04, h * 1.02, Math.min(w, h) * 0.42, 0, Math.PI * 2);
+      ctx.lineWidth = Math.max(2, w * 0.0035);
+      ctx.strokeStyle = hexA(bold ? '#ffffff' : accent, bold ? 0.22 : 0.16);
+      ctx.stroke();
+
+      const mx = Math.round(w * 0.068);
+      const my = Math.round(h * 0.072);
+
+      /* 플랫폼 배지 */
+      const pillFs = Math.round(23 * base);
+      ctx.font = '700 ' + pillFs + 'px ' + FONT;
+      const pillTxt = o.name || '';
+      const tw = ctx.measureText(pillTxt).width;
+      const ph = Math.round(48 * base);
+      const pw = tw + Math.round(46 * base);
+      roundRect(ctx, mx, my, pw, ph, ph / 2);
+      ctx.fillStyle = bold ? 'rgba(255,255,255,0.20)' : accent;
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(pillTxt, mx + pw / 2, my + ph / 2 + 1);
+
+      /* 우상단 */
+      ctx.textAlign = 'right';
+      ctx.font = '600 ' + Math.round(19 * base) + 'px ' + FONT;
+      ctx.fillStyle = textSub;
+      ctx.fillText('원영 콘텐츠 스튜디오', w - mx, my + ph / 2);
+
+      /* 장 번호 워터마크 (카드뉴스) */
+      if (o.bigNo) {
+        ctx.save();
+        ctx.globalAlpha = 1;
+        const noSize = Math.round(Math.min(w, h) * 0.40);
+        ctx.font = '800 ' + noSize + 'px ' + FONT;
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = hexA(bold ? '#ffffff' : accent, bold ? 0.14 : 0.07);
+        ctx.fillText(o.bigNo, w - mx, h - ((o.key === 'yt') ? Math.round(h * 0.115) : my) - Math.round(80 * base));
+        ctx.restore();
+      }
+
+      const titleText = o.title || '오늘의 주제를 입력하세요';
+      const keyline = o.sub || '';
+      const kicker = o.kicker || '';
+
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+
+      const maxW = w - mx * 2;
+      const footerOffset = (o.key === 'yt') ? Math.round(h * 0.115) : my;
+      const footerH = Math.round(72 * base) + footerOffset;
+      const topLimit = my + ph + Math.round(26 * base);
+      const bottomLimit = h - footerH;
+      const maxTitleH = (bottomLimit - topLimit) * (o.key === 'google' ? 0.62 : 0.60);
+      const maxTitleLines = o.key === 'google' ? 3 : 4;
+
+      let titleSize = Math.round(96 * base);
+      let titleLines = [];
+      for (;;) {
+        ctx.font = '800 ' + titleSize + 'px ' + FONT;
+        titleLines = wrapText(ctx, titleText, maxW);
+        const hh = titleLines.length * titleSize * 1.24;
+        if ((hh <= maxTitleH && titleLines.length <= maxTitleLines) || titleSize <= 26) break;
+        titleSize -= 2;
+      }
+      if (titleLines.length > maxTitleLines) {
+        titleLines = titleLines.slice(0, maxTitleLines);
+        titleLines[maxTitleLines - 1] = titleLines[maxTitleLines - 1].replace(/\s*\S{0,2}$/, '') + '…';
+      }
+
+      const subSize = Math.round(30 * base);
+      let subLines = [];
+      if (keyline) {
+        ctx.font = '500 ' + subSize + 'px ' + FONT;
+        subLines = wrapText(ctx, keyline, maxW);
+        if (subLines.length > 2) {
+          subLines = subLines.slice(0, 2);
+          subLines[1] = subLines[1].replace(/\s*\S{0,2}$/, '') + '…';
+        }
+      }
+
+      const barH = Math.max(4, Math.round(7 * base));
+      const kickerH = Math.round(24 * base);
+      const gap1 = Math.round(18 * base);
+      const gap2 = Math.round(20 * base);
+      const gap3 = Math.round(22 * base);
+      const titleLH = Math.round(titleSize * 1.24);
+      const subLH = Math.round(subSize * 1.6);
+
+      const blockH = barH + gap1 + kickerH + gap2 + titleLines.length * titleLH +
+        (subLines.length ? (gap3 + subLines.length * subLH) : 0);
+      const avail = bottomLimit - topLimit;
+      let y = topLimit + Math.max(0, (avail - blockH) * 0.40);
+
+      /* 포인트 바 */
+      roundRect(ctx, mx, y, Math.round(58 * base), barH, barH / 2);
+      ctx.fillStyle = bold ? '#ffffff' : accent;
+      ctx.fill();
+      y += barH + gap1;
+
+      /* 카테고리 */
+      ctx.font = '700 ' + Math.round(21 * base) + 'px ' + FONT;
+      ctx.fillStyle = bold ? 'rgba(255,255,255,0.94)' : accent;
+      ctx.fillText(kicker, mx, y);
+      y += kickerH + gap2;
+
+      /* 제목 */
+      ctx.font = '800 ' + titleSize + 'px ' + FONT;
+      ctx.fillStyle = textMain;
+      titleLines.forEach((ln, i) => ctx.fillText(ln, mx, y + i * titleLH));
+      y += titleLines.length * titleLH;
+
+      /* 보조 문구 */
+      if (subLines.length) {
+        y += gap3;
+        ctx.font = '500 ' + subSize + 'px ' + FONT;
+        ctx.fillStyle = textSub;
+        subLines.forEach((ln, i) => ctx.fillText(ln, mx, y + i * subLH));
+      }
+
+      /* 푸터 */
+      const fy = h - footerOffset;
+      ctx.strokeStyle = lineCol;
+      ctx.lineWidth = Math.max(1, Math.round(w * 0.0013));
+      ctx.beginPath();
+      ctx.moveTo(mx, fy - Math.round(34 * base));
+      ctx.lineTo(w - mx, fy - Math.round(34 * base));
+      ctx.stroke();
+
+      ctx.textBaseline = 'middle';
+      ctx.font = '700 ' + Math.round(23 * base) + 'px ' + FONT;
+      ctx.fillStyle = textMain;
+      ctx.textAlign = 'left';
+      ctx.fillText('@jungwonyeong14', mx, fy);
+
+      ctx.textAlign = 'right';
+      ctx.font = '500 ' + Math.round(19 * base) + 'px ' + FONT;
+      ctx.fillStyle = textSub;
+      ctx.fillText((o.use || '') + ' · ' + w + '×' + h, w - mx, fy);
+    }
+
+    function drawCard(key) {
+      if (key === 'insta') { drawInsta(); return; }
+      const meta = CH[key];
+      const cv = document.getElementById('cv-' + key);
+      if (!cv) return;
+      const wide = (key === 'threads' && threadsWide);
+      const w = wide ? 1200 : meta.w;
+      const h = wide ? 675 : meta.h;
+      cv.width = w;
+      cv.height = h;
+
+      const cap = document.getElementById('cap-' + key);
+      if (cap) cap.textContent = w + '×' + h + ' · ' + (wide ? '16:9' : meta.ratio) + ' · ' + meta.use;
+
+      const title = (document.getElementById('title-' + key).value || '').trim()
+        || (document.getElementById('topic').value || '').trim()
+        || '오늘의 주제를 입력하세요';
+      const sub = (document.getElementById('keyline').value || '').trim() || meta.sub;
+
+      paintCard(cv.getContext('2d'), w, h, {
+        key: key,
+        accent: meta.accent,
+        accent2: meta.accent2,
+        name: meta.name,
+        use: meta.use,
+        title: title,
+        sub: sub,
+        kicker: document.getElementById('category').value
+      });
+    }
+
+    /* ---------- 인스타그램: 피드 1장 / 카드뉴스 6장 ---------- */
+    function instaCarousel() { return instaFormat === 'carousel'; }
+
+    function instaFallbackSlides() {
+      const t = (document.getElementById('topic').value || '').trim() || '오늘의 주제';
+      const c = document.getElementById('category').value;
+      return [
+        t + ', 아직도 감으로 하시나요?',
+        '대부분 첫 단계에서 막힙니다',
+        '기준 하나만 세우면 달라집니다',
+        c + '에서 특히 중요한 포인트',
+        '오늘 바로 쓰는 체크리스트 3가지',
+        '저장해 두고 필요할 때 꺼내 보세요'
+      ];
+    }
+
+    function getInstaSlides() {
+      const raw = document.getElementById('outInsta').value || '';
+      const found = {};
+      raw.split('\n').forEach(line => {
+        let m = line.match(/^\s*(\d)\s*장\s*(?:\([^)]*\))?\s*[:：]\s*(.+)$/);
+        if (!m) m = line.match(/^\s*\[\s*(\d)\s*\/\s*\d\s*\]\s*[:：]?\s*(.+)$/);
+        if (!m) m = line.match(/^\s*슬라이드\s*(\d)\s*[:：]\s*(.+)$/);
+        if (m) {
+          const n = parseInt(m[1], 10);
+          if (n >= 1 && n <= 10 && !found[n]) found[n] = cleanTitle(m[2]);
+        }
+      });
+      let arr = [];
+      for (let i = 1; i <= 6; i++) arr.push(found[i] || '');
+      if (arr.filter(Boolean).length < 3) arr = instaFallbackSlides();
+      return arr.map((t, i) => (instaOverrides[i] != null && String(instaOverrides[i]).trim() !== '') ? instaOverrides[i] : t);
+    }
+
+    function paintInstaSlide(cv, idx) {
+      const meta = CH.insta;
+      const carousel = instaCarousel();
+      const slides = carousel ? getInstaSlides() : null;
+      const total = carousel ? slides.length : 1;
+      const i = Math.max(0, Math.min(idx, total - 1));
+      const category = document.getElementById('category').value;
+      const keyline = (document.getElementById('keyline').value || '').trim();
+
+      let title;
+      if (carousel) {
+        title = slides[i];
+      } else {
+        title = (document.getElementById('title-insta').value || '').trim()
+          || (document.getElementById('topic').value || '').trim() || '오늘의 주제를 입력하세요';
+      }
+
+      let sub = keyline;
+      if (!sub) {
+        if (!carousel) sub = meta.sub;
+        else if (i === 0) sub = meta.sub;
+        else if (i === total - 1) sub = '저장해 두고 필요할 때 꺼내 보세요';
+        else sub = '';
+      }
+
+      paintCard(cv.getContext('2d'), cv.width, cv.height, {
+        key: 'insta',
+        accent: meta.accent,
+        accent2: meta.accent2,
+        name: meta.name,
+        use: carousel ? ('카드뉴스 ' + (i + 1) + '/' + total) : '피드 1장',
+        title: title,
+        sub: sub,
+        kicker: category,
+        bigNo: carousel ? ('0' + (i + 1)).slice(-2) : ''
+      });
+    }
+
+    function drawInsta() {
+      const cv = document.getElementById('cv-insta');
+      if (!cv) return;
+      if (instaFormat === 'toon') {
+        paintInstaToon(cv);
+        const capT = document.getElementById('cap-insta');
+        if (capT) capT.textContent = '1080×1350 · 4:5 · 인스타툰 4컷';
+        const navT = document.getElementById('instaNav');
+        const thumbsT = document.getElementById('instaThumbs');
+        if (navT) navT.style.display = 'none';
+        if (thumbsT) thumbsT.style.display = 'none';
+        return;
+      }
+      const carousel = instaCarousel();
+      const total = carousel ? getInstaSlides().length : 1;
+      if (instaSlide > total - 1) instaSlide = 0;
+      cv.width = 1080;
+      cv.height = 1350;
+
+      const cap = document.getElementById('cap-insta');
+      if (cap) cap.textContent = '1080×1350 · 4:5 · ' + (carousel ? ('카드뉴스 ' + total + '장') : '피드 1장');
+
+      paintInstaSlide(cv, instaSlide);
+
+      const nav = document.getElementById('instaNav');
+      const thumbs = document.getElementById('instaThumbs');
+      if (nav) nav.style.display = carousel ? 'flex' : 'none';
+      if (thumbs) thumbs.style.display = carousel ? 'grid' : 'none';
+      const idxEl = document.getElementById('instaIndex');
+      if (idxEl) idxEl.textContent = carousel ? ((instaSlide + 1) + ' / ' + total) : '1 / 1';
+      if (carousel) renderThumbs();
+    }
+
+    function renderThumbs() {
+      const box = document.getElementById('instaThumbs');
+      if (!box) return;
+      const slides = getInstaSlides();
+      while (box.childElementCount > slides.length) box.removeChild(box.lastElementChild);
+      while (box.childElementCount < slides.length) {
+        const c = document.createElement('canvas');
+        c.width = 270;
+        c.height = 338;
+        c.addEventListener('click', () => {
+          instaSlide = Array.prototype.indexOf.call(box.children, c);
+          syncInstaInput();
+          drawInsta();
+        });
+        box.appendChild(c);
+      }
+      Array.prototype.forEach.call(box.children, (c, i) => {
+        paintInstaSlide(c, i);
+        if (i === instaSlide) c.classList.add('active');
+        else c.classList.remove('active');
+      });
+    }
+
+    function syncInstaInput() {
+      if (!instaCarousel()) return;
+      const input = document.getElementById('title-insta');
+      if (!input) return;
+      const slides = getInstaSlides();
+      input.value = slides[Math.min(instaSlide, slides.length - 1)] || '';
+    }
+
+    function instaPrev() {
+      const total = instaCarousel() ? getInstaSlides().length : 1;
+      instaSlide = (instaSlide - 1 + total) % total;
+      syncInstaInput();
+      drawInsta();
+    }
+
+    function instaNext() {
+      const total = instaCarousel() ? getInstaSlides().length : 1;
+      instaSlide = (instaSlide + 1) % total;
+      syncInstaInput();
+      drawInsta();
+    }
+
+    /* ===================== 인스타툰 4컷 (손그림 만화) ===================== */
+    function rnd(seed) {
+      const x = Math.sin(seed * 12.9898 + 78.233) * 43758.5453;
+      return x - Math.floor(x);
+    }
+
+    function wobblyPath(ctx, x, y, w, h, seed) {
+      const n = 5;
+      const j = (i) => (rnd(seed + i * 7.31) - 0.5) * 7;
+      ctx.beginPath();
+      for (let i = 0; i <= n; i++) {
+        const px = x + (w * i) / n;
+        const py = y + j(i);
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      for (let i = 1; i <= n; i++) ctx.lineTo(x + w + j(20 + i), y + (h * i) / n);
+      for (let i = n - 1; i >= 0; i--) ctx.lineTo(x + (w * i) / n, y + h + j(40 + i));
+      for (let i = n - 1; i >= 0; i--) ctx.lineTo(x + j(60 + i), y + (h * i) / n);
+      ctx.closePath();
+    }
+
+    function toonCutsFallback() {
+      const t = shortTopic(24) || '오늘의 주제';
+      return [
+        { line: t + ', 이거 모르고 시작하면 시간만 버려요', scene: '밤 11시, 노트북 앞 아빠' },
+        { line: '했는데 첫 기록은 [숫자]였어요', scene: '폰 화면을 같이 보는 부부' },
+        { line: '근데 순서를 바꿔더니 달라졌어요', scene: '메모에 3줄 적는 손' },
+        { line: '이 순서 저장해두세요. 어디서 막혔어요?', scene: '식탁에 붙은 체크리스트' }
+      ];
+    }
+
+    function getToonCuts() {
+      const raw = document.getElementById('outInsta').value || '';
+      const cuts = [];
+      raw.split('\n').forEach(line => {
+        const m = line.match(/^\s*([1-4])\s*컷\s*[|·:：]\s*(.+)$/);
+        if (!m) return;
+        const n = parseInt(m[1], 10);
+        if (cuts[n - 1]) return;
+        const body = m[2];
+        const d = body.match(/대사\s*[:：]\s*["“]?([^"”|]*)/);
+        const sc = body.match(/장면\s*[:：]\s*([^|]*)/);
+        cuts[n - 1] = {
+          line: (d ? d[1] : body).replace(/\s+/g, ' ').trim().slice(0, 44),
+          scene: (sc ? sc[1] : '').replace(/\s+/g, ' ').trim().slice(0, 22)
+        };
+      });
+      if (cuts.filter(x => x && x.line).length < 4) return toonCutsFallback();
+      return cuts;
+    }
+
+    function paintInstaToon(cv) {
+      const ctx = cv.getContext('2d');
+      const W = 1080, H = 1350;
+      cv.width = W;
+      cv.height = H;
+      const cuts = getToonCuts();
+      const titleIn = (document.getElementById('title-insta').value || '').trim();
+      const title = titleIn || cleanTitle(hookTitle('insta')) || '오늘의 카툰';
+      const pastel = ['#ffe9ef', '#e9f2ff', '#fff3dd', '#e9fbf1'];
+      const bodyCol = ['#8fa9ff', '#ff9fbb', '#ffc46b', '#7fd8b0'];
+      const ink = '#5a4c3c';
+
+      ctx.fillStyle = '#fffdf6';
+      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = 'rgba(120,105,85,0.07)';
+      for (let y = 16; y < H; y += 26) {
+        for (let x = 16; x < W; x += 26) {
+          ctx.beginPath();
+          ctx.arc(x + (rnd(x + y) - 0.5) * 6, y + (rnd(y * 1.7) - 0.5) * 6, 1.4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = '#3c3327';
+      ctx.font = '800 38px ' + FONT;
+      const tl = wrapText(ctx, title, W - 120).slice(0, 2);
+      tl.forEach((ln, i) => ctx.fillText(ln, 60, 40 + i * 46));
+
+      const top = 40 + tl.length * 46 + 20;
+      const gap = 18;
+      const bottom = 56;
+      const ph = (H - top - bottom - gap * 3) / 4;
+      const pw = W - 120;
+
+      cuts.forEach((cut, i) => {
+        const y = top + i * (ph + gap);
+
+        wobblyPath(ctx, 60, y, pw, ph, i * 3.7 + 1);
+        ctx.fillStyle = pastel[i % 4];
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = ink;
+        ctx.stroke();
+
+        /* 컷 번호 */
+        ctx.beginPath();
+        ctx.arc(96, y + 32, 19, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.92)';
+        ctx.fill();
+        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = ink;
+        ctx.stroke();
+        ctx.fillStyle = '#4a3f31';
+        ctx.font = '800 22px ' + FONT;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(String(i + 1), 96, y + 33);
+
+        /* 캐릭터 */
+        const cx = 186;
+        const cy = y + ph * 0.58;
+        const headR = Math.min(46, ph * 0.19);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = ink;
+        ctx.beginPath();
+        ctx.moveTo(cx - headR * 0.9, cy + headR * 1.5);
+        ctx.quadraticCurveTo(cx - headR * 1.15, cy + headR * 0.35, cx, cy + headR * 0.3);
+        ctx.quadraticCurveTo(cx + headR * 1.15, cy + headR * 0.35, cx + headR * 0.9, cy + headR * 1.5);
+        ctx.closePath();
+        ctx.fillStyle = bodyCol[i % 4];
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(cx, cy, headR, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffe6cd';
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(cx - headR, cy - headR * 0.25);
+        ctx.quadraticCurveTo(cx - headR * 0.6, cy - headR * 1.5, cx + headR * 0.15, cy - headR * 1.1);
+        ctx.quadraticCurveTo(cx + headR * 0.75, cy - headR * 0.8, cx + headR, cy - headR * 0.2);
+        ctx.quadraticCurveTo(cx + headR * 0.2, cy - headR * 0.75, cx - headR, cy - headR * 0.25);
+        ctx.fillStyle = ink;
+        ctx.fill();
+        ctx.fillStyle = '#3b3228';
+        const eyeY = cy - headR * 0.08;
+        if (i === 2) {
+          ctx.lineWidth = 3;
+          ctx.strokeStyle = '#3b3228';
+          ctx.beginPath();
+          ctx.arc(cx - headR * 0.36, eyeY, headR * 0.13, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(cx + headR * 0.36, eyeY, headR * 0.13, 0, Math.PI * 2);
+          ctx.stroke();
+        } else {
+          ctx.beginPath();
+          ctx.arc(cx - headR * 0.34, eyeY, headR * 0.085, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(cx + headR * 0.34, eyeY, headR * 0.085, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.strokeStyle = '#3b3228';
+        ctx.lineWidth = 2.6;
+        ctx.beginPath();
+        if (i === 3) {
+          ctx.arc(cx, cy + headR * 0.32, headR * 0.26, 0.2, Math.PI - 0.2);
+        } else if (i === 1) {
+          ctx.moveTo(cx - headR * 0.2, cy + headR * 0.42);
+          ctx.lineTo(cx + headR * 0.2, cy + headR * 0.42);
+        } else {
+          ctx.arc(cx, cy + headR * 0.22, headR * 0.22, 0.35, Math.PI - 0.35);
+        }
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(255,150,160,0.45)';
+        ctx.beginPath();
+        ctx.arc(cx - headR * 0.55, cy + headR * 0.26, headR * 0.15, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(cx + headR * 0.55, cy + headR * 0.26, headR * 0.15, 0, Math.PI * 2);
+        ctx.fill();
+
+        /* 말풍선 */
+        const bx = 258;
+        const bw = pw - bx - 26;
+        const byTop = y + 22;
+        const bh = ph - 74;
+        ctx.lineWidth = 2.6;
+        ctx.strokeStyle = ink;
+        wobblyPath(ctx, bx, byTop, bw, bh, i * 5.1 + 12);
+        ctx.fillStyle = 'rgba(255,255,255,0.96)';
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(bx + 4, byTop + bh * 0.55);
+        ctx.lineTo(bx - 22, byTop + bh * 0.62);
+        ctx.lineTo(bx + 6, byTop + bh * 0.7);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(255,255,255,0.96)';
+        ctx.fill();
+        ctx.stroke();
+
+        /* 대사 */
+        ctx.fillStyle = '#332c24';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        let fs = Math.round(Math.min(34, ph * 0.16));
+        let dLines = [];
+        for (;;) {
+          ctx.font = '700 ' + fs + 'px ' + FONT;
+          dLines = wrapText(ctx, cut.line, bw - 44);
+          if (dLines.length <= 4 || fs <= 20) break;
+          fs -= 2;
+        }
+        if (dLines.length > 4) dLines = dLines.slice(0, 4);
+        const lh = Math.round(fs * 1.35);
+        let ty = byTop + Math.max(14, (bh - dLines.length * lh) / 2);
+        dLines.forEach(ln => { ctx.fillText(ln, bx + 22, ty); ty += lh; });
+
+        if (cut.scene) {
+          ctx.textAlign = 'right';
+          ctx.textBaseline = 'bottom';
+          ctx.fillStyle = 'rgba(90,76,60,0.75)';
+          ctx.font = '500 20px ' + FONT;
+          ctx.fillText(cut.scene, 60 + pw - 18, y + ph - 12);
+        }
+        ctx.textAlign = 'left';
+      });
+
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'bottom';
+      ctx.fillStyle = 'rgba(90,76,60,0.6)';
+      ctx.font = '600 22px ' + FONT;
+      ctx.fillText('@savejeong.pick · 인스타툰 4컷', W - 60, H - 18);
+    }
+
+    /* ===================== 이미지 가이드 ===================== */
+    function imageGuide(key, t, category) {
+      const G = {
+        naver: {
+          spec: '1200×900 (4:3) · JPG/PNG · 장당 10MB 이하 ·최소 800×600',
+          count: '대표 1장 + 본문 8~15장 (3~4문단마다 1장)',
+          alt: '"' + t + ' 실제 적용 전/후 비교 — ' + category + ' 초보 기준" (키워드 앞배치, 50자 내외)',
+          file: 'naver_' + slug(t) + '_01.jpg (한글 키워드 + 번호)',
+          cuts: [
+            '표지: 제목 + 핵심 문구 타이포 카드',
+            '전/후: 두 장을 나란히 붙인 비교 이미지',
+            '정보: 체크리스트·표 요약 카드',
+            '생활: 실제 사용 장면(손, 책상, 앱 화면 — 개인정보 모자이크)'
+          ],
+          tip: '모바일 목록에서 정사각으로 크롭될 수 있어 핵심 문구를 중앙 60% 안에 두세요. 움직이는 GIF·과한 워터마크·타사 로고는 노출에 불리합니다.'
+        },
+        google: {
+          spec: 'OG 1200×630 (1.91:1) · 본문 1600×900 (16:9) · WebP 200KB 이하 권장',
+          count: '피처드 1장 + 본문 3~5장 + 비교표·도식 1개',
+          alt: '"' + t + ' 절차를 4단계로 정리한 인포그래픽" (서술형, 125자 이내, 키워드 자연 포함)',
+          file: 'how-to-' + slug(t) + '-guide-1200x630.webp (영문 소문자·하이픈·키워드)',
+          cuts: [
+            '피처드(OG): 제목 + H2 목차 3줄 — SNS 공유 시 이 이미지가 뜸',
+            '도식: 3단계 화살표 인포그래픽',
+            '표: 비교표 (가능하면 실제 HTML 표로 넣고 이미지는 보조)',
+            'FAQ: 3문항 요약 카드'
+          ],
+          tip: '구글 이미지 검색은 파일명·주변 텍스트·alt를 함께 읽습니다. H1 바로 아래에 첫 이미지를 두고 캡션에 키워드 문장 1줄을 넣으세요. 네이버 원고와 같은 이미지·같은 문단을 쓰면 중복 문서로 묶일 수 있습니다.'
+        },
+        insta: {
+          spec: '1080×1350 (4:5) · PNG/JPG · 캐러셀 최대 10장 (릴스 커버는 1080×1920)',
+          count: '표지 1 + 본문 5장 = 6장 세트 (한 장에 한 문장)',
+          alt: '"' + t + ' 카드뉴스 표지 — ' + category + ' 핵심 3가지 요약" (게시 전 고급 설정 → 대체 텍스트)',
+          file: 'insta_' + slug(t) + '_01.png (보관용 — 업로드 후 노출 영향은 작음)',
+          cuts: [
+            '표지: 질문형 훅, 7단어 이내',
+            '2장: 결론 먼저 (캐러셀 이탈이 가장 많은 장)',
+            '3~5장: 문제 → 핵심1 → 핵심2 (숫자 1개씩)',
+            '6장: 체크리스트 3줄 / 7장: "저장" CTA'
+          ],
+          tip: '피드에서 세로 공간을 가장 많이 차지하는 비율이 4:5입니다. 같은 템플릿을 반복하면 계정 인지도가 올라가고, 표지 글자는 좌우 여백을 넉넉히 두세요. 인스타툰 4컷은 블로그 글의 사건을 4단으로 나누고, 대사는 한 컷 40자 이내로 줄여야 폰에서 읽힙니다.'
+        },
+        yt: {
+          spec: '1080×1920 (9:16) · PNG · 자막 안전영역 1080×1200(중앙)',
+          count: '커버 1 + 영상 내 자막 컷 4~6개 (3초마다 전환)',
+          alt: '제목·설명 첫 두 줄에 키워드 (썸네일 alt는 사실상 제목이 역할)',
+          file: 'shorts_' + slug(t) + '_cover.png',
+          cuts: [
+            '0~1초: 훅 3~5단어 큰 글자',
+            '1~3초: 숫자·결과 제시',
+            '중반: 비교·전후 컷',
+            '마지막: "저장 · 구독" CTA'
+          ],
+          tip: '상단 220px·하단 380px은 앱 UI에 가려집니다. 핵심 텍스트는 세로 중앙에, 글자는 6~10자로 짧게. 좌우보다 중앙 배치가 안전합니다.'
+        },
+        threads: {
+          spec: '1200×1200 (1:1) 또는 1200×675 (16:9) · 최대 10장',
+          count: '포인트 카드 1장 (필요할 때만)',
+          alt: '별도 alt 입력 없음 → 이미지 안 문장을 본문에도 그대로 적기',
+          file: 'threads_' + slug(t) + '_point.png',
+          cuts: [
+            '1장: 본문 첫 줄 그대로 (반말 유지, 20자 이내)',
+            '2장(선택): 근거 숫자 한 줄',
+            '3장(선택): 질문 한 줄 (댓글 유도)'
+          ],
+          tip: '실제 글이 대부분 이미지 없이 올라가므로 필요한 때만 1장을 씁니다. 텍스트 타임라인이라 카드에는 “한 문장”만 담아야 읽힙니다. 1:1이 모바일에서 가장 크게 보입니다.'
+        }
+      };
+      return G[key];
+    }
+
+    function buildGuideHTML(key) {
+      const topic = document.getElementById('topic').value.trim();
+      const t = (topic || '오늘의 주제').replace(/\s+/g, ' ').slice(0, 40);
+      const category = document.getElementById('category').value;
+      const d = imageGuide(key, t, category);
+      const cuts = d.cuts.map(c => '<li>' + esc(c) + '</li>').join('');
+      return '<div class="g-item"><span class="g-k">규격 · 비율</span><span class="g-v">' + esc(d.spec) + '</span></div>' +
+        '<div class="g-item"><span class="g-k">장수</span><span class="g-v">' + esc(d.count) + '</span></div>' +
+        '<div class="g-item"><span class="g-k">Alt 텍스트</span><span class="g-v">' + esc(d.alt) + '</span></div>' +
+        '<div class="g-item"><span class="g-k">파일명</span><span class="g-v">' + esc(d.file) + '</span></div>' +
+        '<div class="g-label">컷별 콘셉트</div><ol class="g-cuts">' + cuts + '</ol>' +
+        '<div class="g-tip">💡 ' + esc(d.tip) + '</div>';
+    }
+
+    function refreshGuides() {
+      KEYS.forEach(k => {
+        const el = document.getElementById('guide-' + k);
+        if (el) el.innerHTML = buildGuideHTML(k);
+      });
+    }
+
+    /* ===================== 다운로드 · 복사 ===================== */
+    function saveCanvas(cv, name) {
+      const done = (href) => {
+        const a = document.createElement('a');
+        a.href = href;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        statusText.textContent = name + ' 저장 완료';
+      };
+      if (cv.toBlob) {
+        cv.toBlob(blob => {
+          if (!blob) { statusText.textContent = '이미지 저장 실패 — 다시 시도해 주세요'; return; }
+          const url = URL.createObjectURL(blob);
+          done(url);
+          setTimeout(() => URL.revokeObjectURL(url), 5000);
+        }, 'image/png');
+      } else {
+        done(cv.toDataURL('image/png'));
+      }
+    }
+
+    function downloadCard(key) {
+      if (key === 'insta' && instaCarousel()) { downloadInstaSlide(instaSlide); return; }
+      const cv = document.getElementById('cv-' + key);
+      if (!cv) return;
+      const meta = CH[key];
+      const baseName = (document.getElementById('title-' + key).value || document.getElementById('topic').value || meta.name);
+      saveCanvas(cv, meta.prefix + '_' + slug(baseName) + '_' + cv.width + 'x' + cv.height + '.png');
+    }
+
+    function downloadInstaSlide(idx) {
+      const slides = getInstaSlides();
+      const i = Math.max(0, Math.min(idx, slides.length - 1));
+      const off = document.createElement('canvas');
+      off.width = 1080;
+      off.height = 1350;
+      paintInstaSlide(off, i);
+      const base = slides[i] || document.getElementById('topic').value || 'card';
+      saveCanvas(off, 'insta_' + slug(base) + '_' + (i + 1) + 'of' + slides.length + '.png');
+    }
+
+    let instaBatchRunning = false;
+    function downloadInstaAll() {
+      if (!instaCarousel()) { downloadCard('insta'); return; }
+      if (instaBatchRunning) return;
+      instaBatchRunning = true;
+      const slides = getInstaSlides();
+      let i = 0;
+      statusText.textContent = '카드뉴스 ' + slides.length + '장을 저장합니다...';
+      const step = () => {
+        if (i >= slides.length) {
+          instaBatchRunning = false;
+          statusText.textContent = slides.length + '장 저장 요청 완료 (브라우저가 여러 파일 저장을 물어볼 수 있어요)';
+          return;
+        }
+        downloadInstaSlide(i);
+        i += 1;
+        setTimeout(step, 700);
+      };
+      step();
+    }
+
+    let batchRunning = false;
+    async function downloadAll() {
+      if (batchRunning) return;
+      batchRunning = true;
+      statusText.textContent = '5장을 순서대로 저장합니다...';
+      for (let i = 0; i < KEYS.length; i++) {
+        downloadCard(KEYS[i]);
+        await new Promise(r => setTimeout(r, 700));
+      }
+      batchRunning = false;
+      statusText.textContent = '5장 저장 요청 완료 (브라우저가 여러 파일 저장을 물어볼 수 있어요)';
+    }
+
+    function toggleThreadsRatio() {
+      threadsWide = !threadsWide;
+      drawCard('threads');
+      statusText.textContent = '스레드 이미지 비율: ' + (threadsWide ? '16:9 (1200×675)' : '1:1 (1200×1200)');
+    }
+
+    function buildImagePrompt(key) {
+      const meta = CH[key];
+      if (key === 'insta' && instaFormat === 'toon') {
+        const raw = document.getElementById('outInsta').value || '';
+        const out = [];
+        raw.split('\n').forEach(line => {
+          const m = line.match(/^\s*([1-4])\s*컷\s*[|·:：]\s*(.+)$/);
+          if (!m) return;
+          const p = m[2].match(/프롬프트\s*[:：]\s*(.+)$/);
+          if (p) out.push(m[1] + '컷 — ' + p[1].trim());
+        });
+        if (out.length) return out.join('\n');
+        return 'Hand-drawn Korean instatoon, 4 vertical panels, soft watercolor pastel palette, wobbly pencil ink outline, cozy home background, cute simple characters, empty speech bubbles for Korean dialogue, no text, no 3d render, no photo.';
+      }
+      const wide = (key === 'threads' && threadsWide);
+      const w = wide ? 1200 : meta.w;
+      const h = wide ? 675 : meta.h;
+      const t = (document.getElementById('title-' + key).value || '').trim()
+        || (document.getElementById('topic').value || '').trim() || 'SNS 콘텐츠';
+      const category = document.getElementById('category').value;
+
+      const layout = key === 'yt'
+        ? 'Vertical 9:16 composition, key text centered in the middle 60% of the frame, generous empty space at top 220px and bottom 380px, huge bold Korean headline of 6-10 characters, one small supporting line.'
+        : key === 'google'
+          ? 'Wide 1.91:1 composition, headline left-aligned in the left 60%, simple 3-step arrow diagram or abstract chart on the right, subtle blue accent, lots of white space.'
+          : key === 'insta'
+            ? (instaCarousel()
+              ? 'Vertical 4:5 carousel slide, oversized Korean headline centered, one supporting line, a small slide number in a corner, consistent template across all 6 slides, clean minimal fashion-editorial layout.'
+              : 'Vertical 4:5 single feed photo, oversized Korean headline centered, one supporting line, clean minimal fashion-editorial layout.')
+            : key === 'threads'
+              ? 'Square composition, one single Korean sentence in very large type, almost no other elements, high contrast.'
+              : 'Horizontal 4:3 composition, Korean headline on the left, soft lifestyle still-life objects (notebook, phone, coffee) on the right, warm natural light.';
+
+      return 'Create a clean, modern Korean editorial thumbnail for a ' + category + ' content post.\n' +
+        'Size: ' + w + '×' + h + ' px. ' + layout + '\n' +
+        'Headline text to render exactly (Korean): "' + t + '"\n' +
+        'Style: flat vector / minimal graphic design, strong typographic hierarchy, 2-3 colors (accent ' + meta.accent + '), soft geometric shapes, no photographs of faces, no logos, no watermark, no distorted or misspelled Korean characters.\n' +
+        'Leave clean margins so the text is not cropped on mobile feeds.';
+    }
+
+    function copyImagePrompt(key) {
+      const text = buildImagePrompt(key);
+      navigator.clipboard.writeText(text).then(
+        () => { statusText.textContent = CH[key].name + ' 이미지 생성 프롬프트를 복사했습니다'; },
+        () => { statusText.textContent = '클립보드 복사에 실패했습니다 (브라우저 권한 확인)'; }
+      );
+    }
+
+    function copyMasterPrompt() {
+      const topic = document.getElementById('topic').value.trim() || '(여기에 오늘의 주제 입력)';
+      const category = document.getElementById('category').value;
+      const tone = document.getElementById('tone').value;
+      navigator.clipboard.writeText(buildMasterPrompt(topic, category, tone, document.getElementById('instaFormat').value)).then(
+        () => { statusText.textContent = '통합 프롬프트(5채널 + 이미지 지침)를 복사했습니다!'; },
+        () => { statusText.textContent = '클립보드 복사에 실패했습니다'; }
+      );
+    }
+
+    function copyText(id) {
+      const el = document.getElementById(id);
+      if (!el.value) { statusText.textContent = '복사할 내용이 없습니다'; return; }
+      navigator.clipboard.writeText(el.value).then(
+        () => { statusText.textContent = '복사 완료!'; },
+        () => { statusText.textContent = '클립보드 복사에 실패했습니다'; }
+      );
+    }
+
+    function clearAll() {
+      document.getElementById('topic').value = '';
+      document.getElementById('keyline').value = '';
+      KEYS.forEach(k => {
+        document.getElementById(CH[k].outId).value = '';
+        document.getElementById('title-' + k).value = '';
+        hookState[k].style = HOOKS[k][0].id;
+        hookState[k].keywords = [];
+      });
+      instaSlide = 0;
+      instaOverrides = {};
+      drawAll();
+      refreshGuides();
+      renderHookBars();
+      renderSeo('naver');
+      renderSeo('google');
+      statusText.textContent = '초기화되었습니다.';
+    }
+
+    /* ===================== 키워드 발굴 ===================== */
+    const KW_SUFFIX = {
+      info: ['방법', '뜻', '원리', '절차', '준비물', '기준', '계산법', '기간', '조건', '신청 방법', '초보', '총정리'],
+      compare: ['비교', '차이', '추천 순위', '장단점', '고르는 법', '순위', '대안'],
+      review: ['후기', '솔직 후기', '3개월 후기', '실패', '실제 후기', '효과', '단점'],
+      question: ['어떻게', '얼마', '언제', '가능할까', '왜', '필요할까', '몇 년', '무엇부터']
+    };
+
+    const linkNaver = q => 'https://search.naver.com/search.naver?query=' + encodeURIComponent(q);
+    const linkGoogle = q => 'https://www.google.com/search?q=' + encodeURIComponent(q);
+    const linkDatalab = () => 'https://datalab.naver.com/keyword/trendSearch.naver';
+    const linkTrends = q => 'https://trends.google.com/trends/explore?hl=ko&q=' + encodeURIComponent(q);
+    const linkSearchAd = () => 'https://searchad.naver.com/';
+
+    function fetchWithTimeout(url, ms) {
+      return new Promise((resolve, reject) => {
+        let timer = null;
+        let ctrl = null;
+        try { ctrl = new AbortController(); } catch (e) { ctrl = null; }
+        timer = setTimeout(() => { if (ctrl) { try { ctrl.abort(); } catch (e) {} } reject(new Error('timeout')); }, ms);
+        fetch(url, ctrl ? { signal: ctrl.signal } : {})
+          .then(r => r.ok ? r.json() : Promise.reject(new Error('http ' + r.status)))
+          .then(d => { clearTimeout(timer); resolve(d); })
+          .catch(e => { clearTimeout(timer); reject(e); });
+      });
+    }
+
+    async function fetchSuggestions(seed) {
+      const q = encodeURIComponent(seed);
+      const out = [];
+      const safe = async (fn) => { try { const r = await fn(); return r || []; } catch (e) { return []; } };
+      const g = await safe(async () => {
+        const d = await fetchWithTimeout('https://suggestqueries.google.com/complete/search?client=firefox&hl=ko&q=' + q, 2500);
+        return Array.isArray(d) && Array.isArray(d[1]) ? d[1] : [];
+      });
+      const n = await safe(async () => {
+        const d = await fetchWithTimeout('https://ac.search.naver.com/nx/ac?q=' + q + '&con=1&frm=nv&ans=2&r_format=json&r_enc=UTF-8&r_unicode=0&t_koreng=1', 2500);
+        const items = d && d.items && d.items[0] ? d.items[0] : [];
+        return items.map(x => Array.isArray(x) ? x[0] : x);
+      });
+      const dm = await safe(async () => {
+        const d = await fetchWithTimeout('https://suggest.daum.net/v1/suggest?mod=json&q=' + q, 2000);
+        return ((d && d.suggestions) || []).map(s => s && s.value).filter(Boolean);
+      });
+      [].concat(g, n, dm).forEach(s => {
+        const v = String(s || '').trim();
+        if (v && v !== seed && out.indexOf(v) === -1) out.push(v);
+      });
+      return out.slice(0, 25);
+    }
+
+    async function researchKeywords() {
+      const seed = document.getElementById('seedKeyword').value.trim();
+      const status = document.getElementById('kwStatus');
+      if (!seed) {
+        status.textContent = '씨앗 키워드를 먼저 입력해 주세요.';
+        document.getElementById('seedKeyword').focus();
+        return;
+      }
+      status.textContent = '네이버 · 구글 · 다음 자동완성을 조회하는 중...';
+      const live = await fetchSuggestions(seed);
+      discoveredKeywords = (live.length
+        ? live
+        : [seed + ' 후기', seed + ' 방법', seed + ' 비교', seed + ' 초보', seed + ' 주의점']).slice(0, 12);
+      renderHookBars();
+      renderKeywordResults(seed, live);
+      status.textContent = live.length
+        ? live.length + '개의 실시간 자동완성을 포함해 정리했습니다. 칩을 누르면 주제칸에 들어갑니다.'
+        : '브라우저 보안(CORS) 때문에 실시간 자동완성은 못 불러왔습니다. 로컬 조합으로 생성했으니, 아래 링크에서 실제 검색량·경쟁도를 확인하세요.';
+    }
+
+    function renderKeywordResults(seed, live) {
+      const cat = document.getElementById('category').value;
+      const catShort = cat.split('+')[0];
+      const groups = [];
+      if (live && live.length) {
+        groups.push({ title: '실시간 자동완성', hint: '지금 사람들이 실제로 치는 말', items: live });
+      }
+      groups.push({ title: '정보형 (how-to·개념)', hint: '정보 습득 의도 · 구글 상위 노출·애드센스에 유리', items: KW_SUFFIX.info.map(s => seed + ' ' + s) });
+      groups.push({ title: '비교형 (선택 기준)', hint: '비교·선택 의도 · 표 콘텐츠와 궁합', items: KW_SUFFIX.compare.map(s => seed + ' ' + s) });
+      groups.push({ title: '후기형 (경험·신뢰)', hint: '경험 확인 의도 · 네이버 애드포스트에 유리', items: KW_SUFFIX.review.map(s => seed + ' ' + s) });
+      groups.push({ title: '질문형 (FAQ·스니펫)', hint: '즉답 의도 · FAQ 블록으로 스니펫 선점', items: KW_SUFFIX.question.map(s => seed + ' ' + s) });
+      groups.push({ title: '롱테일 조합 (경쟁 낮음)', hint: '3~4단어 조합 · 초반 상위 노출용', items: [seed + ' ' + catShort + ' 방법', seed + ' 초보 ' + catShort, seed + ' 2026 ' + catShort, seed + ' 직접 해보니', seed + ' 시작 전 확인'] });
+
+      let html = '';
+      groups.forEach(g => {
+        html += '<div class="kw-group"><div class="kw-group-title">' + esc(g.title) + ' <span class="hint">' + esc(g.hint) + '</span></div><div class="kw-chips">';
+        g.items.forEach(k => {
+          html += '<div class="chip">' +
+            '<button class="chip-main" data-kw="' + esc(k) + '">' + esc(k) + '</button>' +
+            '<a class="chip-ico naver" href="' + linkNaver(k) + '" target="_blank" rel="noopener" title="네이버 검색결과">N</a>' +
+            '<a class="chip-ico google" href="' + linkGoogle(k) + '" target="_blank" rel="noopener" title="구글 검색결과">G</a>' +
+            '</div>';
+        });
+        html += '</div></div>';
+      });
+
+      html += '<div class="kw-links">' +
+        '<a class="kw-link" href="' + linkNaver(seed) + '" target="_blank" rel="noopener">네이버 검색결과 · 경쟁도 보기</a>' +
+        '<a class="kw-link" href="' + linkGoogle(seed) + '" target="_blank" rel="noopener">구글 검색결과 · 상위 문서 보기</a>' +
+        '<a class="kw-link" href="' + linkDatalab() + '" target="_blank" rel="noopener">네이버 데이터랩 · 검색량 추이</a>' +
+        '<a class="kw-link" href="' + linkTrends(seed) + '" target="_blank" rel="noopener">구글 트렌드 · 시기별 추이</a>' +
+        '<a class="kw-link" href="' + linkSearchAd() + '" target="_blank" rel="noopener">네이버 검색광고 키워드도구 (로그인 필요)</a>' +
+        '</div>';
+
+      document.getElementById('kwResults').innerHTML = html;
+      document.querySelectorAll('#kwResults .chip-main').forEach(btn => {
+        btn.addEventListener('click', () => useKeyword(btn.dataset.kw));
+      });
+    }
+
+    function useKeyword(kw) {
+      document.getElementById('topic').value = kw;
+      document.getElementById('targetKeyword').value = kw;
+      drawAll();
+      refreshGuides();
+      renderHookBars();
+      renderSeo('naver');
+      renderSeo('google');
+      const panel = document.getElementById('studioPanel');
+      if (panel && panel.scrollIntoView) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      statusText.textContent = '"' + kw + '" 키워드를 주제에 넣었습니다 — 5개 채널 동시 생성을 누르세요';
+    }
+
+    /* ===================== SEO 점검 ===================== */
+    function guessKeyword() {
+      const t = (document.getElementById('topic').value || '').trim();
+      return t.split(/[,·—\-]/)[0].trim().slice(0, 20);
+    }
+
+    function seoChecks(key) {
+      const text = (document.getElementById(CH[key].outId).value || '').trim();
+      const kwGiven = (document.getElementById('targetKeyword').value || '').trim();
+      const kw = kwGiven || guessKeyword();
+      const flat = text.replace(/\s+/g, ' ');
+      const plain = text.replace(/\s/g, '');
+      const title = pickTitle(key) || '';
+      const items = [];
+      const push = (ok, label, detail) => items.push({ ok: !!ok, label: label, detail: detail });
+
+      const tl = title.length;
+      push(tl >= 25 && tl <= 38, '제목 길이 25~38자', tl ? '현재 ' + tl + '자' : '제목 후보 없음');
+
+      const idx = kw ? title.indexOf(kw) : -1;
+      push(idx >= 0 && idx <= 8, '핵심 키워드 앞배치', !kw ? '타깃 키워드를 입력하세요' : (idx >= 0 ? '제목 ' + (idx + 1) + '번째 글자' : '제목에 키워드 없음'));
+
+      const need = key === 'google' ? 1700 : 1400;
+      push(plain.length >= need, '본문 ' + (key === 'google' ? '1,700' : '1,400') + '자 이상', '현재 ' + plain.length + '자 (공백 제외)' + (key === 'google' ? ' · 목표 1,700~1,950' : ' · 목표 1,450~1,600'));
+
+      const h2 = (text.match(/^##\s/gm) || []).length;
+      const h3 = (text.match(/^###\s/gm) || []).length;
+      const sub = (text.match(/\[소제목/g) || []).length;
+      if (key === 'google') {
+        push(h2 >= 2 && h3 >= 1, 'H2/H3 구조화', 'H2 ' + h2 + '개 · H3 ' + h3 + '개');
+      } else {
+        push((sub + h2) >= 3, '소제목 3개 이상', '소제목 ' + (sub + h2) + '개');
+      }
+
+      let cnt = 0;
+      if (kw) { let i = 0; while ((i = flat.indexOf(kw, i)) !== -1) { cnt++; i += kw.length; } }
+      push(cnt >= 3 && cnt <= 6, '키워드 자연 반복 3~6회', !kw ? '타깃 키워드 필요' : '현재 ' + cnt + '회' + (cnt > 6 ? ' — 줄이세요' : (cnt < 3 ? ' — 1~2회 더' : '')));
+
+      push(/Alt|이미지 플랜/i.test(text), '이미지 · Alt 가이드', /이미지 플랜/.test(text) ? '이미지 플랜 있음' : '이미지 플랜 블록 없음');
+
+      if (key === 'google') {
+        const q = (text.match(/\*\*Q\d/g) || []).length;
+        push(q >= 3, 'FAQ 3문항', 'Q ' + q + '개');
+        push(text.indexOf('|') !== -1, '비교표(표) 포함', text.indexOf('|') !== -1 ? '표 형식 감지' : '표가 없습니다');
+        const md = (text.match(/메타 디스크립션[^\n]*\n+([^\n]+)/) || [])[1] || '';
+        push(md.length >= 70 && md.length <= 170, '메타 디스크립션 70~170자', md ? '현재 ' + md.length + '자' : '메타 디스크립션 없음');
+      } else {
+        const tagLine = text.split('\n').find(l => l.trim().startsWith('#')) || '';
+        const tags = tagLine.split(/\s+/).filter(t => t.startsWith('#')).length;
+        push(tags >= 5 && tags <= 8, '태그 5~8개', '현재 ' + tags + '개');
+      }
+      return { items: items, kw: kw };
+    }
+
+    function renderSeo(key) {
+      const scoreEl = document.getElementById('seoScore-' + key);
+      const listEl = document.getElementById('seoList-' + key);
+      if (!scoreEl || !listEl) return;
+      const raw = (document.getElementById(CH[key].outId).value || '').trim();
+      if (!raw) {
+        scoreEl.textContent = '—';
+        scoreEl.className = 'seo-score';
+        listEl.innerHTML = '<div class="seo-item"><span class="seo-m">·</span><span class="seo-detail">글을 생성하면 제목·분량·구조·키워드 반복을 자동으로 점검합니다.</span></div>';
+        return;
+      }
+      const res = seoChecks(key);
+      const items = res.items;
+      const passed = items.filter(i => i.ok).length;
+      const score = Math.round(passed / items.length * 100);
+      scoreEl.textContent = 'SEO ' + score + '점';
+      scoreEl.className = 'seo-score ' + (score >= 80 ? 'good' : (score >= 60 ? 'mid' : 'bad'));
+      listEl.innerHTML = items.map(it =>
+        '<div class="seo-item"><span class="seo-m">' + (it.ok ? '✅' : '⚠️') + '</span><span><b>' + esc(it.label) + '</b> <span class="seo-detail">' + esc(it.detail) + '</span></span></div>'
+      ).join('');
+    }
+
+    /* ===================== 실행 ===================== */
+    async function runStudio() {
+      const topic = document.getElementById('topic').value.trim();
+      const category = document.getElementById('category').value;
+      const tone = document.getElementById('tone').value;
+      const engine = engineSelect.value;
+      const apiKey = keyInput.value.trim();
+      const customModel = document.getElementById('modelName').value.trim();
+
+      if (!topic) {
+        alert('주제 또는 메모를 먼저 입력해 주세요!');
+        return;
+      }
+
+      if (engine === 'template' || !apiKey) {
+        fillTemplate(topic, category, tone);
+        statusText.textContent = engine === 'template'
+          ? '5채널 구조 초안 + 이미지 생성 완료 (통합 프롬프트 복사로 ChatGPT/Gemini/Claude에 바로 쓸 수 있어요)'
+          : 'API 키가 없어 구조 초안으로 생성했습니다';
+        return;
+      }
+
+      statusText.textContent = 'AI가 5개 채널 콘텐츠를 생성 중입니다...';
+      const prompt = buildMasterPrompt(topic, category, tone, document.getElementById('instaFormat').value);
+
+      try {
+        let rawText = '';
+        if (engine === 'openai') {
+          const res = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + apiKey
+            },
+            body: JSON.stringify({
+              model: customModel || 'gpt-4o-mini',
+              response_format: { type: 'json_object' },
+              messages: [{ role: 'user', content: prompt }]
+            })
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error((data.error && data.error.message) || 'OpenAI 요청 실패');
+          rawText = data.choices[0].message.content;
+        } else if (engine === 'gemini') {
+          const model = customModel || 'gemini-2.5-flash';
+          const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + encodeURIComponent(apiKey), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }],
+              generationConfig: { responseMimeType: 'application/json' }
+            })
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error((data.error && data.error.message) || 'Gemini 요청 실패');
+          rawText = data.candidates[0].content.parts[0].text;
+        } else if (engine === 'claude') {
+          const res = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-api-key': apiKey,
+              'anthropic-version': '2023-06-01',
+              'anthropic-dangerous-direct-browser-access': 'true'
+            },
+            body: JSON.stringify({
+              model: customModel || 'claude-sonnet-4-20250514',
+              max_tokens: 6000,
+              messages: [{ role: 'user', content: prompt }]
+            })
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error((data.error && data.error.message) || 'Claude 요청 실패');
+          rawText = data.content[0].text;
+        }
+
+        const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+        const parsed = JSON.parse(jsonMatch ? jsonMatch[0] : rawText);
+        document.getElementById('outNaver').value = parsed.naver_blog || '';
+        document.getElementById('outGoogle').value = parsed.google_blog || '';
+        document.getElementById('outInsta').value = parsed.instagram || '';
+        document.getElementById('outYt').value = parsed.youtube_shorts || '';
+        document.getElementById('outThreads').value = parsed.threads || '';
+
+        applyTitles();
+        drawAll();
+        refreshGuides();
+        renderHookBars();
+        renderSeo('naver');
+        renderSeo('google');
+        statusText.textContent = '5개 채널 생성 완료! (구글 원고는 네이버와 문장이 겹치지 않는지 한 번 확인하세요)';      } catch (err) {
+        statusText.textContent = '오류: ' + err.message;
+        alert('생성 중 오류가 발생했습니다: ' + err.message);
+      }
+    }
+
+    /* ===================== 날짜별 글 리스트 · 임시저장 · 예약 발송 ===================== */
+    const POSTS_KEY = 'wonyeong_studio_posts_v1';
+    const NOTES_KEY = 'wonyeong_studio_pickle_notes_v1';
+    let postBook = [];
+    let postFilter = 'all';
+    let pickleNotes = [];
+
+    function two(n) { return String(n).padStart(2, '0'); }
+    function todayISO() {
+      const d = new Date();
+      return d.getFullYear() + '-' + two(d.getMonth() + 1) + '-' + two(d.getDate());
+    }
+    function nowStamp() {
+      const d = new Date();
+      return todayISO() + ' ' + two(d.getHours()) + ':' + two(d.getMinutes());
+    }
+    function readLocal(key) {
+      try {
+        const raw = window.localStorage.getItem(key);
+        return raw === null ? null : raw;
+      } catch (e) { return null; }
+    }
+    function writeLocal(key, value) {
+      try { window.localStorage.setItem(key, JSON.stringify(value)); return true; }
+      catch (e) { return false; }
+    }
+    function readPostsFromStore() {
+      const raw = readLocal(POSTS_KEY);
+      if (!raw) return [];
+      try { const arr = JSON.parse(raw); return Array.isArray(arr) ? arr : []; } catch (e) { return []; }
+    }
+    function persistPosts() { return writeLocal(POSTS_KEY, postBook); }
+
+    /* 2026-11-27 확정본을 첫 기록으로 시드 (이미 저장된 기록이 있으면 그대로 둠) */
+    function seedPostBook() {
+      if (readLocal(POSTS_KEY) !== null) return false;
+      const el = document.getElementById('seedDraftsJson');
+      let seed = null;
+      if (el) { try { seed = JSON.parse(el.textContent); } catch (e) { seed = null; } }
+      if (seed && seed.date) {
+        postBook.push({
+          date: seed.date,
+          topic: seed.topic || '',
+          status: seed.status || '임시저장',
+          scheduledAt: '',
+          savedAt: seed.savedAt || nowStamp(),
+          drafts: seed.drafts || {}
+        });
+      }
+      persistPosts();
+      return true;
+    }
+
+    function findPost(date) {
+      return postBook.filter(p => p.date === date)[0] || null;
+    }
+    function upsertPost(date, patch) {
+      let post = findPost(date);
+      if (!post) {
+        post = { date: date, topic: '', status: '임시저장', scheduledAt: '', savedAt: '', drafts: {} };
+        postBook.push(post);
+      }
+      Object.keys(patch || {}).forEach(k => { if (patch[k] !== undefined) post[k] = patch[k]; });
+      post.savedAt = nowStamp();
+      persistPosts();
+      return post;
+    }
+    function currentDrafts() {
+      const out = {};
+      KEYS.forEach(k => { const el = document.getElementById(CH[k].outId); out[k] = el ? el.value : ''; });
+      return out;
+    }
+    function draftCount(drafts) {
+      if (!drafts) return 0;
+      return KEYS.filter(k => String(drafts[k] || '').trim()).length;
+    }
+    function postDateValue() {
+      const el = document.getElementById('postDate');
+      return (el && el.value) || todayISO();
+    }
+    function formatSched(v) { return String(v || '').replace('T', ' ').slice(0, 16); }
+
+    function statusClass(s) {
+      if (s === '예약 대기') return 'waiting';
+      if (s === '발행 완료') return 'done';
+      return 'draft';
+    }
+
+    function renderPostList() {
+      const box = document.getElementById('postList');
+      if (!box) return;
+      const sorted = postBook.slice().sort((a, b) => (a.date < b.date ? 1 : (a.date > b.date ? -1 : 0)));
+      const list = postFilter === 'all' ? sorted : sorted.filter(p => (p.status || '임시저장') === postFilter);
+      if (!list.length) {
+        box.innerHTML = '<div class="post-empty">' + (sorted.length ? '이 상태의 기록이 없습니다.' : '아직 기록이 없습니다. 날짜를 고르고 💾 임시저장을 누르면 여기에 쌓입니다.') + '</div>';
+        return;
+      }
+      box.innerHTML = list.map(p => {
+        const st = p.status || '임시저장';
+        const when = (st === '예약 대기' && p.scheduleLabel)
+          ? ' · ⏰ ' + esc(p.scheduleLabel) + ' 예약 대기'
+          : (p.savedAt ? ' · 저장 ' + esc(p.savedAt) : '');
+        return '<div class="post-row">' +
+          '<div class="post-main" data-post-load="' + esc(p.date) + '">' +
+            '<div class="post-date">' + esc(p.date) + ' <span class="post-chip ' + statusClass(st) + '">' + esc(st) + '</span></div>' +
+            '<div class="post-topic">' + esc(p.topic || '(주제 미입력)') + '</div>' +
+            '<div class="post-meta">초안 ' + draftCount(p.drafts) + '/5' + when + '</div>' +
+          '</div>' +
+          '<div class="post-btns">' +
+            '<button class="btn-mini" data-post-load="' + esc(p.date) + '">불러오기</button>' +
+            '<button class="btn-mini" data-post-pub="' + esc(p.date) + '">발행 완료</button>' +
+            '<button class="btn-mini" data-post-del="' + esc(p.date) + '">삭제</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function saveDraftPost() {
+      const date = postDateValue();
+      const topic = (document.getElementById('topic').value || '').trim();
+      const drafts = currentDrafts();
+      if (!topic && draftCount(drafts) === 0) {
+        statusText.textContent = '주제나 초안을 먼저 입력해 주세요 — 저장할 내용이 없습니다';
+        const t = document.getElementById('topic');
+        if (t && t.focus) t.focus();
+        return false;
+      }
+      const prev = findPost(date);
+      const post = upsertPost(date, {
+        topic: topic || (prev ? prev.topic : ''),
+        drafts: drafts,
+        status: prev ? (prev.status || '임시저장') : '임시저장'
+      });
+      renderPostList();
+      statusText.textContent = post.date + ' 초안 저장 완료 (' + draftCount(post.drafts) + '/5 · ' + post.status + ')';
+      return true;
+    }
+
+    function setScheduledPost() {
+      const schedEl = document.getElementById('schedAt');
+      const raw = schedEl ? String(schedEl.value || '').trim() : '';
+      if (!raw) {
+        statusText.textContent = '예약 발송 일시를 먼저 골라 주세요';
+        if (schedEl && schedEl.focus) schedEl.focus();
+        return false;
+      }
+      const dateEl = document.getElementById('postDate');
+      if (dateEl && !dateEl.value) dateEl.value = raw.slice(0, 10);
+      const date = postDateValue();
+      const before = findPost(date);
+      const post = upsertPost(date, {
+        topic: (document.getElementById('topic').value || '').trim() || (before ? before.topic : ''),
+        drafts: currentDrafts(),
+        status: '예약 대기',
+        scheduledAt: raw,
+        scheduleLabel: formatSched(raw)
+      });
+      renderPostList();
+      statusText.textContent = post.date + ' 글을 ' + formatSched(raw) + ' 예약 대기로 표시했습니다 — 실제 예약은 📋 피클 예약 발송 요청으로 등록하세요';
+      return true;
+    }
+
+    function loadPost(date) {
+      const post = findPost(date);
+      if (!post) { statusText.textContent = date + ' 기록이 없습니다'; return false; }
+      const dateEl = document.getElementById('postDate');
+      if (dateEl) dateEl.value = post.date;
+      const topicEl = document.getElementById('topic');
+      if (topicEl) topicEl.value = post.topic || '';
+      KEYS.forEach(k => {
+        const el = document.getElementById(CH[k].outId);
+        if (el && post.drafts && typeof post.drafts[k] === 'string') el.value = post.drafts[k];
+      });
+      const schedEl = document.getElementById('schedAt');
+      if (schedEl) schedEl.value = post.scheduledAt || '';
+      const pdEl = document.getElementById('pickleDate');
+      if (pdEl && !pdEl.value) pdEl.value = post.date;
+      try { applyTitles(); drawAll(); refreshGuides(); renderHookBars(); renderSeo('naver'); renderSeo('google'); }
+      catch (e) { /* 캔버스가 없는 환경(테스트)에서는 건너뜀 */ }
+      statusText.textContent = post.date + ' 기록을 불러왔습니다 — ' + (post.status || '임시저장') + ' · 초안 ' + draftCount(post.drafts) + '/5';
+      return true;
+    }
+
+    function updatePostStatus(date, status) {
+      const post = findPost(date);
+      if (!post) { statusText.textContent = date + ' 기록이 없습니다'; return false; }
+      post.status = status;
+      if (status === '발행 완료') post.publishedAt = nowStamp();
+      persistPosts();
+      renderPostList();
+      statusText.textContent = post.date + ' 상태를 "' + status + '"(으)로 바꿨습니다';
+      return true;
+    }
+    function markPostPublished() { return updatePostStatus(postDateValue(), '발행 완료'); }
+
+    function deletePost(date) {
+      const i = postBook.map(p => p.date).indexOf(date);
+      if (i < 0) { statusText.textContent = date + ' 기록이 없습니다'; return false; }
+      postBook.splice(i, 1);
+      persistPosts();
+      renderPostList();
+      statusText.textContent = date + ' 기록을 삭제했습니다';
+      return true;
+    }
+    function deletePostWithConfirm(date) {
+      const ok = (typeof window.confirm === 'function') ? window.confirm(date + ' 기록을 지울까요?') : true;
+      if (!ok) return false;
+      return deletePost(date);
+    }
+    function deletePostByDate() { return deletePostWithConfirm(postDateValue()); }
+
+    function buildScheduleRequest(date) {
+      const d = date || postDateValue();
+      const post = findPost(d);
+      const schedEl = document.getElementById('schedAt');
+      const when = (post && post.scheduleLabel) ? post.scheduleLabel : formatSched(schedEl ? schedEl.value : '');
+      const topic = (post && post.topic) || (document.getElementById('topic').value || '').trim();
+      const names = KEYS.map(k => CH[k].name).join(' · ');
+      return [
+        '[피클 예약 발송 등록 요청]',
+        '· 날짜: ' + d,
+        '· 주제: ' + (topic || '(주제 미입력)'),
+        '· 희망 발송: ' + (when || '(아직 미정 — 이번 주 안에서 정해줘)'),
+        '· 채널: ' + names,
+        '· 저장된 초안: ' + draftCount(post && post.drafts) + '/5',
+        '· 광고·제휴: ⏸️ 승인 전 홀드 — 링크·고지 없이 발행',
+        '',
+        '이 일정으로 5채널 발행을 예약해줘. 발행 직전에 초안 확인을 한 번 받아줘.'
+      ].join('\n');
+    }
+    function copyScheduleRequest() {
+      const text = buildScheduleRequest();
+      const box = document.getElementById('scheduleRequest');
+      if (box) box.value = text;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          () => { statusText.textContent = '피클 예약 발송 요청문을 복사했습니다 — 피클 채팅에 붙여 보내세요'; },
+          () => { if (box && box.focus) box.focus(); if (box && box.select) box.select(); statusText.textContent = '복사 실패 — 요청문을 아래 칸에서 선택해 복사하세요'; }
+        );
+      } else {
+        statusText.textContent = '복사 기능이 없어 요청문을 아래 칸에 넣었습니다';
+      }
+      return text;
+    }
+
+    /* ===================== 피클 지시 히스토리 ===================== */
+    const PICKLE_TAGS = [
+      { id: 'fix', label: '수정 요청', text: '수정 요청: ' },
+      { id: 'publish', label: '이대로 발행', text: '이대로 발행해줘. 초안 그대로 올리고 발행 후 링크 알려줘.' },
+      { id: 'schedule', label: '예약 발송', text: '예약 발송: 5채널 다 오늘 정한 시간에 맞춰 예약해줘.' },
+      { id: 'threads', label: '스레드 말투 변경', text: '스레드 말투 변경: 전부 반말로, ~습니다/~해요 빼고 ?·!로 끝내줘. ㅋㅋㅋ 섞고 이모지는 맨 끝에 0~1개.' },
+      { id: 'title', label: '제목 다시', text: '제목만 다시 뽑아줘: ' },
+      { id: 'image', label: '이미지 다시', text: '이미지만 다시 뽑아줘. 인스타툰은 손그림 파스텔 느낌으로.' }
+    ];
+
+    function readNotesFromStore() {
+      const raw = readLocal(NOTES_KEY);
+      if (!raw) return [];
+      try { const arr = JSON.parse(raw); return Array.isArray(arr) ? arr : []; } catch (e) { return []; }
+    }
+    function persistNotes() { return writeLocal(NOTES_KEY, pickleNotes); }
+    function channelLabel(key) { return (key && CH[key]) ? CH[key].name : '전체(5채널)'; }
+
+    function renderPickleTags() {
+      const box = document.getElementById('pickleTags');
+      if (!box) return;
+      box.innerHTML = PICKLE_TAGS.map(t => '<button class="ptag" data-ptag="' + esc(t.id) + '">' + esc(t.label) + '</button>').join('');
+    }
+    function applyPickleTag(id) {
+      const tag = PICKLE_TAGS.filter(t => t.id === id)[0];
+      if (!tag) return false;
+      const input = document.getElementById('pickleInput');
+      if (input) { input.value = tag.text; if (input.focus) input.focus(); }
+      statusText.textContent = '"' + tag.label + '" 문구를 넣었습니다 — 내용을 다듬고 기록 & 복사';
+      return true;
+    }
+
+    function noteMessage(note) {
+      return [
+        '[피클 지시]',
+        '· 보낸 시각: ' + note.at,
+        '· 연결: ' + note.date + ' · ' + channelLabel(note.channel),
+        '· 광고·제휴: ⏸️ 승인 전 홀드 — 링크·고지 없음',
+        '',
+        note.text
+      ].join('\n');
+    }
+    function copyPlainText(text, okMessage) {
+      const box = document.getElementById('pickleCopyBox');
+      if (box) box.value = text;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          () => { statusText.textContent = okMessage; },
+          () => { if (box && box.focus) box.focus(); if (box && box.select) box.select(); statusText.textContent = '복사 실패 — 아래 복사 칸에서 선택해 복사하세요'; }
+        );
+      } else {
+        statusText.textContent = '복사 기능이 없어 아래 칸에 넣었습니다';
+      }
+      return text;
+    }
+    function addPickleNote() {
+      const input = document.getElementById('pickleInput');
+      const text = input ? String(input.value || '').trim() : '';
+      if (!text) {
+        statusText.textContent = '피클에게 할 말을 먼저 적어 주세요';
+        if (input && input.focus) input.focus();
+        return false;
+      }
+      const dateEl = document.getElementById('pickleDate');
+      const chEl = document.getElementById('pickleChannel');
+      const note = {
+        id: 'n' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+        at: nowStamp(),
+        date: (dateEl && dateEl.value) || postDateValue(),
+        channel: chEl ? chEl.value : '',
+        text: text
+      };
+      pickleNotes.unshift(note);
+      pickleNotes = pickleNotes.slice(0, 100);
+      persistNotes();
+      if (input) input.value = '';
+      renderPickleHistory();
+      copyPickleMessage(note.id);
+      return note;
+    }
+    function copyPickleMessage(id) {
+      let note = null;
+      if (id) note = pickleNotes.filter(n => n.id === id)[0] || null;
+      if (!note) {
+        const input = document.getElementById('pickleInput');
+        const typed = input ? String(input.value || '').trim() : '';
+        const dateEl = document.getElementById('pickleDate');
+        const chEl = document.getElementById('pickleChannel');
+        if (typed) {
+          note = { at: nowStamp(), date: (dateEl && dateEl.value) || postDateValue(), channel: chEl ? chEl.value : '', text: typed };
+        } else if (pickleNotes.length) {
+          note = pickleNotes[0];
+        }
+      }
+      if (!note) { statusText.textContent = '복사할 지시가 없습니다 — 먼저 적고 기록해 주세요'; return ''; }
+      return copyPlainText(noteMessage(note), '피클에게 보낼 메시지를 복사했습니다 — 피클 채팅에 붙여 보내세요');
+    }
+    function deletePickleNote(id) {
+      const before = pickleNotes.length;
+      pickleNotes = pickleNotes.filter(n => n.id !== id);
+      persistNotes();
+      renderPickleHistory();
+      if (pickleNotes.length !== before) statusText.textContent = '지시 기록 1개를 지웠습니다';
+      return pickleNotes.length !== before;
+    }
+    function clearPickleNotes() {
+      if (!pickleNotes.length) { statusText.textContent = '지울 지시 기록이 없습니다'; return false; }
+      const ok = (typeof window.confirm === 'function') ? window.confirm('지시 히스토리를 모두 지울까요?') : true;
+      if (!ok) return false;
+      pickleNotes = [];
+      persistNotes();
+      renderPickleHistory();
+      statusText.textContent = '피클 지시 히스토리를 비웠습니다';
+      return true;
+    }
+    function renderPickleHistory() {
+      const box = document.getElementById('pickleHistory');
+      if (!box) return;
+      if (!pickleNotes.length) {
+        box.innerHTML = '<div class="post-empty">아직 지시 기록이 없습니다. 위에 적고 💬 기록 & 복사를 누르면 시간순으로 쌓입니다.</div>';
+        return;
+      }
+      box.innerHTML = pickleNotes.map(n =>
+        '<div class="note-row">' +
+          '<div class="note-head"><span><b>' + esc(n.at) + '</b> · ' + esc(n.date) + ' · ' + esc(channelLabel(n.channel)) + '</span>' +
+            '<span class="post-btns">' +
+              '<button class="btn-mini" data-note-copy="' + esc(n.id) + '">📋 복사</button>' +
+              '<button class="btn-mini" data-note-del="' + esc(n.id) + '">삭제</button>' +
+            '</span></div>' +
+          '<div class="note-text">' + esc(n.text) + '</div>' +
+        '</div>'
+      ).join('');
+    }
+
+    /* ===================== 9시 초안 JSON 가져오기 ===================== */
+    const DRAFT_ALIASES = {
+      naver: ['naver', 'naver_blog', 'naverBlog', 'blog_naver', '네이버'],
+      google: ['google', 'google_blog', 'googleBlog', 'tistory', 'blog_google', '티스토리'],
+      insta: ['insta', 'instagram', 'insta_toon', '카툰'],
+      yt: ['yt', 'youtube', 'youtube_shorts', 'shorts', '쇼츠'],
+      threads: ['threads', 'thread', '스레드']
+    };
+    function pickDraft(obj, key) {
+      if (!obj || typeof obj !== 'object') return '';
+      const names = DRAFT_ALIASES[key] || [key];
+      for (let i = 0; i < names.length; i += 1) {
+        const n = names[i];
+        if (Object.prototype.hasOwnProperty.call(obj, n) && typeof obj[n] === 'string') return obj[n];
+      }
+      if (obj.drafts && typeof obj.drafts === 'object') return pickDraft(obj.drafts, key);
+      return '';
+    }
+    function normalizeBundle(raw) {
+      const b = (typeof raw === 'string') ? JSON.parse(raw) : raw;
+      const items = Array.isArray(b) ? b : [b];
+      return items.map(it => {
+        const date = String(it.date || it.day || it.postDate || postDateValue()).slice(0, 10);
+        const drafts = {};
+        KEYS.forEach(k => { const v = pickDraft(it, k); if (v) drafts[k] = v; });
+        return {
+          date: date,
+          topic: String(it.topic || it.title || it.subject || '').trim(),
+          status: (it.status === '예약 대기' || it.status === '발행 완료') ? it.status : '임시저장',
+          scheduledAt: String(it.scheduledAt || ''),
+          scheduleLabel: String(it.scheduleLabel || ''),
+          drafts: drafts
+        };
+      });
+    }
+    function importDraftJson() {
+      const el = document.getElementById('importJson');
+      const out = document.getElementById('importResult');
+      const raw = el ? String(el.value || '').trim() : '';
+      const say = (msg, ok) => {
+        if (out) { out.textContent = msg; out.className = 'import-result ' + (ok ? 'ok' : 'err'); }
+        statusText.textContent = msg;
+      };
+      if (!raw) { say('붙여넣은 JSON이 없습니다', false); return false; }
+      let bundle;
+      try { bundle = normalizeBundle(raw); }
+      catch (e) { say('JSON 형식이 아닙니다: ' + e.message, false); return false; }
+      const valid = bundle.filter(b => b.date && draftCount(b.drafts));
+      if (!valid.length) { say('date와 5채널 초안(drafts)이 있는 항목이 없습니다', false); return false; }
+      valid.forEach(b => {
+        const prev = findPost(b.date);
+        upsertPost(b.date, {
+          topic: b.topic || (prev ? prev.topic : ''),
+          drafts: Object.assign({}, prev ? prev.drafts : {}, b.drafts),
+          status: (prev && prev.status === '발행 완료') ? '발행 완료' : b.status,
+          scheduledAt: b.scheduledAt || (prev ? prev.scheduledAt : ''),
+          scheduleLabel: b.scheduleLabel || (prev ? prev.scheduleLabel : '')
+        });
+      });
+      renderPostList();
+      const last = valid[0];
+      loadPost(last.date);
+      if (el) el.value = '';
+      say('📥 ' + valid.map(v => v.date).join(', ') + ' 초안을 리스트에 추가하고 열었습니다 (' + draftCount(last.drafts) + '/5)', true);
+      return valid;
+    }
+    function fillImportSample() {
+      const el = document.getElementById('importJson');
+      if (!el) return false;
+      el.value = JSON.stringify({
+        date: '2026-11-28',
+        topic: '예: 연말정산 미리보기 — 13월의 월급 준비',
+        status: '임시저장',
+        drafts: {
+          naver: '네이버 원고...',
+          google: '티스토리 원고...',
+          insta: '인스타툰 4컷...',
+          yt: '쇼츠 20초 대본...',
+          threads: '스레드 반말 본문...'
+        }
+      }, null, 2);
+      statusText.textContent = '예시 JSON을 채웠습니다 — 형식만 보고 실제 내용으로 바꿔 붙여넣으세요';
+      return true;
+    }
+
+    function initPostBook() {
+      postBook = readPostsFromStore();
+      seedPostBook();
+      const dateEl = document.getElementById('postDate');
+      if (dateEl && !dateEl.value) dateEl.value = todayISO();
+      const pdEl = document.getElementById('pickleDate');
+      if (pdEl && !pdEl.value) pdEl.value = todayISO();
+      const schedEl = document.getElementById('schedAt');
+      const p = findPost(dateEl ? dateEl.value : '');
+      if (schedEl && p && p.scheduledAt) schedEl.value = p.scheduledAt;
+      pickleNotes = readNotesFromStore();
+      renderPickleTags();
+      renderPickleHistory();
+      renderPostList();
+      /* 가장 최근 기록에 초안이 있으면 바로 열어 준다 */
+      const latest = postBook.slice().sort((a, b) => (a.date < b.date ? 1 : (a.date > b.date ? -1 : 0)))[0];
+      if (latest && draftCount(latest.drafts) > 0) loadPost(latest.date);
+    }
+
+    /* ===================== 이벤트 연결 ===================== */
+    document.getElementById('postStatusFilter').addEventListener('change', (e) => {
+      postFilter = e.target.value;
+      renderPostList();
+    });
+    /* 날짜별 글 리스트 · 피클 지시 버튼 (위임) */
+    document.addEventListener('click', (e) => {
+      const t = e.target;
+      if (!t || !t.closest) return;
+      const tagEl = t.closest('[data-ptag]');
+      if (tagEl) { applyPickleTag(tagEl.dataset.ptag); return; }
+      const loadEl = t.closest('[data-post-load]');
+      if (loadEl) { loadPost(loadEl.dataset.postLoad); return; }
+      const pubEl = t.closest('[data-post-pub]');
+      if (pubEl) { updatePostStatus(pubEl.dataset.postPub, '발행 완료'); return; }
+      const delEl = t.closest('[data-post-del]');
+      if (delEl) { deletePostWithConfirm(delEl.dataset.postDel); return; }
+      const copyEl = t.closest('[data-note-copy]');
+      if (copyEl) { copyPickleMessage(copyEl.dataset.noteCopy); return; }
+      const ndelEl = t.closest('[data-note-del]');
+      if (ndelEl) { deletePickleNote(ndelEl.dataset.noteDel); return; }
+    });
+    document.getElementById('imgStyle').addEventListener('change', () => {
+      drawAll();
+      statusText.textContent = '이미지 스타일이 5장에 모두 적용되었습니다';
+    });
+    document.getElementById('instaFormat').addEventListener('change', (e) => {
+      instaFormat = e.target.value;
+      instaSlide = 0;
+      instaOverrides = {};
+      const topic = document.getElementById('topic').value.trim();
+      if (topic) fillInsta(topic, document.getElementById('category').value, document.getElementById('tone').value);
+      applyTitles();
+      drawInsta();
+      renderHookBars();
+      statusText.textContent = instaFormat === 'carousel'
+        ? '인스타 포맷: 카드뉴스 6장 — 아래 썸네일로 장을 넘겨보고 장별로 저장하세요'
+        : (instaFormat === 'toon'
+          ? '인스타 포맷: 인스타툰 4컷 — 위 원고의 컷별 대사로 손그림 4컷 미리보기를 그렸습니다. PNG로 저장하세요'
+          : '인스타 포맷: 일반 피드 1장 — 사진 한 장 + 캡션으로 생성합니다');
+    });
+    document.getElementById('keyline').addEventListener('input', () => drawAll());
+    document.getElementById('targetKeyword').addEventListener('input', () => {
+      renderSeo('naver');
+      renderSeo('google');
+      renderHookBars();
+    });
+    document.getElementById('seedKeyword').addEventListener('input', () => renderHookBars());
+    document.getElementById('outNaver').addEventListener('input', () => renderSeo('naver'));
+    document.getElementById('outGoogle').addEventListener('input', () => renderSeo('google'));
+    document.getElementById('seedKeyword').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); researchKeywords(); }
+    });
+    document.getElementById('category').addEventListener('change', () => { drawAll(); refreshGuides(); renderHookBars(); });
+    document.getElementById('topic').addEventListener('input', () => {
+      clearTimeout(guideTimer);
+      guideTimer = setTimeout(() => {
+        drawAll();
+        refreshGuides();
+        renderHookBars();
+        renderSeo('naver');
+        renderSeo('google');
+      }, 350);
+    });
+
+    /* 후킹 스타일 · 제목 키워드 선택기 */
+    document.addEventListener('click', (e) => {
+      const t = e.target;
+      if (!t || !t.closest) return;
+      const hookBtn = t.closest('.hchip[data-hook]');
+      if (hookBtn) { setHookStyle(hookBtn.dataset.ch, hookBtn.dataset.hook); return; }
+      const kwBtn = t.closest('.hchip[data-hkw]');
+      if (kwBtn) { toggleHookKeyword(kwBtn.dataset.ch, kwBtn.dataset.hkw); return; }
+    });
+    KEYS.forEach(key => {
+      const inp = document.getElementById('hook-kwin-' + key);
+      if (!inp) return;
+      inp.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          addHookKeyword(key, inp.value);
+          inp.value = '';
+        }
+      });
+    });
+    document.querySelectorAll('.title-input').forEach(el => {
+      el.addEventListener('input', () => {
+        if (el.dataset.ch === 'insta' && instaCarousel()) instaOverrides[instaSlide] = el.value;
+        drawCard(el.dataset.ch);
+      });
+    });
+
+    /* 초기 상태 */
+    document.getElementById('title-naver').value = '월급날 통장 쪼개기, 3년 해보고 남은 것';
+    document.getElementById('title-google').value = '월급 통장 쪼개기 총정리: 조건·방법·주의점 5가지';
+    document.getElementById('title-insta').value = '통장 쪼개기, 아직도 감으로 하시나요?';
+    document.getElementById('title-yt').value = '통장 쪼개기 3년, 남은 건';
+    document.getElementById('title-threads').value = '결국 기준 하나였음';
+    syncInstaInput();
+    drawAll();
+    refreshGuides();
+    renderHookBars();
+    renderSeo('naver');
+    renderSeo('google');
+    initPostBook();
+    statusText.textContent = '준비 완료 — 주제를 입력하거나 예시 이미지를 눌러보세요';
+  </script>
+</body>
+</html>
