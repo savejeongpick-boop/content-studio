@@ -371,6 +371,11 @@
     .dkpi-s { margin-top: 5px; font-size: 11.5px; color: var(--muted-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .dkpi.primary { border-color: #dcd9ff; background: #fdfdff; }
     .dkpi.primary .dkpi-v { color: var(--accent-text); }
+    .dkpi-v.up { color: #067647; }
+    .dkpi-v.down { color: #b42318; }
+    .dkpi-s b { font-weight: 750; color: var(--text-2); }
+    .dkpi-s b.up { color: #067647; }
+    .dkpi-s b.down { color: #b42318; }
     .nextbar {
       display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
       background: #fff; border: 1px solid var(--border); border-radius: 14px;
@@ -1029,6 +1034,117 @@
     .tour-next { padding: 7px 14px; font-size: 12.5px; }
 
     /* =========================================================
+       세로 탭(아코디언) · SNS 채널 전환 · 일자→채널 목록
+       ========================================================= */
+    /* 세로 탭 머리 — 모바일에서만 보인다 */
+    .acc-head {
+      display: none; width: 100%; align-items: center; gap: 9px;
+      padding: 13px 14px; margin: 0 0 6px; text-align: left;
+      background: #fff; border: 1px solid var(--border); border-radius: 12px;
+      box-shadow: var(--shadow-xs); color: var(--text);
+    }
+    .acc-no {
+      width: 21px; height: 21px; flex: 0 0 auto; display: grid; place-items: center;
+      border-radius: 6px; background: var(--surface-3); color: var(--muted-2);
+      font-size: 11px; font-weight: 800; font-variant-numeric: tabular-nums;
+    }
+    .acc-name { font-size: 14.5px; font-weight: 750; letter-spacing: -0.025em; white-space: nowrap; }
+    .acc-meta {
+      margin-left: auto; min-width: 0; max-width: 44%;
+      font-size: 11.5px; font-weight: 600; color: var(--muted-2);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .acc-chev {
+      flex: 0 0 auto; width: 8px; height: 8px; margin: 0 3px 3px 2px;
+      border-right: 1.8px solid var(--muted); border-bottom: 1.8px solid var(--muted);
+      transform: rotate(-45deg); transition: transform 0.18s ease;
+    }
+    .view.acc-open > .acc-head { border-color: #dcd9ff; background: #fdfdff; box-shadow: var(--shadow-sm); }
+    .view.acc-open > .acc-head .acc-no { background: var(--accent); color: #fff; }
+    .view.acc-open > .acc-head .acc-chev { transform: rotate(45deg); margin-bottom: 3px; }
+    @keyframes accIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+    /* SNS 채널 전환 칩 */
+    .chswitch {
+      display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none;
+      margin: 0 -2px 12px; padding: 2px 2px 0;
+    }
+    .chswitch::-webkit-scrollbar { display: none; }
+    .chs {
+      flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px;
+      height: 32px; padding: 0 12px; border-radius: 999px;
+      background: #fff; border: 1px solid var(--border); color: var(--muted);
+      font-size: 12.5px; font-weight: 650;
+    }
+    .chs:hover { color: var(--text); border-color: var(--border-strong); }
+    .chs.active { background: var(--text); border-color: var(--text); color: #fff; }
+    .chs-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted-2); flex: 0 0 auto; }
+    .chs[data-chs="naver"] .chs-dot { background: #03c75a; }
+    .chs[data-chs="google"] .chs-dot { background: #4285f4; }
+    .chs[data-chs="insta"] .chs-dot { background: #e1306c; }
+    .chs[data-chs="yt"] .chs-dot { background: #ff2d55; }
+    .chs[data-chs="threads"] .chs-dot { background: #16181d; }
+    .chs.active .chs-dot { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4); }
+
+    /* 발행률 줄 · 다음 할 일 줄 */
+    .dash-prog { display: flex; align-items: center; gap: 8px; margin: 0 2px 12px; }
+    .dash-prog .pbar { flex: 0 1 200px; }
+    .dp-pct { font-size: 11.5px; font-weight: 750; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .dp-sub { margin-left: auto; font-size: 11.5px; color: var(--muted-2); }
+    .nextline { display: flex; align-items: center; gap: 8px; margin: 0 2px 18px; }
+    .next-k {
+      font-size: 10.5px; font-weight: 700; color: var(--muted);
+      background: var(--surface-3); border: 1px solid var(--border);
+      border-radius: 999px; padding: 2px 8px; flex: 0 0 auto;
+    }
+    .next-v {
+      min-width: 0; font-size: 12.5px; font-weight: 650; color: var(--text-2);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .nextline .btn-mini { margin-left: auto; flex: 0 0 auto; }
+
+    /* 콘텐츠 목록 — 일자 그룹 안에 SNS 채널 행 */
+    .clist { background: #fff; border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow-sm); overflow: hidden; }
+    .cgroup + .cgroup { border-top: 1px solid var(--border); }
+    .cgroup-h { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 14px; background: var(--surface-2); }
+    .cg-date { font-size: 12.5px; font-weight: 750; color: var(--text); font-variant-numeric: tabular-nums; }
+    .cg-date em { margin-left: 2px; font-style: normal; font-weight: 600; color: var(--muted-2); }
+    .cg-topic { min-width: 0; font-size: 12.5px; font-weight: 650; color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cg-acts { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .cg-money { display: inline-flex; align-items: center; gap: 3px; margin: 0; font-size: 10.5px; font-weight: 600; color: var(--muted-2); white-space: nowrap; }
+    .cg-money input { width: 66px; padding: 4px 6px; text-align: right; font-size: 11.5px; font-weight: 650; font-variant-numeric: tabular-nums; border-radius: 7px; }
+
+    .citem {
+      display: grid; grid-template-columns: auto auto auto minmax(0, 1fr) auto;
+      align-items: center; gap: 5px 8px; padding: 9px 14px; border-top: 1px solid #f1f3f7;
+    }
+    .ci-name { display: inline-flex; align-items: center; gap: 5px; flex: 0 0 auto; min-width: 64px; font-size: 11.5px; font-weight: 700; color: var(--text-2); }
+    .ci-name::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--muted-2); flex: 0 0 auto; }
+    .citem[data-ch="naver"] .ci-name::before { background: #03c75a; }
+    .citem[data-ch="google"] .ci-name::before { background: #4285f4; }
+    .citem[data-ch="insta"] .ci-name::before { background: #e1306c; }
+    .citem[data-ch="yt"] .ci-name::before { background: #ff2d55; }
+    .citem[data-ch="threads"] .ci-name::before { background: #16181d; }
+    .ci-badge { flex: 0 0 auto; font-size: 10px; font-weight: 750; padding: 2px 6px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
+    .ci-badge.done { color: #067647; background: #ecfdf5; border-color: #b7ebd7; }
+    .ci-badge.ready { color: #4338ca; background: #eef2ff; border-color: #dcd9ff; }
+    .ci-badge.none { color: #98a0ac; background: #f7f8fa; border-color: #eef0f4; }
+    .ci-link { flex: 0 0 auto; font-size: 11px; font-weight: 650; color: var(--accent-text); text-decoration: none; }
+    .ci-link:hover { text-decoration: underline; }
+    .ci-link.off { color: #b6bcc6; font-weight: 500; text-decoration: none; }
+    .ci-stats {
+      justify-self: end; display: flex; flex-wrap: wrap; gap: 3px 10px; justify-content: flex-end;
+      font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+    }
+    .ci-stats b { font-weight: 700; color: var(--text-2); }
+    .ci-stats b.z { font-weight: 500; color: #c2c8d2; }
+    .ci-stats .roi { font-weight: 750; color: #067647; }
+    .ci-stats .roi.neg { color: #b42318; }
+    .ci-stats .roi.zero { color: var(--muted-2); font-weight: 600; }
+    .citem .btn-mini { flex: 0 0 auto; }
+    .cgroup-empty { padding: 12px 14px; font-size: 12px; color: var(--muted-2); border-top: 1px solid #f1f3f7; }
+
+    /* =========================================================
        Responsive
        ========================================================= */
     @media (min-width: 1400px) {
@@ -1182,6 +1298,39 @@
       .top-facts { grid-template-columns: minmax(0, 1fr); }
       .crow-pair label { justify-content: flex-start; }
     }
+    /* =========================================================
+       모바일 세로 탭 — 가로 탭바를 숨기고 섹션을 아코디언으로
+       ========================================================= */
+    @media (max-width: 768px) {
+      .tabbar { display: none; }
+      .view { display: block; margin: 0 0 8px; }
+      .view > .acc-head { display: flex; }
+      .view:not(.acc-open) > *:not(.acc-head) { display: none; }
+      .view.acc-open > *:not(.acc-head) { animation: accIn 0.2s ease-out both; }
+      .view-head { margin: 0 2px 12px; }
+      .view-head h1 { display: none; }
+      .view-head p { margin: 0; font-size: 11.5px; }
+      .dash-head { margin: 0 2px 12px; }
+      .dash-head h1 { display: none; }
+      .dash-head .dash-sub { margin: 0; }
+      .dash-kpis { gap: 8px; margin-bottom: 10px; }
+      .dkpi { padding: 11px 12px; border-radius: 11px; }
+      .dkpi-v { font-size: 19px; }
+      .dkpi-s { font-size: 11px; }
+      .dash-prog { margin-bottom: 10px; }
+      .nextline { margin-bottom: 14px; }
+      .cgroup-h { padding: 9px 12px; }
+      .cg-acts { width: 100%; margin-left: 0; }
+      .citem { padding: 9px 12px; grid-template-columns: auto auto auto minmax(0, 1fr); }
+      .citem .btn-mini { grid-column: 4; grid-row: 1; justify-self: end; }
+      .ci-stats { grid-column: 1 / -1; justify-self: start; justify-content: flex-start; }
+      .chswitch { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; overflow: visible; }
+      .chs { width: 100%; height: 31px; padding: 0 8px; font-size: 12px; justify-content: center; }
+      .wrap { padding: 12px 10px 44px; }
+      .panel { margin-bottom: 10px; }
+      .brand { flex: 1 1 auto; overflow: hidden; }
+      .brand-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+    }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       * { transition: none !important; animation: none !important; }
@@ -1257,6 +1406,9 @@
     function viewFromNode(node) {
       var n = node, v;
       for (var i = 0; n && n !== document && i < 12; i++) {
+        /* 화면 섹션 안쪽 클릭은 화면 전환이 아니다 —
+           (예전에는 뷰 안의 버튼을 눌러도 매번 맨 위로 스크롤됐다) */
+        if (n.id && String(n.id).indexOf('view-') === 0) { return null; }
         if (n.getAttribute) {
           v = n.getAttribute('data-view');
           if (v && isView(v)) { return v; }
@@ -1422,7 +1574,14 @@
   <main class="wrap" id="appMain">
 
     <!-- ══════════ 대시보드 ══════════ -->
-    <section class="view active" id="view-dashboard" data-view="dashboard">
+    <section class="view active acc-open" id="view-dashboard" data-view="dashboard">
+      <button type="button" class="acc-head" data-acc="dashboard" aria-expanded="true" aria-controls="view-dashboard">
+        <span class="acc-no">1</span>
+        <span class="acc-name">대시보드</span>
+        <span class="acc-meta" id="accMeta-dashboard"></span>
+        <span class="acc-chev" aria-hidden="true"></span>
+      </button>
+
       <div class="dash-head">
         <div>
           <h1>대시보드</h1>
@@ -1430,75 +1589,66 @@
         </div>
       </div>
 
+      <!-- SNS 채널 전환 — 고른 채널만의 수치와 목록을 본다 -->
+      <div class="chswitch" id="chSwitch" role="tablist" aria-label="SNS 채널 선택">
+        <button type="button" class="chs active" data-chs="all" role="tab" aria-selected="true">전체</button>
+        <button type="button" class="chs" data-chs="naver" role="tab" aria-selected="false"><i class="chs-dot"></i>네이버</button>
+        <button type="button" class="chs" data-chs="google" role="tab" aria-selected="false"><i class="chs-dot"></i>티스토리</button>
+        <button type="button" class="chs" data-chs="insta" role="tab" aria-selected="false"><i class="chs-dot"></i>인스타</button>
+        <button type="button" class="chs" data-chs="yt" role="tab" aria-selected="false"><i class="chs-dot"></i>유튜브</button>
+        <button type="button" class="chs" data-chs="threads" role="tab" aria-selected="false"><i class="chs-dot"></i>스레드</button>
+      </div>
+
       <div class="dash-kpis">
         <div class="dkpi">
-          <div class="dkpi-k">총 콘텐츠</div>
+          <div class="dkpi-k">콘텐츠</div>
           <div class="dkpi-v" id="dashCount">0<small>건</small></div>
-          <div class="dkpi-s" id="dashCountSub">발행 완료 0건</div>
+          <div class="dkpi-s" id="dashCountSub">발행 완료 0 · 임시저장 0</div>
         </div>
         <div class="dkpi">
-          <div class="dkpi-k">평균 진행률</div>
-          <div class="dkpi-v" id="dashProgress">0<small>%</small></div>
-          <div class="dkpi-s" id="dashProgressSub">채널 0/0</div>
-        </div>
-        <div class="dkpi">
-          <div class="dkpi-k">총 조회 · 방문</div>
+          <div class="dkpi-k">조회 · 방문</div>
           <div class="dkpi-v" id="dashViews">0</div>
           <div class="dkpi-s" id="dashViewsSub">방문 0</div>
         </div>
-        <div class="dkpi primary">
-          <div class="dkpi-k">총 수익</div>
+        <div class="dkpi">
+          <div class="dkpi-k">수익</div>
           <div class="dkpi-v" id="dashRevenue">0<small>원</small></div>
-          <div class="dkpi-s" id="dashRevenueSub">콘텐츠별 수익 합계</div>
+          <div class="dkpi-s">제작비 <span id="dashCost">0원</span></div>
+        </div>
+        <div class="dkpi primary">
+          <div class="dkpi-k">순수익 · ROI</div>
+          <div class="dkpi-v" id="dashNet">0<small>원</small></div>
+          <div class="dkpi-s">ROI <b id="dashRoi">0%</b></div>
         </div>
       </div>
 
-      <div class="fin-strip" data-tour="fin">
-        <div class="fin-cell">
-          <div class="fin-k">총 제작비</div>
-          <div class="fin-v" id="dashCost">0<small>원</small></div>
-        </div>
-        <div class="fin-cell">
-          <div class="fin-k">순수익 (수익 − 제작비)</div>
-          <div class="fin-v" id="dashNet">0<small>원</small></div>
-        </div>
-        <div class="fin-cell">
-          <div class="fin-k">평균 수익률 (ROI)</div>
-          <div class="fin-v" id="dashRoi">0%</div>
-        </div>
-        <div class="fin-go">
-          <button type="button" class="btn-outline" data-goto-view="performance" data-perf-jump="month">이번 달 수익 →</button>
-        </div>
+      <div class="dash-prog">
+        <span class="pbar"><i id="dashProgFill" style="width:0%"></i></span>
+        <span class="dp-pct" id="dashProgress">0%</span>
+        <span class="dp-sub" id="dashProgressSub">채널 발행 0/0</span>
       </div>
 
-      <div class="nextbar">
-        <div class="nextbar-main">
-          <span class="nextbar-k">다음 할 일</span>
-          <span class="nextbar-v" id="dashNext">—</span>
-        </div>
-        <div class="nextbar-act">
-          <button type="button" class="btn-outline" data-goto-view="publish">발행 · 일정</button>
-          <button type="button" class="btn-primary" data-goto-view="create">+ 새 콘텐츠 만들기</button>
-        </div>
+      <div class="nextline">
+        <span class="next-k">다음</span>
+        <span class="next-v" id="dashNext">—</span>
+        <button type="button" class="btn-mini primary" data-goto-view="create">+ 새 콘텐츠</button>
       </div>
 
       <div class="dash-sec">
-        <h2>콘텐츠 목록</h2>
+        <h2 id="dashListTitle">콘텐츠 목록</h2>
         <span class="dash-count" id="dashListCount">0건</span>
       </div>
-      <div class="ctable" data-tour="list">
-        <div class="ctable-h">
-          <span>콘텐츠</span>
-          <span>조회 · 방문</span>
-          <span>수익성 (비용·수익·ROI)</span>
-          <span>관리</span>
-        </div>
-        <div id="dashList"></div>
-      </div>
+      <div class="clist" id="dashList" data-tour="list"></div>
     </section>
 
     <!-- ══════════ 새 콘텐츠 제작 ══════════ -->
     <section class="view" id="view-create" data-view="create">
+      <button type="button" class="acc-head" data-acc="create" aria-expanded="false" aria-controls="view-create">
+        <span class="acc-no">2</span>
+        <span class="acc-name">새 콘텐츠 제작</span>
+        <span class="acc-meta" id="accMeta-create"></span>
+        <span class="acc-chev" aria-hidden="true"></span>
+      </button>
       <div class="view-head">
         <div>
           <h1>새 콘텐츠 제작</h1>
@@ -1828,6 +1978,12 @@
 
     <!-- ══════════ 발행 · 일정 ══════════ -->
     <section class="view" id="view-publish" data-view="publish">
+      <button type="button" class="acc-head" data-acc="publish" aria-expanded="false" aria-controls="view-publish">
+        <span class="acc-no">3</span>
+        <span class="acc-name">발행 · 일정</span>
+        <span class="acc-meta" id="accMeta-publish"></span>
+        <span class="acc-chev" aria-hidden="true"></span>
+      </button>
       <div class="view-head">
         <div>
           <h1>발행 · 일정</h1>
@@ -1933,6 +2089,12 @@
 
     <!-- ══════════ 성과 · 수익 ══════════ -->
     <section class="view" id="view-performance" data-view="performance">
+      <button type="button" class="acc-head" data-acc="performance" aria-expanded="false" aria-controls="view-performance">
+        <span class="acc-no">4</span>
+        <span class="acc-name">성과 · 수익</span>
+        <span class="acc-meta" id="accMeta-performance"></span>
+        <span class="acc-chev" aria-hidden="true"></span>
+      </button>
       <div class="view-head">
         <div>
           <h1>성과 · 수익</h1>
@@ -2107,6 +2269,12 @@
 
     <!-- ══════════ 기준 · 설정 ══════════ -->
     <section class="view" id="view-settings" data-view="settings">
+      <button type="button" class="acc-head" data-acc="settings" aria-expanded="false" aria-controls="view-settings">
+        <span class="acc-no">5</span>
+        <span class="acc-name">기준 · 설정</span>
+        <span class="acc-meta" id="accMeta-settings"></span>
+        <span class="acc-chev" aria-hidden="true"></span>
+      </button>
       <div class="view-head">
         <div>
           <h1>기준 · 설정</h1>
@@ -5448,64 +5616,162 @@ instaLine +
       try { renderPerformance(); } catch (e) { /* 무시 */ }
     }
 
-    function dashRow(post) {
-      const st = post.status || '임시저장';
-      const cls = st === '발행 완료' ? 'done' : (st === '예약 대기' ? 'waiting' : 'draft');
+    /* ===================== 대시보드 — SNS 채널 전환 · 일자 → 채널 목록 ===================== */
+    const DASH_CH_LABEL = { all: '전체', naver: '네이버', google: '티스토리', insta: '인스타', yt: '유튜브', threads: '스레드' };
+    let dashChannel = 'all';
+    function dashChLabel(ch) { return DASH_CH_LABEL[ch] || '전체'; }
+    function weekdayKo(date) {
+      try { return ['일', '월', '화', '수', '목', '금', '토'][new Date(String(date) + 'T00:00:00').getDay()]; }
+      catch (e) { return ''; }
+    }
+    /* 선택한 채널에 글이 있는 날짜만 본다 (전체면 모든 날짜) */
+    function postsForChannel(ch) {
+      if (ch === 'all') return postBook.slice();
+      return postBook.filter(p => channelState(p, ch) !== 'none');
+    }
+    /* 제작비·수익은 글(날짜) 단위로 한 번만 적히므로,
+       발행한 채널(없으면 초안이 있는 채널)에 똑같이 나눠서 보여준다. */
+    function shareChannels(post) {
       const links = channelLinks(post);
-      const chips = KEYS.map(k => {
-        const state = channelState(post, k);
-        const name = CH_SHORT[k] || CH[k].name;
-        if (state === 'done' && links[k]) {
-          return '<a class="ch-dot done" data-ch="' + k + '" href="' + esc(links[k]) + '" target="_blank" rel="noopener" title="' + esc(CH[k].name) + ' 발행 글 열기">' + esc(name) + '</a>';
-        }
-        if (state === 'done') return '<span class="ch-dot done" data-ch="' + k + '">' + esc(name) + '</span>';
-        if (state === 'ready') return '<span class="ch-dot ready" data-ch="' + k + '" title="초안 작성됨">' + esc(name) + '</span>';
-        return '<span class="ch-dot none" data-ch="' + k + '" title="아직 없음">' + esc(name) + '</span>';
-      }).join('');
-      const pct = postProgressPercent(post);
-      const m = dateMetrics(post.date);
-      const md = String(post.date).slice(5).replace('-', '.');
-      const sched = (st === '예약 대기' && post.scheduleLabel) ? ' · ' + esc(post.scheduleLabel) : '';
-      const net = postNet(post);
-      const roiV = roiValue(postCost(post), postRevenue(post));
-      const roiCls = roiV === null ? (postRevenue(post) > 0 ? 'roi' : 'roi zero') : (roiV >= 0 ? 'roi' : 'roi neg');
-      return '<div class="crow" data-post="' + esc(post.date) + '">' +
-        '<div class="crow-main">' +
-          '<div class="crow-top">' +
-            '<span class="crow-date">' + esc(md) + '</span>' +
-            '<span class="crow-topic" title="' + esc(post.topic || '') + '">' + esc(post.topic || '(주제 미입력)') + '</span>' +
-            '<span class="st ' + cls + '">' + esc(st) + sched + '</span>' +
-          '</div>' +
-          '<div class="crow-meta">' +
-            '<span class="pbar' + (pct < 100 ? ' draft' : '') + '"><i style="width:' + pct + '%"></i></span>' +
-            '<span class="crow-pt">' + (postPublishCount(post) > 0
-              ? postPublishCount(post) + '/5'
-              : '초안 ' + draftCount(post.drafts) + '/5') + '</span>' +
-            '<span class="crow-chips">' + chips + '</span>' +
-          '</div>' +
-          '<div class="crow-money">' +
-            '<span>제작비 <b>' + money(postCost(post)) + '원</b></span>' +
-            '<span>순수익 <b>' + money(net) + '원</b></span>' +
-            '<span class="' + roiCls + '">ROI <b>' + esc(postRoiLabel(post)) + '</b></span>' +
-          '</div>' +
-        '</div>' +
-        '<div class="crow-nums">' +
-          '<span class="crow-num' + (m.views ? '' : ' muted') + '">' + (m.views ? fmtNum(m.views) : '—') + '<em>조회</em></span>' +
-          '<span class="crow-num' + (m.visits ? '' : ' muted') + '">' + (m.visits ? fmtNum(m.visits) : '—') + '<em>방문</em></span>' +
-        '</div>' +
-        '<div class="crow-pair">' +
-          '<label><span class="k">비용</span><input type="text" inputmode="numeric" data-cost="' + esc(post.date) + '" value="' + postCost(post) + '" aria-label="' + esc(post.date) + ' 제작비(원)" /><span>원</span></label>' +
-          '<label><span class="k">수익</span><input type="text" inputmode="numeric" data-revenue="' + esc(post.date) + '" value="' + postRevenue(post) + '" aria-label="' + esc(post.date) + ' 수익(원)" /><span>원</span></label>' +
-        '</div>' +
-        '<div class="crow-acts">' +
-          '<button type="button" class="btn-mini" data-open-post="' + esc(post.date) + '">열기</button>' +
-        '</div>' +
+      const pub = KEYS.filter(k => links[k]);
+      if (pub.length) return pub;
+      return KEYS.filter(k => String((post.drafts || {})[k] || '').trim());
+    }
+    function sharePart(total, list, ch) {
+      const n = list.length;
+      if (!n) return 0;
+      const i = list.indexOf(ch);
+      if (i < 0) return 0;
+      const t = Math.round(Number(total) || 0);
+      const base = Math.floor(t / n);
+      return base + (i < t - base * n ? 1 : 0);
+    }
+    function channelMoney(ch) {
+      if (ch === 'all') return { cost: totalCost(), revenue: totalRevenue() };
+      return postBook.reduce((acc, p) => {
+        const list = shareChannels(p);
+        acc.cost += sharePart(postCost(p), list, ch);
+        acc.revenue += sharePart(postRevenue(p), list, ch);
+        return acc;
+      }, { cost: 0, revenue: 0 });
+    }
+    function channelMetrics(ch) {
+      const src = ch === 'all' ? metrics : metrics.filter(m => String(m.channel) === ch);
+      return metricsTotals(src);
+    }
+    function channelMetricsOn(date, ch) {
+      return (Array.isArray(metrics) ? metrics : [])
+        .filter(m => m.date === date && String(m.channel) === ch)
+        .reduce((a, m) => { a.views += num(m.views); a.visits += num(m.visits); return a; }, { views: 0, visits: 0 });
+    }
+    function setDashChannel(ch) {
+      if (ch !== 'all' && KEYS.indexOf(ch) === -1) return false;
+      dashChannel = ch;
+      try { renderDashboard(); } catch (e) { /* 무시 */ }
+      return true;
+    }
+
+    /* 일자 그룹 → 그 안의 SNS 채널 행 */
+    function dashItem(post, k) {
+      const state = channelState(post, k);
+      const link = channelLinks(post)[k] || '';
+      const m = channelMetricsOn(post.date, k);
+      const list = shareChannels(post);
+      const cost = sharePart(postCost(post), list, k);
+      const rev = sharePart(postRevenue(post), list, k);
+      const roiV = roiValue(cost, rev);
+      const roiCls = roiV === null ? (rev > 0 ? 'roi' : 'roi zero') : (roiV >= 0 ? 'roi' : 'roi neg');
+      const badge = state === 'done'
+        ? '<span class="ci-badge done">발행</span>'
+        : (state === 'ready' ? '<span class="ci-badge ready">초안</span>' : '<span class="ci-badge none">없음</span>');
+      const linkHtml = link
+        ? '<a class="ci-link" href="' + esc(link) + '" target="_blank" rel="noopener">열기 ↗</a>'
+        : '<span class="ci-link off">링크 없음</span>';
+      const zv = (v) => v > 0 ? fmtNum(v) : '<b class="z">0</b>';
+      const zw = (v) => v > 0 ? money(v) + '원' : '<b class="z">0원</b>';
+      return '<div class="citem" data-ch="' + k + '">' +
+        '<span class="ci-name">' + esc(CH_SHORT[k] || CH[k].name) + '</span>' +
+        badge + linkHtml +
+        '<span class="ci-stats">' +
+          '<span>조회 ' + zv(m.views) + ' · 방문 ' + zv(m.visits) + '</span>' +
+          '<span>비용 ' + zw(cost) + ' · 수익 ' + zw(rev) + '</span>' +
+          '<span class="' + roiCls + '">ROI <b>' + esc(roiLabel(cost, rev)) + '</b></span>' +
+        '</span>' +
+        '<button type="button" class="btn-mini" data-open-post="' + esc(post.date) + '" data-open-ch="' + k + '">편집</button>' +
       '</div>';
+    }
+
+    function dashGroup(post, ch) {
+      const md = String(post.date).slice(5).replace('-', '.');
+      const full = post.status || '임시저장';
+      let stText = full;
+      let stCls = full === '발행 완료' ? 'done' : (full === '예약 대기' ? 'waiting' : 'draft');
+      if (ch !== 'all') {
+        const cs2 = channelState(post, ch);
+        stText = cs2 === 'done' ? '발행' : (cs2 === 'ready' ? '초안' : '없음');
+        stCls = cs2 === 'done' ? 'done' : 'draft';
+      }
+      const channels = KEYS.filter(k => ch === 'all' ? channelState(post, k) !== 'none' : k === ch);
+      const rows = channels.length
+        ? channels.map(k => dashItem(post, k)).join('')
+        : '<div class="cgroup-empty">이 날짜에 ' + esc(dashChLabel(ch)) + ' 글이 없습니다.</div>';
+      return '<div class="cgroup" data-post="' + esc(post.date) + '">' +
+        '<div class="cgroup-h">' +
+          '<span class="cg-date">' + esc(md) + '<em>' + esc(weekdayKo(post.date)) + '</em></span>' +
+          '<span class="st ' + stCls + '">' + esc(stText) + '</span>' +
+          '<span class="cg-topic" title="' + esc(post.topic || '') + '">' + esc(post.topic || '(주제 미입력)') + '</span>' +
+          '<span class="cg-acts">' +
+            '<label class="cg-money"><span>비용</span><input type="text" inputmode="numeric" data-cost="' + esc(post.date) + '" value="' + postCost(post) + '" aria-label="' + esc(post.date) + ' 제작비(원)" /><span>원</span></label>' +
+            '<label class="cg-money"><span>수익</span><input type="text" inputmode="numeric" data-revenue="' + esc(post.date) + '" value="' + postRevenue(post) + '" aria-label="' + esc(post.date) + ' 수익(원)" /><span>원</span></label>' +
+            '<button type="button" class="btn-mini" data-open-post="' + esc(post.date) + '">열기</button>' +
+          '</span>' +
+        '</div>' +
+        rows +
+      '</div>';
+    }
+
+    /* 모바일 세로 탭 요약 (접혀 있어도 상태가 보이게) */
+    function renderAccMeta() {
+      const set = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+      const pub = postBook.reduce((a, p) => a + postPublishCount(p), 0);
+      set('accMeta-dashboard', postBook.length + '건 · 발행 ' + pub + '/' + (postBook.length * 5 || 0));
+      const drafts = postBook.reduce((a, p) => a + draftCount(p.drafts), 0);
+      set('accMeta-create', '초안 ' + drafts + '개');
+      set('accMeta-publish', '기록 ' + postBook.length + '건');
+      set('accMeta-performance', '조회 ' + fmtNum(metricsTotals().views));
+    }
+    function mobAcc() {
+      try { return !!(window.matchMedia && window.matchMedia('(max-width: 768px)').matches); } catch (e) { return false; }
+    }
+    function headOf(name) {
+      const el = document.getElementById('view-' + name);
+      if (!el || !el.querySelector) return null;
+      try { return el.querySelector('.acc-head'); } catch (e) { return null; }
+    }
+    function accToggle(name) {
+      const el = document.getElementById('view-' + name);
+      if (!el || !el.classList) return false;
+      const open = el.classList.contains('active') && el.classList.contains('acc-open');
+      if (open) {
+        el.classList.remove('acc-open');
+        const h = headOf(name);
+        if (h && h.setAttribute) h.setAttribute('aria-expanded', 'false');
+        return true;
+      }
+      const ok = switchView(name, { scroll: false });
+      const h = headOf(name);
+      if (h && h.setAttribute) h.setAttribute('aria-expanded', 'true');
+      if (ok && h && h.scrollIntoView) {
+        try { h.scrollIntoView({ block: 'start', behavior: 'smooth' }); } catch (e) { try { h.scrollIntoView(); } catch (e2) { /* 무시 */ } }
+      }
+      return ok;
     }
 
     function renderDashboard() {
       const today = todayISO();
       const tp = findPost(today);
+      const ch = dashChannel;
+      const label = dashChLabel(ch);
       const sub = document.getElementById('dashToday');
       if (sub) {
         const d = new Date();
@@ -5514,58 +5780,92 @@ instaLine +
         if (tp) line += ' · 오늘 5채널 ' + postPublishCount(tp) + '/5 발행';
         sub.textContent = line;
       }
-      const done = postBook.filter(p => (p.status || '임시저장') === '발행 완료').length;
-      const draftOnly = postBook.filter(p => (p.status || '임시저장') === '임시저장').length;
+      /* 채널 전환 칩 표시 */
+      const sw = document.getElementById('chSwitch');
+      if (sw && sw.querySelectorAll) {
+        sw.querySelectorAll('.chs').forEach(b => {
+          const on = !!(b.dataset && b.dataset.chs === ch);
+          if (on) b.classList.add('active'); else b.classList.remove('active');
+          if (b.setAttribute) b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+      }
+
+      const scope = postsForChannel(ch);
+      const done = ch === 'all'
+        ? postBook.filter(p => (p.status || '임시저장') === '발행 완료').length
+        : postBook.filter(p => channelState(p, ch) === 'done').length;
+      const draftOnly = ch === 'all'
+        ? postBook.filter(p => (p.status || '임시저장') === '임시저장').length
+        : postBook.filter(p => channelState(p, ch) === 'ready').length;
       const c = document.getElementById('dashCount');
-      if (c) c.innerHTML = postBook.length + '<small>건</small>';
+      if (c) c.innerHTML = scope.length + '<small>건</small>';
       const cs = document.getElementById('dashCountSub');
-      if (cs) cs.textContent = '발행 완료 ' + done + ' · 임시저장 ' + draftOnly;
-      const avg = postBook.length
-        ? Math.round(postBook.reduce((a, p) => a + postProgressPercent(p), 0) / postBook.length)
-        : 0;
-      const pr = document.getElementById('dashProgress');
-      if (pr) pr.innerHTML = avg + '<small>%</small>';
-      const prs = document.getElementById('dashProgressSub');
-      if (prs) {
-        prs.textContent = postBook.length
+      if (cs) cs.textContent = ch === 'all'
+        ? '발행 완료 ' + done + ' · 임시저장 ' + draftOnly
+        : '발행 ' + done + ' · 초안 ' + draftOnly;
+
+      let pct = 0;
+      let progSub = '콘텐츠 없음';
+      if (ch === 'all') {
+        pct = postBook.length
+          ? Math.round(postBook.reduce((a, p) => a + postProgressPercent(p), 0) / postBook.length)
+          : 0;
+        progSub = postBook.length
           ? '채널 발행 ' + postBook.reduce((a, p) => a + postPublishCount(p), 0) + '/' + (postBook.length * 5)
           : '콘텐츠 없음';
+      } else {
+        pct = scope.length ? Math.round(done / scope.length * 100) : 0;
+        progSub = label + ' 발행 ' + done + '/' + scope.length;
       }
-      const tot = metricsTotals();
+      const pr = document.getElementById('dashProgress');
+      if (pr) pr.innerHTML = pct + '<small>%</small>';
+      const prf = document.getElementById('dashProgFill');
+      if (prf && prf.style) prf.style.width = pct + '%';
+      const prs = document.getElementById('dashProgressSub');
+      if (prs) prs.textContent = progSub;
+
+      const tot = channelMetrics(ch);
       const dv = document.getElementById('dashViews');
       if (dv) dv.innerHTML = fmtNum(tot.views);
       const dvs = document.getElementById('dashViewsSub');
       if (dvs) dvs.textContent = '방문 ' + fmtNum(tot.visits) + (tot.views ? ' · 조회 대비 ' + Math.round(tot.visits / tot.views * 100) + '%' : '');
-      const rev = totalRevenue();
+
+      const cm = channelMoney(ch);
+      const rev = cm.revenue;
+      const cost = cm.cost;
+      const net = rev - cost;
       const dr = document.getElementById('dashRevenue');
       if (dr) dr.innerHTML = money(rev) + '<small>원</small>';
-      const drs = document.getElementById('dashRevenueSub');
-      if (drs) drs.textContent = '순수익 ' + money(totalNet()) + '원';
       const dc = document.getElementById('dashCost');
-      if (dc) dc.innerHTML = money(totalCost()) + '<small>원</small>';
+      if (dc) dc.innerHTML = money(cost) + '원';
       const dnet = document.getElementById('dashNet');
       if (dnet) {
-        const net = totalNet();
         dnet.innerHTML = money(net) + '<small>원</small>';
-        dnet.className = 'fin-v' + (net > 0 ? ' up' : (net < 0 ? ' down' : ''));
+        if (dnet.setAttribute) dnet.className = 'dkpi-v' + (net > 0 ? ' up' : (net < 0 ? ' down' : ''));
       }
       const droi = document.getElementById('dashRoi');
       if (droi) {
-        droi.textContent = roiLabel(totalCost(), totalRevenue());
-        droi.className = 'fin-v' + (totalNet() > 0 ? ' up' : (totalNet() < 0 ? ' down' : ''));
+        droi.textContent = roiLabel(cost, rev);
+        droi.className = net > 0 ? 'up' : (net < 0 ? 'down' : '');
       }
+
       const nx = nextAction();
       const dn = document.getElementById('dashNext');
       if (dn) dn.textContent = nx.when + ' · ' + nx.what;
+
+      const title = document.getElementById('dashListTitle');
+      if (title) title.textContent = ch === 'all' ? '콘텐츠 목록' : label + ' 콘텐츠';
       const list = document.getElementById('dashList');
       if (list) {
-        const sorted = postBook.slice().sort(byDateDesc);
+        const sorted = scope.slice().sort(byDateDesc);
         list.innerHTML = sorted.length
-          ? sorted.map(dashRow).join('')
-          : '<div class="crow-empty">아직 콘텐츠가 없습니다. <button type="button" class="btn-mini" data-goto-view="create">+ 새 콘텐츠 만들기</button></div>';
+          ? sorted.map(p => dashGroup(p, ch)).join('')
+          : '<div class="crow-empty">' + (postBook.length ? '이 채널에 아직 콘텐츠가 없습니다.' : '아직 콘텐츠가 없습니다.')
+            + ' <button type="button" class="btn-mini" data-goto-view="create">+ 새 콘텐츠 만들기</button></div>';
         const lc = document.getElementById('dashListCount');
         if (lc) lc.textContent = sorted.length + '건';
       }
+      try { renderAccMeta(); } catch (e) { /* 무시 */ }
     }
     /* 예전 이름 유지 (SEO 점수 갱신 시 호출) */
     function renderOverview() { return renderDashboard(); }
@@ -5788,10 +6088,23 @@ instaLine +
       VIEWS.forEach(v => {
         const el = document.getElementById('view-' + v);
         if (el && el.classList) {
-          if (v === name) el.classList.add('active'); else el.classList.remove('active');
+          if (v === name) { el.classList.add('active'); el.classList.add('acc-open'); }
+          else { el.classList.remove('active'); el.classList.remove('acc-open'); }
         }
         if (el && el.setAttribute) el.setAttribute('aria-hidden', v === name ? 'false' : 'true');
       });
+      /* 모바일 세로 탭 화살표 상태 */
+      try {
+        const opened = document.getElementById('view-' + name);
+        const head = opened && opened.querySelector ? opened.querySelector('.acc-head') : null;
+        if (head && head.setAttribute) head.setAttribute('aria-expanded', 'true');
+        VIEWS.forEach(v => {
+          if (v === name) return;
+          const other = document.getElementById('view-' + v);
+          const oh = other && other.querySelector ? other.querySelector('.acc-head') : null;
+          if (oh && oh.setAttribute) oh.setAttribute('aria-expanded', 'false');
+        });
+      } catch (e) { /* 무시 */ }
       const tabs = document.getElementById('studioTabs');
       if (tabs && tabs.querySelectorAll) {
         tabs.querySelectorAll('.tab').forEach(b => {
@@ -5845,8 +6158,8 @@ instaLine +
     const TOUR_STEPS = [
       { sel: '[data-tour="list"]', title: '콘텐츠 목록 · 진행 현황', text: '여기서 오늘 만든 글이 몇 개 발행됐는지, 채널별로 어디까지 나갔는지 한눈에 봅니다.' },
       { sel: '[data-goto-view="create"]', title: '새 콘텐츠 만들기', text: '새 글은 여기서 시작합니다. 주제만 넣으면 5채널 초안과 이미지가 한 번에 나옵니다.' },
-      { sel: '.crow-pair input, .crow-rev input', title: '콘텐츠별 비용 · 수익', text: '제작비와 수익을 넣으면 순수익과 수익률(ROI)이 바로 계산됩니다. 입력한 값은 이 브라우저에 저장됩니다.' },
-      { sel: '.tab[data-view="performance"]', title: '성과 · 수익', text: '조회·방문·반응 기록과 콘텐츠별 수익은 이 탭에서 일·주·월·연도로 봅니다.' }
+      { sel: '.cgroup .cg-money input, .crow-pair input, .crow-rev input', title: '콘텐츠별 비용 · 수익', text: '제작비와 수익을 넣으면 순수익과 수익률(ROI)이 바로 계산됩니다. 입력한 값은 이 브라우저에 저장됩니다.' },
+      { sel: '.acc-head[data-acc="performance"], .tab[data-view="performance"]', title: '성과 · 수익', text: '조회·방문·반응 기록과 콘텐츠별 수익은 이 탭에서 일·주·월·연도로 봅니다.' }
     ];
     let tourIndex = 0;
     let tourActive = false;
@@ -5862,8 +6175,15 @@ instaLine +
       if (!step) return null;
       try {
         if (document.querySelector) {
-          const el = document.querySelector(step.sel);
-          if (el) return el;
+          const parts = String(step.sel).split(',');
+          for (let i = 0; i < parts.length; i++) {
+            const el = document.querySelector(parts[i].trim());
+            if (!el) continue;
+            /* 모바일에서 숨은 요소(가로 탭바 등)는 건너뛰고 보이는 쪽을 고른다 */
+            const r = el.getBoundingClientRect ? el.getBoundingClientRect() : null;
+            if (r && (r.width === 0 || r.height === 0)) continue;
+            return el;
+          }
         }
       } catch (e) { /* 무시 */ }
       return null;
@@ -6263,8 +6583,24 @@ instaLine +
       if (open && open.dataset) {
         loadPost(open.dataset.openPost);
         switchView('create');
+        const chKey = open.dataset.openCh;
+        if (chKey) {
+          const card = document.querySelector ? document.querySelector('.ch-card[data-ch="' + chKey + '"]') : null;
+          if (card && card.scrollIntoView) {
+            try { card.scrollIntoView({ block: 'start', behavior: 'smooth' }); } catch (err) { /* 무시 */ }
+          }
+        }
         return;
       }
+    });
+    /* 모바일 세로 탭 · SNS 채널 전환 */
+    onDoc('click', (e) => {
+      const t = e.target;
+      if (!t || !t.closest) return;
+      const acc = t.closest('[data-acc]');
+      if (acc && acc.dataset) { accToggle(acc.dataset.acc); return; }
+      const chip = t.closest('[data-chs]');
+      if (chip && chip.dataset) { setDashChannel(chip.dataset.chs); return; }
     });
     /* 5대 심사 기준 체크박스 · 제작비/수익 입력 */
     onDoc('change', (e) => {
