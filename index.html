@@ -2,9 +2,17 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>원영 콘텐츠 스튜디오 · 3분할 5채널 설정</title>
-<meta name="description" content="주제선정부터 네이버·티스토리·인스타그램·유튜브·스레드 설정까지, 3분할 한 화면에서 정하고 3개 AI 프롬프트로 바로 복사하는 콘텐츠 스튜디오." />
+<meta name="description" content="주제선정부터 네이버·구글(티스토리)·스레드·유튜브·인스타그램 설정까지, 차례대로 넘겨 정하고 3개 AI 프롬프트로 바로 복사하는 콘텐츠 스튜디오." />
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#4f46e5" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="5채널 스튜디오" />
+<meta name="mobile-web-app-capable" content="yes" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
 <style>
   @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css");
 
@@ -156,7 +164,7 @@
   .panels { min-width: 0; }
   .panel {
     display: none; background: var(--card); border: 1px solid var(--line);
-    border-radius: var(--r-lg); box-shadow: var(--shadow); overflow: hidden;
+    border-radius: var(--r-lg); box-shadow: var(--shadow); overflow: hidden; scroll-margin-top: 64px;
   }
   .panel.is-on { display: block; animation: fade .18s ease; }
   @keyframes fade { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
@@ -573,6 +581,98 @@
   .modal-f { display: flex; gap: 8px; padding: 0 18px 16px; }
   .copy-sink { position: fixed; left: -9999px; top: 0; width: 10px; height: 10px; opacity: 0; }
 
+  /* ── 앱 홈 (모바일 8아이콘) ──────────────────────── */
+  .rail-nav .nav[data-tab="home"] { display: none; }
+  .home-search { display: flex; gap: 8px; align-items: center; }
+  .home-search .input { height: 44px; flex: 1 1 auto; min-width: 0; }
+  .hs-links { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 8px; }
+  .hs-links[hidden] { display: none; }
+  .hs-links a { font-size: 11.5px; font-weight: 700; }
+  .hs-empty { font-size: 12px; color: var(--mut); margin: 0; grid-column: 1 / -1; }
+  .appgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .apptile {
+    display: flex; align-items: center; gap: 10px; text-align: left; cursor: pointer;
+    padding: 12px 12px; border: 1px solid var(--line-2); border-radius: 14px; background: #fff;
+    transition: border-color .14s, background .14s, transform .1s, box-shadow .14s;
+  }
+  .apptile:hover { border-color: var(--accent); background: var(--card-2); transform: translateY(-1px); box-shadow: 0 12px 24px -20px rgba(16, 24, 40, .6); }
+  .apptile:active { transform: translateY(0); }
+  .at-ico { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; font-size: 19px; background: #f1f3f7; flex: 0 0 auto; }
+  .at-txt { display: flex; flex-direction: column; min-width: 0; }
+  .at-txt b { font-size: 12.8px; font-weight: 800; color: var(--ink); letter-spacing: -.02em; }
+  .at-txt small {
+    font-size: 10.5px; color: var(--mut); line-height: 1.35; overflow: hidden; text-overflow: ellipsis;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  }
+  .at-go { margin-left: auto; color: var(--mut-2); font-size: 16px; flex: 0 0 auto; }
+  .stepbar-mini { display: flex; gap: 6px; flex-wrap: wrap; }
+  .sb-dot {
+    width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--line-2);
+    background: #fff; font-size: 11.5px; font-weight: 800; color: var(--mut); cursor: pointer;
+  }
+  .sb-dot:hover { border-color: var(--accent); color: var(--accent-2); }
+  .sb-dot.is-done { border-color: #b7e6d2; background: var(--ok-soft); color: var(--ok); }
+  .sb-dot.is-on { border-color: var(--accent); background: var(--accent); color: #fff; }
+  @media (min-width: 768px) { .appgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+  /* ── 순차 설정 흐름 (주제 → 5채널) ─────────────────── */
+  .stepstrip {
+    display: flex; align-items: center; gap: 2px; flex-wrap: wrap;
+    margin-bottom: 10px; padding: 6px 8px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 999px; box-shadow: var(--shadow);
+  }
+  .stepstrip .ss-i {
+    display: inline-flex; align-items: center; gap: 6px; height: 29px; padding: 0 10px;
+    border-radius: 999px; border: 1px solid transparent; background: transparent;
+    font-size: 11.5px; font-weight: 700; color: var(--mut); cursor: pointer; white-space: nowrap;
+    transition: background .14s, color .14s, border-color .14s;
+  }
+  .stepstrip .ss-i:hover { background: var(--card-2); color: var(--ink-2); }
+  .stepstrip .ss-i .ss-n {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 17px; height: 17px; border-radius: 50%; background: #eef0f5; color: var(--mut);
+    font-size: 10px; font-weight: 800; flex: 0 0 auto;
+  }
+  .stepstrip .ss-i.is-done { color: var(--ink-2); }
+  .stepstrip .ss-i.is-done .ss-n { background: var(--ok-soft); color: var(--ok); }
+  .stepstrip .ss-i.is-on { background: var(--soft); border-color: #cfd3ff; color: var(--accent-2); }
+  .stepstrip .ss-i.is-on .ss-n { background: var(--accent); color: #fff; }
+  .stepstrip .ss-arrow { font-size: 9.5px; color: var(--line-2); padding: 0 1px; }
+  .stepstrip .ss-progress {
+    margin-left: auto; padding: 0 8px; font-size: 11px; font-weight: 800; color: var(--accent-2); white-space: nowrap;
+  }
+  .stepstrip .ss-progress small { font-weight: 700; color: var(--mut); }
+
+  .stepnav {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    padding: 13px 24px; border-top: 1px solid var(--line); background: var(--card-2);
+  }
+  .stepnav .sn-count {
+    margin: 0 auto; font-size: 11.5px; font-weight: 800; letter-spacing: .06em; color: var(--mut);
+  }
+  .stepnav .sn-next { height: 44px; padding: 0 20px; font-size: 13.5px; font-weight: 800; }
+  .stepnav .sn-prev { height: 38px; font-size: 12.5px; }
+  .stepnav .sn-prev[disabled] { opacity: .45; cursor: default; }
+  .stepnav .sn-prev[disabled]:hover { background: #fff; border-color: var(--line-2); }
+  .stepnav .sn-done { background: #0e9f6e; border-color: #0e9f6e; }
+  .stepnav .sn-done:hover { background: #0b8a5f; border-color: #0b8a5f; }
+
+  .autoflow {
+    display: flex; align-items: flex-start; gap: 10px; margin-top: 10px; padding: 11px 13px;
+    border: 1px solid #dfe3ff; border-radius: var(--r-sm); background: var(--soft); cursor: pointer;
+  }
+  .autoflow input { margin-top: 2px; accent-color: var(--accent); width: 15px; height: 15px; flex: 0 0 auto; }
+  .autoflow span { font-size: 12px; color: var(--ink-2); line-height: 1.5; }
+  .autoflow b { color: var(--accent-2); }
+  .autoflow small { display: block; font-size: 11px; color: var(--mut); margin-top: 2px; }
+
+  .aicmp.pulse { animation: pulseAI 1.5s ease; }
+  @keyframes pulseAI {
+    0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, .45); background: #f6f7ff; }
+    60% { box-shadow: 0 0 0 8px rgba(79, 70, 229, 0); background: #f6f7ff; }
+    100% { box-shadow: none; background: transparent; }
+  }
+
   /* ── 반응형 ───────────────────────────────────────── */
   @media (max-width: 1320px) {
     .studio { grid-template-columns: 238px minmax(0, 1fr); }
@@ -644,6 +744,16 @@
     .phead { padding-top: 16px; }
     .pstate { display: none; }
     .post-h { row-gap: 4px; }
+    .stepstrip { border-radius: var(--r); padding: 6px; gap: 1px; }
+    .stepstrip .ss-i { height: 26px; padding: 0 8px; font-size: 11px; }
+    .stepstrip .ss-arrow, .stepstrip .ss-i .ss-lb-long { display: none; }
+    .rail-nav .nav[data-tab="home"] { display: inline-flex; }
+    .home-search { flex-wrap: nowrap; }
+    .sect-h .only-wide { display: none; }
+    .stepnav { padding: 11px 16px; gap: 7px; }
+    .stepnav .sn-count { display: none; }
+    .stepnav .sn-prev { flex: 0 0 auto; }
+    .stepnav .sn-next { flex: 1 1 auto; min-width: 0; padding: 0 12px; font-size: 12.5px; }
   }
   @media (max-width: 520px) {
     .brand-name { font-size: 13.5px; }
@@ -653,6 +763,8 @@
     .mform { grid-template-columns: 1fr 1fr; }
     .modal { padding: 10px; }
     .modal-b textarea { height: 46vh; }
+    .stepstrip .ss-progress { display: none; }
+    .stepnav .sn-prev { padding: 0 10px; font-size: 11.5px; }
   }
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
@@ -667,7 +779,7 @@
     <span class="brand-mark" aria-hidden="true">✎</span>
     <div>
       <div class="brand-name">원영 콘텐츠 스튜디오</div>
-      <div class="brand-sub">3분할 설정 · 네이버 · 티스토리 · 인스타 · 유튜브 · 스레드</div>
+      <div class="brand-sub">주제 → 네이버 → 구글(티스토리) → 스레드 → 유튜브 → 인스타</div>
     </div>
   </div>
   <div class="app-spacer"></div>
@@ -682,31 +794,35 @@
 
   <!-- ══════════ 왼쪽: 항목 탭 ══════════ -->
   <aside class="rail" aria-label="항목 탭">
-    <div class="rail-h"><b>항목</b><span>6 + 보조 3</span></div>
+    <div class="rail-h"><b>순서대로 설정</b><span>6단계 + 보조 3</span></div>
     <nav class="rail-nav" role="tablist" aria-orientation="vertical">
-      <button type="button" class="nav is-on" role="tab" data-tab="topic" aria-selected="true" aria-controls="p-topic">
+      <button type="button" class="nav" role="tab" data-tab="home" aria-selected="false" aria-controls="p-home">
+        <span class="nav-no">🏠</span>
+        <span class="nav-txt"><b>🏠 앱 홈</b><i>검색 · 8개 바로가기</i></span>
+      </button>
+      <button type="button" class="nav is-on" role="tab" data-tab="topic" data-step="1" aria-selected="true" aria-controls="p-topic">
         <span class="nav-no">1</span>
         <span class="nav-txt"><b>🎯 주제선정</b><i>추천 · 랜덤·임의 자동</i></span>
       </button>
-      <button type="button" class="nav" role="tab" data-tab="naver" aria-selected="false" aria-controls="p-naver">
+      <button type="button" class="nav" role="tab" data-tab="naver" data-step="2" aria-selected="false" aria-controls="p-naver">
         <span class="nav-no">2</span>
         <span class="nav-txt"><b>🟢 네이버 톤 설정</b><i>savejeong · 실속형</i></span>
       </button>
-      <button type="button" class="nav" role="tab" data-tab="tistory" aria-selected="false" aria-controls="p-tistory">
+      <button type="button" class="nav" role="tab" data-tab="tistory" data-step="3" aria-selected="false" aria-controls="p-tistory">
         <span class="nav-no">3</span>
-        <span class="nav-txt"><b>🟠 티스토리 톤 설정</b><i>dodoapple0331 · 정보형</i></span>
+        <span class="nav-txt"><b>🟠 구글(티스토리) 톤 설정</b><i>dodoapple0331 · 정보형</i></span>
       </button>
-      <button type="button" class="nav" role="tab" data-tab="insta" aria-selected="false" aria-controls="p-insta">
+      <button type="button" class="nav" role="tab" data-tab="threads" data-step="4" aria-selected="false" aria-controls="p-threads">
         <span class="nav-no">4</span>
-        <span class="nav-txt"><b>📸 인스타그램</b><i>음악 · 이미지 · 자막</i></span>
-      </button>
-      <button type="button" class="nav" role="tab" data-tab="yt" aria-selected="false" aria-controls="p-yt">
-        <span class="nav-no">5</span>
-        <span class="nav-txt"><b>🎬 유튜브</b><i>음악 · 이미지 · 자막</i></span>
-      </button>
-      <button type="button" class="nav" role="tab" data-tab="threads" aria-selected="false" aria-controls="p-threads">
-        <span class="nav-no">6</span>
         <span class="nav-txt"><b>🧵 스레드 톤 설정</b><i>@savejeong.pick · 본문만</i></span>
+      </button>
+      <button type="button" class="nav" role="tab" data-tab="yt" data-step="5" aria-selected="false" aria-controls="p-yt">
+        <span class="nav-no">5</span>
+        <span class="nav-txt"><b>🎬 유튜브 (음악·이미지·자막)</b><i>세픽 · 20초 쇼츠</i></span>
+      </button>
+      <button type="button" class="nav" role="tab" data-tab="insta" data-step="6" aria-selected="false" aria-controls="p-insta">
+        <span class="nav-no">6</span>
+        <span class="nav-txt"><b>📸 인스타그램 (음악·이미지·자막)</b><i>@savejeong.pick · 4:5 · 릴스</i></span>
       </button>
     </nav>
     <div class="nav-div">보조 보기</div>
@@ -721,10 +837,54 @@
   <!-- ══════════ 가운데: 선택한 탭의 패널 ══════════ -->
   <main class="panels" id="panels">
 
+    <!-- 순차 설정 진행 바 -->
+    <div class="stepstrip" id="stepStrip" aria-label="설정 진행 순서">
+      <button type="button" class="ss-i is-on" data-goto="topic" data-step-key="topic" aria-current="step"><span class="ss-n">1</span><span class="ss-lb">주제선정</span></button>
+      <span class="ss-arrow" aria-hidden="true">›</span>
+      <button type="button" class="ss-i" data-goto="naver" data-step-key="naver"><span class="ss-n">2</span><span class="ss-lb">네이버</span></button>
+      <span class="ss-arrow" aria-hidden="true">›</span>
+      <button type="button" class="ss-i" data-goto="tistory" data-step-key="tistory"><span class="ss-n">3</span><span class="ss-lb">구글(티스토리)</span></button>
+      <span class="ss-arrow" aria-hidden="true">›</span>
+      <button type="button" class="ss-i" data-goto="threads" data-step-key="threads"><span class="ss-n">4</span><span class="ss-lb">스레드</span></button>
+      <span class="ss-arrow" aria-hidden="true">›</span>
+      <button type="button" class="ss-i" data-goto="yt" data-step-key="yt"><span class="ss-n">5</span><span class="ss-lb">유튜브</span></button>
+      <span class="ss-arrow" aria-hidden="true">›</span>
+      <button type="button" class="ss-i" data-goto="insta" data-step-key="insta"><span class="ss-n">6</span><span class="ss-lb">인스타</span></button>
+      <span class="ss-progress" id="ssProgress">1 / 6</span>
+    </div>
+
+    <!-- 0. 앱 홈 (모바일 홈 화면 · 주제 확정 후) -->
+    <section class="panel" id="p-home" data-panel="home" role="tabpanel" aria-label="앱 홈">
+      <div class="phead">
+        <div class="phead-top"><span class="pkicker">앱 홈 · 검색 + 8개 바로가기</span><span class="pstate" id="stateHome">주제 미선택</span></div>
+        <h2 class="ptitle">🏠 앱 홈</h2>
+        <p class="pdesc">주제가 정해졌습니다. 검색으로 키워드를 확인하거나, 아래 8개 아이콘에서 바로 들어가세요. 설정 화면마다 아래 <b>다음 →</b> 버튼으로 순서대로 이어집니다.</p>
+      </div>
+      <div class="pbody">
+        <div class="sect">
+          <div class="home-search">
+            <input type="search" class="input" id="homeSearch" placeholder="키워드·글 검색 · 아이콘 이름으로 찾기 (예: 유튜브, 세액공제)" autocomplete="off" />
+            <button type="button" class="btn" id="homeSearchBtn">🔍 검색</button>
+          </div>
+          <div class="hs-links" id="homeSearchLinks" hidden></div>
+          <p class="hint" style="margin:8px 0 0">입력하면 아래 8개 아이콘을 바로 걸러 줍니다. 찾는 게 없으면 네이버·유튜브 검색 링크가 나옵니다.</p>
+        </div>
+        <div class="sect">
+          <div class="sect-h"><h3>바로가기</h3><span id="homeTileCount">8개</span><span class="req">아이콘 클릭</span></div>
+          <div class="appgrid" id="homeTiles"></div>
+        </div>
+        <div class="sect">
+          <div class="sect-h"><h3>순서대로 설정</h3><span class="only-wide">주제 → 네이버 → 구글(티스토리) → 스레드 → 유튜브 → 인스타</span></div>
+          <div class="stepbar-mini" id="stepBarMini"></div>
+          <button type="button" class="btn primary wide lg" data-goto="naver" style="margin-top:10px">🟢 네이버 톤 설정부터 시작 →</button>
+        </div>
+      </div>
+    </section>
+
     <!-- 1. 주제선정 -->
     <section class="panel is-on" id="p-topic" data-panel="topic" role="tabpanel" aria-label="주제선정">
       <div class="phead">
-        <div class="phead-top"><span class="pkicker">1 / 6 · STEP 1</span><span class="pstate" id="stateTopic">주제 미선택</span></div>
+        <div class="phead-top"><span class="pkicker">1 / 6 · STEP 1 · 주제선정</span><span class="pstate" id="stateTopic">주제 미선택</span></div>
         <h2 class="ptitle">🎯 주제선정</h2>
         <p class="pdesc">추천 주제어에서 고르거나 직접 입력하세요. 입력창에 <b>‘랜덤’</b> 또는 <b>‘임의’</b>를 넣고 엔터를 치면 추천 주제 중 하나가 자동으로 선택됩니다.</p>
       </div>
@@ -733,9 +893,15 @@
           <div class="sect-h"><h3>직접 입력</h3><span>숫자와 시점이 들어간 주제가 검색에 유리합니다</span></div>
           <div class="row">
             <input type="text" class="input" id="topicInput" placeholder="예: 연말정산 월세 세액공제, 12월에 집주인 동의 없이 챙기는 법" autocomplete="off" />
-            <button type="button" class="btn primary" id="topicApply">적용</button>
+            <button type="button" class="btn primary" id="topicApply">적용 &amp; 다음 →</button>
           </div>
-          <p class="hint" style="margin:8px 0 0">입력 후 <b>Enter</b> 또는 적용. ‘랜덤’·‘임의’·‘아무거나’를 넣으면 아래 추천에서 자동 선택됩니다.</p>
+          <p class="hint" style="margin:8px 0 0">입력 후 <b>Enter</b> 또는 <b>적용 &amp; 다음</b> — 주제가 정해지면 아래 <b>자동 이동</b>이 켜져 있을 때 바로 <b>네이버 톤 설정</b>으로 넘어갑니다. ‘랜덤’·‘임의’·‘아무거나’를 넣으면 아래 추천에서 자동 선택됩니다.</p>
+          <label class="autoflow">
+            <input type="checkbox" id="autoFlow" checked />
+            <span><b>주제가 확정되면 바로 다음 단계로</b> — 🟢 네이버 톤 설정으로 자동 이동합니다.
+              <small>끄면 주제만 정하고 이 화면에 머뭅니다. 이동은 가운데 아래 ‘다음 →’ 버튼이나 위 단계 바를 눌러도 언제든 됩니다.</small>
+            </span>
+          </label>
         </div>
 
         <div class="sect">
@@ -752,6 +918,11 @@
         <div class="sect">
           <div class="note"><span class="ni">🎯</span><div><b>어떤 주제가 잘 붙나</b> — 검색으로 들어오는 사람은 결론 숫자를 원합니다. 주제에 <b>금액·한도·마감일</b> 같은 숫자와 <b>12월</b>처럼 시점이 들어가면 제목·소제목이 그대로 검색어가 됩니다. 반대로 “요즘 재테크 어때요” 같은 넓은 주제는 첫날 조회가 붙지 않았습니다.</div></div>
         </div>
+      </div>
+      <div class="stepnav">
+        <button type="button" class="btn sn-prev" disabled aria-disabled="true">← 이전 단계</button>
+        <span class="sn-count">1 / 6 · 주제선정</span>
+        <button type="button" class="btn primary sn-next" data-goto="naver">다음: 🟢 네이버 톤 설정 →</button>
       </div>
     </section>
 
@@ -780,13 +951,18 @@
           <div class="note"><span class="ni">📐</span><div><b>기준</b> — 네이버는 문단이 길면 모바일에서 이탈합니다. 2~3문장마다 끊고, 첫 문단 아래 표지 사진 1장, 중간 2장을 넣습니다. 제목은 키워드를 앞에 두고 30~35자로 자릅니다.</div></div>
         </div>
       </div>
+      <div class="stepnav">
+        <button type="button" class="btn sn-prev" data-goto="topic">← 이전: 🎯 주제선정</button>
+        <span class="sn-count">2 / 6 · 네이버</span>
+        <button type="button" class="btn primary sn-next" data-goto="tistory">다음: 🟠 구글(티스토리) 톤 설정 →</button>
+      </div>
     </section>
 
     <!-- 3. 티스토리 -->
     <section class="panel" id="p-tistory" data-panel="tistory" role="tabpanel" aria-label="티스토리 톤 설정">
       <div class="phead">
-        <div class="phead-top"><span class="pkicker">3 / 6 · 티스토리</span><span class="pstate" id="stateTistory">💸 실속형 · 표·체크·FAQ</span></div>
-        <h2 class="ptitle">🟠 티스토리 톤 설정</h2>
+        <div class="phead-top"><span class="pkicker">3 / 6 · 구글(티스토리)</span><span class="pstate" id="stateTistory">💸 실속형 · 표·체크·FAQ</span></div>
+        <h2 class="ptitle">🟠 구글(티스토리) 톤 설정</h2>
         <p class="pdesc">dodoapple0331 · ‘10년 후의 나를 위해’ — 같은 주제를 검색 정보형으로 다시 씁니다. 톤과 애드센스 정보형 구성을 정하세요.</p>
       </div>
       <div class="pbody">
@@ -807,54 +983,45 @@
           <div class="note warn"><span class="ni">⛔</span><div><b>광고 코드·제휴 링크는 0건</b> — 애드센스 승인과 안정권에 들기 전까지 표·체크리스트·FAQ는 <b>구성</b>만 쓰고, 광고 코드와 쿠팡 파트너스 링크는 넣지 않습니다.</div></div>
         </div>
       </div>
+      <div class="stepnav">
+        <button type="button" class="btn sn-prev" data-goto="naver">← 이전: 🟢 네이버 톤 설정</button>
+        <span class="sn-count">3 / 6 · 구글(티스토리)</span>
+        <button type="button" class="btn primary sn-next" data-goto="threads">다음: 🧵 스레드 톤 설정 →</button>
+      </div>
     </section>
 
-    <!-- 4. 인스타그램 -->
-    <section class="panel" id="p-insta" data-panel="insta" role="tabpanel" aria-label="인스타그램 음악 이미지 자막">
+    <!-- 4. 스레드 -->
+    <section class="panel" id="p-threads" data-panel="threads" role="tabpanel" aria-label="스레드 톤 설정">
       <div class="phead">
-        <div class="phead-top"><span class="pkicker">4 / 6 · 인스타그램</span><span class="pstate" id="stateInsta">로파이 · 카드뉴스 · 1줄</span></div>
-        <h2 class="ptitle">📸 인스타그램 · 음악 · 이미지 · 자막</h2>
-        <p class="pdesc">@savejeong.pick — 4:5 피드와 릴스. 세 항목을 각각 1개씩 고르면 오른쪽 요약과 프롬프트에 그대로 들어갑니다.</p>
+        <div class="phead-top"><span class="pkicker">4 / 6 · 스레드</span><span class="pstate" id="stateThreads">반말 1~2줄 · 댓글 OFF</span></div>
+        <h2 class="ptitle">🧵 스레드 톤 설정</h2>
+        <p class="pdesc">@savejeong.pick — 본문 1개만 올립니다. 짧은 반말 한두 줄로 끝내고, 댓글 타래는 제휴를 받을 때 그 자리에 링크를 두려고 비워 둡니다.</p>
       </div>
       <div class="pbody">
         <div class="sect">
-          <div class="sect-h"><h3>음악</h3><span>1개 선택</span></div>
-          <div class="optgrid" id="instaMusic"></div>
+          <div class="sect-h"><h3>글 톤</h3><span>4가지 중 1개</span></div>
+          <div class="tonegrid" id="threadTones"></div>
         </div>
         <div class="sect">
-          <div class="sect-h"><h3>이미지</h3><span>1개 선택</span></div>
-          <div class="optgrid" id="instaImage"></div>
-        </div>
-        <div class="sect">
-          <div class="sect-h"><h3>자막</h3><span>1개 선택</span></div>
-          <div class="optgrid" id="instaCaption"></div>
-        </div>
-        <div class="sect">
-          <div class="sect-h"><h3>미리보기</h3><span>선택이 바로 반영됩니다</span></div>
-          <div class="preview">
-            <div class="mock insta" id="instaMock" data-image="card">
-              <div class="mock-top">@savejeong.pick</div>
-              <span class="mock-music" id="instaMockMusic">🎵 로파이</span>
-              <div class="mock-art">
-                <span class="mock-kicker">2026.11</span>
-                <div class="mock-headline" id="instaMockHead">연말정산<br />월세 세액공제</div>
-                <div class="mock-line w85"></div>
-                <div class="mock-line w70"></div>
-                <div class="mock-line w50"></div>
-              </div>
-              <div class="mock-cap mid" id="instaMockCap">12월에 챙기는 법</div>
+          <div class="sect-h"><h3>댓글 타래</h3><span>지금은 쓰지 않습니다</span></div>
+          <div class="lockbox">
+            <span class="lk" aria-hidden="true">🔒</span>
+            <div>
+              <b>댓글 타래 OFF</b>
+              <small>본문 1개만 발행합니다. 답글 3단은 제휴 링크를 넣을 때만 열고, 그때 링크는 본문이 아니라 댓글에 둡니다.</small>
             </div>
-            <div class="preview-side">
-              <b id="instaPrevTitle">4:5 카드뉴스</b>
-              <dl>
-                <dt>음악</dt><dd id="instaPrevMusic">차분한 로파이</dd>
-                <dt>이미지</dt><dd id="instaPrevImage">4:5 카드뉴스 · 6장</dd>
-                <dt>자막</dt><dd id="instaPrevCap">핵심 1줄 크게</dd>
-              </dl>
-              <p style="margin:8px 0 0">첫 문장 훅 후보 3개를 확정하기 전에는 발행하지 않습니다. 이미지에서 C2PA 메타데이터를 지워 ‘AI 콘텐츠’ 라벨을 피합니다.</p>
-            </div>
+            <span class="tag-off">고정 OFF</span>
           </div>
         </div>
+        <div class="sect">
+          <div class="note"><span class="ni">✂️</span><div><b>말투 기준</b> — 반말, 1~2줄 30~100자, 마침표 대신 <b>?</b>·<b>!</b>, 번호(1/3) 없음, 이모지는 맨 끝에 0~1개. 실제 계정에 올린 글에서 확인된 톤만 씁니다.</div></div>
+          <div class="note"><span class="ni">🔗</span><div><b>제휴 준비</b> — 링크를 달 때는 “너무 많이 물어봐서 아래 링크 달게” + 쿠팡 파트너스 고지 한 줄. 승인 전까지는 링크 자체를 넣지 않습니다.</div></div>
+        </div>
+      </div>
+      <div class="stepnav">
+        <button type="button" class="btn sn-prev" data-goto="tistory">← 이전: 🟠 구글(티스토리) 톤 설정</button>
+        <span class="sn-count">4 / 6 · 스레드</span>
+        <button type="button" class="btn primary sn-next" data-goto="yt">다음: 🎬 유튜브 (음악·이미지·자막) →</button>
       </div>
     </section>
 
@@ -902,35 +1069,64 @@
           </div>
         </div>
       </div>
+      <div class="stepnav">
+        <button type="button" class="btn sn-prev" data-goto="threads">← 이전: 🧵 스레드 톤 설정</button>
+        <span class="sn-count">5 / 6 · 유튜브</span>
+        <button type="button" class="btn primary sn-next" data-goto="insta">다음: 📸 인스타그램 (음악·이미지·자막) →</button>
+      </div>
     </section>
 
-    <!-- 6. 스레드 -->
-    <section class="panel" id="p-threads" data-panel="threads" role="tabpanel" aria-label="스레드 톤 설정">
+    <!-- 6. 인스타그램 -->
+    <section class="panel" id="p-insta" data-panel="insta" role="tabpanel" aria-label="인스타그램 음악 이미지 자막">
       <div class="phead">
-        <div class="phead-top"><span class="pkicker">6 / 6 · 스레드</span><span class="pstate" id="stateThreads">반말 1~2줄 · 댓글 OFF</span></div>
-        <h2 class="ptitle">🧵 스레드 톤 설정</h2>
-        <p class="pdesc">@savejeong.pick — 본문 1개만 올립니다. 짧은 반말 한두 줄로 끝내고, 댓글 타래는 제휴를 받을 때 그 자리에 링크를 두려고 비워 둡니다.</p>
+        <div class="phead-top"><span class="pkicker">6 / 6 · 인스타그램 · 마지막 단계</span><span class="pstate" id="stateInsta">로파이 · 카드뉴스 · 1줄</span></div>
+        <h2 class="ptitle">📸 인스타그램 · 음악 · 이미지 · 자막</h2>
+        <p class="pdesc">@savejeong.pick — 4:5 피드와 릴스. 세 항목을 각각 1개씩 고르면 오른쪽 요약과 프롬프트에 그대로 들어갑니다.</p>
       </div>
       <div class="pbody">
         <div class="sect">
-          <div class="sect-h"><h3>글 톤</h3><span>4가지 중 1개</span></div>
-          <div class="tonegrid" id="threadTones"></div>
+          <div class="sect-h"><h3>음악</h3><span>1개 선택</span></div>
+          <div class="optgrid" id="instaMusic"></div>
         </div>
         <div class="sect">
-          <div class="sect-h"><h3>댓글 타래</h3><span>지금은 쓰지 않습니다</span></div>
-          <div class="lockbox">
-            <span class="lk" aria-hidden="true">🔒</span>
-            <div>
-              <b>댓글 타래 OFF</b>
-              <small>본문 1개만 발행합니다. 답글 3단은 제휴 링크를 넣을 때만 열고, 그때 링크는 본문이 아니라 댓글에 둡니다.</small>
+          <div class="sect-h"><h3>이미지</h3><span>1개 선택</span></div>
+          <div class="optgrid" id="instaImage"></div>
+        </div>
+        <div class="sect">
+          <div class="sect-h"><h3>자막</h3><span>1개 선택</span></div>
+          <div class="optgrid" id="instaCaption"></div>
+        </div>
+        <div class="sect">
+          <div class="sect-h"><h3>미리보기</h3><span>선택이 바로 반영됩니다</span></div>
+          <div class="preview">
+            <div class="mock insta" id="instaMock" data-image="card">
+              <div class="mock-top">@savejeong.pick</div>
+              <span class="mock-music" id="instaMockMusic">🎵 로파이</span>
+              <div class="mock-art">
+                <span class="mock-kicker">2026.11</span>
+                <div class="mock-headline" id="instaMockHead">연말정산<br />월세 세액공제</div>
+                <div class="mock-line w85"></div>
+                <div class="mock-line w70"></div>
+                <div class="mock-line w50"></div>
+              </div>
+              <div class="mock-cap mid" id="instaMockCap">12월에 챙기는 법</div>
             </div>
-            <span class="tag-off">고정 OFF</span>
+            <div class="preview-side">
+              <b id="instaPrevTitle">4:5 카드뉴스</b>
+              <dl>
+                <dt>음악</dt><dd id="instaPrevMusic">차분한 로파이</dd>
+                <dt>이미지</dt><dd id="instaPrevImage">4:5 카드뉴스 · 6장</dd>
+                <dt>자막</dt><dd id="instaPrevCap">핵심 1줄 크게</dd>
+              </dl>
+              <p style="margin:8px 0 0">첫 문장 훅 후보 3개를 확정하기 전에는 발행하지 않습니다. 이미지에서 C2PA 메타데이터를 지워 ‘AI 콘텐츠’ 라벨을 피합니다.</p>
+            </div>
           </div>
         </div>
-        <div class="sect">
-          <div class="note"><span class="ni">✂️</span><div><b>말투 기준</b> — 반말, 1~2줄 30~100자, 마침표 대신 <b>?</b>·<b>!</b>, 번호(1/3) 없음, 이모지는 맨 끝에 0~1개. 실제 계정에 올린 글에서 확인된 톤만 씁니다.</div></div>
-          <div class="note"><span class="ni">🔗</span><div><b>제휴 준비</b> — 링크를 달 때는 “너무 많이 물어봐서 아래 링크 달게” + 쿠팡 파트너스 고지 한 줄. 승인 전까지는 링크 자체를 넣지 않습니다.</div></div>
-        </div>
+      </div>
+      <div class="stepnav">
+        <button type="button" class="btn sn-prev" data-goto="yt">← 이전: 🎬 유튜브</button>
+        <span class="sn-count">6 / 6 · 인스타그램 · 마지막</span>
+        <button type="button" class="btn primary sn-next sn-done" id="instaDone">🤖 3개 AI 교차검증·비교 →</button>
       </div>
     </section>
 
@@ -1066,10 +1262,10 @@
       </div>
       <ul class="sum-list">
         <li><button type="button" class="sum-i" data-goto="naver"><span class="sl-t">🟢 네이버 <span class="go">설정 →</span></span><span class="sl-b" id="sumNaver">—</span></button></li>
-        <li><button type="button" class="sum-i" data-goto="tistory"><span class="sl-t">🟠 티스토리 <span class="go">설정 →</span></span><span class="sl-b" id="sumTistory">—</span></button></li>
-        <li><button type="button" class="sum-i" data-goto="insta"><span class="sl-t">📸 인스타그램 <span class="go">설정 →</span></span><span class="sl-b" id="sumInsta">—</span></button></li>
-        <li><button type="button" class="sum-i" data-goto="yt"><span class="sl-t">🎬 유튜브 <span class="go">설정 →</span></span><span class="sl-b" id="sumYt">—</span></button></li>
+        <li><button type="button" class="sum-i" data-goto="tistory"><span class="sl-t">🟠 구글(티스토리) <span class="go">설정 →</span></span><span class="sl-b" id="sumTistory">—</span></button></li>
         <li><button type="button" class="sum-i" data-goto="threads"><span class="sl-t">🧵 스레드 <span class="go">설정 →</span></span><span class="sl-b" id="sumThreads">—</span></button></li>
+        <li><button type="button" class="sum-i" data-goto="yt"><span class="sl-t">🎬 유튜브 <span class="go">설정 →</span></span><span class="sl-b" id="sumYt">—</span></button></li>
+        <li><button type="button" class="sum-i" data-goto="insta"><span class="sl-t">📸 인스타그램 <span class="go">설정 →</span></span><span class="sl-b" id="sumInsta">—</span></button></li>
       </ul>
       <div class="aicmp" id="aiCmp">
         <div class="aicmp-h"><b>3개 AI 교차 검증</b><span class="eg">예시값</span><span class="lbl">트래픽 100점</span></div>
@@ -1289,6 +1485,8 @@
       topic: '',
       topicSource: '',
       lastPick: -1,
+      autoFlow: true,
+      visited: {},
       naver: { tone: 'value', split: '2', subheads: true },
       tistory: { tone: 'value', table: true, checklist: true, faq: true },
       insta: { music: 'lofi', image: 'card', caption: 'line' },
@@ -1342,6 +1540,8 @@
     d.topic = typeof raw.topic === 'string' ? raw.topic : '';
     d.topicSource = typeof raw.topicSource === 'string' ? raw.topicSource : '';
     d.lastPick = typeof raw.lastPick === 'number' ? raw.lastPick : -1;
+    d.autoFlow = raw.autoFlow !== false;
+    d.visited = (raw.visited && typeof raw.visited === 'object') ? raw.visited : {};
     if (raw.naver) {
       d.naver.tone = byId(TONES, raw.naver.tone).id === raw.naver.tone ? raw.naver.tone : 'value';
       d.naver.split = SPLIT_LABEL[raw.naver.split] ? raw.naver.split : '2';
@@ -1436,8 +1636,109 @@
     toastTimer = window.setTimeout(function () { el.className = 'toast'; }, 2600);
   }
 
+  /* ===================== 순차 설정 단계 ===================== */
+  var STEP_ORDER = ['topic', 'naver', 'tistory', 'threads', 'yt', 'insta'];
+  var STEP_LABEL = {
+    topic: '🎯 주제선정',
+    naver: '🟢 네이버 톤 설정',
+    tistory: '🟠 구글(티스토리) 톤 설정',
+    threads: '🧵 스레드 톤 설정',
+    yt: '🎬 유튜브 (음악·이미지·자막)',
+    insta: '📸 인스타그램 (음악·이미지·자막)'
+  };
+  function stepIndex(name) {
+    for (var i = 0; i < STEP_ORDER.length; i++) { if (STEP_ORDER[i] === name) { return i; } }
+    return -1;
+  }
+  function stepNext(name) {
+    var i = stepIndex(name);
+    return (i > -1 && i < STEP_ORDER.length - 1) ? STEP_ORDER[i + 1] : null;
+  }
+  function stepPrev(name) {
+    var i = stepIndex(name);
+    return i > 0 ? STEP_ORDER[i - 1] : null;
+  }
+  function isMobileApp() { return window.innerWidth < 768; }
+
+  function renderSteps() {
+    var box = $('stepStrip');
+    var idx = stepIndex(currentTab);
+    if (box) {
+      var items = box.querySelectorAll('.ss-i');
+      for (var i = 0; i < items.length; i++) {
+        var key = items[i].getAttribute('data-step-key');
+        var pos = stepIndex(key);
+        var done = key !== currentTab && !!(state.visited && state.visited[key]);
+        items[i].className = 'ss-i' + (key === currentTab ? ' is-on is-now' : '') + (done ? ' is-done' : '');
+        if (key === currentTab) { items[i].setAttribute('aria-current', 'step'); } else { items[i].removeAttribute('aria-current'); }
+        var num = items[i].querySelector('.ss-n');
+        if (num) { num.textContent = done ? '✓' : String(pos + 1); }
+      }
+      var pr = $('ssProgress');
+      if (pr) {
+        if (idx > -1) { pr.innerHTML = (idx + 1) + ' / 6 <small>' + esc(STEP_LABEL[currentTab].replace(/^[^ ]+ /, '').replace(' 톤 설정', '').replace(' (음악·이미지·자막)', '')) + '</small>'; }
+        else if (currentTab === 'home') { pr.innerHTML = '앱 홈 <small>8개 바로가기</small>'; }
+        else { pr.innerHTML = '보조 화면 <small>총괄·통계·글목록</small>'; }
+      }
+    }
+    var bar = $('stepBarMini');
+    if (bar) {
+      bar.innerHTML = '';
+      for (var m = 0; m < STEP_ORDER.length; m++) {
+        var k2 = STEP_ORDER[m];
+        var d2 = k2 !== currentTab && !!(state.visited && state.visited[k2]);
+        bar.innerHTML += '<button type="button" class="sb-dot' + (k2 === currentTab ? ' is-on' : '') + (d2 ? ' is-done' : '') +
+          '" data-goto="' + k2 + '" title="' + esc(STEP_LABEL[k2]) + '" aria-label="' + esc(STEP_LABEL[k2]) + '">' + (d2 ? '✓' : (m + 1)) + '</button>';
+      }
+    }
+  }
+
+  /* 주제 확정 → 다음 단계(모바일은 앱 홈, 데스크톱은 네이버) */
+  function afterTopicConfirmed(force) {
+    var nxt = isMobileApp() ? 'home' : 'naver';
+    var msg = isMobileApp()
+      ? '✅ 주제 확정 — 앱 홈에서 8개 바로가기로 들어가세요'
+      : '✅ 주제 확정 — 다음은 🟢 네이버 톤 설정입니다';
+    if (!force && state.autoFlow === false) { toast(msg + ' (자동 이동 꺼짐)'); return; }
+    var ti = $('topicInput');
+    if (ti && ti.blur) { ti.blur(); }
+    window.setTimeout(function () {
+      setTab(nxt, true);
+      toast(isMobileApp() ? '✅ 주제 확정 — 앱 홈 · 8개 바로가기' : '➡️ 🟢 네이버 톤 설정 단계로 넘어갑니다');
+      var el = document.querySelector('.panel.is-on .ptitle');
+      if (el && el.scrollIntoView && window.innerWidth > 860) { el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+    }, 420);
+  }
+
+  function goStep(name) {
+    setTab(name, true);
+  }
+
+  function focusAICompare() {
+    var card = $('sumCard');
+    if (card && String(card.className).indexOf('is-closed') > -1) {
+      card.className = 'sumcard';
+      var tg = $('sumToggle');
+      if (tg) { tg.textContent = '접기'; tg.setAttribute('aria-expanded', 'true'); }
+    }
+    state.visited.insta = true;
+    renderSteps();
+    var box = $('aiCmp');
+    if (box) {
+      if (box.scrollIntoView) { box.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+      box.className = 'aicmp pulse';
+      window.setTimeout(function () { box.className = 'aicmp'; }, 1600);
+    }
+    toast('🤖 6단계 완료 — 3개 AI 교차검증에서 최고점 버전을 고르세요');
+    scheduleSave();
+  }
+
   /* ===================== 탭 ===================== */
   function setTab(name, fromUser) {
+    if (currentTab && currentTab !== name && stepIndex(currentTab) > -1) {
+      if (!state.visited) { state.visited = {}; }
+      state.visited[currentTab] = true;
+    }
     currentTab = name;
     var navs = document.querySelectorAll('.nav[data-tab]');
     for (var i = 0; i < navs.length; i++) {
@@ -1456,10 +1757,16 @@
       var show = panels[k].getAttribute('data-panel') === name;
       panels[k].className = 'panel' + (show ? ' is-on' : '');
     }
+    var activeNav = document.querySelector('.nav[data-tab="' + name + '"]');
+    if (activeNav && activeNav.scrollIntoView && window.innerWidth <= 860) {
+      activeNav.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
     if (fromUser && window.innerWidth <= 860) {
       var el = document.querySelector('.panel.is-on');
       if (el && el.scrollIntoView) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     }
+    renderSteps();
+    scheduleSave();
   }
   function bindNav() {
     document.addEventListener('click', function (ev) {
@@ -1467,6 +1774,7 @@
       while (t && t !== document) {
         if (t.getAttribute && t.getAttribute('data-tab')) { setTab(t.getAttribute('data-tab'), true); return; }
         if (t.getAttribute && t.getAttribute('data-goto')) { setTab(t.getAttribute('data-goto'), true); return; }
+        if (t.id === 'instaDone') { focusAICompare(); return; }
         t = t.parentNode;
       }
     });
@@ -1564,6 +1872,8 @@
     }
     var aff = $('affToggle');
     if (aff) { aff.checked = state.affiliate === true; }
+    var af = $('autoFlow');
+    if (af) { af.checked = state.autoFlow !== false; }
     var ti = $('topicInput');
     if (ti) { ti.value = state.topic || ''; }
   }
@@ -1626,21 +1936,22 @@
     scheduleSave();
     if (toastMsg) { toast(toastMsg); }
   }
-  function pickRandom() {
+  function pickRandom(silent) {
     var idx = Math.floor(Math.random() * RECS.length);
     if (RECS.length > 1) {
       var guard = 0;
       while (idx === state.lastPick && guard < 12) { idx = Math.floor(Math.random() * RECS.length); guard++; }
     }
     state.lastPick = idx;
-    setTopic(RECS[idx].full, '🎲 랜덤·임의 자동 선택', '🎲 추천 ' + (idx + 1) + '번 「' + RECS[idx].short + '」로 정했습니다');
+    setTopic(RECS[idx].full, '🎲 랜덤·임의 자동 선택', silent ? '' : '🎲 추천 ' + (idx + 1) + '번 「' + RECS[idx].short + '」로 정했습니다');
     var chip = document.querySelector('.chip[data-rec="' + idx + '"]');
     if (chip) {
       chip.className = 'chip is-on picked';
       if (chip.scrollIntoView) { chip.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
     }
+    afterTopicConfirmed(false);
   }
-  function applyTopic() {
+  function applyTopic(force) {
     var ti = $('topicInput');
     if (!ti) { return; }
     var v = String(ti.value || '').trim();
@@ -1657,26 +1968,29 @@
     if (matched > -1) {
       state.lastPick = matched;
       setTopic(RECS[matched].full, '추천 주제 선택', '추천 ' + (matched + 1) + '번 주제로 정했습니다');
+      afterTopicConfirmed(force === true);
       return;
     }
     setTopic(v, '직접 입력', '주제를 적용했습니다');
+    afterTopicConfirmed(force === true);
   }
   function bindTopic() {
     var apply = $('topicApply');
-    if (apply) { apply.addEventListener('click', applyTopic); }
+    if (apply) { apply.addEventListener('click', function () { applyTopic(true); }); }
     var rand = $('topicRandom');
-    if (rand) { rand.addEventListener('click', pickRandom); }
+    if (rand) { rand.addEventListener('click', function () { pickRandom(false); }); }
+    var flow = $('autoFlow');
+    if (flow) {
+      flow.addEventListener('change', function () {
+        state.autoFlow = flow.checked === true;
+        scheduleSave();
+        toast(state.autoFlow ? '자동 이동 ON — 주제가 정해지면 다음 단계로 바로 넘어갑니다' : '자동 이동 OFF — 주제만 정하고 이 화면에 머뭅니다');
+      });
+    }
     var ti = $('topicInput');
     if (ti) {
       ti.addEventListener('keydown', function (ev) {
-        if (ev.key === 'Enter' || ev.keyCode === 13) { ev.preventDefault(); applyTopic(); }
-      });
-      ti.addEventListener('input', function () {
-        var v = String(ti.value || '').trim();
-        if (!v) { return; }
-        if (isRandomWord(v) && v.length <= 6) {
-          /* 타이핑 중 힌트만 — 실제 선택은 엔터/적용에서 */
-        }
+        if (ev.key === 'Enter' || ev.keyCode === 13) { ev.preventDefault(); applyTopic(false); }
       });
     }
     var chips = $('topicChips');
@@ -1689,6 +2003,7 @@
             if (!isNaN(idx) && RECS[idx]) {
               state.lastPick = idx;
               setTopic(RECS[idx].full, '추천 주제 선택', '추천 ' + (idx + 1) + '번 주제를 골랐습니다');
+              afterTopicConfirmed(false);
             }
             return;
           }
@@ -1801,6 +2116,89 @@
     setText('ytPrevCap', byId(YT.caption, state.yt.caption).name);
   }
   function setText(id, v) { var el = $(id); if (el) { el.textContent = v; } }
+
+  /* ===================== 앱 홈 (8아이콘) ===================== */
+  var HOME_TILES = [
+    { key: 'overview', ico: '📊', name: '총괄' },
+    { key: 'insta', ico: '📸', name: '인스타그램' },
+    { key: 'yt', ico: '🎬', name: '유튜브' },
+    { key: 'naver', ico: '🟢', name: '네이버' },
+    { key: 'tistory', ico: '🟠', name: '구글(티스토리)' },
+    { key: 'threads', ico: '🧵', name: '스레드' },
+    { key: 'stats', ico: '📈', name: '통계' },
+    { key: 'posts', ico: '📝', name: '글목록' }
+  ];
+
+  function renderHome() {
+    var box = $('homeTiles');
+    if (!box) { return; }
+    var L = channelLines();
+    var desc = {
+      overview: '발행 회차 · 운영 규칙',
+      insta: L.insta,
+      yt: L.yt,
+      naver: L.naver,
+      tistory: L.tistory,
+      threads: L.threads,
+      stats: '5채널 조회 · 수익',
+      posts: '4건 · 라이브 링크'
+    };
+    var si = $('homeSearch');
+    var q = String((si && si.value) || '').replace(/^\s+|\s+$/g, '').toLowerCase();
+    var out = '';
+    var shown = 0;
+    for (var i = 0; i < HOME_TILES.length; i++) {
+      var t = HOME_TILES[i];
+      var hay = (t.name + ' ' + t.ico + ' ' + (desc[t.key] || '')).toLowerCase();
+      if (q && hay.indexOf(q) === -1) { continue; }
+      shown++;
+      out += '<button type="button" class="apptile" data-goto="' + t.key + '" aria-label="' + esc(t.name) + ' 설정 열기">' +
+        '<span class="at-ico" aria-hidden="true">' + t.ico + '</span>' +
+        '<span class="at-txt"><b>' + esc(t.name) + '</b><small>' + esc(desc[t.key] || '') + '</small></span>' +
+        '<span class="at-go" aria-hidden="true">›</span></button>';
+    }
+    if (!shown) {
+      out = '<p class="hs-empty">‘' + esc(q) + '’에 맞는 바로가기가 없습니다. 아래 네이버·유튜브 검색을 써보세요.</p>';
+    }
+    box.innerHTML = out;
+    setText('homeTileCount', shown + ' / 8');
+    var st = $('stateHome');
+    if (st) { st.textContent = state.topic ? (state.topic.length > 20 ? state.topic.slice(0, 20) + '…' : state.topic) : '주제 미선택'; }
+    var links = $('homeSearchLinks');
+    if (links) {
+      if (q && shown === 0) {
+        links.hidden = false;
+        links.innerHTML = '<a href="https://search.naver.com/search.naver?query=' + encodeURIComponent(q) + '" target="_blank" rel="noopener">🔍 네이버에서 ‘' + esc(q) + '’ 검색 ↗</a>' +
+          '<a href="https://www.youtube.com/results?search_query=' + encodeURIComponent(q) + '" target="_blank" rel="noopener">▶ 유튜브에서 ‘' + esc(q) + '’ 검색 ↗</a>';
+      } else {
+        links.hidden = true;
+        links.innerHTML = '';
+      }
+    }
+  }
+
+  function bindHome() {
+    var si = $('homeSearch');
+    if (si) {
+      si.addEventListener('input', function () { renderHome(); });
+      si.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Enter' || ev.keyCode === 13) {
+          ev.preventDefault();
+          renderHome();
+          var first = document.querySelector('#homeTiles .apptile');
+          if (first) { first.focus(); }
+        }
+      });
+    }
+    var btn = $('homeSearchBtn');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        renderHome();
+        var first = document.querySelector('#homeTiles .apptile');
+        if (first) { first.focus(); }
+      });
+    }
+  }
 
   /* ===================== 통계 ===================== */
   function renderStats() {
@@ -2416,6 +2814,8 @@
     renderPreviews();
     renderStats();
     renderPosts();
+    renderHome();
+    renderSteps();
   }
 
   /* ===================== 시작 ===================== */
@@ -2426,6 +2826,7 @@
       syncControls();
       bindNav();
       bindTopic();
+      bindHome();
       bindMetrics();
       bindPosts();
       bindCopy();
@@ -2434,7 +2835,11 @@
       bindMobile();
       renderAll();
       setTab('topic');
+      renderSteps();
       setSave(true, state.savedAt ? state.savedAt.slice(11) : '');
+      if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+        navigator.serviceWorker.register('./sw.js').catch(function () {});
+      }
       if (!state.topic) {
         window.setTimeout(function () {
           toast('🎯 주제부터 정해보세요 — 추천 칩을 누르거나 🎲 랜덤을 누르면 바로 정해집니다');

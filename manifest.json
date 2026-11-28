@@ -1,0 +1,36 @@
+{
+  "name": "세픽 5채널 스튜디오",
+  "short_name": "5채널 스튜디오",
+  "description": "주제선정 → 네이버 → 구글(티스토리) → 스레드 → 유튜브 → 인스타그램 순서로 설정하고 3개 AI 프롬프트로 복사하는 콘텐츠 스튜디오.",
+  "lang": "ko-KR",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "id": "./index.html",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait",
+  "theme_color": "#4f46e5",
+  "background_color": "#f4f5f8",
+  "categories": ["productivity", "business"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
