@@ -2950,7 +2950,7 @@
         var it = FIN_CHECKS[i];
         var ok2 = finalChecks()[it.id] === true;
         chh += '<label class="six' + (ok2 ? ' is-on' : '') + '"><input type="checkbox" data-fcheck="' + it.id + '"' + (ok2 ? ' checked' : '') + ' />' +
-          '<span class="six-n">' + (ok2 ? '✓' : (i + 1)) + '</span>' +
+          '<span class="six-n">' + (i + 1) + '</span>' +
           '<span class="six-t"><b>' + esc(it.t) + '</b><small>' + esc(it.d) + '</small></span></label>';
       }
       cb.innerHTML = chh;
