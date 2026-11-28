@@ -673,6 +673,110 @@
     100% { box-shadow: none; background: transparent; }
   }
 
+  /* ── 7단계: 최종 검수 · 임시저장 · 발행 ───────────── */
+  .fin-vers { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .fver {
+    display: flex; flex-direction: column; gap: 1px; text-align: left; cursor: pointer;
+    padding: 9px 13px; border: 1px solid var(--line-2); border-radius: 11px; background: #fff;
+    transition: border-color .14s, background .14s, box-shadow .14s;
+  }
+  .fver:hover { border-color: #b9bdf5; }
+  .fver b { font-size: 12.5px; font-weight: 800; letter-spacing: -.02em; }
+  .fver small { font-size: 10.5px; color: var(--mut); }
+  .fver.is-on { border-color: var(--accent); background: var(--soft); box-shadow: 0 0 0 1px var(--accent) inset; }
+  .fver.is-on b { color: var(--accent-2); }
+  .recbox { border: 1px solid #dfe3ff; border-radius: var(--r); padding: 14px 16px; background: linear-gradient(180deg, #f8f9ff, #fff); }
+  .recbox h4 { margin: 0 0 5px; font-size: 13.5px; font-weight: 800; letter-spacing: -.02em; }
+  .recbox > p { margin: 0; font-size: 12px; color: var(--mut); line-height: 1.6; }
+  .recbox ul { margin: 9px 0 0; padding-left: 17px; font-size: 12.3px; color: var(--ink-2); line-height: 1.7; }
+  .recbox ul b { color: var(--accent-2); }
+  .mtgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; margin-top: 13px; }
+  .mtr .mt-h { display: flex; justify-content: space-between; align-items: baseline; font-size: 11.5px; font-weight: 700; color: var(--ink-2); }
+  .mtr .mt-h em { font-style: normal; font-size: 11px; font-weight: 800; color: var(--accent-2); }
+  .mtr .mt-b { height: 7px; border-radius: 999px; background: #e9ebf7; overflow: hidden; margin-top: 4px; }
+  .mtr .mt-b i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #6d63f0, #4338ca); }
+  .mtr.low .mt-b i { background: linear-gradient(90deg, #f0a24b, #b45309); }
+  .ftab { margin-top: 13px; border: 1px solid var(--line); border-radius: var(--r-sm); overflow: hidden; }
+  .ftab .ft-row { display: grid; grid-template-columns: 1fr .6fr 1.5fr; gap: 8px; padding: 8px 12px; font-size: 11.5px; color: var(--ink-2); border-top: 1px solid var(--line); }
+  .ftab .ft-row:first-child { border-top: 0; background: var(--card-2); font-weight: 800; color: var(--mut); }
+  .ftab .ft-row.is-on { background: var(--soft); font-weight: 700; }
+  .ft-sum { margin: 8px 0 0; font-size: 11.5px; color: var(--ink-2); line-height: 1.6; }
+  .ctabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .ctab {
+    display: inline-flex; align-items: center; gap: 5px; padding: 8px 12px; cursor: pointer;
+    border: 1px solid var(--line-2); border-radius: 999px; background: #fff;
+    font-size: 12px; font-weight: 700; color: var(--ink-2);
+  }
+  .ctab:hover { border-color: var(--accent); color: var(--accent-2); }
+  .ctab.is-on { border-color: var(--accent); background: var(--soft); color: var(--accent-2); }
+  .ctab .d { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); }
+  .dp { border: 1px solid var(--line); border-radius: var(--r); background: var(--card-2); padding: 14px 16px; }
+  .dp-head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 9px; }
+  .dp-head b { font-size: 13px; font-weight: 800; letter-spacing: -.02em; }
+  .dp-meta { display: flex; gap: 5px; flex-wrap: wrap; }
+  .dp-meta span { font-size: 10.5px; font-weight: 700; color: var(--ink-2); background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; }
+  .dp-title { font-size: 14px; font-weight: 800; letter-spacing: -.025em; line-height: 1.45; margin-bottom: 10px; color: var(--ink); }
+  .dp-b + .dp-b { margin-top: 12px; }
+  .dp-b h5 { margin: 0 0 5px; font-size: 11px; font-weight: 800; letter-spacing: .04em; color: var(--accent-2); }
+  .dp-b ol, .dp-b ul { margin: 0; padding-left: 17px; font-size: 12.3px; color: var(--ink-2); line-height: 1.65; }
+  .dp-b li + li { margin-top: 3px; }
+  .dp-b p { margin: 0 0 5px; font-size: 12.3px; color: var(--ink-2); line-height: 1.68; }
+  .dp-b p:last-child { margin-bottom: 0; }
+  .dp-note { margin: 11px 0 0; font-size: 11px; color: var(--mut-2); line-height: 1.55; }
+  .draft-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 11px; }
+  .draft-actions .btn { height: 40px; font-size: 12.5px; }
+  .dbadge { font-size: 11px; font-weight: 800; color: var(--mut); background: #f1f3f7; border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; white-space: nowrap; }
+  .dbadge.on { color: var(--ok); background: var(--ok-soft); border-color: #b7e6d2; }
+  .sixbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+  .sixbar .btn { height: 36px; font-size: 12px; padding: 0 13px; }
+  .sixbar > span { font-size: 11.5px; font-weight: 700; color: var(--accent-2); }
+  .sixchk { display: flex; flex-direction: column; gap: 7px; }
+  .six {
+    display: flex; gap: 10px; align-items: flex-start; cursor: pointer;
+    padding: 11px 13px; border: 1px solid var(--line-2); border-radius: var(--r-sm); background: #fff;
+    transition: border-color .14s, background .14s;
+  }
+  .six:hover { border-color: #b9bdf5; }
+  .six input { margin: 2px 0 0; width: 16px; height: 16px; accent-color: var(--ok); flex: 0 0 auto; }
+  .six .six-n {
+    flex: 0 0 auto; width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center;
+    font-size: 10.5px; font-weight: 800; color: var(--mut); background: #f1f3f7; border: 1px solid var(--line);
+  }
+  .six .six-t { min-width: 0; }
+  .six .six-t b { display: block; font-size: 12.5px; font-weight: 800; letter-spacing: -.02em; }
+  .six .six-t small { display: block; margin-top: 2px; font-size: 11px; color: var(--mut); line-height: 1.5; }
+  .six.is-on { border-color: #b7e6d2; background: var(--ok-soft); }
+  .six.is-on .six-n { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .pubbar {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 14px;
+    padding: 14px; border: 1px solid #dfe3ff; border-radius: var(--r); background: var(--soft);
+  }
+  .pubbar .btn { height: 48px; padding: 0 26px; font-size: 14.5px; }
+  .pubbar .btn[disabled], .pubbar .btn[disabled]:hover {
+    background: #c7cbe4; border-color: #c7cbe4; color: #fff; box-shadow: none; cursor: not-allowed; transform: none;
+  }
+  .pubbar > span { flex: 1 1 190px; font-size: 11.5px; font-weight: 700; color: var(--ink-2); line-height: 1.55; }
+  .pubdone {
+    margin-top: 10px; padding: 11px 13px; border-radius: var(--r-sm);
+    background: var(--ok-soft); border: 1px solid #b7e6d2; font-size: 11.5px; font-weight: 700; color: #0b6b4b; line-height: 1.55;
+  }
+  .pubdone[hidden] { display: none; }
+  .dlist { display: flex; flex-direction: column; gap: 8px; }
+  .dlist .empty { font-size: 12px; color: var(--mut); padding: 10px 0; }
+  .drow {
+    display: flex; gap: 9px; align-items: center; flex-wrap: wrap;
+    padding: 10px 12px; border: 1px dashed var(--line-2); border-radius: var(--r-sm); background: var(--card-2);
+  }
+  .drow .db { font-size: 10.5px; font-weight: 800; color: var(--warn); background: var(--warn-soft); border: 1px solid #f3e0b5; border-radius: 999px; padding: 2px 8px; white-space: nowrap; }
+  .drow b { font-size: 12.3px; font-weight: 700; }
+  .drow small { font-size: 11px; color: var(--mut); }
+  .drow .dr-act { margin-left: auto; display: flex; gap: 6px; }
+  .drow .dr-act button {
+    border: 1px solid var(--line-2); background: #fff; border-radius: 8px;
+    font-size: 11.5px; font-weight: 700; padding: 5px 9px; cursor: pointer; color: var(--ink-2);
+  }
+  .drow .dr-act button:hover { border-color: var(--accent); color: var(--accent-2); }
+
   /* ── 반응형 ───────────────────────────────────────── */
   @media (max-width: 1320px) {
     .studio { grid-template-columns: 238px minmax(0, 1fr); }
@@ -744,6 +848,8 @@
     .phead { padding-top: 16px; }
     .pstate { display: none; }
     .post-h { row-gap: 4px; }
+    .mtgrid { grid-template-columns: 1fr; }
+    .pubbar .btn { width: 100%; }
     .stepstrip { border-radius: var(--r); padding: 6px; gap: 1px; }
     .stepstrip .ss-i { height: 26px; padding: 0 8px; font-size: 11px; }
     .stepstrip .ss-arrow, .stepstrip .ss-i .ss-lb-long { display: none; }
@@ -794,7 +900,7 @@
 
   <!-- ══════════ 왼쪽: 항목 탭 ══════════ -->
   <aside class="rail" aria-label="항목 탭">
-    <div class="rail-h"><b>순서대로 설정</b><span>6단계 + 보조 3</span></div>
+    <div class="rail-h"><b>순서대로 설정</b><span>7단계 + 보조 3</span></div>
     <nav class="rail-nav" role="tablist" aria-orientation="vertical">
       <button type="button" class="nav" role="tab" data-tab="home" aria-selected="false" aria-controls="p-home">
         <span class="nav-no">🏠</span>
@@ -824,6 +930,10 @@
         <span class="nav-no">6</span>
         <span class="nav-txt"><b>📸 인스타그램 (음악·이미지·자막)</b><i>@savejeong.pick · 4:5 · 릴스</i></span>
       </button>
+      <button type="button" class="nav" role="tab" data-tab="final" data-step="7" aria-selected="false" aria-controls="p-final">
+        <span class="nav-no">7</span>
+        <span class="nav-txt"><b>🚀 최종 검수·발행</b><i>추천 이유 · 미리보기 · 임시저장 · 6대 점검</i></span>
+      </button>
     </nav>
     <div class="nav-div">보조 보기</div>
     <div class="nav-sub" role="tablist" aria-label="보조 보기">
@@ -850,7 +960,9 @@
       <button type="button" class="ss-i" data-goto="yt" data-step-key="yt"><span class="ss-n">5</span><span class="ss-lb">유튜브</span></button>
       <span class="ss-arrow" aria-hidden="true">›</span>
       <button type="button" class="ss-i" data-goto="insta" data-step-key="insta"><span class="ss-n">6</span><span class="ss-lb">인스타</span></button>
-      <span class="ss-progress" id="ssProgress">1 / 6</span>
+      <span class="ss-arrow" aria-hidden="true">›</span>
+      <button type="button" class="ss-i" data-goto="final" data-step-key="final"><span class="ss-n">7</span><span class="ss-lb">최종 검수·발행</span></button>
+      <span class="ss-progress" id="ssProgress">1 / 7</span>
     </div>
 
     <!-- 0. 앱 홈 (모바일 홈 화면 · 주제 확정 후) -->
@@ -884,7 +996,7 @@
     <!-- 1. 주제선정 -->
     <section class="panel is-on" id="p-topic" data-panel="topic" role="tabpanel" aria-label="주제선정">
       <div class="phead">
-        <div class="phead-top"><span class="pkicker">1 / 6 · STEP 1 · 주제선정</span><span class="pstate" id="stateTopic">주제 미선택</span></div>
+        <div class="phead-top"><span class="pkicker">1 / 7 · STEP 1 · 주제선정</span><span class="pstate" id="stateTopic">주제 미선택</span></div>
         <h2 class="ptitle">🎯 주제선정</h2>
         <p class="pdesc">추천 주제어에서 고르거나 직접 입력하세요. 입력창에 <b>‘랜덤’</b> 또는 <b>‘임의’</b>를 넣고 엔터를 치면 추천 주제 중 하나가 자동으로 선택됩니다.</p>
       </div>
@@ -921,7 +1033,7 @@
       </div>
       <div class="stepnav">
         <button type="button" class="btn sn-prev" disabled aria-disabled="true">← 이전 단계</button>
-        <span class="sn-count">1 / 6 · 주제선정</span>
+        <span class="sn-count">1 / 7 · 주제선정</span>
         <button type="button" class="btn primary sn-next" data-goto="naver">다음: 🟢 네이버 톤 설정 →</button>
       </div>
     </section>
@@ -929,7 +1041,7 @@
     <!-- 2. 네이버 -->
     <section class="panel" id="p-naver" data-panel="naver" role="tabpanel" aria-label="네이버 톤 설정">
       <div class="phead">
-        <div class="phead-top"><span class="pkicker">2 / 6 · 네이버</span><span class="pstate" id="stateNaver">💸 실속형 · 2문장</span></div>
+        <div class="phead-top"><span class="pkicker">2 / 7 · 네이버</span><span class="pstate" id="stateNaver">💸 실속형 · 2문장</span></div>
         <h2 class="ptitle">🟢 네이버 톤 설정</h2>
         <p class="pdesc">savejeong · ‘세정아빠의 짠테크 가계부’ — 1인칭 경험에 숫자를 붙이는 블로그입니다. 톤 하나를 고르고 단락을 끊는 기준을 정하세요.</p>
       </div>
@@ -953,7 +1065,7 @@
       </div>
       <div class="stepnav">
         <button type="button" class="btn sn-prev" data-goto="topic">← 이전: 🎯 주제선정</button>
-        <span class="sn-count">2 / 6 · 네이버</span>
+        <span class="sn-count">2 / 7 · 네이버</span>
         <button type="button" class="btn primary sn-next" data-goto="tistory">다음: 🟠 구글(티스토리) 톤 설정 →</button>
       </div>
     </section>
@@ -961,7 +1073,7 @@
     <!-- 3. 티스토리 -->
     <section class="panel" id="p-tistory" data-panel="tistory" role="tabpanel" aria-label="티스토리 톤 설정">
       <div class="phead">
-        <div class="phead-top"><span class="pkicker">3 / 6 · 구글(티스토리)</span><span class="pstate" id="stateTistory">💸 실속형 · 표·체크·FAQ</span></div>
+        <div class="phead-top"><span class="pkicker">3 / 7 · 구글(티스토리)</span><span class="pstate" id="stateTistory">💸 실속형 · 표·체크·FAQ</span></div>
         <h2 class="ptitle">🟠 구글(티스토리) 톤 설정</h2>
         <p class="pdesc">dodoapple0331 · ‘10년 후의 나를 위해’ — 같은 주제를 검색 정보형으로 다시 씁니다. 톤과 애드센스 정보형 구성을 정하세요.</p>
       </div>
@@ -985,7 +1097,7 @@
       </div>
       <div class="stepnav">
         <button type="button" class="btn sn-prev" data-goto="naver">← 이전: 🟢 네이버 톤 설정</button>
-        <span class="sn-count">3 / 6 · 구글(티스토리)</span>
+        <span class="sn-count">3 / 7 · 구글(티스토리)</span>
         <button type="button" class="btn primary sn-next" data-goto="threads">다음: 🧵 스레드 톤 설정 →</button>
       </div>
     </section>
@@ -993,7 +1105,7 @@
     <!-- 4. 스레드 -->
     <section class="panel" id="p-threads" data-panel="threads" role="tabpanel" aria-label="스레드 톤 설정">
       <div class="phead">
-        <div class="phead-top"><span class="pkicker">4 / 6 · 스레드</span><span class="pstate" id="stateThreads">반말 1~2줄 · 댓글 OFF</span></div>
+        <div class="phead-top"><span class="pkicker">4 / 7 · 스레드</span><span class="pstate" id="stateThreads">반말 1~2줄 · 댓글 OFF</span></div>
         <h2 class="ptitle">🧵 스레드 톤 설정</h2>
         <p class="pdesc">@savejeong.pick — 본문 1개만 올립니다. 짧은 반말 한두 줄로 끝내고, 댓글 타래는 제휴를 받을 때 그 자리에 링크를 두려고 비워 둡니다.</p>
       </div>
@@ -1020,7 +1132,7 @@
       </div>
       <div class="stepnav">
         <button type="button" class="btn sn-prev" data-goto="tistory">← 이전: 🟠 구글(티스토리) 톤 설정</button>
-        <span class="sn-count">4 / 6 · 스레드</span>
+        <span class="sn-count">4 / 7 · 스레드</span>
         <button type="button" class="btn primary sn-next" data-goto="yt">다음: 🎬 유튜브 (음악·이미지·자막) →</button>
       </div>
     </section>
@@ -1028,7 +1140,7 @@
     <!-- 5. 유튜브 -->
     <section class="panel" id="p-yt" data-panel="yt" role="tabpanel" aria-label="유튜브 음악 이미지 자막">
       <div class="phead">
-        <div class="phead-top"><span class="pkicker">5 / 6 · 유튜브</span><span class="pstate" id="stateYt">로파이 · 5장면 · 중앙</span></div>
+        <div class="phead-top"><span class="pkicker">5 / 7 · 유튜브</span><span class="pstate" id="stateYt">로파이 · 5장면 · 중앙</span></div>
         <h2 class="ptitle">🎬 유튜브 · 음악 · 이미지 · 자막</h2>
         <p class="pdesc">세픽 · 20초 쇼츠. 정지 이미지 대신 장면이 움직이는 구조로 만들고, 자막 위치를 미리 정해 두면 편집이 빨라집니다.</p>
       </div>
@@ -1071,7 +1183,7 @@
       </div>
       <div class="stepnav">
         <button type="button" class="btn sn-prev" data-goto="threads">← 이전: 🧵 스레드 톤 설정</button>
-        <span class="sn-count">5 / 6 · 유튜브</span>
+        <span class="sn-count">5 / 7 · 유튜브</span>
         <button type="button" class="btn primary sn-next" data-goto="insta">다음: 📸 인스타그램 (음악·이미지·자막) →</button>
       </div>
     </section>
@@ -1079,7 +1191,7 @@
     <!-- 6. 인스타그램 -->
     <section class="panel" id="p-insta" data-panel="insta" role="tabpanel" aria-label="인스타그램 음악 이미지 자막">
       <div class="phead">
-        <div class="phead-top"><span class="pkicker">6 / 6 · 인스타그램 · 마지막 단계</span><span class="pstate" id="stateInsta">로파이 · 카드뉴스 · 1줄</span></div>
+        <div class="phead-top"><span class="pkicker">6 / 7 · 인스타그램</span><span class="pstate" id="stateInsta">로파이 · 카드뉴스 · 1줄</span></div>
         <h2 class="ptitle">📸 인스타그램 · 음악 · 이미지 · 자막</h2>
         <p class="pdesc">@savejeong.pick — 4:5 피드와 릴스. 세 항목을 각각 1개씩 고르면 오른쪽 요약과 프롬프트에 그대로 들어갑니다.</p>
       </div>
@@ -1125,8 +1237,66 @@
       </div>
       <div class="stepnav">
         <button type="button" class="btn sn-prev" data-goto="yt">← 이전: 🎬 유튜브</button>
-        <span class="sn-count">6 / 6 · 인스타그램 · 마지막</span>
-        <button type="button" class="btn primary sn-next sn-done" id="instaDone">🤖 3개 AI 교차검증·비교 →</button>
+        <span class="sn-count">6 / 7 · 인스타그램</span>
+        <button type="button" class="btn primary sn-next sn-done" id="instaDone">다음: 🚀 최종 추천·발행 →</button>
+      </div>
+    </section>
+
+    <!-- 7. 최종 검수 · 임시저장 · 발행 -->
+    <section class="panel" id="p-final" data-panel="final" role="tabpanel" aria-label="최종 검수 임시저장 발행">
+      <div class="phead">
+        <div class="phead-top"><span class="pkicker">7 / 7 · STEP 7 · 마지막 단계</span><span class="pstate" id="stateFinal">6대 점검 0 / 6</span></div>
+        <h2 class="ptitle">🚀 최종 검수 · 임시저장 · 발행</h2>
+        <p class="pdesc">추천 글의 이유와 수치를 확인하고, 5채널 작성글을 미리 본 뒤 임시저장하세요. <b>발행 전 필수 주의사항 6가지</b>를 모두 확인해야 <b>🚀 발행하기</b>가 열립니다.</p>
+      </div>
+      <div class="pbody">
+
+        <!-- 1) 추천 글 -->
+        <div class="sect">
+          <div class="sect-h"><h3>1) 추천 글 · 이유와 수치분석</h3><span id="finAiMeta">ChatGPT · 0/100</span><span class="req">3사 교차검증</span></div>
+          <div class="fin-vers" id="finVers" role="group" aria-label="발행할 AI 버전 선택"></div>
+          <div class="recbox">
+            <h4 id="finRecTitle">추천 버전을 불러오는 중입니다</h4>
+            <p id="finRecLead"></p>
+            <ul id="finRecList"></ul>
+            <div class="mtgrid" id="finMetrics"></div>
+          </div>
+          <div class="ftab" id="finFactTable"></div>
+          <p class="ft-sum" id="finFactSum"></p>
+        </div>
+
+        <!-- 2) 채널별 미리보기 · 임시저장 -->
+        <div class="sect">
+          <div class="sect-h"><h3>2) 채널별 작성글 미리보기 · 임시저장</h3><span id="finDraftMeta">임시저장 0건</span><span class="req dbadge" id="draftBadge">미저장</span></div>
+          <div class="ctabs" id="finTabs" role="tablist" aria-label="채널 미리보기"></div>
+          <div id="finDraft"></div>
+          <div class="draft-actions">
+            <button type="button" class="btn primary" id="draftSave">💾 임시저장</button>
+            <button type="button" class="btn" id="draftSaveAll">💾 5채널 모두 임시저장</button>
+            <span class="hint" id="draftTip">주제·톤·음악·이미지·자막 설정이 그대로 담깁니다.</span>
+          </div>
+        </div>
+
+        <!-- 3) 6대 주의사항 · 발행 -->
+        <div class="sect">
+          <div class="sect-h"><h3>3) 발행 전 필수 주의사항 6가지</h3><span id="finCheckMeta">0 / 6 확인</span></div>
+          <div class="sixbar">
+            <button type="button" class="btn" id="sixAll">✅ 전체 일괄 확인</button>
+            <button type="button" class="btn" id="sixNone">전체 해제</button>
+            <span id="sixHint"></span>
+          </div>
+          <div class="sixchk" id="finChecks"></div>
+          <div class="pubbar">
+            <button type="button" class="btn primary lg" id="publishBtn" disabled aria-disabled="true">🚀 발행하기</button>
+            <span id="pubHint">6가지 확인이 남아 있습니다 (6 / 6 필요)</span>
+          </div>
+          <div class="pubdone" id="pubDone" hidden></div>
+        </div>
+      </div>
+      <div class="stepnav">
+        <button type="button" class="btn sn-prev" data-goto="insta">← 이전: 📸 인스타그램</button>
+        <span class="sn-count">7 / 7 · 최종 검수·발행</span>
+        <button type="button" class="btn" data-goto="topic">🎯 처음부터 다시</button>
       </div>
     </section>
 
@@ -1239,6 +1409,11 @@
         <p class="pdesc">날짜별 발행 기록과 실제 라이브 URL입니다. 채널 이름을 누르면 그 글로 이동하고, 수익을 넣으면 통계의 ROI에 반영됩니다.</p>
       </div>
       <div class="pbody">
+        <div class="sect">
+          <div class="sect-h"><h3>📝 임시저장 · 발행 지시</h3><span id="draftCount">0건</span></div>
+          <div class="pubdone" id="pubRecord" hidden></div>
+          <div class="dlist" id="draftList"></div>
+        </div>
         <div class="posts" id="postList"></div>
         <div class="sect">
           <div class="note"><span class="ni">🧾</span><div><b>미발행도 기록합니다</b> — 11/28은 블로그 2곳만 발행하고 인스타·유튜브·스레드는 지시로 올리지 않았습니다. 다음 회차에 무엇이 남았는지 보이도록 회색 점선으로 표시했습니다.</div></div>
@@ -1425,6 +1600,25 @@
     checklist: '✅ 체크리스트형', mentor: '☕ 멘토 조언형', couple: '💑 부부 대화형'
   };
 
+  /* 7단계 — 발행 전 필수 주의사항 6가지 */
+  var FIN_CHECKS = [
+    { id: 'exposure', t: '상위노출 되기', d: '롱테일 키워드를 제목 앞에 두고, 소제목·메타가 검색 질문에 그대로 답하는가' },
+    { id: 'policy', t: '각 플랫폼 위반사항 체크', d: '애드포스트·애드센스·인스타·유튜브·스레드 정책에 걸리는 표현·링크·저작물이 0건인가' },
+    { id: 'dwell', t: '구독자 및 방문자의 체류시간 확보 미디어인지', d: '2~3문장 단락·시각화·3초 훅으로 끝까지 읽거나 보게 만드는가' },
+    { id: 'legal', t: '법적인 문제여부', d: '수익·진단·추천을 단정한 문장이 없고, 날짜·금액·비율을 1차 공식 출처로 확인했는가' },
+    { id: 'ftc', t: '공정위 확인', d: '광고·제휴 홀드 0건이고, 제휴를 켰다면 고지 문구가 본문 앞에 있는가' },
+    { id: 'copy', t: '저작권 확인', d: '자체·CC0 이미지와 BGM만 쓰고, 무단 캡처·타사 로고가 0건인가' }
+  ];
+
+  /* 7단계 — 채널별 미리보기 탭 */
+  var FIN_CH = [
+    { id: 'naver', label: '🟢 네이버' },
+    { id: 'tistory', label: '🟠 티스토리' },
+    { id: 'threads', label: '🧵 스레드' },
+    { id: 'yt', label: '🎬 유튜브' },
+    { id: 'insta', label: '📸 인스타그램' }
+  ];
+
   var STATS = [
     { key: 'naver', name: '네이버', views: 5, visits: 5, note: '유입: 통합검색 50% · 블로그 홈', color: '#03c75a' },
     { key: 'tistory', name: '티스토리', views: 9, visits: 8, note: '색인 유입 0 · 직접 유입 추정', color: '#f2721b' },
@@ -1481,7 +1675,7 @@
 
   function defaultState() {
     return {
-      v: 3,
+      v: 4,
       topic: '',
       topicSource: '',
       lastPick: -1,
@@ -1503,6 +1697,8 @@
       affiliate: false,
       metrics: [],
       posts: {},
+      final: { channel: 'naver', checks: {}, published: null },
+      drafts: [],
       savedAt: ''
     };
   }
@@ -1586,6 +1782,44 @@
     }
     d.metrics = Object.prototype.toString.call(raw.metrics) === '[object Array]' ? raw.metrics : [];
     d.posts = (raw.posts && typeof raw.posts === 'object') ? raw.posts : {};
+
+    /* 7단계 — 채널 탭·6대 점검·발행 기록 */
+    var rf = (raw.final && typeof raw.final === 'object') ? raw.final : {};
+    for (var fc = 0; fc < FIN_CHECKS.length; fc++) {
+      d.final.checks[FIN_CHECKS[fc].id] = !!(rf.checks && rf.checks[FIN_CHECKS[fc].id] === true);
+    }
+    for (var fd = 0; fd < FIN_CH.length; fd++) {
+      if (rf.channel === FIN_CH[fd].id) { d.final.channel = rf.channel; }
+    }
+    if (rf.published && typeof rf.published === 'object' && rf.published.ts) {
+      d.final.published = {
+        ts: String(rf.published.ts),
+        ai: rf.published.ai === 'gemini' || rf.published.ai === 'claude' ? rf.published.ai : 'chatgpt',
+        score: parseInt(rf.published.score, 10) || 0,
+        topic: String(rf.published.topic || ''),
+        channels: Object.prototype.toString.call(rf.published.channels) === '[object Array]' ? rf.published.channels : [],
+        drafts: parseInt(rf.published.drafts, 10) || 0
+      };
+    }
+
+    /* 7단계 — 임시저장 묶음 */
+    d.drafts = [];
+    if (Object.prototype.toString.call(raw.drafts) === '[object Array]') {
+      for (var dd = 0; dd < raw.drafts.length && d.drafts.length < 60; dd++) {
+        var one = raw.drafts[dd];
+        if (!one || typeof one !== 'object' || !one.channel) { continue; }
+        d.drafts.push({
+          id: String(one.id || ('d' + dd)),
+          channel: String(one.channel),
+          label: String(one.label || ''),
+          topic: String(one.topic || ''),
+          ai: String(one.ai || ''),
+          ts: String(one.ts || ''),
+          meta: Object.prototype.toString.call(one.meta) === '[object Array]' ? one.meta.slice(0, 6).map(String) : [],
+          text: String(one.text || '').slice(0, 12000)
+        });
+      }
+    }
     d.savedAt = typeof raw.savedAt === 'string' ? raw.savedAt : '';
     return d;
   }
@@ -1637,14 +1871,15 @@
   }
 
   /* ===================== 순차 설정 단계 ===================== */
-  var STEP_ORDER = ['topic', 'naver', 'tistory', 'threads', 'yt', 'insta'];
+  var STEP_ORDER = ['topic', 'naver', 'tistory', 'threads', 'yt', 'insta', 'final'];
   var STEP_LABEL = {
     topic: '🎯 주제선정',
     naver: '🟢 네이버 톤 설정',
     tistory: '🟠 구글(티스토리) 톤 설정',
     threads: '🧵 스레드 톤 설정',
     yt: '🎬 유튜브 (음악·이미지·자막)',
-    insta: '📸 인스타그램 (음악·이미지·자막)'
+    insta: '📸 인스타그램 (음악·이미지·자막)',
+    final: '🚀 최종 검수·임시저장·발행'
   };
   function stepIndex(name) {
     for (var i = 0; i < STEP_ORDER.length; i++) { if (STEP_ORDER[i] === name) { return i; } }
@@ -1676,7 +1911,7 @@
       }
       var pr = $('ssProgress');
       if (pr) {
-        if (idx > -1) { pr.innerHTML = (idx + 1) + ' / 6 <small>' + esc(STEP_LABEL[currentTab].replace(/^[^ ]+ /, '').replace(' 톤 설정', '').replace(' (음악·이미지·자막)', '')) + '</small>'; }
+        if (idx > -1) { pr.innerHTML = (idx + 1) + ' / 7 <small>' + esc(STEP_LABEL[currentTab].replace(/^[^ ]+ /, '').replace(' 톤 설정', '').replace(' (음악·이미지·자막)', '')) + '</small>'; }
         else if (currentTab === 'home') { pr.innerHTML = '앱 홈 <small>8개 바로가기</small>'; }
         else { pr.innerHTML = '보조 화면 <small>총괄·통계·글목록</small>'; }
       }
@@ -1715,6 +1950,11 @@
   }
 
   function focusAICompare() {
+    openFinal();
+  }
+
+  /* ⑥ 인스타 다음 → 7단계(최종 검수·발행)를 자연스럽게 연다 */
+  function openFinal() {
     var card = $('sumCard');
     if (card && String(card.className).indexOf('is-closed') > -1) {
       card.className = 'sumcard';
@@ -1722,14 +1962,14 @@
       if (tg) { tg.textContent = '접기'; tg.setAttribute('aria-expanded', 'true'); }
     }
     state.visited.insta = true;
-    renderSteps();
+    setTab('final', true);
+    renderFinal();
     var box = $('aiCmp');
     if (box) {
-      if (box.scrollIntoView) { box.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
       box.className = 'aicmp pulse';
       window.setTimeout(function () { box.className = 'aicmp'; }, 1600);
     }
-    toast('🤖 6단계 완료 — 3개 AI 교차검증에서 최고점 버전을 고르세요');
+    toast('🚀 마지막 단계 — 추천 이유 → 채널 미리보기·임시저장 → 6대 점검 → 발행');
     scheduleSave();
   }
 
@@ -1774,7 +2014,7 @@
       while (t && t !== document) {
         if (t.getAttribute && t.getAttribute('data-tab')) { setTab(t.getAttribute('data-tab'), true); return; }
         if (t.getAttribute && t.getAttribute('data-goto')) { setTab(t.getAttribute('data-goto'), true); return; }
-        if (t.id === 'instaDone') { focusAICompare(); return; }
+        if (t.id === 'instaDone') { openFinal(); return; }
         t = t.parentNode;
       }
     });
@@ -2332,9 +2572,11 @@
       '</article>';
     }
     box.innerHTML = out;
-    setText('cntPosts', String(POSTS.length));
+    var nd = (state.drafts || []).length;
+    setText('cntPosts', String(POSTS.length + nd));
     var sp = $('statePosts');
-    if (sp) { sp.textContent = POSTS.length + '건 · 발행 4회차'; }
+    if (sp) { sp.textContent = POSTS.length + '건 · 발행 4회차' + (nd ? ' · 임시저장 ' + nd : ''); }
+    renderDrafts();
   }
   function bindPosts() {
     var box = $('postList');
@@ -2355,6 +2597,604 @@
       if (roi) { roi.textContent = '—'; }
       scheduleSave();
     });
+  }
+
+  /* ===================== 7단계: 최종 검수 · 임시저장 · 발행 ===================== */
+  var ddArm = null;
+
+  function finalChecks() {
+    if (!state.final) { state.final = { channel: 'naver', checks: {}, published: null }; }
+    if (!state.final.checks) { state.final.checks = {}; }
+    return state.final.checks;
+  }
+  function checkCount() {
+    var c = finalChecks(), n = 0;
+    for (var i = 0; i < FIN_CHECKS.length; i++) { if (c[FIN_CHECKS[i].id] === true) { n++; } }
+    return n;
+  }
+  function allChecked() { return checkCount() === FIN_CHECKS.length; }
+  function canPublish() { return allChecked() && !!state.topic; }
+  function pubHintText() {
+    var n = checkCount();
+    if (!state.topic) { return '주제가 비어 있습니다 — 🎯 주제선정에서 먼저 정해 주세요'; }
+    if (n < FIN_CHECKS.length) {
+      return '발행 전 필수 주의사항 ' + (FIN_CHECKS.length - n) + '개가 남았습니다 (' + n + ' / 6 확인) — 모두 확인해야 발행하기가 열립니다';
+    }
+    return '✅ 6 / 6 확인 완료 — ' + aiName(state.ai.selected) + ' ' + aiScore(state.ai.selected) + '점 원고로 5채널 발행 지시문을 만듭니다';
+  }
+  function splitLabel() {
+    return state.naver.split === 'auto' ? '자동 문단' : state.naver.split + '문장마다 끊기';
+  }
+  function topicTitle() {
+    var t = String(state.topic || '').replace(/\s+/g, ' ').trim();
+    return t || '(주제 미선택)'; 
+  }
+  function topicBase() {
+    var t = String(state.topic || '').replace(/\s+/g, ' ').trim();
+    if (!t) { return '연말정산 월세 세액공제, 12월에 집주인 동의 없이 챙기는 법'; }
+    return t.split(',')[0].trim() || t;
+  }
+  function topicTags() {
+    var src = String(state.topic || '') + ' 연말정산 세액공제 12월 절세 가계부 체크리스트';
+    var words = src.replace(/[^가-힣A-Za-z0-9 ]/g, ' ').split(/\s+/);
+    var out = [];
+    for (var i = 0; i < words.length && out.length < 8; i++) {
+      var w = words[i];
+      if (w.length < 2 || out.indexOf(w) > -1) { continue; }
+      out.push(w);
+    }
+    return out;
+  }
+
+  function previewModel(ch) {
+    var full = topicTitle();
+    var base = topicBase();
+    var tags = topicTags();
+    var m = { ch: ch, label: '', title: '', meta: [], blocks: [], note: '' };
+
+    if (ch === 'naver') {
+      var nt = byId(TONES, state.naver.tone);
+      var hook = {
+        value: '숫자부터 놓겠습니다. ' + base + '에서 확인할 건 세 가지 — 대상, 한도, 마감입니다.',
+        story: '12월 첫째 주, 서류를 챙겨 놓고도 한 달을 미뤘습니다. ' + base + '는 미루면 그냥 사라집니다.',
+        qna: '“이거 나도 되나요?” — 됩니다. 다만 순서가 있습니다. ' + base + '는 조건 → 숫자 → 신청 순서로 보면 5분이면 끝납니다.',
+        checklist: '확인할 것은 네 가지입니다. 하나씩 지우면 5분이면 끝납니다. ' + base + ' 기준으로 적었습니다.',
+        mentor: '3년 해보니 ' + base + '는 12월 첫째 주에 끝내는 게 맞습니다. 늦게 하면 손해만 커집니다.',
+        couple: '“여보, 이거 우리도 되나?” “돼. 대신 12월 안에 해야 해.” ' + base + '는 말보다 순서가 중요합니다.'
+      }[nt.id] || '';
+      m.label = '네이버 · savejeong';
+      m.title = full;
+      m.meta = [nt.emoji + ' ' + nt.name, splitLabel(), state.naver.subheads ? '소제목 4개' : '소제목 없음', '1,500~1,800자', '사진 3장'];
+      m.blocks.push({ h: '제목 후보 3개 · 30~35자', kind: 'ol', items: [
+        full,
+        base + ' — 12월에 확인할 3단계',
+        base + ', 숫자로 먼저 확인하기'
+      ] });
+      m.blocks.push({ h: '첫 문단 (3초 훅) · 톤: ' + nt.name, kind: 'p', items: [hook, '톤 규칙 — ' + nt.rule] });
+      m.blocks.push({ h: '본문 구성', kind: 'ul', items: [
+        state.naver.subheads ? '소제목 4개 — ① 대상 확인 ② 숫자 계산 ③ 신청 순서 ④ 놓치기 쉬운 조건' : '소제목 없이 ' + splitLabel() + ' 문단만',
+        splitLabel() + ' · 한 문단에 정보 하나 · 1,500~1,800자',
+        '사진 3장 — 첫 문단 아래 표지 / ③ 중간 / ④ 마감 안내',
+        '마지막 문단: 3줄 요약 + 댓글 질문 1개'
+      ] });
+      m.blocks.push({ h: '태그 8개 · 3줄 요약', kind: 'p', items: [
+        '# ' + tags.join(' # '),
+        '요약 — 결론 1줄 → 조건 1줄 → 12월 마감 1줄.'
+      ] });
+      m.note = 'AI 원고를 붙이기 전 구성 골격입니다 · 실제 문장은 ' + aiName(state.ai.selected) + ' 선택본으로 채웁니다.';
+      return m;
+    }
+
+    if (ch === 'tistory') {
+      var tt = byId(TONES, state.tistory.tone);
+      var comp = [state.tistory.table ? 'HTML 표' : '', state.tistory.checklist ? '체크리스트' : '', state.tistory.faq ? 'FAQ 3문항' : ''].filter(Boolean);
+      var desc = (base + ' 조건과 숫자, 12월 마감 순서를 표와 체크리스트로 정리했습니다. 신청 전 확인할 항목만 골랐습니다.').slice(0, 150);
+      m.label = '티스토리 · dodoapple0331';
+      m.title = base + ' — 조건·숫자·마감 정리';
+      m.meta = [tt.emoji + ' ' + tt.name, comp.join(' · ') || '본문만', 'H1·H2·H3', '메타 ' + desc.length + '자'];
+      m.blocks.push({ h: 'H1 · 메타 디스크립션', kind: 'p', items: ['# ' + base, '메타 — ' + desc] });
+      m.blocks.push({ h: '첫 문단 (결론 먼저)', kind: 'p', items: [
+        '결론부터 — ' + base + '는 조건 확인 → 숫자 확인 → 신청 순서로 12월 안에 끝내면 됩니다.',
+        '톤 규칙 — ' + tt.rule
+      ] });
+      if (state.tistory.table) {
+        m.blocks.push({ h: '비교 표 (HTML · 모바일 3열 유지)', kind: 'ul', items: [
+          '구분 | 조건 | 금액·한도 | 마감',
+          '① | 총급여 기준 | (확인된 값) | 12월',
+          '② | 주택 요건 | (확인된 값) | 12월',
+          '③ | 신청 경로 | (확인된 값) | 다음 달 반영'
+        ] });
+      }
+      if (state.tistory.checklist) {
+        m.blocks.push({ h: '체크리스트 4~6줄', kind: 'ul', items: [
+          '□ 대상 조건 확인', '□ 필요 서류 준비', '□ 12월 신청 마감 확인', '□ 다음 달 반영 여부 확인'
+        ] });
+      }
+      if (state.tistory.faq) {
+        m.blocks.push({ h: 'FAQ 3문항 · 질문형 소제목, 답은 결론부터', kind: 'ol', items: [
+          'Q. 대상 조건은 무엇인가요?',
+          'Q. 12월에만 신청할 수 있나요?',
+          'Q. 놓치면 어떻게 되나요?'
+        ] });
+      }
+      m.note = '티스토리는 메타 입력칸이 없어 첫 문단에 핵심 문장을 둡니다 · 광고 코드·제휴 링크는 0건입니다.';
+      return m;
+    }
+
+    if (ch === 'threads') {
+      var sd = byId(THREAD_TONES, state.threads.tone);
+      var sample = sd.sample || '';
+      m.label = '스레드 · @savejeong.pick';
+      m.title = '본문 1개 · 답글 타래 OFF';
+      m.meta = [sd.name.replace(' (기본)', ''), sample.length + '자', '답글 타래 OFF', '링크 0건'];
+      m.blocks.push({ h: '본문', kind: 'p', items: ['“' + sample + '”', '현재 ' + sample.length + '자 — 30~100자 기준 안에 들어갑니다.'] });
+      m.blocks.push({ h: '발행 규칙', kind: 'ul', items: [
+        '반말 1~2줄 · 마침표 대신 ?·! · 번호(1/3) 없음 · 이모지 0~1개',
+        '답글 타래는 쓰지 않습니다 — 제휴 링크 자리로 비워 둡니다',
+        '같은 문장을 두 번 올리지 않게 첫 문장만 바꿔 A/B합니다'
+      ] });
+      m.note = '실제 계정에 올린 글에서 확인된 톤만 씁니다 · 링크·제휴 문구 0건.';
+      return m;
+    }
+
+    if (ch === 'yt') {
+      var ym = byId(YT.music, state.yt.music), yi = byId(YT.image, state.yt.image), yc = byId(YT.caption, state.yt.caption);
+      var capPos = state.yt.caption === 'center' ? '중앙 굵은 단어 싱크' : state.yt.caption === 'bottom' ? '하단 2줄' : '상단 고정 훅';
+      m.label = '유튜브 · 세픽 쇼츠';
+      m.title = base + ' #shorts';
+      m.meta = [ym.name, yi.name, yc.name, '20초 · 9:16'];
+      m.blocks.push({ h: '제목 후보 3개', kind: 'ol', items: [
+        base + ' #shorts',
+        base + ' 20초 정리 #shorts',
+        '12월에 놓치면 사라지는 ' + base + ' #shorts'
+      ] });
+      m.blocks.push({ h: '5장면 타임라인 (0.0~20.0s)', kind: 'ol', items: [
+        'S1 0.0~3.0 — 자막 “12월, 이거 안 하면 사라집니다” / 내레이션 숫자 1개 / 화면 카드 표지 + 카운트업',
+        'S2 3.0~7.0 — 자막 “대상은?” / 내레이션 조건 3줄 / 화면 조건 슬라이드',
+        'S3 7.0~12.0 — 자막 “숫자로 보면” / 내레이션 계산 한 줄 / 화면 데이터 강조',
+        'S4 12.0~17.0 — 자막 “신청 순서 3단계” / 내레이션 단계 안내 / 화면 단계 카드',
+        'S5 17.0~20.0 — 자막 “12월 마감” / 내레이션 마무리 한 줄 / 화면 저장·구독 유도'
+      ] });
+      m.blocks.push({ h: '자막 · 화면 · 음악', kind: 'ul', items: [
+        '자막 — ' + capPos + ' (유튜브 UI를 피해 상단 1/3 또는 중앙)',
+        '화면 — ' + yi.name + (state.yt.image === 'motion' ? ' · 장면마다 0.5~2초 이동' : ''),
+        '음악 — ' + ym.name + ' · CC0만 사용, 저작권 표기 불필요'
+      ] });
+      m.note = '첫 1초에 숫자 1개 · 이탈률 90%는 소재 불일치와 첫 1초를 먼저 봅니다.';
+      return m;
+    }
+
+    var im = byId(INSTA.music, state.insta.music), ii = byId(INSTA.image, state.insta.image), ic = byId(INSTA.caption, state.insta.caption);
+    m.label = '인스타그램 · @savejeong.pick';
+    m.title = base + ' · ' + ii.name;
+    m.meta = [im.name, ii.name, ic.name, '4:5 · 1080×1350'];
+    m.blocks.push({ h: ii.id === 'toon' ? '4컷 인스타툰' : '카드 6장', kind: 'ol', items: ii.id === 'toon' ? [
+      '1컷 — “여보, 이거 우리도 되나?” (부부 대사)',
+      '2컷 — “돼. 대신 12월 안에.”',
+      '3컷 — 조건 2줄 (자막 밖 처리)',
+      '4컷 — 신청 순서 3단계 · 저장 유도'
+    ] : [
+      '1장 표지 — ' + base,
+      '2장 문제 — 왜 12월인가',
+      '3장 조건 — 대상 3줄',
+      '4장 숫자 — 계산 한 줄',
+      '5장 순서 — 신청 3단계',
+      '6장 마무리 — 저장·공유 유도'
+    ] });
+    m.blocks.push({ h: '캡션 7줄 · 해시태그 8개', kind: 'p', items: [
+      '첫 줄 훅 → 조건 → 숫자 → 순서 → 질문. 줄바꿈 유지, 이모지는 끝에만.',
+      '# ' + tags.join(' # ')
+    ] });
+    m.blocks.push({ h: '음악 · 이미지 · 자막', kind: 'ul', items: [
+      '음악 — ' + im.name + (state.insta.music === 'mute' ? ' (음악 없이 글자만)' : ''),
+      '이미지 — ' + ii.name + ' · 대체텍스트(alt) 6개',
+      '자막 — ' + ic.name
+    ] });
+    m.note = '이미지에서 C2PA 메타데이터를 지워 ‘AI 콘텐츠’ 라벨을 피합니다 · 대체텍스트는 장마다 따로 씁니다.';
+    return m;
+  }
+
+  function modelHTML(m) {
+    var out = '<div class="dp"><div class="dp-head"><b>' + esc(m.label) + ' · 작성글 미리보기</b><div class="dp-meta">';
+    for (var i = 0; i < m.meta.length; i++) { out += '<span>' + esc(m.meta[i]) + '</span>'; }
+    out += '</div></div>';
+    if (m.title) { out += '<div class="dp-title">' + esc(m.title) + '</div>'; }
+    for (var b = 0; b < m.blocks.length; b++) {
+      var blk = m.blocks[b];
+      out += '<div class="dp-b"><h5>' + esc(blk.h) + '</h5>';
+      if (blk.kind === 'ol' || blk.kind === 'ul') {
+        out += '<' + blk.kind + '>';
+        for (var k = 0; k < blk.items.length; k++) { out += '<li>' + esc(blk.items[k]) + '</li>'; }
+        out += '</' + blk.kind + '>';
+      } else {
+        for (var p = 0; p < blk.items.length; p++) { out += '<p>' + esc(blk.items[p]) + '</p>'; }
+      }
+      out += '</div>';
+    }
+    if (m.note) { out += '<p class="dp-note">' + esc(m.note) + '</p>'; }
+    return out + '</div>';
+  }
+
+  function modelText(m) {
+    var out = ['[' + m.label + '] ' + m.title, '설정: ' + m.meta.join(' · '), ''];
+    for (var b = 0; b < m.blocks.length; b++) {
+      var blk = m.blocks[b];
+      out.push('## ' + blk.h);
+      for (var k = 0; k < blk.items.length; k++) {
+        out.push((blk.kind === 'ol' ? (k + 1) + '. ' : '- ') + blk.items[k]);
+      }
+      out.push('');
+    }
+    if (m.note) { out.push('※ ' + m.note); }
+    return out.join('\n');
+  }
+
+  function draftFor(ch) {
+    var list = state.drafts || [], t = state.topic || '';
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].channel === ch && list[i].topic === t) { return list[i]; }
+    }
+    return null;
+  }
+
+  function renderFinal() {
+    if (!state.final) { state.final = { channel: 'naver', checks: {}, published: null }; }
+    var sel = state.ai.selected;
+    var best = bestAI();
+    var sc = aiScore(sel);
+    var v = state.ai.versions[sel];
+    var f = FACT[v.fact] || FACT.todo;
+    var i, k;
+
+    /* AI 버전 선택 칩 */
+    var vb = $('finVers');
+    if (vb) {
+      var vh = '';
+      for (i = 0; i < AI_DEFS.length; i++) {
+        var d = AI_DEFS[i];
+        var on = d.id === sel;
+        var ds = aiScore(d.id);
+        var df = FACT[state.ai.versions[d.id].fact] || FACT.todo;
+        vh += '<button type="button" class="fver' + (on ? ' is-on' : '') + '" data-fai="' + d.id + '" aria-pressed="' + (on ? 'true' : 'false') + '">' +
+          '<b>' + esc(d.name) + (best === d.id ? ' 🏆' : '') + '</b>' +
+          '<small>' + ds + '/100 · ' + esc(df.short) + '</small></button>';
+      }
+      vb.innerHTML = vh;
+    }
+    setText('finAiMeta', aiName(sel) + ' · ' + sc + '/100 · ' + f.short);
+
+    /* 추천 이유 + 수치분석 */
+    var rt = $('finRecTitle'), rl = $('finRecLead'), rlist = $('finRecList'), mt = $('finMetrics');
+    if (rt) {
+      rt.textContent = (best === sel ? '🏆 ' : '📌 ') + aiName(sel) + ' ' + sc + '/100 — 이 버전으로 발행합니다';
+    }
+    if (rl) {
+      rl.textContent = best === sel
+        ? '4개 항목 합계가 3사 중 가장 높아 추천된 버전입니다. 팩트 상태는 ' + f.text + '.'
+        : '최고점은 🏆 ' + aiName(best) + ' ' + aiScore(best) + '점입니다. 이 버전으로 간다면 아래에서 낮은 항목만 보완하세요.';
+    }
+    if (rlist) {
+      var lh = '';
+      for (k = 0; k < 4; k++) {
+        var mine = v.s[k], top = -1, who = '';
+        for (i = 0; i < AI_DEFS.length; i++) {
+          var os = state.ai.versions[AI_DEFS[i].id].s[k];
+          if (os > top) { top = os; who = AI_DEFS[i].name; }
+        }
+        var note;
+        if (mine >= 24) { note = '3사 최고 수준 — 그대로 둡니다'; }
+        else if (mine === top) { note = '3사 공동 1위'; }
+        else if (top - mine <= 2) { note = who + ' ' + top + '점과 ' + (top - mine) + '점 차 — 문장 하나만 다듬으면 따라갑니다'; }
+        else { note = who + ' ' + top + '점보다 ' + (top - mine) + '점 낮음 — 이 항목은 발행 전에 손봐야 합니다'; }
+        lh += '<li><b>' + SC_LABEL[k] + ' ' + mine + '/25</b> — ' + esc(note) + '</li>';
+      }
+      rlist.innerHTML = lh;
+    }
+    if (mt) {
+      var mh = '';
+      for (k = 0; k < 4; k++) {
+        var w = Math.round(v.s[k] / 25 * 100);
+        mh += '<div class="mtr' + (v.s[k] < 20 ? ' low' : '') + '"><div class="mt-h"><span>' + SC_LABEL[k] + '</span><em>' + v.s[k] + ' / 25</em></div>' +
+          '<div class="mt-b"><i style="width:' + Math.max(4, w) + '%"></i></div></div>';
+      }
+      mt.innerHTML = mh;
+    }
+
+    /* 3사 교차 팩트검증 요약 */
+    var ft = $('finFactTable');
+    var cnt = { ok: 0, warn: 0, todo: 0 };
+    if (ft) {
+      var th = '<div class="ft-row"><span>AI</span><span>총점</span><span>3사 교차 팩트검증</span></div>';
+      for (i = 0; i < AI_DEFS.length; i++) {
+        var ad = AI_DEFS[i];
+        var af = FACT[state.ai.versions[ad.id].fact] || FACT.todo;
+        cnt[af.cls] = (cnt[af.cls] || 0) + 1;
+        th += '<div class="ft-row' + (ad.id === sel ? ' is-on' : '') + '"><span>' + esc(ad.name) + (ad.id === sel ? ' ✓' : '') + '</span>' +
+          '<span>' + aiScore(ad.id) + '</span><span>' + esc(af.text) + '</span></div>';
+      }
+      ft.innerHTML = th;
+    }
+    setText('finFactSum', '팩트 요약 — ✅ 일치 ' + cnt.ok + ' · ⚠️ 차이 ' + cnt.warn + ' · ⛔ 미확인 ' + cnt.todo +
+      (cnt.warn + cnt.todo > 0 ? ' · ⚠️·⛔ 표시가 있으면 그 숫자는 발행 전 1차 공식 출처로 다시 확인합니다.' : ' · 세 버전 숫자가 모두 일치합니다.'));
+
+    /* 채널 탭 */
+    var tb = $('finTabs');
+    var chNow = state.final.channel || 'naver';
+    var valid = false;
+    for (i = 0; i < FIN_CH.length; i++) { if (FIN_CH[i].id === chNow) { valid = true; } }
+    if (!valid) { chNow = 'naver'; state.final.channel = 'naver'; }
+    if (tb) {
+      var cth = '';
+      for (i = 0; i < FIN_CH.length; i++) {
+        var chd = FIN_CH[i], on2 = chd.id === chNow;
+        cth += '<button type="button" class="ctab' + (on2 ? ' is-on' : '') + '" data-fch="' + chd.id + '" role="tab" aria-selected="' + (on2 ? 'true' : 'false') + '">' +
+          esc(chd.label) + (draftFor(chd.id) ? '<span class="d" title="임시저장 있음"></span>' : '') + '</button>';
+      }
+      tb.innerHTML = cth;
+    }
+    var db = $('finDraft');
+    if (db) { db.innerHTML = modelHTML(previewModel(chNow)); }
+    var badge = $('draftBadge');
+    if (badge) {
+      var dr = draftFor(chNow);
+      badge.className = 'req dbadge' + (dr ? ' on' : '');
+      badge.textContent = dr ? ('📝 임시저장 · ' + String(dr.ts).slice(11, 16)) : '미저장';
+    }
+    setText('finDraftMeta', '임시저장 ' + (state.drafts || []).length + '건');
+
+    /* 6대 주의사항 */
+    var cb = $('finChecks');
+    if (cb) {
+      var chh = '';
+      for (i = 0; i < FIN_CHECKS.length; i++) {
+        var it = FIN_CHECKS[i];
+        var ok2 = finalChecks()[it.id] === true;
+        chh += '<label class="six' + (ok2 ? ' is-on' : '') + '"><input type="checkbox" data-fcheck="' + it.id + '"' + (ok2 ? ' checked' : '') + ' />' +
+          '<span class="six-n">' + (ok2 ? '✓' : (i + 1)) + '</span>' +
+          '<span class="six-t"><b>' + esc(it.t) + '</b><small>' + esc(it.d) + '</small></span></label>';
+      }
+      cb.innerHTML = chh;
+    }
+    var n = checkCount();
+    setText('finCheckMeta', n + ' / 6 확인');
+    setText('sixHint', n === FIN_CHECKS.length ? '✅ 6가지 모두 확인됨' : (FIN_CHECKS.length - n) + '개 남음');
+    setText('stateFinal', '6대 점검 ' + n + ' / 6');
+    var pbtn = $('publishBtn');
+    if (pbtn) {
+      var can = canPublish();
+      pbtn.disabled = !can;
+      pbtn.setAttribute('aria-disabled', can ? 'false' : 'true');
+    }
+    setText('pubHint', pubHintText());
+    var pd = $('pubDone');
+    if (pd) {
+      var pb2 = state.final.published;
+      if (pb2) {
+        pd.hidden = false;
+        pd.innerHTML = '🚀 ' + esc(pb2.ts) + ' · ' + esc(aiName(pb2.ai)) + ' ' + pb2.score + '점 · ' + (pb2.channels || []).length + '채널 발행 지시문을 만들었습니다 · 임시저장 ' + pb2.drafts + '건';
+      } else {
+        pd.hidden = true;
+        pd.innerHTML = '';
+      }
+    }
+  }
+
+  function renderDrafts() {
+    var list = state.drafts || [];
+    setText('draftCount', list.length + '건');
+    setText('cntPosts', String(POSTS.length + list.length));
+    var sp = $('statePosts');
+    if (sp) { sp.textContent = POSTS.length + '건 · 발행 4회차' + (list.length ? ' · 임시저장 ' + list.length : ''); }
+    var box = $('draftList');
+    if (box) {
+      if (!list.length) {
+        box.innerHTML = '<div class="empty">아직 임시저장한 작성글이 없습니다. 7단계에서 채널을 고르고 💾 임시저장을 누르면 여기에 📝 임시저장 상태로 쌓입니다.</div>';
+      } else {
+        var out = '';
+        for (var i = 0; i < list.length; i++) {
+          var d = list[i];
+          out += '<div class="drow" data-drow="' + esc(d.id) + '"><span class="db">📝 임시저장</span><b>' + esc(d.label) + '</b>' +
+            '<small>' + esc(d.ts) + (d.ai ? ' · ' + esc(aiName(d.ai)) : '') + '</small>' +
+            '<span class="dr-t" style="flex:1 1 100%; font-size:12px; color:var(--ink-2)">' + esc(d.topic || '(주제 없음)') + '</span>' +
+            '<span class="dr-act"><button type="button" data-dview="' + esc(d.id) + '">미리보기</button>' +
+            '<button type="button" data-ddel="' + esc(d.id) + '">삭제</button></span></div>';
+        }
+        box.innerHTML = out;
+      }
+    }
+    var pr = $('pubRecord');
+    if (pr) {
+      var pbl = state.final && state.final.published;
+      if (pbl) {
+        pr.hidden = false;
+        pr.innerHTML = '🚀 발행 지시 완료 · ' + esc(pbl.ts) + ' · ' + esc(aiName(pbl.ai)) + ' ' + pbl.score + '점 · ' + (pbl.channels || []).length + '채널 · 6대 점검 6 / 6 · 임시저장 ' + pbl.drafts + '건';
+      } else {
+        pr.hidden = true;
+        pr.innerHTML = '';
+      }
+    }
+  }
+
+  function saveDraft(ch, silent) {
+    if (!state.topic) { toast('주제를 먼저 골라주세요 — 🎯 주제선정에서 정하면 임시저장에 함께 기록됩니다'); return false; }
+    var m = previewModel(ch);
+    var rec = {
+      id: 'd' + new Date().getTime() + '-' + ch,
+      channel: ch, label: m.label, topic: state.topic || '', ai: state.ai.selected,
+      ts: stamp(), meta: m.meta.slice(0, 6), text: modelText(m)
+    };
+    if (!state.drafts) { state.drafts = []; }
+    var old = -1;
+    for (var i = 0; i < state.drafts.length; i++) {
+      if (state.drafts[i].channel === ch && state.drafts[i].topic === rec.topic) { old = i; break; }
+    }
+    if (old > -1) { rec.id = state.drafts[old].id; state.drafts[old] = rec; }
+    else { state.drafts.unshift(rec); }
+    if (state.drafts.length > 60) { state.drafts = state.drafts.slice(0, 60); }
+    persist();
+    renderFinal();
+    renderDrafts();
+    if (!silent) { toast('💾 ' + m.label + ' 작성글을 임시저장했습니다 · 글목록 탭에서 📝 임시저장으로 확인'); }
+    return true;
+  }
+
+  function publishInstruction() {
+    var L = channelLines();
+    var sel = state.ai.selected;
+    var lines = [];
+    lines.push('🚀 [5채널 발행 지시] — 콘텐츠 스튜디오 7단계에서 보냄');
+    lines.push('만든 시각: ' + stamp());
+    lines.push('주제: ' + topicOr());
+    lines.push('원고: ' + aiName(sel) + ' 선택본 · 트래픽 ' + aiScore(sel) + '/100 · 팩트 ' + (FACT[state.ai.versions[sel].fact] || FACT.todo).text);
+    lines.push('비교: ' + aiCompareLine());
+    lines.push('');
+    lines.push('[발행 전 6대 주의사항 — 모두 확인]');
+    for (var i = 0; i < FIN_CHECKS.length; i++) { lines.push('  ' + (i + 1) + '. ' + FIN_CHECKS[i].t + ' ✓'); }
+    lines.push('');
+    lines.push('[채널 설정]');
+    lines.push('· 네이버 ' + L.naver);
+    lines.push('· 티스토리 ' + L.tistory);
+    lines.push('· 스레드 ' + L.threads);
+    lines.push('· 유튜브 ' + L.yt);
+    lines.push('· 인스타그램 ' + L.insta);
+    lines.push('');
+    lines.push('[임시저장] ' + (state.drafts || []).length + '건 — 글목록 탭에서 확인');
+    lines.push('');
+    lines.push('[발행 순서] 네이버 → 티스토리 → 스레드 → 유튜브 → 인스타그램');
+    lines.push('[지킬 것]');
+    lines.push('- 광고·제휴 ' + (state.affiliate ? '설정 ON이지만 승인 전이므로 본문 삽입 0건' : '0건') + ' · 스레드는 본문 1개만');
+    lines.push('- 날짜·금액·비율은 1차 공식 출처로 확인된 값만. 확인 못 한 숫자는 넣지 않는다.');
+    lines.push('- 블로그 이미지 가로 1200px JPEG 220KB 이하, 인스타·쇼츠 1080px, C2PA 메타데이터 제거.');
+    lines.push('- 발행 후 5채널 라이브 URL을 글목록에 기록하고, 결과를 원영님께 보고한다.');
+    return lines.join('\n');
+  }
+
+  function doPublish() {
+    if (!canPublish()) { toast(pubHintText()); return; }
+    var rec = {
+      ts: stamp(),
+      ai: state.ai.selected,
+      score: aiScore(state.ai.selected),
+      topic: state.topic,
+      channels: (function () { var a = []; for (var i = 0; i < FIN_CH.length; i++) { a.push(FIN_CH[i].id); } return a; })(),
+      drafts: (state.drafts || []).length
+    };
+    state.final.published = rec;
+    persist();
+    var text = publishInstruction();
+    copyText(text, '🚀 발행 지시문을 복사했습니다');
+    openPreview(text, '🚀 최종 발행 지시문 · ' + aiName(rec.ai) + ' ' + rec.score + '점 · ' + rec.ts);
+    renderFinal();
+    renderDrafts();
+    toast('🚀 발행 지시문을 만들었습니다 — 피클(앵두)에게 그대로 보내면 5채널 발행이 진행됩니다');
+  }
+
+  function bindFinal() {
+    document.addEventListener('click', function (ev) {
+      var t = ev.target;
+      while (t && t !== document) {
+        if (t.getAttribute) {
+          var fch = t.getAttribute('data-fch');
+          if (fch) {
+            state.final.channel = fch;
+            renderFinal();
+            scheduleSave();
+            return;
+          }
+          var fai = t.getAttribute('data-fai');
+          if (fai) {
+            state.ai.selected = fai;
+            renderAll();
+            scheduleSave();
+            toast('📌 ' + aiName(fai) + ' 버전으로 발행 준비 — ' + aiScore(fai) + '점');
+            return;
+          }
+          var dv = t.getAttribute('data-dview');
+          if (dv) {
+            var list = state.drafts || [];
+            for (var i = 0; i < list.length; i++) {
+              if (list[i].id === dv) {
+                openPreview(list[i].text, '📝 임시저장 · ' + list[i].label + ' · ' + list[i].ts);
+                return;
+              }
+            }
+            return;
+          }
+          var dd = t.getAttribute('data-ddel');
+          if (dd) {
+            if (!ddArm || ddArm.id !== dd) {
+              if (ddArm && ddArm.t) { window.clearTimeout(ddArm.t); }
+              ddArm = { id: dd, t: window.setTimeout(function () { ddArm = null; }, 4000) };
+              toast('한 번 더 누르면 이 임시저장을 삭제합니다');
+              return;
+            }
+            window.clearTimeout(ddArm.t);
+            ddArm = null;
+            var arr = state.drafts || [];
+            for (var j = 0; j < arr.length; j++) {
+              if (arr[j].id === dd) {
+                var rm = arr.splice(j, 1)[0];
+                persist();
+                renderFinal();
+                renderDrafts();
+                toast('임시저장을 삭제했습니다 · ' + rm.label);
+                return;
+              }
+            }
+            return;
+          }
+        }
+        t = t.parentNode;
+      }
+    });
+
+    var cb = $('finChecks');
+    if (cb) {
+      cb.addEventListener('change', function (ev) {
+        var el = ev.target;
+        if (!el || !el.getAttribute) { return; }
+        var id = el.getAttribute('data-fcheck');
+        if (!id) { return; }
+        state.final.checks[id] = el.checked === true;
+        renderFinal();
+        scheduleSave();
+        if (el.checked) {
+          var n = checkCount();
+          toast(n === FIN_CHECKS.length ? '✅ 6가지 모두 확인 — 🚀 발행하기가 열렸습니다' : '✅ 확인했습니다 (' + n + ' / 6)');
+        }
+      });
+    }
+    var sa = $('sixAll');
+    if (sa) {
+      sa.addEventListener('click', function () {
+        for (var i = 0; i < FIN_CHECKS.length; i++) { state.final.checks[FIN_CHECKS[i].id] = true; }
+        renderFinal();
+        scheduleSave();
+        toast(canPublish() ? '✅ 6가지 주의사항을 모두 확인 처리했습니다 — 🚀 발행하기가 열렸습니다' : pubHintText());
+      });
+    }
+    var sn = $('sixNone');
+    if (sn) {
+      sn.addEventListener('click', function () {
+        for (var i = 0; i < FIN_CHECKS.length; i++) { state.final.checks[FIN_CHECKS[i].id] = false; }
+        renderFinal();
+        scheduleSave();
+        toast('6가지 확인을 모두 해제했습니다 — 발행하기가 닫힙니다');
+      });
+    }
+    var ds = $('draftSave');
+    if (ds) { ds.addEventListener('click', function () { saveDraft(state.final.channel || 'naver', false); }); }
+    var dsa = $('draftSaveAll');
+    if (dsa) {
+      dsa.addEventListener('click', function () {
+        if (!state.topic) { toast('주제를 먼저 골라주세요 — 🎯 주제선정'); return; }
+        var okAll = true;
+        for (var i = 0; i < FIN_CH.length; i++) { if (!saveDraft(FIN_CH[i].id, true)) { okAll = false; } }
+        if (okAll) { toast('💾 5채널 작성글을 모두 임시저장했습니다 · 글목록 탭에서 📝 임시저장으로 확인'); }
+      });
+    }
+    var pb = $('publishBtn');
+    if (pb) { pb.addEventListener('click', doPublish); }
   }
 
   /* ===================== 3개 AI 버전 비교 ===================== */
@@ -2730,7 +3570,12 @@
     var pv = $('previewBtn');
     if (pv) { pv.addEventListener('click', function () { openPreview(buildCopyText()); }); }
     var mc = $('copyModalCopy');
-    if (mc) { mc.addEventListener('click', function () { copyText(buildCopyText(), '복사했습니다'); }); }
+    if (mc) {
+      mc.addEventListener('click', function () {
+        var ta = $('copyPreviewText');
+        copyText(ta ? ta.value : buildCopyText(), '복사했습니다');
+      });
+    }
     var c1 = $('copyModalClose'), c2 = $('copyModalClose2');
     if (c1) { c1.addEventListener('click', closePreview); }
     if (c2) { c2.addEventListener('click', closePreview); }
@@ -2816,6 +3661,8 @@
     renderPosts();
     renderHome();
     renderSteps();
+    renderFinal();
+    renderDrafts();
   }
 
   /* ===================== 시작 ===================== */
@@ -2831,6 +3678,7 @@
       bindPosts();
       bindCopy();
       bindAI();
+      bindFinal();
       bindReset();
       bindMobile();
       renderAll();
